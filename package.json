@@ -1,0 +1,57 @@
+{
+  "name": "@chobantonov/jsonforms-extended-spec",
+  "version": "0.1.0",
+  "description": "Portable JSON Forms extended UI model specification, JSON schemas and examples",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kchobantonov/jsonforms-extended-spec.git"
+  },
+  "homepage": "https://kchobantonov.github.io/jsonforms-extended-spec/",
+  "bugs": "https://github.com/kchobantonov/jsonforms-extended-spec/issues",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.28.2",
+  "files": [
+    "SPEC.md",
+    "schemas",
+    "examples",
+    "conformance",
+    "provenance.json",
+    "README.md",
+    "LICENSE",
+    "TODO.md",
+    "AUDIT.md"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./SPEC.md": "./SPEC.md",
+    "./schemas/*": "./schemas/*",
+    "./examples/*": "./examples/*",
+    "./conformance/*": "./conformance/*",
+    "./TODO.md": "./TODO.md",
+    "./AUDIT.md": "./AUDIT.md"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test",
+    "validate": "node scripts/validate.mjs",
+    "build": "pnpm run validate && node scripts/build-site.mjs",
+    "check": "pnpm run test && pnpm run build && pnpm run test:packed",
+    "release:pack": "node scripts/pack-release.mjs",
+    "test:packed": "node scripts/pack-release.mjs --test",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "pnpm run check && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "2.30.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "markdown-it": "14.3.2"
+  }
+}

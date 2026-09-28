@@ -1,0 +1,237 @@
+[
+  {
+    "id": "span-gap",
+    "section": "6.3",
+    "input": {
+      "width": 800,
+      "gridColumns": 16,
+      "gap": 16,
+      "span": 8
+    },
+    "expected": {
+      "width": 392
+    }
+  },
+  {
+    "id": "visible-children",
+    "section": "6.5",
+    "input": {
+      "visible": [
+        true,
+        false,
+        true
+      ]
+    },
+    "expected": {
+      "participatingIndices": [
+        0,
+        2
+      ],
+      "gapCount": 1
+    }
+  },
+  {
+    "id": "expression-own-constructor",
+    "section": "9.7",
+    "input": {
+      "data": {
+        "constructor": "part",
+        "name": "Jo"
+      },
+      "expression": "data.name"
+    },
+    "expected": {
+      "value": "Jo"
+    }
+  },
+  {
+    "id": "url-script",
+    "section": "12",
+    "input": {
+      "url": "java\nscript:alert(1)"
+    },
+    "expected": {
+      "allowed": false
+    }
+  },
+  {
+    "id": "script-default-closed",
+    "section": "14.2",
+    "input": {
+      "button": {
+        "type": "Button",
+        "script": "return 1;"
+      },
+      "config": {}
+    },
+    "expected": {
+      "executed": false,
+      "diagnostic": "script.evaluationDisabled"
+    }
+  },
+  {
+    "id": "markdown-substitution",
+    "section": "9.4",
+    "input": {
+      "text": "Hello {name}",
+      "params": {
+        "name": "**Jo**"
+      },
+      "markup": "markdown"
+    },
+    "expected": {
+      "text": "Hello **Jo**",
+      "substitutionCreatesMarkup": false
+    }
+  },
+  {
+    "id": "outside-enum",
+    "section": "19",
+    "input": {
+      "schema": {
+        "enum": [
+          "A",
+          "B"
+        ]
+      },
+      "data": "C",
+      "interaction": "mount"
+    },
+    "expected": {
+      "data": "C",
+      "changes": 0
+    }
+  },
+  {
+    "id": "tuple-fill-prefix",
+    "section": "18.11",
+    "input": {
+      "schema": {
+        "type": "array",
+        "items": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "integer"
+          }
+        ]
+      },
+      "data": [],
+      "edit": {
+        "index": 1,
+        "value": 30
+      }
+    },
+    "expected": {
+      "data": [
+        "",
+        30
+      ],
+      "changes": 1
+    }
+  },
+  {
+    "id": "confirmation-complex-old",
+    "section": "14.3",
+    "input": {
+      "policy": "complex",
+      "old": {
+        "name": "Jo"
+      },
+      "new": ""
+    },
+    "expected": {
+      "confirm": true
+    }
+  },
+  {
+    "id": "array-error-boundary",
+    "section": "8.3",
+    "input": {
+      "container": "employees.1",
+      "errorPath": "employees.10.name"
+    },
+    "expected": {
+      "contributes": false
+    }
+  },
+  {
+    "id": "duration-unchanged",
+    "section": "18.18.2",
+    "input": {
+      "data": "P0W",
+      "actions": [
+        "open",
+        "apply"
+      ]
+    },
+    "expected": {
+      "data": "P0W",
+      "changes": 0
+    }
+  },
+  {
+    "id": "pending-delete",
+    "section": "18.4",
+    "input": {
+      "data": [
+        "Jo",
+        "Sam"
+      ],
+      "actions": [
+        {
+          "queueEdit": {
+            "index": 0,
+            "value": "Jane"
+          }
+        },
+        {
+          "deleteIndex": 0
+        },
+        "flush"
+      ]
+    },
+    "expected": {
+      "data": [
+        "Sam"
+      ]
+    }
+  },
+  {
+    "id": "dialog-cancel",
+    "section": "18.13",
+    "input": {
+      "data": {
+        "city": "Sofia"
+      },
+      "actions": [
+        "open",
+        {
+          "edit": {
+            "city": "Paris"
+          }
+        },
+        "cancel"
+      ]
+    },
+    "expected": {
+      "data": {
+        "city": "Sofia"
+      },
+      "changes": 0
+    }
+  },
+  {
+    "id": "accordion-close",
+    "section": "8.8",
+    "input": {
+      "openCategory": "details",
+      "action": "activate-details"
+    },
+    "expected": {
+      "openCategory": null,
+      "dataChanges": 0
+    }
+  }
+]

@@ -1,0 +1,140 @@
+{
+  "sourceRepository": "https://github.com/kchobantonov/jsonforms-react-renderers",
+  "sourceCommit": "e931e46c237f371dc283c291746640d653a32190",
+  "documents": [
+    {
+      "path": "docs/TODO.md",
+      "sha256": "9398c74e6f7d69c21bf4c757b8c20f46c17b914b6f79b953aa8035cf9d7c913f",
+      "role": "Historical implementation issues; not normative"
+    },
+    {
+      "path": "docs/jsonforms-consolidated-spec-record.md",
+      "sha256": "6a60dfcb44f4ad94f36fefdd7e62b662d2346541906da5d0d168783ea0143af7",
+      "role": "Consolidation provenance and known omissions"
+    },
+    {
+      "path": "docs/jsonforms-container-validation-indicator-spec.md",
+      "sha256": "73eabc5b7f03442627b84ff885a70670f9e0b13b5a13d6059ebdb7a78667852f",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/jsonforms-extended-ui-model-adjustments.md",
+      "sha256": "38afab3b37b530c9ec2924f3a45ec79e15d8c7c79a284604d985a384190e153b",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/jsonforms-extended-ui-model-consolidated-spec.md",
+      "sha256": "9e2c45a09cd9c3a7192349d9e5a68965b3e08484373ef671fd8744d6d2ebf297",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/jsonforms-extended-ui-model-spec.md",
+      "sha256": "124a528c30c6c65b92b8a6a786fc739de8789e6bb545e4d768fefc699f68aa49",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/jsonforms-react-antd-implementation-gaps.md",
+      "sha256": "0d72afe969794b24e82503957543b64bf929308961549f72bf03787632f36396",
+      "role": "Reference implementation coverage; not normative"
+    },
+    {
+      "path": "docs/renderer-common.md",
+      "sha256": "2a4398e88ad0805c78357798c1ea191feaf3374e607ed36e9901c17471825294",
+      "role": "Implementation architecture guidance"
+    },
+    {
+      "path": "docs/renderer-set-and-demo-specification.md",
+      "sha256": "559321841585004acc6f8d5003b09dfc50e02eb73d657ede4827318a6af195ca",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/schemas/README.md",
+      "sha256": "fbb19fcde571afd6151017b8127e991e12bcca236127a62c5db431aee8508132",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/schemas/jsonforms-config.schema.json",
+      "sha256": "c22aa5309675c93f03ecdeefd04b98d8334469fb83021d9326a6ad3aeb26f935",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/schemas/jsonforms-extended-config.schema.json",
+      "sha256": "226caa1188e8b36630499fa1f8690d8c10b34b04ac0adbb173100bc4b1d4dfd9",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/schemas/jsonforms-extended-uischema.schema.json",
+      "sha256": "d5db3453d3d1612bf32ff1c93af844a9a39cc8083c55ef56ac533a45e7819cac",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/schemas/jsonforms-uischema.schema.json",
+      "sha256": "1d0e899f177ee2c140aa1f7a41b9dd4f80f8c1b200704150d5959ad9f5c3987f",
+      "role": "Source contract reconciled in SPEC.md and schemas"
+    },
+    {
+      "path": "docs/typed-form-authoring.md",
+      "sha256": "04e5d6f954769b3267938ef25ff91d2e3165f25471f57939a2326fb78fb13321",
+      "role": "Optional typed authoring guidance"
+    }
+  ],
+  "reconciliation": [
+    {
+      "topic": "Document roles",
+      "decision": "Portable contracts and accepted amendments consolidated; issue histories and implementation gaps retained only as provenance, not normative text."
+    },
+    {
+      "topic": "Interpolation",
+      "decision": "CEL profile replaces older ICU proposals; binding paths and expression own-key access are distinguished."
+    },
+    {
+      "topic": "Tuple detail",
+      "decision": "Tuple-wide options.detail places positions; registry position detail describes a dialog. options.layout only sizes a child."
+    },
+    {
+      "topic": "Color",
+      "decision": "Save formats hex, hex3, rgb and hsb, verified against renderer-common colorFormat.ts."
+    },
+    {
+      "topic": "OTP",
+      "decision": "Both schema length bounds are required; otherwise ordinary password presentation."
+    },
+    {
+      "topic": "File size",
+      "decision": "Use numeric UI format bounds in portable examples; schema-side numeric comparison requires a separate validator extension and is excluded from the Ajv-compatible data-schema authoring profile."
+    },
+    {
+      "topic": "Temporal restrictions",
+      "decision": "Picker selections enforce bounds under restrict. Complete typed range violations may commit with validation feedback; no silent clamping."
+    },
+    {
+      "topic": "Proposals",
+      "decision": "Timezone selectors remain non-normative. Dynamic overlay and pending-validity contracts do not imply reference implementation support."
+    },
+    {
+      "topic": "Release",
+      "decision": "Single public package; Changesets release PR/publish on master, Node 22, pnpm 10.28.2 and GitHub Pages, following jsonforms-svelte workflows."
+    },
+    {
+      "topic": "Temporal example dialect",
+      "decision": "Converted the isolated prefixItems tuple to equivalent draft-07 positional items; the entire fixture now uses one declared dialect with actual positional validation."
+    },
+    {
+      "topic": "Categorization accordion",
+      "decision": "At most one open category, including persistent explicit all-closed state, follows the accepted amendment and reference interaction."
+    },
+    {
+      "topic": "Neutral fixture names",
+      "decision": "Remaining pickup-related field names replaced with projectContact, officeCity and startsOn in the standalone examples."
+    }
+  ],
+  "additionalReconciliationNotes": [
+    "Retain the portable flat config.restrict spelling. Require host resolution before core defaults are injected; document the reference implementation namespaced spelling as adapter compatibility rather than a second canonical setting.",
+    "Reconcile temporal text range feedback with picker prevention across both the shared restrict section and the temporal catalog.",
+    "Image-data opt-in admits SVG images in the reference URL policy; hosts may apply a narrower MIME policy.",
+    "Published schemas are limited to implemented authoring features. Removed the speculative $dynamic overlay vocabulary and vectors, reserved layout hints, unconsumed type-detail/dialog settings, and unverified read-only separation opt-in. TODO.md tracks design versus implementation work; the implemented Label interpolation dynamicValues gate remains.",
+    "Removed the custom data-schema meta-schema: use the standard JSON Schema meta-schema supplied by the validator. Custom extension keywords are not checked by standard meta-schema validation.",
+    "2026-09-27 source audit: all 15 hashes and all 32 example directories verified; 156 JSON assets accounted for. Added standalone rules and corrected core/config/option coverage. Core settings are described separately from renderer support. See AUDIT.md for evidence and remaining adapter differences.",
+    "Configuration follow-up: traced every previously declared config path. Removed 30 unsupported or misleading global declarations, added 9 confirmed config paths, and recorded evidence and merge behavior in conformance/config-consumption.json and AUDIT.md. Structural label/detail/summary/cell options remain local authoring choices despite isolated merged-config readers."
+  ]
+}
