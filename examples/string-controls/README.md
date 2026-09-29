@@ -5,12 +5,12 @@
 **Domain:** customer intake\
 **Specs covered:**
 
-- [Masked string control](../../SPEC.md#18186-masked-string-control)
-- [Input composition and Unicode string length](../../SPEC.md#18186-masked-string-control)
-- [Shared placeholder hints](../../SPEC.md#18186-masked-string-control)
-- [Established presentation options](../../SPEC.md#18186-masked-string-control) (`multi`, `mask`)
-- [Honest rendering of invalid data](../../SPEC.md#18186-masked-string-control)
-- [The masked string control](../../SPEC.md#18186-masked-string-control)
+- [Masked string control](../../docs/spec.md#18186-masked-string-control)
+- [Input composition and Unicode string length](../../docs/spec.md#18186-masked-string-control)
+- [Shared placeholder hints](../../docs/spec.md#18186-masked-string-control)
+- [Established presentation options](../../docs/spec.md#18186-masked-string-control) (`multi`, `mask`)
+- [Honest rendering of invalid data](../../docs/spec.md#18186-masked-string-control)
+- [The masked string control](../../docs/spec.md#18186-masked-string-control)
 
 One intake form, seen through every string presentation the model defines. The
 point of the example is that **a mask describes how a value is typed, and the

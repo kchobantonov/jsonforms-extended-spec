@@ -5,10 +5,10 @@
 **Domain:** course enrolment\
 **Specs covered:**
 
-- [Extended validator profile](../../SPEC.md#159-data-schemas-rules-and-validator-profile)
-- [Internationalizable text](../../SPEC.md#159-data-schemas-rules-and-validator-profile)
-- [script-evaluation permission](../../SPEC.md#159-data-schemas-rules-and-validator-profile)
-- [The extended validator profile](../../SPEC.md#159-data-schemas-rules-and-validator-profile)
+- [Extended validator profile](../../docs/spec.md#159-data-schemas-rules-and-validator-profile)
+- [Internationalizable text](../../docs/spec.md#159-data-schemas-rules-and-validator-profile)
+- [script-evaluation permission](../../docs/spec.md#159-data-schemas-rules-and-validator-profile)
+- [The extended validator profile](../../docs/spec.md#159-data-schemas-rules-and-validator-profile)
 
 **Nothing in this example is renderer behaviour.** Every tab is something the
 validator did before a renderer saw anything: reported a failure, rewrote a
@@ -172,7 +172,7 @@ same key-or-text rule this renderer set applies to labels.
 lose: `ajv-errors` replaces the failures it covers with a *single* error at the
 enclosing object's path, and JSON Forms maps errors to controls **by path**.
 Left alone, a schema that adds friendly messages makes every field it covers go
-silent. See [the specification](../../SPEC.md#159-data-schemas-rules-and-validator-profile).
+silent. See [the specification](../../docs/spec.md#159-data-schemas-rules-and-validator-profile).
 
 ## Expected behaviour
 
@@ -194,4 +194,4 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 
 ## Standalone host setup
 
-- Install the extended validator profile in SPEC.md; plain JSON Schema validation does not implement transforms, dynamic defaults or custom error messages.
+- Install the extended validator profile in spec.md; plain JSON Schema validation does not implement transforms, dynamic defaults or custom error messages.

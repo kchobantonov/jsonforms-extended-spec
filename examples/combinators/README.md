@@ -5,11 +5,11 @@
 **Domain:** a meeting-room request\
 **Specs covered:**
 
-- [Combinator controls: oneOf, anyOf, and allOf](../../SPEC.md#1815-combinator-controls)
-- [Conditional validation versus conditional presentation](../../SPEC.md#1815-combinator-controls)
-- [Required properties, markers, and clearing](../../SPEC.md#1815-combinator-controls)
-- [Shared destructive-change confirmation](../../SPEC.md#1815-combinator-controls)
-- [When a selection writes, and when it only displays](../../SPEC.md#1815-combinator-controls)
+- [Combinator controls: oneOf, anyOf, and allOf](../../docs/spec.md#1815-combinator-controls)
+- [Conditional validation versus conditional presentation](../../docs/spec.md#1815-combinator-controls)
+- [Required properties, markers, and clearing](../../docs/spec.md#1815-combinator-controls)
+- [Shared destructive-change confirmation](../../docs/spec.md#1815-combinator-controls)
+- [When a selection writes, and when it only displays](../../docs/spec.md#1815-combinator-controls)
 
 Six categories, each answering one question the combinator section raises.
 The last two are the ones worth reading twice: a schema condition and a UI

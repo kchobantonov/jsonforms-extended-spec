@@ -5,12 +5,12 @@
 **Domain:** appointment options\
 **Specs covered:**
 
-- [Radio-choice layout and interaction](../../SPEC.md#185-choice-and-suggested-string-controls)
-- [Choice identity and existing values](../../SPEC.md#185-choice-and-suggested-string-controls)
-- [Honest rendering of invalid data](../../SPEC.md#185-choice-and-suggested-string-controls)
-- [Choice and suggested-string controls](../../SPEC.md#185-choice-and-suggested-string-controls)
-- [Choice searchability](../../SPEC.md#185-choice-and-suggested-string-controls)
-- [`vertical` orientation](../../SPEC.md#185-choice-and-suggested-string-controls)
+- [Radio-choice layout and interaction](../../docs/spec.md#185-choice-and-suggested-string-controls)
+- [Choice identity and existing values](../../docs/spec.md#185-choice-and-suggested-string-controls)
+- [Honest rendering of invalid data](../../docs/spec.md#185-choice-and-suggested-string-controls)
+- [Choice and suggested-string controls](../../docs/spec.md#185-choice-and-suggested-string-controls)
+- [Choice searchability](../../docs/spec.md#185-choice-and-suggested-string-controls)
+- [`vertical` orientation](../../docs/spec.md#185-choice-and-suggested-string-controls)
 
 ## Validation state
 
@@ -25,7 +25,7 @@ exactly one error:
 
 `options.vertical` is the single orientation encoding, and it means the same
 thing here as on a checkbox group — see
-[the specification](../../SPEC.md#185-choice-and-suggested-string-controls).
+[the specification](../../docs/spec.md#185-choice-and-suggested-string-controls).
 
 | Control | Orientation |
 | --- | --- |
@@ -77,7 +77,7 @@ That default is a choice, and section 18 allows it — "preserves the renderer
 family's documented default. No universal default is imposed" — but it differs
 from Material, where searching is on unless `autocomplete: false`. A document
 that relies on Material's default will render a plain dropdown here. See
-[the specification](../../SPEC.md#185-choice-and-suggested-string-controls).
+[the specification](../../docs/spec.md#185-choice-and-suggested-string-controls).
 
 **Search Handling team for `Oper`.** It matches **Operations**, the visible
 label, not the stored constant `ops` — searching for `ops` finds nothing. The

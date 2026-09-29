@@ -5,15 +5,15 @@
 **Domain:** conference programme\
 **Specs covered:**
 
-- [Array tables and detail forms: baseline versus extension](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [Shared array action options](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [Expandable array-item forms](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [List with detail](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [Shared array item labels](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [Array Add-item initialization](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [Array-level errors and item summaries](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [Array matching constraints: contains and matching counts](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
-- [AG Grid array control](../../SPEC.md#1821-expandable-arrays-and-list-with-detail)
+- [Array tables and detail forms: baseline versus extension](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [Shared array action options](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [Expandable array-item forms](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [List with detail](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [Shared array item labels](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [Array Add-item initialization](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [Array-level errors and item summaries](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [Array matching constraints: contains and matching counts](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
+- [AG Grid array control](../../docs/spec.md#1821-expandable-arrays-and-list-with-detail)
 
 One schema, five presentations, one tab each. The example exists to make the
 **selection rules** visible rather than described, because that is the part
@@ -212,3 +212,7 @@ a fallback is not evidence that its specialized editing behavior is supported.
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+All array presentations enable `collapsible`. Use the header toggle to hide and
+restore the panel body without losing data or item expansion. Set `collapsed: true`
+to start closed; item `initCollapsed` remains independent.

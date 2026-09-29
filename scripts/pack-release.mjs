@@ -21,7 +21,7 @@ try {
     assert.equal(manifest.name, '@chobantonov/jsonforms-extended-spec');
     assert.equal(manifest.private, undefined);
     for (const group of ['dependencies','optionalDependencies','peerDependencies']) for (const version of Object.values(manifest[group] ?? {})) assert.ok(!/^(workspace:|link:|file:)/.test(version));
-    for (const file of ['SPEC.md','TODO.md','AUDIT.md','README.md','LICENSE','provenance.json','conformance/authoring.json']) await readFile(join(packed,file));
+    for (const file of ['docs/spec.md','docs/renderer-and-demo.md','docs/renderer-selection.md','docs/history/TODO.md','docs/todo.md','docs/audit.md','README.md','LICENSE','provenance.json','conformance/authoring.json']) await readFile(join(packed,file));
     // Resolve public subpaths as an external consumer with no workspace imports.
     const consumer = join(temp,'consumer');
     await mkdir(join(consumer,'node_modules/@chobantonov'),{recursive:true});
@@ -35,6 +35,11 @@ try {
       const schema = JSON.parse(readFileSync(new URL(resolve('schemas/jsonforms-extended-uischema.schema.json'))));
       if (!schema.$id) throw new Error('Schema missing');
       await import(resolve('examples/object-control/uischemas.mjs'));
+      const { examples } = await import(resolve('examples'));
+      if (examples.length !== catalog.length || !examples.every(e => e.schema && e.uischema)) throw new Error('Example module incomplete');
+      if (typeof examples.find(e => e.id === 'tuple-control').uischemas[0].tester !== 'function') throw new Error('Registry hook missing');
+      const { forSchema } = await import(resolve('typescript'));
+      if (forSchema({type:'object',properties:{name:{type:'string'}}}).scope('name') !== '#/properties/name') throw new Error('Authoring export missing');
     `],{cwd:consumer,stdio:'pipe'});
     console.log(`Packed consumer verified: ${report.examples} examples, ${report.schemas} offline schemas.`);
   }

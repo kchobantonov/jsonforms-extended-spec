@@ -5,8 +5,8 @@
 **Domain:** supplier record\
 **Specs covered:**
 
-- [Group](../../SPEC.md#81-group)
-- [Layout types and semantics](../../SPEC.md#81-group)
+- [Group](../../docs/spec.md#81-group)
+- [Layout types and semantics](../../docs/spec.md#81-group)
 
 A Group is the plainest container there is — "an ordinary Group presents
 related controls as a labelled section" — and three options make it more than
@@ -50,6 +50,12 @@ sizing model rather than replacing it.
 **Contact** is collapsible and opens by default, because `collapsed` defaults
 to false. The header is "an accessible disclosure control", so it can be
 reached and operated from the keyboard.
+
+For the suggested presentation, make the whole header the disclosure target,
+keep the title at the leading edge, and put the data marker and chevron at the
+trailing edge. The marker's tooltip uses its localized accessible name. Use
+the UI framework's standard collapsible component and the application's theme;
+see [§8.1 presentation recommendations](../../docs/spec.md#81-group).
 
 ### `collapsed` initializes, and only when collapsible
 

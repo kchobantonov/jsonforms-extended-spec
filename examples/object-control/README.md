@@ -5,9 +5,9 @@
 **Domain:** customer profile\
 **Specs covered:**
 
-- [Object controls and additional-property editing](../../SPEC.md#1816-object-controls-and-dynamic-properties)
-- [Object-level errors and errors without rendered targets](../../SPEC.md#1816-object-controls-and-dynamic-properties)
-- [Honest rendering of invalid data](../../SPEC.md#1816-object-controls-and-dynamic-properties)
+- [Object controls and additional-property editing](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
+- [Object-level errors and errors without rendered targets](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
+- [Honest rendering of invalid data](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
 
 An object control's whole job is to produce **other** controls, so there are
 only two questions worth asking of it: where the nested form came from, and

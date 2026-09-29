@@ -2,7 +2,7 @@
 
 **Example ID:** `code-editor` · **Domain:** Deployment assets
 
-Covers the [portable UI model, the renderer contract — Monaco](../../SPEC.md#1826-code-editor-profile): language selection, editor dimensions, initialization actions and JSON conversion.
+Covers the [portable UI model, the renderer contract — Monaco](../../docs/spec.md#1826-code-editor-profile): language selection, editor dimensions, initialization actions and JSON conversion.
 
 ## Files
 
@@ -45,7 +45,7 @@ remains an editor draft and must not replace the last committed object. A
 syntactically valid object with `replicas: 0` commits and produces a schema
 error; syntax validity and schema validity are separate.
 
-See [Additional errors](../additional-errors/) for dynamic `:language`,
+See [Additional errors](../additional-errors) for dynamic `:language`,
 `propagateErrors`, editor diagnostics and coexistence with server errors.
 Those cases stay together because they demonstrate error ownership.
 

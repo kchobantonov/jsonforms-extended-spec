@@ -5,12 +5,12 @@
 **Domain:** inventory metadata\
 **Specs covered:**
 
-- [Additional (dynamic) properties](../../SPEC.md#1816-object-controls-and-dynamic-properties)
-- [Empty property name policy](../../SPEC.md#1816-object-controls-and-dynamic-properties)
-- [Empty-name presentation, and empty add-name draft feedback](../../SPEC.md#1816-object-controls-and-dynamic-properties)
-- [Literal-key editing](../../SPEC.md#1816-object-controls-and-dynamic-properties)
-- [Honest rendering of invalid data](../../SPEC.md#1816-object-controls-and-dynamic-properties)
-- [Dynamic property names](../../SPEC.md#1816-object-controls-and-dynamic-properties)
+- [Additional (dynamic) properties](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
+- [Empty property name policy](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
+- [Empty-name presentation, and empty add-name draft feedback](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
+- [Literal-key editing](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
+- [Honest rendering of invalid data](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
+- [Dynamic property names](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
 
 Five objects whose keys are data rather than schema. The point of the example is
 that **a key is a value too**: what it may be called, whether it can be reached
@@ -69,7 +69,7 @@ else to put them.
 one key, not an index into an array. `2024` is an object key, not an array
 position. Both work because core 3.9 stopped using lodash's path grammar in the
 reducer; before that they were written to the wrong place. See
-[14](../../SPEC.md#1816-object-controls-and-dynamic-properties).
+[14](../../docs/spec.md#1816-object-controls-and-dynamic-properties).
 
 **Type `sdf.sdf` into any Add box.** It is accepted, and it becomes **one key
 called `sdf.sdf`** — not a nested `{ "sdf": { "sdf": … } }`. A dot cannot be

@@ -3,14 +3,14 @@
 One portable specification, authoring schemas and 32 worked examples for JSON
 Forms renderer implementations.
 
-- [Read the specification](SPEC.md)
+- [Read the specification](docs/spec.md)
 - [Browse the examples](examples/README.md)
 - [Use the JSON schemas](schemas/README.md)
-- [Read the migration and schema audit](AUDIT.md)
+- [Read the migration and schema audit](docs/audit.md)
 
 The specification is a consolidated v1 draft. It separates accepted contracts
 from future design work and documents optional capabilities explicitly.
-The published schemas cover implemented features only; see [TODO.md](TODO.md)
+The published schemas cover implemented features only; see [design backlog](docs/todo.md)
 for design discussions and implementation work, including `$dynamic`.
 No component library is required by this package.
 
@@ -18,7 +18,7 @@ No component library is required by this package.
 
 | Path | Purpose |
 | --- | --- |
-| `SPEC.md` | The single specification, organized by topic |
+| `docs/spec.md` | The single specification, organized by topic |
 | `schemas/` | Six JSON schemas with offline-resolvable references |
 | `examples/` | Authored schemas, UI schemas, data, config, translations and walkthroughs |
 | `conformance/authoring.json` | Executable positive and negative schema vectors |
@@ -103,3 +103,24 @@ The expected URL is
 
 `pnpm run check` is the local release gate. Publishing and Pages deployment
 happen only through their configured workflows or an explicit maintainer command.
+
+## TypeScript authoring
+
+See [the TypeScript guide](typescript/README.md) for schema-aware authoring helpers. Sources and tests live under `typescript/`; other language bindings can use their own directories.
+
+## Renderer and demo design
+
+Use [the renderer/demo acceptance guide](docs/renderer-and-demo.md),
+[renderer selection](docs/renderer-selection.md), and the
+[migration audit](docs/audit.md). These maintained guides contain the portable
+requirements. [History TODO](docs/history/TODO.md) tracks any unresolved migration
+questions; renderer implementation gaps belong in their renderer repositories.
+
+## Automatic example discovery
+
+Import `examples` from `@chobantonov/jsonforms-extended-spec/examples`.
+Each entry includes its ID, title, JSON fixtures and optional UI-schema registry.
+Add an entry to `examples/catalog.json`, then run `pnpm build` (or
+`pnpm generate:examples` during development). All consuming demos discover it
+without maintaining their own registration list. Rebuild the linked package to
+refresh a running demo. Host requirements remain explicit in each entry.

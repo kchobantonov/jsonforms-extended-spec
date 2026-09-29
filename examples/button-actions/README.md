@@ -5,10 +5,10 @@
 **Domain:** a subscription sign-up\
 **Specs covered:**
 
-- [Button, actions and script](../../SPEC.md#14-button-actions-and-script)
-- [Action path and Script path](../../SPEC.md#14-button-actions-and-script)
-- [Internationalizable text](../../SPEC.md#14-button-actions-and-script)
-- [The Button contract](../../SPEC.md#14-button-actions-and-script)
+- [Button, actions and script](../../docs/spec.md#14-button-actions-and-script)
+- [Action path and Script path](../../docs/spec.md#14-button-actions-and-script)
+- [Internationalizable text](../../docs/spec.md#14-button-actions-and-script)
+- [The Button contract](../../docs/spec.md#14-button-actions-and-script)
 
 A Button does not know what its command means: it hands the command to the
 host and waits. That is the whole example, and it has **three tabs**, because

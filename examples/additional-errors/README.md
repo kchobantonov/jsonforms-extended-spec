@@ -5,9 +5,9 @@
 **Domain:** deployment notes\
 **Specs covered:**
 
-- [Code editor (Monaco), `propagateErrors`](../../SPEC.md#156-renderer-published-additional-errors)
-- [Additional-error ownership and changing data paths](../../SPEC.md#156-renderer-published-additional-errors)
-- [Renderer-published additional errors](../../SPEC.md#156-renderer-published-additional-errors)
+- [Code editor (Monaco), `propagateErrors`](../../docs/spec.md#156-renderer-published-additional-errors)
+- [Additional-error ownership and changing data paths](../../docs/spec.md#156-renderer-published-additional-errors)
+- [Renderer-published additional errors](../../docs/spec.md#156-renderer-published-additional-errors)
 
 Two things know something the schema does not: a **server** that rejected a
 submit, and a code editor's **language service**. They look like different

@@ -5,10 +5,10 @@
 **Domain:** product listing attributes\
 **Specs covered:**
 
-- [Mixed-value control and deep-structure navigation](../../SPEC.md#1820-mixed-value-controls-and-navigation)
-- [Tuple control](../../SPEC.md#1820-mixed-value-controls-and-navigation) (the open tail delegates here)
-- [Honest rendering of invalid data](../../SPEC.md#1820-mixed-value-controls-and-navigation)
-- [An array element's type cannot be cleared](../../SPEC.md#1820-mixed-value-controls-and-navigation)
+- [Mixed-value control and deep-structure navigation](../../docs/spec.md#1820-mixed-value-controls-and-navigation)
+- [Tuple control](../../docs/spec.md#1820-mixed-value-controls-and-navigation) (the open tail delegates here)
+- [Honest rendering of invalid data](../../docs/spec.md#1820-mixed-value-controls-and-navigation)
+- [An array element's type cannot be cleared](../../docs/spec.md#1820-mixed-value-controls-and-navigation)
 
 Eight values whose **type is data**. The point of the example is that a mixed
 value carries its own type alongside its contents: the selector says which, the

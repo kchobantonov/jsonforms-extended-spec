@@ -5,11 +5,11 @@
 **Domain:** an overnight replenishment job\
 **Specs covered:**
 
-- [The cron picker asks how often first](../../SPEC.md#1825-cron-control)
-- [Schema-driven and UI-driven format selection](../../SPEC.md#1825-cron-control)
-- [the shared clear-value contract](../../SPEC.md#1825-cron-control)
-- [pending edits, commit timing and cancellation](../../SPEC.md#1825-cron-control)
-- [The extended validator profile](../../SPEC.md#1825-cron-control)
+- [The cron picker asks how often first](../../docs/spec.md#1825-cron-control)
+- [Schema-driven and UI-driven format selection](../../docs/spec.md#1825-cron-control)
+- [the shared clear-value contract](../../docs/spec.md#1825-cron-control)
+- [pending edits, commit timing and cancellation](../../docs/spec.md#1825-cron-control)
+- [The extended validator profile](../../docs/spec.md#1825-cron-control)
 
 A cron expression is a string, and this is the control that stops it being
 edited as one. Six values are hidden in six fields of punctuation, and the

@@ -5,11 +5,11 @@
 **Domain:** equipment order\
 **Specs covered:**
 
-- [Categorization](../../SPEC.md#86-categorization)
-- [Accordion categorization](../../SPEC.md#86-categorization)
-- [Container visibility and hidden children](../../SPEC.md#86-categorization)
-- [The Categorization navigation contract](../../SPEC.md#86-categorization)
-- [Container validation indicator](../../SPEC.md#86-categorization)
+- [Categorization](../../docs/spec.md#86-categorization)
+- [Accordion categorization](../../docs/spec.md#86-categorization)
+- [Container visibility and hidden children](../../docs/spec.md#86-categorization)
+- [The Categorization navigation contract](../../docs/spec.md#86-categorization)
+- [Container validation indicator](../../docs/spec.md#86-categorization)
 
 **The same four categories, rendered three ways, bound to the same data.** Type
 in one and the other two follow. That is the point: which of tabs, stepper and
@@ -89,7 +89,7 @@ still works.
 **Click the open accordion header.** It closes, and the accordion is left with
 nothing open — collapse all three and you are looking at the form's outline.
 This is a deliberate divergence from §8, which fixes the accordion at *exactly*
-one open category; see [the specification](../../SPEC.md#86-categorization).
+one open category; see [the specification](../../docs/spec.md#86-categorization).
 Two open at once is still impossible.
 
 **Close the accordion, then toggle `Business account`.** It stays closed.

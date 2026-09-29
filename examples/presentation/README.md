@@ -5,10 +5,10 @@
 **Domain:** a course handbook page\
 **Specs covered:**
 
-- [ImageView, Separator and Link](../../SPEC.md#13-imageview-separator-link-and-templates)
-- [Wrap, defaults, splitter and Spacer](../../SPEC.md#13-imageview-separator-link-and-templates)
-- [URL and extension security configuration](../../SPEC.md#13-imageview-separator-link-and-templates)
-- [When a selection writes, and when it only displays](../../SPEC.md#13-imageview-separator-link-and-templates)
+- [ImageView, Separator and Link](../../docs/spec.md#13-imageview-separator-link-and-templates)
+- [Wrap, defaults, splitter and Spacer](../../docs/spec.md#13-imageview-separator-link-and-templates)
+- [URL and extension security configuration](../../docs/spec.md#13-imageview-separator-link-and-templates)
+- [When a selection writes, and when it only displays](../../docs/spec.md#13-imageview-separator-link-and-templates)
 
 The elements that read nothing and write nothing: **ImageView**, **Link**,
 **Spacer**, **Separator** and **Label**. They are the least interesting

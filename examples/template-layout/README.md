@@ -5,10 +5,10 @@
 **Domain:** event registration\
 **Specs covered:**
 
-- [TemplateLayout fields and profiles](../../SPEC.md#135-templatelayout)
-- [script evaluation permission, and function-valued extension points](../../SPEC.md#135-templatelayout)
-- [Two template engines](../../SPEC.md#135-templatelayout)
-- [TemplateLayout, authored in TypeScript](../../SPEC.md#135-templatelayout)
+- [TemplateLayout fields and profiles](../../docs/spec.md#135-templatelayout)
+- [script evaluation permission, and function-valued extension points](../../docs/spec.md#135-templatelayout)
+- [Two template engines](../../docs/spec.md#135-templatelayout)
+- [TemplateLayout, authored in TypeScript](../../docs/spec.md#135-templatelayout)
 
 The same five things, written three times: in `lang: "jsx"`, in
 `lang: "ractive"`, and as a **TypeScript function**. Put next to each other
@@ -123,7 +123,7 @@ to its decimal index as its name, so a list where nothing is named resolves by
 position either way and hides a whole class of mistake — which is exactly what
 happened: `{elements}` once returned internal wrappers instead of the elements,
 and every test passed because none of them had named a child in a list rendered
-as an array. See [the specification](../../SPEC.md#135-templatelayout).
+as an array. See [the specification](../../docs/spec.md#135-templatelayout).
 
 ## Expected behaviour
 

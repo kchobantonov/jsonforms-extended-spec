@@ -9,7 +9,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const md = new MarkdownIt();
 const slug = text => text.toLowerCase().replace(/[^\p{L}\p{N}_\- ]/gu, '').replaceAll(' ', '-');
 const catalog = await readJson(join(root, 'examples/catalog.json'));
-const docs = ['README.md', 'SPEC.md', 'TODO.md', 'AUDIT.md', 'schemas/README.md', 'examples/README.md', ...catalog.map(x => `examples/${x.id}/README.md`)];
+const docs = ['README.md', 'docs/spec.md', 'docs/renderer-and-demo.md', 'docs/renderer-selection.md', 'docs/todo.md', 'docs/audit.md', 'docs/history/TODO.md', 'typescript/README.md', 'schemas/README.md', 'examples/README.md', ...catalog.map(x => `examples/${x.id}/README.md`)];
 const headings = new Map();
 for (const path of docs) {
   const ids = new Set(); const counts = new Map();
@@ -51,7 +51,7 @@ test('every bundled schema reference resolves, including unused definitions', as
 });
 test('JSON specification snippets parse and complete authoring documents validate', async () => {
   const checks = await validators(root);
-  const spec = await readFile(join(root, 'SPEC.md'), 'utf8');
+  const spec = await readFile(join(root, 'docs/spec.md'), 'utf8');
   for (const match of spec.matchAll(/^```\s*json\s*\n([\s\S]*?)^```/gm)) {
     const value = JSON.parse(match[1]);
     const candidates = [];
@@ -62,4 +62,14 @@ test('JSON specification snippets parse and complete authoring documents validat
       assert.ok(validate(document), `Line ${spec.slice(0,match.index).split('\n').length}: ${JSON.stringify(validate.errors)}`);
     }
   }
+});
+
+test('maintained guides live in docs and history contains only its TODO', async () => {
+  assert.deepEqual(await readdir(join(root, 'docs/history')), ['TODO.md']);
+  const rootFiles = await readdir(root);
+  for (const obsolete of ['SPEC.md', 'RENDERER-AND-DEMO.md', 'RENDERER-SELECTION.md', 'AUDIT.md', 'TODO.md', 'DOCUMENTATION-COVERAGE.md']) {
+    assert.ok(!rootFiles.includes(obsolete), `${obsolete} should not remain at the package root`);
+  }
+  const pkg = await readJson(join(root, 'package.json'));
+  assert.equal(pkg.exports['./docs/*'], './docs/*');
 });

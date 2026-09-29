@@ -40,7 +40,7 @@ test('behavior vectors are identified separately from executed authoring tests',
 });
 test('spec and walkthroughs stay independent of component libraries', async () => {
   const catalog = await readJson(join(root,'examples/catalog.json'));
-  for (const path of ['SPEC.md',...catalog.map(x=>`examples/${x.id}/README.md`)]) {
+  for (const path of ['docs/spec.md',...catalog.map(x=>`examples/${x.id}/README.md`)]) {
     const text = await readFile(join(root,path),'utf8');
     assert.doesNotMatch(text,/\b(?:antd|primereact|shadcn|mui|vuetify|svelte|vue)\b/i,path);
   }

@@ -5,11 +5,11 @@
 **Domain:** an appointment booking\
 **Specs covered:**
 
-- [Date, time and date-time controls](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Temporal controls: schema-driven behavior](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Duration control](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Schema-driven and UI-driven format selection](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Temporal serialization and picker bounds](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
+- [Date, time and date-time controls](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Temporal controls: schema-driven behavior](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Duration control](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Schema-driven and UI-driven format selection](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Temporal serialization and picker bounds](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
 
 Four controls that all store **strings**, split by *how the control was
 chosen*. That split is the whole example, because it decides something people
@@ -55,7 +55,7 @@ coincidence, and it used to be false** — the defaults were `HH:mm:ss` and
 `YYYY-MM-DD HH:mm`, while RFC 3339 requires seconds *and* an offset. A time
 control went invalid the moment anyone used the picker, and the picker could
 not repair it, because every value it could produce was invalid. See
-[the specification](../../SPEC.md#1819-scalar-controls-and-temporal-editing).
+[the specification](../../docs/spec.md#1819-scalar-controls-and-temporal-editing).
 
 `duration` is here too: `PT1H30M`, ISO 8601, staged in a picker that Cancel
 discards, and `P0D` for zero.
@@ -289,7 +289,7 @@ That is the point of it: a form's catalog is authored for the form's own
 labels, so the renderer set's own strings have to come from somewhere else.
 They fall back to the **locale bundle** for the current language and only then
 to English. See
-[the specification](../../SPEC.md#1819-scalar-controls-and-temporal-editing).
+[the specification](../../docs/spec.md#1819-scalar-controls-and-temporal-editing).
 
 Switch to a language no bundle carries — Japanese — and the picker is English
 again while the rest of the form is unaffected. A missing bundle degrades to

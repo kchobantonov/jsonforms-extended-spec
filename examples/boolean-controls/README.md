@@ -5,9 +5,9 @@
 **Domain:** employee onboarding consent\
 **Specs covered:**
 
-- [Boolean checkbox and switch controls](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Shared table-cell behavior](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Honest rendering of invalid data](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
+- [Boolean checkbox and switch controls](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Shared table-cell behavior](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Honest rendering of invalid data](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
 
 One example, because every boolean renderer answers the same three questions:
 what is true, what is false, and what is neither.

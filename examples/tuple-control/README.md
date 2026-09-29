@@ -5,11 +5,11 @@
 **Domain:** work order\
 **Specs covered:**
 
-- [Tuple control: positional array fields](../../SPEC.md#1811-tuple-control-positional-array-fields)
-- [Array Add-item initialization](../../SPEC.md#1811-tuple-control-positional-array-fields)
-- [Complex position summaries and dialog details](../../SPEC.md#1811-tuple-control-positional-array-fields)
-- [Honest rendering of invalid data](../../SPEC.md#1811-tuple-control-positional-array-fields)
-- [The tuple control](../../SPEC.md#1811-tuple-control-positional-array-fields)
+- [Tuple control: positional array fields](../../docs/spec.md#1811-tuple-control-positional-array-fields)
+- [Array Add-item initialization](../../docs/spec.md#1811-tuple-control-positional-array-fields)
+- [Complex position summaries and dialog details](../../docs/spec.md#1811-tuple-control-positional-array-fields)
+- [Honest rendering of invalid data](../../docs/spec.md#1811-tuple-control-positional-array-fields)
+- [The tuple control](../../docs/spec.md#1811-tuple-control-positional-array-fields)
 
 Eight positional arrays from one project record. The point of the example is
 that **a tuple is one value with several editors, not several values** — which
@@ -214,7 +214,7 @@ opening a dialog creates or normalizes data.
 > entry that is a Control matching an object's schema made the object renderer
 > dispatch it back to itself. Such an entry now falls back to the generated
 > layout and reports `uischema.registryCycle`. See
-> [20.7](../../SPEC.md#1811-tuple-control-positional-array-fields).
+> [20.7](../../docs/spec.md#1811-tuple-control-positional-array-fields).
 >
 > The fixture still shows `summary` **with** `detail`, because that is what an
 > author should write: the fallback is a recovery, not a feature.

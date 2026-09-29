@@ -5,10 +5,10 @@
 **Domain:** order intake\
 **Specs covered:**
 
-- [Layout types and semantics](../../SPEC.md#6-layout-types-and-sizing)
-- [Wrap, defaults, splitter and Spacer](../../SPEC.md#6-layout-types-and-sizing)
-- [The layout sizing model](../../SPEC.md#6-layout-types-and-sizing)
-- [configuration namespacing](../../SPEC.md#6-layout-types-and-sizing)
+- [Layout types and semantics](../../docs/spec.md#6-layout-types-and-sizing)
+- [Wrap, defaults, splitter and Spacer](../../docs/spec.md#6-layout-types-and-sizing)
+- [The layout sizing model](../../docs/spec.md#6-layout-types-and-sizing)
+- [configuration namespacing](../../docs/spec.md#6-layout-types-and-sizing)
 
 Sizing lives on **two different elements**, and telling them apart is most of
 the model:
@@ -144,7 +144,7 @@ diagnostic rather than being silently mis-sized.
 "excludes the trim sizing option" and says to "use the shared layout sizing
 options to control width" — `options.layout.width` or `maxWidth`.
 
-Both are recorded in [21](../../SPEC.md#6-layout-types-and-sizing),
+Both are recorded in [21](../../docs/spec.md#6-layout-types-and-sizing),
 including what changes for a form that used them.
 
 ## Conformance scope

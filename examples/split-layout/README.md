@@ -5,9 +5,9 @@
 **Domain:** project board\
 **Specs covered:**
 
-- [Wrap, defaults, splitter and Spacer](../../SPEC.md#73-splitter)
-- [Layout types and semantics](../../SPEC.md#73-splitter)
-- [Splitter](../../SPEC.md#73-splitter)
+- [Wrap, defaults, splitter and Spacer](../../docs/spec.md#73-splitter)
+- [Layout types and semantics](../../docs/spec.md#73-splitter)
+- [Splitter](../../docs/spec.md#73-splitter)
 
 `options.variant: "splitter"` turns either layout into draggable panes. It is a
 project extension, reusing the shared `variant` convention rather than adding a

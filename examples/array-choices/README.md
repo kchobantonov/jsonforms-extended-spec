@@ -5,11 +5,11 @@
 **Domain:** notification preferences\
 **Specs covered:**
 
-- [Array choices and tokens](../../SPEC.md#1829-array-choices-and-tokens)
-- [Multi-choice identity, applicability, and safe removal](../../SPEC.md#1829-array-choices-and-tokens)
-- [restrict and mutation constraints](../../SPEC.md#1829-array-choices-and-tokens)
-- [Honest rendering of invalid data](../../SPEC.md#1829-array-choices-and-tokens)
-- [Choice searchability and array-choice variants](../../SPEC.md#1829-array-choices-and-tokens)
+- [Array choices and tokens](../../docs/spec.md#1829-array-choices-and-tokens)
+- [Multi-choice identity, applicability, and safe removal](../../docs/spec.md#1829-array-choices-and-tokens)
+- [restrict and mutation constraints](../../docs/spec.md#1829-array-choices-and-tokens)
+- [Honest rendering of invalid data](../../docs/spec.md#1829-array-choices-and-tokens)
+- [Choice searchability and array-choice variants](../../docs/spec.md#1829-array-choices-and-tokens)
 
 One array-of-choices shape, three presentations. The point of the example is
 that **the variant changes the widget and nothing else**: the same schema, the

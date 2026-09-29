@@ -5,9 +5,9 @@
 **Domain:** project declarations\
 **Specs covered:**
 
-- [Null control](../../SPEC.md#18-renderer-behaviour-specifications)
-- [Shared clear-control behavior](../../SPEC.md#18-renderer-behaviour-specifications)
-- [Honest rendering of invalid data](../../SPEC.md#18-renderer-behaviour-specifications)
+- [Null control](../../docs/spec.md#18-renderer-behaviour-specifications)
+- [Shared clear-control behavior](../../docs/spec.md#18-renderer-behaviour-specifications)
+- [Honest rendering of invalid data](../../docs/spec.md#18-renderer-behaviour-specifications)
 
 A `{"type": "null"}` property can hold exactly one value, so the control's only
 job is to say whether that value is **there**. The point of the example is that

@@ -6,7 +6,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const dest = join(root, 'site');
 await rm(dest, { recursive: true, force: true });
 await mkdir(dest, { recursive: true });
-for (const asset of ['SPEC.md', 'TODO.md', 'AUDIT.md', 'schemas', 'examples', 'conformance', 'provenance.json', 'LICENSE']) await cp(join(root, asset), join(dest, asset), { recursive: true });
+for (const asset of ['docs', 'schemas', 'examples', 'conformance', 'provenance.json', 'LICENSE']) await cp(join(root, asset), join(dest, asset), { recursive: true });
 const md = new MarkdownIt({ html: false, linkify: false, typographer: false });
 const slug = text => text.toLowerCase().replace(/[^\p{L}\p{N}_\- ]/gu, '').replaceAll(' ', '-');
 md.core.ruler.push('heading-ids', state => {
@@ -28,18 +28,16 @@ async function render(source, target) {
   const text = await readFile(join(root, source), 'utf8');
   const prefix = relative(dirname(join(dest, target)), dest).split(sep).join('/') || '.';
   const title = text.match(/^# (.+)$/m)?.[1] ?? 'JSON Forms Extended Spec';
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>${escape(title)}</title><link rel="stylesheet" href="${prefix}/style.css"></head><body><a class="skip" href="#content">Skip to content</a><header><a class="brand" href="${prefix}/index.html">JSON Forms Extended</a><nav aria-label="Documentation"><a href="${prefix}/SPEC.html">Specification</a><a href="${prefix}/examples/README.html">Examples</a><a href="${prefix}/schemas/README.html">Schemas</a><a href="https://github.com/kchobantonov/jsonforms-extended-spec">Source</a></nav></header><main id="content">${md.render(text)}</main><footer>Specification draft · portable model, schema contracts and example fixtures</footer></body></html>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><title>${escape(title)}</title><link rel="stylesheet" href="${prefix}/style.css"></head><body><a class="skip" href="#content">Skip to content</a><header><a class="brand" href="${prefix}/index.html">JSON Forms Extended</a><nav aria-label="Documentation"><a href="${prefix}/docs/spec.html">Specification</a><a href="${prefix}/examples/README.html">Examples</a><a href="${prefix}/schemas/README.html">Schemas</a><a href="https://github.com/kchobantonov/jsonforms-extended-spec">Source</a></nav></header><main id="content">${md.render(text)}</main><footer>Specification draft · portable model, schema contracts and example fixtures</footer></body></html>`;
   await mkdir(dirname(join(dest, target)), {recursive:true});
   await writeFile(join(dest, target), html);
 }
 await render('README.md', 'index.html');
-await render('SPEC.md', 'SPEC.html');
-await render('TODO.md', 'TODO.html');
-await render('AUDIT.md', 'AUDIT.html');
+for (const name of ['spec', 'renderer-and-demo', 'renderer-selection', 'todo', 'audit', 'history/TODO']) await render(`docs/${name}.md`, `docs/${name}.html`);
 await render('schemas/README.md', 'schemas/README.html');
 await render('examples/README.md', 'examples/README.html');
 for (const name of await readdir(join(root, 'examples'))) {
-  if (name.endsWith('.json') || name.endsWith('.md')) continue;
+  if (name.includes('.')) continue;
   await render(`examples/${name}/README.md`, `examples/${name}/README.html`);
 }
 await writeFile(join(dest, '.nojekyll'), '');

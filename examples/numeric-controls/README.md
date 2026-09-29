@@ -5,9 +5,9 @@
 **Domain:** office stock line\
 **Specs covered:**
 
-- [Number and integer controls](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Numeric parsing and representation limits](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
-- [Slider control](../../SPEC.md#1819-scalar-controls-and-temporal-editing)
+- [Number and integer controls](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Numeric parsing and representation limits](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Slider control](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
 
 The three go together: they are the same value seen through three editors, and
 the parsing rules apply to all of them.

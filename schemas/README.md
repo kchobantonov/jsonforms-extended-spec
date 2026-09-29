@@ -1,8 +1,8 @@
 # Authoring schemas
 
-These schemas describe the implemented authoring subset of [SPEC.md](../SPEC.md),
+These schemas describe the implemented authoring subset of [spec.md](../docs/spec.md),
 using the reference renderer implementation as evidence. Provisional and
-unimplemented features belong in [TODO.md](../TODO.md), not schema definitions.
+unimplemented features belong in [TODO.md](../docs/todo.md), not schema definitions.
 They use draft-07 and preserve unknown options and namespaces. Core configuration
 settings are also described even when a renderer does not implement their
 presentation behavior; their descriptions state that boundary.
@@ -68,7 +68,7 @@ specified host adapter; the old function-source regex is not such an adapter.
 
 Known options inside cell overrides are checked as control options. This checks
 their shape, not whether every renderer is available as a cell. Monaco and grid
-vendor option bags remain open. See [the audit](../AUDIT.md#complete-configuration-property-review)
+vendor option bags remain open. See [the audit](https://github.com/kchobantonov/jsonforms-react-renderers/blob/master/docs/jsonforms-react-antd-implementation-gaps.md#complete-configuration-property-review)
 for every config property and its actual consumer. Global declarations are limited
 to traced config paths. Keep field-dependent `elementLabelProp`, `childLabelProp`,
 `detail`, `summary` and `cells` on their controls; isolated merged-config readers

@@ -5,9 +5,9 @@
 **Domain:** processing label theme\
 **Specs covered:**
 
-- [Color control](../../SPEC.md#1827-file-and-color-profile-details)
-- [Color encodings, text entry and clearing](../../SPEC.md#1827-file-and-color-profile-details)
-- [configuration namespacing](../../SPEC.md#1827-file-and-color-profile-details)
+- [Color control](../../docs/spec.md#1827-file-and-color-profile-details)
+- [Color encodings, text entry and clearing](../../docs/spec.md#1827-file-and-color-profile-details)
+- [configuration namespacing](../../docs/spec.md#1827-file-and-color-profile-details)
 
 One color, seen through every representation it can be stored in. The point of
 the example is that **how a color is edited and how it is stored are separate

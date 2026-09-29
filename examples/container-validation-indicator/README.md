@@ -5,8 +5,8 @@
 **Domain:** employee onboarding\
 **Specs covered:**
 
-- [Container validation indicator](../../SPEC.md#83-the-container-validation-indicator)
-- [configuration namespacing](../../SPEC.md#83-the-container-validation-indicator)
+- [Container validation indicator](../../docs/spec.md#83-the-container-validation-indicator)
+- [configuration namespacing](../../docs/spec.md#83-the-container-validation-indicator)
 
 One example serves both because they are inseparable in practice: the indicator
 is the first option to use the namespaced config tier, so its `config.json` is
@@ -110,7 +110,7 @@ With `config.jsonformsExtended.showValidationIndicator` set to `true`:
    both locales in `translations.json`. The wording deliberately says *data*,
    not *edits*: this group is populated from `data.json`, so the dot appears on
    load without anyone having typed. See
-   [4](../../SPEC.md#83-the-container-validation-indicator).
+   [4](../../docs/spec.md#83-the-container-validation-indicator).
 
 ## Fallback behavior
 

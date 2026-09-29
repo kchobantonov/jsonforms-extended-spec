@@ -2,7 +2,7 @@
 
 **Example ID:** `file-control` · **Domain:** Supplier attachments
 
-Covers the [portable UI model, the renderer contract — File control](../../SPEC.md#18184-file-control): renderer selection, storage encodings, media filters and byte-size bounds.
+Covers the [portable UI model, the renderer contract — File control](../../docs/spec.md#18184-file-control): renderer selection, storage encodings, media filters and byte-size bounds.
 
 ## Files
 

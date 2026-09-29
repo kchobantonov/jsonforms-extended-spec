@@ -10,7 +10,7 @@ migrations, editor design mode, and implementation-specific source organization.
 
 **Published schema scope:** the JSON schemas describe implemented authoring
 features in the reference renderer set. Design proposals and unimplemented
-requirements are tracked in [TODO.md](TODO.md). In particular, all `$dynamic`
+requirements are tracked in [TODO.md](todo.md). In particular, all `$dynamic`
 overlay descriptions and examples below are **FUTURE design notes**, not an
 approved contract or current feature. No normative wording in those notes
 establishes current conformance requirements.
@@ -19,7 +19,7 @@ This is the single specification for the package. It consolidates the portable
 model, accepted amendments, container indicators, validator extensions, renderer
 behavior and host requirements. Historical issue lists and implementation status
 reports are not normative. Source hashes and the reconciliation record are in
-[provenance.json](provenance.json).
+[provenance.json](../provenance.json).
 
 MUST and MUST NOT state requirements; SHOULD allows a documented reason to
 deviate; MAY is optional. A renderer declares its capabilities and validator
@@ -31,7 +31,7 @@ Sections 1–28 define the model and renderer behavior. Section 29 defines the
 schema artifacts and validation boundary. Section 30 covers host integration,
 demo behavior and accessibility. Appendix A records proposals that are **not
 part of v1 conformance**. The examples are portable assets, with explicit host
-requirements in [the catalog](examples/catalog.json).
+requirements in [the catalog](../examples/catalog.json).
 
 ## Contents
 
@@ -396,6 +396,29 @@ defaults, and validator construction settings are not renderer options.
 Listing an option in global config neither establishes support in every
 renderer nor authorizes it as a selection key.
 
+### 5.3a Renderer selection and default presentations
+
+Renderer names describe capabilities, not source files or framework components.
+Use names such as **String input**, **Array table**, and **Suggested-string input**
+in conformance reports; file extensions and component class names are not contracts.
+The [renderer selection guide](renderer-selection.md) indexes these capabilities,
+selection precedence, and regression examples across the detailed sections below.
+
+Selection MUST inspect the resolved schema at the control's scope, including
+references and composition context. An untyped enclosing object does not make
+its typed property a mixed-value control. Specialized matches MUST take
+precedence over their generic fallbacks. Registration order must not accidentally
+select a generic renderer for a supported specialized case. Numeric ranks are
+implementation details; the observable selection is the portable contract.
+
+The default array table handles primitive items as one editable value per row
+and flat object items as property columns. Primitive rows need no numeric item
+heading or redundant value-column heading. Nested object arrays use the
+expandable/detail presentation described in §18.21. Explicit supported table,
+list/detail, chips, multi-select, tuple, or data-grid selection follows its own
+applicability contract and overrides the corresponding automatic fallback.
+Array item enums select choice **cells**, not a different outer-array renderer.
+
 ### 5.4 Additional presentation variants
 
 | Element | Variant | Applicability | Intended UI | Fallback |
@@ -728,6 +751,24 @@ visual treatment belongs to the renderer family and requires no variant.
 ```
 
 Collapsible groups preserve field data and validation when closed.
+
+#### Presentation recommendations (non-normative)
+
+Prefer the renderer family's standard disclosure or collapsible component.
+Make the full header a keyboard-operable disclosure trigger, with the title
+at the leading edge and a state-dependent chevron at the trailing edge.
+Place data-presence and validation indicators in a separate trailing status
+area beside the chevron, with enough spacing to distinguish them from the
+title. Mirror this arrangement for right-to-left layouts.
+
+Give the data-presence marker a localized tooltip using the same text as its
+accessible name (§8.2). Keep the disclosure's accessible name based on the
+group title so status text does not become part of the title.
+
+A rounded, subtly filled panel with content beneath the header is one suitable
+presentation. Colors, spacing, borders, and icons should follow the consuming
+application's theme and UI framework. These suggestions introduce no portable
+UI Schema options or additional conformance requirements.
 
 Renderer families may have their own presentation options for a Group. Those
 are family conventions, not additional portable variants, and belong in that
@@ -1349,7 +1390,7 @@ direction for an unknown one is the smaller grammar.
 The following is a retained proposal, not a finalized API. Neither the overlay
 shape, path grammar, security policy, resolution order nor lifecycle is committed.
 It is excluded from published schemas and current conformance vectors.
-See [TODO.md](TODO.md#future--dynamic-ui-element-overlays). The existing Label
+See [TODO.md](todo.md#future--dynamic-ui-element-overlays). The existing Label
 interpolation feature and its `dynamicValues.enabled` data-access gate are
 implemented independently and do not implement this proposal.
 
@@ -1792,6 +1833,12 @@ interaction contract.
 
 **Covered operations:** `typeChange` (mixed-type selection), `branchChange`
 (combinator selection), and `delete` (removing a property, item or subtree).
+Removing an object or array value from a composite table cell follows `delete`
+with catalog ID `compositeCell` and fallback policy `complex`. Empty objects and
+arrays clear immediately under `complex`; `always` still prompts for them and
+`never` skips confirmation. Cancellation preserves the value. Confirming must
+recheck mutation permission and the target so a replacement value is not removed.
+
 Clearing a mixed type follows `typeChange`; clearing a combinator selection
 follows `branchChange`. Ordinary input clearing follows the shared clear-value
 contract and does **not** become a confirmation on every edit.
@@ -1807,7 +1854,7 @@ independently of whether its nested values are empty.
 1. Element `options.confirmation[operation]`
 2. Config `jsonformsExtended.confirmation.renderers[catalogId][operation]`
 3. Config `jsonformsExtended.confirmation.default`
-4. Documented fallback: mixed type change uses `complex`; other covered
+4. Documented fallback: mixed type change and composite cell deletion use `complex`; other covered
    operations use `always`
 
 **Catalog IDs are stable semantic identifiers, not component names.** For a
@@ -4443,6 +4490,31 @@ the document and reports unsupported capability.
 
 #### 18.18.1 Data grid array control
 
+**Presentation suggestions (non-normative).** Prefer the renderer family's
+standard input and picker components. Let editors fill the available cell
+width and height, with compact padding and vertically centered checkboxes.
+Use the grid's cell boundaries rather than a second bordered input box.
+Avoid doubled focus borders: provide one visible keyboard-focus indication,
+owned by either the grid or the editor. Do not suppress both. Empty color
+values should show a checkerboard or equivalent empty swatch, rather than
+appearing to contain black; the picker's fallback color must not write data.
+
+**Control identity during updates.** Routine data changes, including each
+keystroke and validation updates, MUST preserve the mounted editor for the
+same logical row and column. They MUST NOT lose keyboard focus, reset the
+caret or selection, interrupt IME composition, or close an open picker merely
+because form data changed. Keep row identity and cell-renderer component
+identity stable across these updates. The same requirement applies to ordinary
+form controls in every renderer set. Intentional structural changes (such as
+removing the field or selecting a different schema branch) may replace an
+editor.
+
+Regression coverage should type several characters into the same input and
+verify the DOM element, focus, caret, and committed value after each update,
+including validation feedback. Repeat for an ordinary form control and a grid
+cell; a static render or a mocked grid alone cannot prove focus preservation.
+
+
 A grid presentation for arrays, selected by `options.variant: "ag-grid"`. It shares the array contracts above — action
 options, item errors, restrict prevention — and adds its own column model.
 
@@ -6313,7 +6385,7 @@ The common config schema includes the audited core's `readonly`, `readOnly`,
 setting does not establish renderer support: separate read-only presentation
 needs adapter verification, and portable sizing continues to exclude `trim`.
 The reference core version and implementation differences are recorded in
-[the audit](AUDIT.md).
+[the audit](audit.md).
 
 
 The schemas in this package use JSON Schema draft-07. Their `$id` values resolve
@@ -6362,6 +6434,10 @@ invalid example: it is often the subject of the example. This package does not
 claim renderer conformance or execute scripts embedded in example documents.
 
 ## 30. Host, demo and accessibility contracts
+
+The detailed host and demo acceptance requirements are maintained in
+[Renderer and demo guide](renderer-and-demo.md). See the
+[documentation coverage map](audit.md) for historical sources.
 
 ### 30.1 Host parity and reusable behavior
 
@@ -6437,8 +6513,22 @@ Opening, displaying or changing locale must never rewrite incoming values.
 The dynamic overlay proposal still requires design discussion and refinement
 before implementation. Structured diagnostics, complete pending-validity
 integration and universal container pre-touch filtering remain implementation
-work tracked in [TODO.md](TODO.md). They are not claims of current support.
+work tracked in [TODO.md](todo.md). They are not claims of current support.
 A reference implementation may support only part of them. Implementations must
 publish limitations rather than treating a schema definition or a worked example
 as proof of runtime support. External choice providers have no canonical option
 in this version; any relationship to a future overlay resolver still needs design.
+
+### Array panel collapsing
+
+All array presentations (table, expandable items, list with detail, and AG Grid)
+support `options.collapsible` and `options.collapsed`, with the same meaning as
+Group. Both default to false. UI options override namespaced config, then legacy
+flat config. `collapsed` sets the initial state and resynchronizes only when its
+effective value changes. Without `collapsible`, the body is always visible.
+
+Collapse hides the array body, preserving mounted editors, data, selection,
+sorting and item expansion. The header, validation indicator and actions remain
+visible. A keyboard-accessible toggle exposes `aria-expanded` and `aria-controls`.
+This is independent of `initCollapsed` and `collapseNewItems`, which affect items.
+Changing form data must not reset panel expansion.

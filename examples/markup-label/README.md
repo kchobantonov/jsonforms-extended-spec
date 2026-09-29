@@ -5,10 +5,10 @@
 **Domain:** a workshop registration form\
 **Specs covered:**
 
-- [Markdown policy](../../SPEC.md#10-markdown-policy)
-- [URL policy](../../SPEC.md#10-markdown-policy)
-- [Text, markup and interpolation](../../SPEC.md#10-markdown-policy)
-- [The markup label](../../SPEC.md#10-markdown-policy)
+- [Markdown policy](../../docs/spec.md#10-markdown-policy)
+- [URL policy](../../docs/spec.md#10-markdown-policy)
+- [Text, markup and interpolation](../../docs/spec.md#10-markdown-policy)
+- [The markup label](../../docs/spec.md#10-markdown-policy)
 
 A `Label` whose `options.markup` is `"markdown"` renders through the
 restricted Markdown profile instead of as a string. Everything here is a

@@ -5,10 +5,10 @@
 **Domain:** project cleanup\
 **Specs covered:**
 
-- [Shared destructive-change confirmation](../../SPEC.md#143-shared-destructive-change-confirmation)
-- [Readonly, restrict and mutation constraints](../../SPEC.md#143-shared-destructive-change-confirmation)
-- [The confirmation policy](../../SPEC.md#143-shared-destructive-change-confirmation)
-- [configuration namespacing](../../SPEC.md#143-shared-destructive-change-confirmation)
+- [Shared destructive-change confirmation](../../docs/spec.md#143-shared-destructive-change-confirmation)
+- [Readonly, restrict and mutation constraints](../../docs/spec.md#143-shared-destructive-change-confirmation)
+- [The confirmation policy](../../docs/spec.md#143-shared-destructive-change-confirmation)
+- [configuration namespacing](../../docs/spec.md#143-shared-destructive-change-confirmation)
 
 **Every** renderer that discards data, under **one** policy. The point of the
 example is that confirmation is not a property of a widget: the same `always`
@@ -194,3 +194,12 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+## Composite cell removal
+
+The Composite cell removal table has populated and empty object/array cells.
+Its `compositeCell.delete` policy is `complex`: removing a populated cell asks
+for confirmation; Cancel preserves it, while confirmation removes the value.
+Empty `{}` and `[]` values clear immediately. Change the policy to `always` to
+confirm empty containers too, or `never` to clear populated values immediately.
+Cell `confirmation.delete` overrides the renderer and global policy.

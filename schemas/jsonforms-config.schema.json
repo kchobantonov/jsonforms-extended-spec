@@ -255,12 +255,12 @@
         "collapsible": {
           "type": "boolean",
           "default": false,
-          "description": "Allows groups to be expanded and collapsed."
+          "description": "Allows group and array panels to be expanded and collapsed."
         },
         "collapsed": {
           "type": "boolean",
           "default": false,
-          "description": "Initial collapsed state for collapsible groups. A change to this setting updates the state; unrelated form updates preserve user expansion."
+          "description": "Initial collapsed state for collapsible group and array panels. A change to this setting updates the state; unrelated form updates preserve user expansion."
         },
         "showDataIndicator": {
           "type": "boolean",

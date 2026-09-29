@@ -5,10 +5,10 @@
 **Domain:** account credentials\
 **Specs covered:**
 
-- [Password control interaction](../../SPEC.md#1824-one-time-password-presentation)
-- [Schema-driven and UI-driven format selection](../../SPEC.md#1824-one-time-password-presentation)
-- [Shared table-cell behavior](../../SPEC.md#1824-one-time-password-presentation)
-- [`variant: "otp"`, a fixed-length code editor](../../SPEC.md#1824-one-time-password-presentation)
+- [Password control interaction](../../docs/spec.md#1824-one-time-password-presentation)
+- [Schema-driven and UI-driven format selection](../../docs/spec.md#1824-one-time-password-presentation)
+- [Shared table-cell behavior](../../docs/spec.md#1824-one-time-password-presentation)
+- [`variant: "otp"`, a fixed-length code editor](../../docs/spec.md#1824-one-time-password-presentation)
 
 ## Validation state
 

@@ -5,10 +5,10 @@
 **Domain:** a subscription billing summary\
 **Specs covered:**
 
-- [Internationalizable text and interpolation](../../SPEC.md#9-internationalizable-text)
-- [Markdown policy](../../SPEC.md#9-internationalizable-text)
-- [Template grammar](../../SPEC.md#9-internationalizable-text)
-- [CEL as the one expression language](../../SPEC.md#9-internationalizable-text)
+- [Internationalizable text and interpolation](../../docs/spec.md#9-internationalizable-text)
+- [Markdown policy](../../docs/spec.md#9-internationalizable-text)
+- [Template grammar](../../docs/spec.md#9-internationalizable-text)
+- [CEL as the one expression language](../../docs/spec.md#9-internationalizable-text)
 
 `options.interpolate: true` evaluates the `{…}` placeholders in a label's
 text. `options.markup: "markdown"` parses the result. They are independent,

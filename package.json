@@ -15,43 +15,74 @@
   },
   "packageManager": "pnpm@10.28.2",
   "files": [
-    "SPEC.md",
     "schemas",
     "examples",
     "conformance",
     "provenance.json",
     "README.md",
     "LICENSE",
-    "TODO.md",
-    "AUDIT.md"
+    "typescript",
+    "docs"
   ],
   "exports": {
     "./package.json": "./package.json",
-    "./SPEC.md": "./SPEC.md",
     "./schemas/*": "./schemas/*",
     "./examples/*": "./examples/*",
     "./conformance/*": "./conformance/*",
-    "./TODO.md": "./TODO.md",
-    "./AUDIT.md": "./AUDIT.md"
+    "./typescript": {
+      "types": "./typescript/lib/index.d.ts",
+      "default": "./typescript/lib/index.js"
+    },
+    "./examples": {
+      "types": "./examples/index.d.ts",
+      "default": "./examples/index.js"
+    },
+    "./docs/*": "./docs/*"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "test": "node --test",
+    "test": "pnpm run generate:examples && node --test test/*.test.mjs && pnpm run test:typescript",
     "validate": "node scripts/validate.mjs",
-    "build": "pnpm run validate && node scripts/build-site.mjs",
+    "build": "pnpm run generate:examples && pnpm run build:typescript && pnpm run validate && node scripts/build-site.mjs",
     "check": "pnpm run test && pnpm run build && pnpm run test:packed",
     "release:pack": "node scripts/pack-release.mjs",
     "test:packed": "node scripts/pack-release.mjs --test",
     "changeset": "changeset",
     "changeset:version": "changeset version",
-    "changeset:publish": "pnpm run check && changeset publish"
+    "changeset:publish": "pnpm run check && changeset publish",
+    "build:typescript": "tsc -p typescript/tsconfig.json",
+    "test:typescript": "tsc -p typescript/test/tsconfig.json && vitest run typescript/test",
+    "prepack": "pnpm run generate:examples && pnpm run build:typescript",
+    "generate:examples": "node scripts/generate-examples.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "2.30.0",
+    "@jsonforms/core": "3.9.0-alpha.1",
+    "@types/node": "^18.19.130",
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
-    "markdown-it": "14.3.2"
+    "markdown-it": "14.3.2",
+    "typescript": "~4.9.5",
+    "vitest": "2.1.9"
+  },
+  "typesVersions": {
+    "*": {
+      "typescript": [
+        "typescript/lib/index.d.ts"
+      ],
+      "*": [
+        "*"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@jsonforms/core": "3.9.0-alpha.1"
+  },
+  "peerDependenciesMeta": {
+    "@jsonforms/core": {
+      "optional": true
+    }
   }
 }

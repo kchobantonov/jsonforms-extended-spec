@@ -31,23 +31,27 @@
                   "room": {
                     "summary": {
                       "type": "Control",
-                      "scope": "#/properties/name"
+                      "scope": "#/properties/name",
+                      "options": {}
                     },
                     "detail": {
                       "type": "VerticalLayout",
                       "elements": [
                         {
                           "type": "Control",
-                          "scope": "#/properties/name"
+                          "scope": "#/properties/name",
+                          "options": {}
                         },
                         {
                           "type": "Control",
-                          "scope": "#/properties/floor"
+                          "scope": "#/properties/floor",
+                          "options": {}
                         }
                       ]
                     }
                   }
-                }
+                },
+                "collapsible": true
               }
             }
           ]
@@ -73,11 +77,13 @@
                   "elements": [
                     {
                       "type": "Control",
-                      "scope": "#/properties/name"
+                      "scope": "#/properties/name",
+                      "options": {}
                     },
                     {
                       "type": "Control",
-                      "scope": "#/properties/track"
+                      "scope": "#/properties/track",
+                      "options": {}
                     },
                     {
                       "type": "Control",
@@ -88,10 +94,12 @@
                     },
                     {
                       "type": "Control",
-                      "scope": "#/properties/links"
+                      "scope": "#/properties/links",
+                      "options": {}
                     }
                   ]
-                }
+                },
+                "collapsible": true
               }
             },
             {
@@ -106,7 +114,8 @@
                 "initCollapsed": true,
                 "collapseNewItems": true,
                 "hideAvatar": true,
-                "hideArraySummaryValidation": true
+                "hideArraySummaryValidation": true,
+                "collapsible": true
               }
             }
           ]
@@ -131,11 +140,13 @@
                   "elements": [
                     {
                       "type": "Control",
-                      "scope": "#/properties/name"
+                      "scope": "#/properties/name",
+                      "options": {}
                     },
                     {
                       "type": "Control",
-                      "scope": "#/properties/tier"
+                      "scope": "#/properties/tier",
+                      "options": {}
                     },
                     {
                       "type": "Control",
@@ -145,7 +156,8 @@
                       }
                     }
                   ]
-                }
+                },
+                "collapsible": true
               }
             }
           ]
@@ -171,23 +183,27 @@
                   "holder": {
                     "summary": {
                       "type": "Control",
-                      "scope": "#/properties/name"
+                      "scope": "#/properties/name",
+                      "options": {}
                     },
                     "detail": {
                       "type": "VerticalLayout",
                       "elements": [
                         {
                           "type": "Control",
-                          "scope": "#/properties/name"
+                          "scope": "#/properties/name",
+                          "options": {}
                         },
                         {
                           "type": "Control",
-                          "scope": "#/properties/email"
+                          "scope": "#/properties/email",
+                          "options": {}
                         }
                       ]
                     }
                   }
-                }
+                },
+                "collapsible": true
               }
             }
           ]
@@ -212,7 +228,8 @@
                   "address": {
                     "summary": {
                       "type": "Control",
-                      "scope": "#/properties/street"
+                      "scope": "#/properties/street",
+                      "options": {}
                     },
                     "showEmptyButton": true,
                     "detail": {
@@ -220,11 +237,13 @@
                       "elements": [
                         {
                           "type": "Control",
-                          "scope": "#/properties/street"
+                          "scope": "#/properties/street",
+                          "options": {}
                         },
                         {
                           "type": "Control",
-                          "scope": "#/properties/city"
+                          "scope": "#/properties/city",
+                          "options": {}
                         }
                       ]
                     }
@@ -240,7 +259,8 @@
                     },
                     "showEmptyButton": true
                   }
-                }
+                },
+                "collapsible": true
               }
             },
             {
@@ -254,7 +274,8 @@
                   "address": {
                     "summary": {
                       "type": "Control",
-                      "scope": "#/properties/street"
+                      "scope": "#/properties/street",
+                      "options": {}
                     },
                     "showEmptyButton": true,
                     "detail": {
@@ -262,11 +283,13 @@
                       "elements": [
                         {
                           "type": "Control",
-                          "scope": "#/properties/street"
+                          "scope": "#/properties/street",
+                          "options": {}
                         },
                         {
                           "type": "Control",
-                          "scope": "#/properties/city"
+                          "scope": "#/properties/city",
+                          "options": {}
                         }
                       ]
                     }
@@ -340,7 +363,8 @@
                       "filter": false
                     }
                   ]
-                }
+                },
+                "collapsible": true
               }
             }
           ]
@@ -360,7 +384,8 @@
               "scope": "#/properties/rounds",
               "options": {
                 "elementLabelProp": "name",
-                "showSortButtons": true
+                "showSortButtons": true,
+                "collapsible": true
               }
             },
             {
@@ -372,7 +397,8 @@
               "scope": "#/properties/checklist",
               "options": {
                 "disableAdd": true,
-                "disableRemove": true
+                "disableRemove": true,
+                "collapsible": true
               }
             },
             {
@@ -381,7 +407,10 @@
             },
             {
               "type": "Control",
-              "scope": "#/properties/reviewers"
+              "scope": "#/properties/reviewers",
+              "options": {
+                "collapsible": true
+              }
             }
           ]
         }

@@ -5,8 +5,8 @@
 **Domain:** supplier onboarding\
 **Specs covered:**
 
-- [— Error-message filtering before touch](../../SPEC.md#157-pre-touch-error-filtering)
-- [honest rendering](../../SPEC.md#157-pre-touch-error-filtering)
+- [— Error-message filtering before touch](../../docs/spec.md#157-pre-touch-error-filtering)
+- [honest rendering](../../docs/spec.md#157-pre-touch-error-filtering)
 
 A form where **nothing has been filled in yet**, so every required field is
 already complaining. That is the situation the option exists for: a form that

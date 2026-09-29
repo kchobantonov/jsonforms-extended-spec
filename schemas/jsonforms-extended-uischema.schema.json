@@ -904,6 +904,12 @@
         "showArrayLayoutSortButtons": {
           "type": "boolean",
           "description": "Legacy expandable array sorting flag, combined with showSortButtons using logical OR. Prefer showSortButtons."
+        },
+        "collapsible": {
+          "type": "boolean"
+        },
+        "collapsed": {
+          "type": "boolean"
         }
       }
     },
@@ -1150,6 +1156,12 @@
         },
         "showArrayLayoutSortButtons": {
           "$ref": "#/$defs/controlOptions/properties/showArrayLayoutSortButtons"
+        },
+        "collapsible": {
+          "type": "boolean"
+        },
+        "collapsed": {
+          "type": "boolean"
         }
       }
     },
