@@ -5610,8 +5610,15 @@ Suggested renderer name: `ListWithDetailRenderer`. This existing JSON Forms
 convention selects `type: "ListWithDetail"` bound to an object-array schema.
 No Control variant is needed. Show an array toolbar with label, optional child-
 validation summary, and Add action above a selectable item list on the left and
-a delegated detail form on the right. The list may scroll independently; avoid
-requiring fixed pixel widths and adapt the arrangement to available space.
+a delegated detail form on the right. Render the list and detail as panes separated
+by a draggable vertical divider so users can adjust their relative widths. Use the
+renderer family's native splitter/resizable component where available. The default
+split MUST be resizable; no extra layout element is required in the UI schema.
+The list may scroll independently; avoid requiring fixed pixel widths and adapt
+the arrangement to available space. Resizing MUST preserve selection, data, pending
+edits and validation. Ordinary edits and selection changes MUST NOT reset the
+user's pane sizes. Apply the keyboard, focus and accessibility requirements in §7
+to the divider, including when form data is read-only.
 List rows show item labels, selection/error state, and applicable reorder/delete
 actions. Keep actions separate from row selection and make them keyboard accessible.
 
@@ -5735,6 +5742,15 @@ confirmation contracts. Recheck identity and mutation guards on Apply; stale
 external replacements must not be overwritten. Read-only users may inspect details.
 Panel presentation shows a selectable table beside a persistent item editor;
 placement is right (default) or bottom, and resizable defaults true.
+For panel presentation, use the renderer family's native splitter/resizable
+component where available: right placement has a draggable vertical divider
+between the table and detail; bottom placement has a draggable horizontal divider.
+`options.rowDetail.resizable: false` disables interactive resizing while retaining
+the two-pane layout. The default MUST allow users to resize both placements.
+Resizing MUST preserve row selection, data, pending edits and validation; ordinary
+edits and selection changes MUST NOT reset the user's pane sizes. Apply §7's
+keyboard, focus and accessibility requirements to the divider. Dialog presentation
+does not introduce a table/detail splitter.
 `options.rowDetail.collapsed` sets initial visibility: `true` starts with the detail
 pane hidden; omitted or `false` starts visible. It applies to both placements.
 The localized show/hide action beside Add toggles visibility without clearing the
