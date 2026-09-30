@@ -5709,6 +5709,17 @@ agGridOptions when explicitly supplied. Without portable settings, explicit
 agGridOptions pagination settings remain supported for compatibility; otherwise
 use the shared defaults. Do not show two independent pagers.
 
+**Table columns.** `options.columnDefs` selects and orders the top-level item
+properties shown in a regular array table. Each entry has a `field` property name
+and optional positive numeric `width`, `minWidth`, and `maxWidth` in CSS pixels.
+Widths are table layout constraints; content must not overflow into adjacent cells.
+Omitting the option retains automatic columns. An empty list shows only table
+selection/actions. Unknown fields are ignored; duplicate fields use the first entry.
+Authors should specify minWidth <= maxWidth and keep width within these bounds.
+Column visibility never removes data or validation, or limits row detail fields.
+`options.cells[field]` continues to configure editors and composite cell details.
+These portable definitions do not expose arbitrary AG Grid column callbacks or APIs.
+
 **Whole-row details.** `options.rowDetail` is opt-in on array tables and grids.
 It requires presentation `dialog` or `panel`. It is independent of
 `options.cells.<property>.detail`, which edits just one cell value.

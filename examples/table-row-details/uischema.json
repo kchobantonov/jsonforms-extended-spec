@@ -29,7 +29,18 @@
                   }
                 ]
               }
-            }
+            },
+            "columnDefs": [
+              {
+                "field": "name",
+                "width": 170
+              },
+              {
+                "field": "email",
+                "minWidth": 220,
+                "maxWidth": 400
+              }
+            ]
           }
         }
       ]
@@ -45,7 +56,18 @@
             "table": true,
             "rowDetail": {
               "presentation": "panel"
-            }
+            },
+            "columnDefs": [
+              {
+                "field": "name",
+                "width": 170
+              },
+              {
+                "field": "email",
+                "minWidth": 220,
+                "maxWidth": 400
+              }
+            ]
           }
         }
       ]
@@ -62,7 +84,18 @@
             "rowDetail": {
               "presentation": "panel",
               "placement": "bottom"
-            }
+            },
+            "columnDefs": [
+              {
+                "field": "name",
+                "width": 170
+              },
+              {
+                "field": "email",
+                "minWidth": 220,
+                "maxWidth": 400
+              }
+            ]
           }
         }
       ]

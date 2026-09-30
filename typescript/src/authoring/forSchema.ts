@@ -88,6 +88,7 @@ export type OptionsFor<Sub> = CommonControlOptions &
         collapsible?: boolean;
         collapsed?: boolean;
         table?: boolean;
+        columnDefs?: { field: string; width?: number; minWidth?: number; maxWidth?: number }[];
         pagination?: PaginationOptions;
         rowDetail?: RowDetailOptions;
         variant?: 'ag-grid' | 'tuple' | 'chips' | 'multi-select';

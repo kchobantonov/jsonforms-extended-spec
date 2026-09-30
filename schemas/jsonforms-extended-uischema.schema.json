@@ -926,6 +926,12 @@
         },
         "additionalProperties": {
           "$ref": "#/$defs/additionalPropertiesPresentation"
+        },
+        "columnDefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tableColumnDefinition"
+          }
         }
       }
     },
@@ -1178,6 +1184,12 @@
         },
         "collapsed": {
           "type": "boolean"
+        },
+        "columnDefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tableColumnDefinition"
+          }
         }
       }
     },
@@ -1657,6 +1669,31 @@
       "properties": {
         "pagination": {
           "$ref": "#/$defs/pagination"
+        }
+      }
+    },
+    "tableColumnDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field"
+      ],
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "minWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "maxWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
         }
       }
     }
