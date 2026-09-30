@@ -5753,13 +5753,30 @@ Keep Add in the collection header. Use consistent end alignment and spacing
 within each renderer family. For unusually tall scrolling collections, an optional
 second pager at the top MUST share the same page and page-size state as the footer.
 
-For AG Grid, portable pagination settings take precedence over corresponding
-agGridOptions when explicitly supplied. Without portable settings, explicit
-agGridOptions pagination settings remain supported for compatibility; otherwise
-use the shared defaults. Do not show two independent pagers.
+AG Grid controls MUST support portable `options.pagination`, `options.columnDefs`
+and `options.rowDetail`; authors MUST NOT need `agGridOptions` to use these features.
+For AG Grid, resolve portable pagination using the same local options, scoped
+configuration and defaults as regular tables. Explicit `agGridOptions.pagination`,
+`paginationPageSize` and `paginationPageSizeSelector` override only their
+corresponding resolved settings. Native false values are explicit overrides.
+Do not show two independent pagers.
+
+| Portable setting | Explicit native override under `options.agGridOptions` |
+| --- | --- |
+| `options.pagination` enabled/disabled | `pagination` |
+| Resolved `pagination.pageSize` | `paginationPageSize` |
+| Resolved `pagination.pageSizeOptions` | `paginationPageSizeSelector` |
+| `options.columnDefs` | `columnDefs` replaces the whole list |
+
+For example, portable page size 6 with native `paginationPageSize: 2` MUST show
+2 rows per page. Portable columns Name then Email with native columns Email then
+Name MUST use the native order and definitions. An explicit native empty column
+list overrides a nonempty portable list. Missing native settings retain the
+portable behavior; pagination and column overrides MUST NOT change row-detail
+configuration. See the [AG Grid comparison example](../examples/ag-grid/README.md).
 
 **Table columns.** `options.columnDefs` selects and orders the top-level item
-properties shown in a regular array table. Each entry has a `field` property name
+properties shown in an array table or AG Grid. Each entry has a `field` property name
 and optional positive numeric `width`, `minWidth`, and `maxWidth` in CSS pixels.
 Widths are table layout constraints; content must not overflow into adjacent cells.
 Regular table data columns support interactive resizing through a visible header
@@ -5775,6 +5792,11 @@ Authors should specify minWidth <= maxWidth and keep width within these bounds.
 Column visibility never removes data or validation, or limits row detail fields.
 `options.cells[field]` continues to configure editors and composite cell details.
 These portable definitions do not expose arbitrary AG Grid column callbacks or APIs.
+Explicit `agGridOptions.columnDefs` replaces the portable column list as a whole,
+including its order and widths, and supports native groups and computed columns.
+Matching item fields retain their JSON Forms editors unless a native definition
+overrides them. Switching to AG Grid alone preserves portable column, pagination
+and row-detail settings.
 
 **Whole-row details.** `options.rowDetail` is opt-in on array tables and grids.
 It requires presentation `dialog` or `panel`. It is independent of
@@ -5831,7 +5853,7 @@ within the viewport while their title and actions remain reachable. Preserve foc
 indicators and validation access. Scrolling is independent of pagination.
 Virtualization is optional and must preserve identity, drafts and accessibility.
 
-Focused fixtures: collection-pagination, table-row-details, property-pagination, additional-items-pagination.
+Focused fixtures: collection-pagination, table-row-details, ag-grid, property-pagination, additional-items-pagination.
 A future kitchen-sink should use separate domain tabs (for example recruitment
 with resumes, booking with dates/times, and inventory with tables), not one
 artificial model containing unrelated fields. It complements focused examples.

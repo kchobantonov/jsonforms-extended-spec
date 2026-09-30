@@ -434,5 +434,18 @@
       "uischema.json"
     ],
     "hostRequirements": []
+  },
+  {
+    "id": "ag-grid",
+    "title": "AG Grid: portable options and native overrides",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Register AG Grid and composite cells from the extended renderer set. Use Ant Design or shadcn for the row-detail presentations."
+    ]
   }
 ]

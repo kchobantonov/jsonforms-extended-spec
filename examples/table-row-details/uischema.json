@@ -99,6 +99,105 @@
           }
         }
       ]
+    },
+    {
+      "type": "Category",
+      "label": "AG Grid: Dialog",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicants",
+          "options": {
+            "rowDetail": {
+              "presentation": "dialog",
+              "detail": {
+                "type": "VerticalLayout",
+                "elements": [
+                  {
+                    "type": "Control",
+                    "scope": "#/properties/name"
+                  },
+                  {
+                    "type": "Control",
+                    "scope": "#/properties/email"
+                  },
+                  {
+                    "type": "Control",
+                    "scope": "#/properties/notes"
+                  }
+                ]
+              }
+            },
+            "variant": "ag-grid",
+            "columnDefs": [
+              {
+                "field": "name",
+                "width": 170
+              },
+              {
+                "field": "email",
+                "minWidth": 220,
+                "maxWidth": 400
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "Category",
+      "label": "AG Grid: Side panel",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicants",
+          "options": {
+            "rowDetail": {
+              "presentation": "panel"
+            },
+            "variant": "ag-grid",
+            "columnDefs": [
+              {
+                "field": "name",
+                "width": 170
+              },
+              {
+                "field": "email",
+                "minWidth": 220,
+                "maxWidth": 400
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "Category",
+      "label": "AG Grid: Bottom panel",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicants",
+          "options": {
+            "rowDetail": {
+              "presentation": "panel",
+              "placement": "bottom"
+            },
+            "variant": "ag-grid",
+            "columnDefs": [
+              {
+                "field": "name",
+                "width": 170
+              },
+              {
+                "field": "email",
+                "minWidth": 220,
+                "maxWidth": 400
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

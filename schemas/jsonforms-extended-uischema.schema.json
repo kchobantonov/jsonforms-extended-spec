@@ -791,7 +791,7 @@
         "agGridOptions": {
           "type": "object",
           "additionalProperties": true,
-          "description": "AG Grid configuration, recursively merged over config.agGridOptions. Arrays - including columnDefs - replace rather than merge by index."
+          "description": "AG Grid-specific configuration. A control's object replaces config.agGridOptions. Explicit pagination settings override their portable equivalents; columnDefs replaces the portable column list and supports richer native definitions."
         },
         "components": {
           "type": "object",
@@ -928,6 +928,7 @@
           "$ref": "#/$defs/additionalPropertiesPresentation"
         },
         "columnDefs": {
+          "description": "Selects and orders table or AG Grid columns with optional width constraints. Explicit agGridOptions.columnDefs replaces this list for AG Grid.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/tableColumnDefinition"
@@ -1189,6 +1190,7 @@
           "type": "boolean"
         },
         "columnDefs": {
+          "description": "Selects and orders table or AG Grid columns with optional width constraints. Explicit agGridOptions.columnDefs replaces this list for AG Grid.",
           "type": "array",
           "items": {
             "$ref": "#/$defs/tableColumnDefinition"
