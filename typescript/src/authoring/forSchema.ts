@@ -59,12 +59,22 @@ export interface CommonControlOptions {
  * That is the documented escape hatch, and it is the same rule that makes
  * a separately-built element unchecked - see the limits in the guide.
  */
+export type PaginationOptions = boolean | {
+  pageSize?: number;
+  pageSizeOptions?: number[];
+};
+export type RowDetailOptions =
+  | { presentation: 'dialog'; detail?: unknown; placement?: never; resizable?: never }
+  | { presentation: 'panel'; detail?: unknown; placement?: 'right' | 'bottom'; resizable?: boolean };
+
 export type OptionsFor<Sub> = CommonControlOptions &
   (Sub extends { type: 'number' | 'integer' }
     ? { slider?: boolean; step?: number; toggle?: never }
     : Sub extends { type: 'string' }
     ? {
         multi?: boolean;
+        variant?: 'otp';
+        vertical?: boolean;
         format?: string;
         mask?: string;
         returnMaskedValue?: boolean;
@@ -78,12 +88,16 @@ export type OptionsFor<Sub> = CommonControlOptions &
         collapsible?: boolean;
         collapsed?: boolean;
         table?: boolean;
-        variant?: 'ag-grid';
+        pagination?: PaginationOptions;
+        rowDetail?: RowDetailOptions;
+        variant?: 'ag-grid' | 'tuple' | 'chips' | 'multi-select';
         showSortButtons?: boolean;
         restrict?: boolean;
         detail?: unknown;
         cells?: Record<string, unknown>;
       }
+    : Sub extends { type: 'object' }
+    ? { additionalProperties?: { pagination?: PaginationOptions } }
     : Sub extends { type: 'boolean' }
     ? { toggle?: boolean; slider?: never }
     : Record<string, unknown>);

@@ -7,7 +7,20 @@
     "phone": "112"
   },
   "certifications": [
-    { "name": "First aid certificate", "expiresOn": "2027-03-14" },
-    { "expiresOn": "2026-11-30" }
+    {
+      "name": "First aid certificate",
+      "expiresOn": "2027-03-14"
+    },
+    {
+      "expiresOn": "2026-11-30"
+    },
+    {
+      "name": "",
+      "expiresOn": "not-a-date"
+    },
+    {
+      "name": "",
+      "expiresOn": "not-a-date"
+    }
   ]
 }

@@ -477,7 +477,13 @@ A searchable renderer MUST define how displayed choices respond to the query:
 ### 5.6 Orientation of choice groups
 
 `options.vertical` is the **only** orientation encoding for a choice group,
-and behaves identically on radio groups and checkbox groups:
+and behaves identically on radio groups and checkbox groups. Read it from
+the current element first. Radio groups then use
+config.jsonformsExtended.radio.vertical, then false. Explicit false overrides a
+true default. Checkbox groups retain local-only orientation. Global config.vertical
+and tuple.vertical MUST NOT affect choice groups.
+
+
 
 | | Behaviour |
 | --- | --- |
@@ -2758,6 +2764,32 @@ control-level or keyword-level translations can still override that message.
 One custom message may cover several underlying errors; it does not imply a
 single error object or erase their individual validation meaning.
 
+**Combined error summaries.** Array and container indicators must retain structured
+error boundaries rather than concatenate messages into a sentence or split an
+already formatted sentence heuristically. Show each message on a separate list
+item with translated field context and one-based array row numbers. Identical
+messages from different rows remain separate. Include the total number of
+eligible validator errors, including host additional errors, using the same
+validation-mode rules as the indicator. Counts describe errors, not visible
+controls or rendered list items; intentional empty-string translations must not
+change validity or counts.
+
+Use the ordinary control `error.custom`, per-error translator, field keyword,
+global keyword, and schema `errorMessage` pipeline described above. Do not invent
+a parallel business-message dictionary or replace localized/schema messages
+with generic English. Authors should supply actionable domain text through those
+existing mechanisms. Resolve field labels through the same i18n keys as the
+field; preserve a readable path when a label cannot be resolved.
+
+Initially show at most three entries. Longer summaries offer translated
+`validation.showMore` (with remaining `count`) and `validation.showLess` actions.
+Expansion affects presentation only. Bound expanded content to the viewport and
+allow vertical scrolling, wrapping long messages instead of widening the form.
+Interactive actions belong in a keyboard-accessible popover or equivalent
+native disclosure, not an interactive ARIA tooltip. A noninteractive hover/focus
+preview may accompany the focusable summary trigger. Opening, closing, and
+expanding the summary must not modify form data or hide field errors.
+
 The errorMessage keyword is a validator-specific schema extension, not a
 UI-schema field, jsonforms.config option, or standard JSON Schema keyword.
 Other validator integrations must declare equivalent support or its absence.
@@ -3305,6 +3337,11 @@ automatically add matches, change item values, or delete excess matching
 entries.**
 
 ### 18.11 Tuple control: positional array fields
+
+Tuple orientation resolves options.vertical, then
+config.jsonformsExtended.tuple.vertical, then false. Generic config.vertical and
+config.jsonformsExtended.vertical are ignored. Explicit false overrides true.
+This default affects only tuples, not choice groups or layouts.
 
 **Extended presentation contract:** `options.showBorder` defaults to `true`
 (global defaults may be overridden per control). Enclose the tuple heading,
@@ -5627,6 +5664,82 @@ state prevents mutations; navigation remains distinct from editing.
 }
 ```
 
+
+### 18.21.1 Collection pagination and whole-row details
+
+This is a target contract. Schema acceptance does not establish renderer support.
+Renderer families MUST publish gaps until implemented. Expandable table rows are
+optional family capabilities, not required by this contract.
+
+**Pagination.** `options.pagination` is false, true, or an object with
+`pageSize` (positive integer, default 10) and `pageSizeOptions` (nonempty,
+unique positive integers, default [5, 10, 25, 50]). True enables the defaults;
+false disables pagination. An object enables it. If the initial pageSize is not
+in the choices, include it in the rendered selector without rewriting options.
+Hide unnecessary page navigation, but retain a size selector when it can change
+the visible result. Do not reserve empty rows to fill a page.
+
+Pagination defaults to enabled for ordinary array tables and AG Grid; it defaults
+to disabled for expandable arrays and ListWithDetail. Fixed tuple positions,
+choice/token controls and mixed trees are not paginated by this option.
+Element options override config.jsonformsExtended.array.pagination, then the
+presentation default. Flat config.pagination is not a supported default. Resolve the whole value, not a merge across config levels.
+
+For dynamic object properties use `options.additionalProperties.pagination`,
+with the same shape and default false. Its defaults come from
+config.jsonformsExtended.additionalProperties.pagination, then false. There is
+no flat config.additionalProperties fallback.
+It applies only to dynamic entries; declared fields stay outside the paginated
+region. This UI option does not change JSON Schema additionalProperties semantics.
+
+Pagination is a view over the complete collection, never slicing stored data.
+Validation, duplicate-name checks, bounds, counts and summaries cover every page.
+Provide a way to locate items with errors on other pages. Sorting/filtering precede
+paging; edits target original items, not displayed row indices. Paging and page-size
+changes never reorder data. Reconcile the current page after deletions; reveal newly
+added items. Rename retains logical property identity and focus. Page-size changes
+retain the first visible item where possible. Selection survives page navigation;
+external replacement must not redirect a pending edit to another item.
+Pending editor drafts must be committed, retained or explicitly cancelled under
+the shared editing contract; navigation must never silently discard them.
+Use localized labels and keyboard-accessible page and size controls.
+
+For AG Grid, portable pagination settings take precedence over corresponding
+agGridOptions when explicitly supplied. Without portable settings, explicit
+agGridOptions pagination settings remain supported for compatibility; otherwise
+use the shared defaults. Do not show two independent pagers.
+
+**Whole-row details.** `options.rowDetail` is opt-in on array tables and grids.
+It requires presentation `dialog` or `panel`. It is independent of
+`options.cells.<property>.detail`, which edits just one cell value.
+Resolve the row form from rowDetail.detail, then the existing registered item UI
+schema lookup, then generation. Explicit detail is a UI-schema element/layout.
+Scopes and rules are item-relative; preserve root-schema references, i18n,
+enabled/read-only inheritance and the selected item's original data path.
+
+Dialog presentation adds a localized Edit details action to each row. Do not make
+summary text itself the trigger. Edit a deep isolated draft of the whole item;
+Apply commits atomically, Cancel/close discards it under the existing draft and
+confirmation contracts. Recheck identity and mutation guards on Apply; stale
+external replacements must not be overwritten. Read-only users may inspect details.
+Panel presentation shows a selectable table beside a persistent item editor;
+placement is right (default) or bottom, and resizable defaults true. Placement and
+resizable are invalid on dialog presentation. Panel edits follow ListWithDetail's
+immediate update contract; show its selection prompt when nothing is selected.
+Inline cells may coexist with either presentation.
+
+**Sizing.** Reuse shared layout sizing; do not add pagination-specific height
+fields. Pagination bounds item count, not pixel height. Resizable panes require a
+bounded containing layout for independent scrolling. Wide tables scroll horizontally
+inside their content region; toolbar actions remain reachable. Dialog bodies scroll
+within the viewport while their title and actions remain reachable. Preserve focus
+indicators and validation access. Scrolling is independent of pagination.
+Virtualization is optional and must preserve identity, drafts and accessibility.
+
+Focused fixtures: collection-pagination, table-row-details, property-pagination.
+A future kitchen-sink should use separate domain tabs (for example recruitment
+with resumes, booking with dates/times, and inventory with tables), not one
+artificial model containing unrelated fields. It complements focused examples.
 
 ### 18.22 Item labels
 

@@ -152,3 +152,11 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+## Combined error summary
+
+The certification rows deliberately contain more than three errors. Open the array
+indicator to see separate messages with row context, then expand and collapse the
+list. The certificate-name schema uses `errorMessage` with English and Bulgarian
+translations to demonstrate actionable business wording. Validation counts remain
+unchanged when the summary is collapsed.

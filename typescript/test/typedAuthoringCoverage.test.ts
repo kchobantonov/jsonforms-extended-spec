@@ -115,3 +115,17 @@ describe('the shapes that degrade rather than block', () => {
     expect(true).toBe(true);
   });
 });
+
+describe('documented control variants', () => {
+  it('authors OTP and array variants without an escape hatch', () => {
+    const model = { type: 'object', properties: {
+      code: { type: 'string', format: 'password', minLength: 6, maxLength: 6 },
+      tags: { type: 'array', items: { type: 'string' } }
+    }} as const satisfies AuthoredSchema;
+    const author = forSchema(model);
+    expect(author.control('code', { options: { variant: 'otp' } }).options?.variant).toBe('otp');
+    for (const variant of ['chips', 'multi-select', 'tuple', 'ag-grid'] as const) {
+      expect(author.control('tags', { options: { variant } }).options?.variant).toBe(variant);
+    }
+  });
+});

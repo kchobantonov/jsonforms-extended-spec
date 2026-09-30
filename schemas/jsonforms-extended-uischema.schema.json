@@ -515,7 +515,14 @@
         },
         "variant": {
           "type": "string",
-          "description": "Canonical presentation selector. Unsupported values are preserved and diagnosed at runtime."
+          "description": "Canonical presentation selector. OTP applies to password strings with minLength and positive maxLength; tuple/chips/multi-select/ag-grid apply to appropriate arrays. This schema cannot resolve applicability against the external data schema. Unsupported values remain open for extensions and are diagnosed at runtime.",
+          "examples": [
+            "otp",
+            "tuple",
+            "chips",
+            "multi-select",
+            "ag-grid"
+          ]
         },
         "focus": {
           "type": "boolean"
@@ -910,6 +917,15 @@
         },
         "collapsed": {
           "type": "boolean"
+        },
+        "pagination": {
+          "$ref": "#/$defs/pagination"
+        },
+        "rowDetail": {
+          "$ref": "#/$defs/rowDetail"
+        },
+        "additionalProperties": {
+          "$ref": "#/$defs/additionalPropertiesPresentation"
         }
       }
     },
@@ -1192,6 +1208,9 @@
             },
             "restrict": {
               "type": "boolean"
+            },
+            "pagination": {
+              "$ref": "#/$defs/pagination"
             }
           }
         }
@@ -1529,6 +1548,105 @@
           "items": {
             "$ref": "#/$defs/element"
           }
+        }
+      }
+    },
+    "pagination": {
+      "description": "Client-side collection pagination. False disables; true or an object enables. Tables default on; other supported collections default off.",
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pageSize": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            },
+            "pageSizeOptions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "default": [
+                5,
+                10,
+                25,
+                50
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "rowDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "presentation"
+      ],
+      "properties": {
+        "presentation": {
+          "enum": [
+            "dialog",
+            "panel"
+          ]
+        },
+        "detail": {
+          "$ref": "#/$defs/element"
+        },
+        "placement": {
+          "enum": [
+            "right",
+            "bottom"
+          ],
+          "default": "right"
+        },
+        "resizable": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "presentation": {
+                "const": "dialog"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "placement"
+                  ]
+                },
+                {
+                  "required": [
+                    "resizable"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "additionalPropertiesPresentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pagination": {
+          "$ref": "#/$defs/pagination"
         }
       }
     }

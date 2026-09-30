@@ -1,0 +1,71 @@
+{
+  "type": "Categorization",
+  "elements": [
+    {
+      "type": "Category",
+      "label": "Dialog",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicants",
+          "options": {
+            "table": true,
+            "rowDetail": {
+              "presentation": "dialog",
+              "detail": {
+                "type": "VerticalLayout",
+                "elements": [
+                  {
+                    "type": "Control",
+                    "scope": "#/properties/name"
+                  },
+                  {
+                    "type": "Control",
+                    "scope": "#/properties/email"
+                  },
+                  {
+                    "type": "Control",
+                    "scope": "#/properties/notes"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Category",
+      "label": "Side panel",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicants",
+          "options": {
+            "table": true,
+            "rowDetail": {
+              "presentation": "panel"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Category",
+      "label": "Bottom panel",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicants",
+          "options": {
+            "table": true,
+            "rowDetail": {
+              "presentation": "panel",
+              "placement": "bottom"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

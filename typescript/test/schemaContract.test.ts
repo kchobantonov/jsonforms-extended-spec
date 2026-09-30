@@ -507,7 +507,7 @@ describe('the two UI schemas', () => {
     bag do - so any difference in them is drift.
   */
   it('keeps the unwidened spine identical to the base', () => {
-    for (const name of ['control', 'detail', 'listWithDetail', 'category']) {
+    for (const name of ['control', 'detail', 'category']) {
       expect(extended.$defs[name], name).toEqual(base.$defs[name]);
     }
   });

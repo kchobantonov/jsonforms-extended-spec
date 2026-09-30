@@ -216,14 +216,6 @@
         }
       ]
     },
-    "vertical": {
-      "description": "Arranges radio choices and tuple fields vertically.",
-      "allOf": [
-        {
-          "$ref": "jsonforms-uischema.schema.json#/$defs/controlOptions/properties/vertical"
-        }
-      ]
-    },
     "showNavButtons": {
       "description": "Shows Previous and Next buttons in a stepper categorization.",
       "allOf": [
@@ -296,6 +288,41 @@
           "type": "boolean",
           "default": true,
           "description": "Enables preventive constraints in temporal controls, such as limiting picker selections to allowed ranges. Defaults to true; a control can override it with options.restrict."
+        },
+        "additionalProperties": {
+          "$ref": "jsonforms-extended-uischema.schema.json#/$defs/additionalPropertiesPresentation"
+        },
+        "tuple": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "vertical": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "description": "Defaults for tuple controls only; local options.vertical overrides."
+        },
+        "array": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pagination": {
+              "$ref": "jsonforms-extended-uischema.schema.json#/$defs/pagination"
+            }
+          },
+          "description": "Pagination defaults for supported array presentations; local options.pagination overrides."
+        },
+        "radio": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "vertical": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "description": "Radio group defaults only. Local options.vertical overrides, including false."
         }
       }
     },

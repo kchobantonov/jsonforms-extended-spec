@@ -15,7 +15,7 @@ for (const vector of await readJson(join(root,'conformance/authoring.json'))) {
   });
 }
 test('all example documents and declared negative cases', async () => {
-  assert.equal((await validateProject(root)).examples, 32);
+  assert.equal((await validateProject(root)).examples, (await readJson(join(root, 'examples/catalog.json'))).length);
 });
 test('catalog includes every example directory exactly once', async () => {
   const entries = await readdir(join(root,'examples'),{withFileTypes:true});
@@ -111,7 +111,7 @@ test('every declared config path has a consumption audit and removed paths stay 
   for (const item of audit.properties) {
     assert.ok(item.evidence.length > 0, item.path);
     assert.ok(item.finding, item.path);
-    if (item.declaredAfter) assert.ok(['consumed', 'core', 'core-default-only', 'container'].includes(item.status), item.path);
+    if (item.declaredAfter) assert.ok(['consumed', 'core', 'core-default-only', 'container', 'pending-implementation'].includes(item.status), item.path);
     else assert.equal(declared.has(item.path), false, item.path);
   }
   const common = documents.get('jsonforms-config.schema.json');

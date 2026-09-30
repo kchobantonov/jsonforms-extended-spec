@@ -1233,14 +1233,14 @@
     },
     {
       "path": "config.vertical",
-      "status": "consumed",
+      "status": "removed",
       "evidence": [
         "packages/jsonforms-react-antd-renderers/src/antd-controls/AntdRadioGroup.tsx",
         "packages/jsonforms-react-antd-renderers/src/complex/TupleControlRenderer.tsx"
       ],
-      "finding": "Merged flat option controls radio and tuple orientation. It is not a universal layout orientation override.",
+      "finding": "Replaced by component-scoped jsonformsExtended defaults; no generic flat fallback.",
       "declaredBefore": true,
-      "declaredAfter": true
+      "declaredAfter": false
     },
     {
       "path": "config.views",
@@ -1262,6 +1262,112 @@
       "finding": "Monaco reads flat config plus local options. Bags replace wholesale through shallow spread. Theme takes precedence over mode; language binding takes precedence over fixed language.",
       "declaredBefore": true,
       "declaredAfter": true
+    },
+    {
+      "path": "config.pagination",
+      "status": "removed",
+      "evidence": [
+        "docs/spec.md \u00a718.21.1",
+        "docs/todo.md"
+      ],
+      "finding": "Replaced by component-scoped jsonformsExtended defaults; no generic flat fallback.",
+      "declaredBefore": false,
+      "declaredAfter": false
+    },
+    {
+      "path": "config.additionalProperties",
+      "status": "removed",
+      "evidence": [
+        "docs/spec.md \u00a718.21.1",
+        "docs/todo.md"
+      ],
+      "finding": "Replaced by component-scoped jsonformsExtended defaults; no generic flat fallback.",
+      "declaredBefore": false,
+      "declaredAfter": false
+    },
+    {
+      "path": "config.jsonformsExtended.pagination",
+      "status": "removed",
+      "evidence": [
+        "docs/spec.md \u00a718.21.1",
+        "docs/todo.md"
+      ],
+      "finding": "Replaced by component-scoped jsonformsExtended defaults; no generic flat fallback.",
+      "declaredBefore": false,
+      "declaredAfter": false
+    },
+    {
+      "path": "config.jsonformsExtended.additionalProperties",
+      "status": "pending-implementation",
+      "evidence": [
+        "docs/spec.md \u00a718.21.1",
+        "docs/todo.md"
+      ],
+      "finding": "Target collection presentation contract; runtime consumption is not yet claimed.",
+      "declaredBefore": false,
+      "declaredAfter": true
+    },
+    {
+      "path": "config.jsonformsExtended.tuple",
+      "status": "container",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "docs/spec.md \u00a718.11, \u00a718.21.1"
+      ],
+      "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
+    },
+    {
+      "path": "config.jsonformsExtended.tuple.vertical",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "docs/spec.md \u00a718.11, \u00a718.21.1"
+      ],
+      "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
+    },
+    {
+      "path": "config.jsonformsExtended.array",
+      "status": "container",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "docs/spec.md \u00a718.11, \u00a718.21.1"
+      ],
+      "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
+    },
+    {
+      "path": "config.jsonformsExtended.array.pagination",
+      "status": "pending-implementation",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "docs/spec.md \u00a718.11, \u00a718.21.1"
+      ],
+      "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
+    },
+    {
+      "path": "config.jsonformsExtended.radio",
+      "status": "container",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-antd-renderers/src/antd-controls/AntdRadioGroup.tsx",
+        "packages/jsonforms-react-shadcn-renderers/src/controls/RadioGroupControl.tsx"
+      ],
+      "finding": "Scoped radio orientation default; local options.vertical takes precedence."
+    },
+    {
+      "path": "config.jsonformsExtended.radio.vertical",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-antd-renderers/src/antd-controls/AntdRadioGroup.tsx",
+        "packages/jsonforms-react-shadcn-renderers/src/controls/RadioGroupControl.tsx"
+      ],
+      "finding": "Scoped radio orientation default; local options.vertical takes precedence."
     }
   ]
 }

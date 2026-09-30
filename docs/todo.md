@@ -71,3 +71,32 @@ Those findings are not requirements to reproduce a particular adapter's behavior
 4. Add only the implemented authoring shape to the schemas, with positive and
    negative schema vectors and a worked example.
 5. Remove or narrow the corresponding backlog entry in the same change.
+
+## Collection presentation implementation tracking
+
+Verify renderer support for §18.21.1 pagination, row detail dialogs/panels and dynamic-property pagination. Schema and examples define the target, not implementation completion. Kitchen-sink domain tabs remain future example work.
+
+## Renderer/schema/authoring audit (React, 2026-09-29)
+
+This is a targeted source audit, not proof of complete option parity.
+- OTP: implemented by Antd PasswordOtpControl/AntdOtp; documented in §18.24.
+  Extended JSON schema already accepts it through open string variant. Added
+  discoverable variant examples and TypeScript string variant support.
+  Shadcn has no segmented OTP renderer; do not claim cross-family support.
+- TypeScript OptionsFor is explicitly a curated subset, not generated from JSON
+  schemas. Array variants tuple/chips/multi-select were missing and are now typed.
+  Applicability involving enum choices, bounds or format still needs runtime checks.
+- Shadcn RadioGroupControl used orientation instead of the canonical vertical option;
+  React fix accompanies this audit.
+- Shadcn multiLine is a compatibility alias for multi, and array labelRef is a
+  family fallback; do not publish them as new portable names.
+- Shadcn FileControlRenderer reads accept as a fallback for schema contentMediaType.
+  Decide whether this remains family-specific before declaring a portable option.
+- Split/layout options need a separate element-aware parity review. Properties
+  such as action/params belong to Button schemas; array map/filter calls are not
+  UI options. A raw text scan cannot establish conformance.
+- Collection pagination and rowDetail are target contracts with runtime support
+  still pending, recorded in config-consumption.json.
+- Add systematic per-capability vectors linking tester selection, option
+  declarations, authoring acceptance, and renderer behavior. Open schemas accepting
+  an option must never be interpreted as evidence that a renderer implements it.
