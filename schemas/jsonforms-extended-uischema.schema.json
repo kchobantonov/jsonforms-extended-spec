@@ -936,6 +936,9 @@
         },
         "additionalItems": {
           "$ref": "#/$defs/additionalItemsPresentation"
+        },
+        "dialog": {
+          "$ref": "#/$defs/detailDialog"
         }
       }
     },
@@ -1195,6 +1198,9 @@
           "items": {
             "$ref": "#/$defs/tableColumnDefinition"
           }
+        },
+        "dialog": {
+          "$ref": "#/$defs/detailDialog"
         }
       }
     },
@@ -1633,6 +1639,9 @@
           "type": "boolean",
           "default": false,
           "description": "Initial panel visibility: true starts hidden; false starts visible. Panel presentation only."
+        },
+        "dialog": {
+          "$ref": "#/$defs/detailDialog"
         }
       },
       "allOf": [
@@ -1708,6 +1717,48 @@
       "properties": {
         "pagination": {
           "$ref": "#/$defs/pagination"
+        }
+      }
+    },
+    "detailDialog": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "width": {
+          "oneOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "height": {
+          "oneOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "maximizable": {
+          "type": "boolean",
+          "default": true
+        },
+        "draggable": {
+          "type": "boolean",
+          "default": false
+        },
+        "resizable": {
+          "type": "boolean",
+          "default": false
         }
       }
     }

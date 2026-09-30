@@ -16,6 +16,7 @@ import type { DataPath, Scope, SchemaAtPath } from './schemaTypes';
 
 /** Options every control understands, whatever it is bound to. */
 export interface CommonControlOptions {
+  dialog?: DetailDialogOptions;
   readonly?: boolean;
   focus?: boolean;
   hideRequiredAsterisk?: boolean;
@@ -63,8 +64,15 @@ export type PaginationOptions = boolean | {
   pageSize?: number;
   pageSizeOptions?: number[];
 };
+export type DetailDialogOptions = {
+  width?: number | string;
+  height?: number | string;
+  maximizable?: boolean;
+  draggable?: boolean;
+  resizable?: boolean;
+};
 export type RowDetailOptions =
-  | { presentation: 'dialog'; detail?: unknown; placement?: never; resizable?: never; collapsed?: never }
+  | { presentation: 'dialog'; dialog?: DetailDialogOptions; detail?: unknown; placement?: never; resizable?: never; collapsed?: never }
   | { presentation: 'panel'; detail?: unknown; placement?: 'right' | 'bottom'; resizable?: boolean; collapsed?: boolean };
 
 export type OptionsFor<Sub> = CommonControlOptions &

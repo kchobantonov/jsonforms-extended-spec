@@ -13,21 +13,91 @@
             "rowDetail": {
               "presentation": "dialog",
               "detail": {
-                "type": "VerticalLayout",
+                "type": "Categorization",
                 "elements": [
                   {
-                    "type": "Control",
-                    "scope": "#/properties/name"
+                    "type": "Category",
+                    "label": "Applicant",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/name"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/email"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/notes",
+                        "options": {
+                          "multi": true
+                        }
+                      }
+                    ]
                   },
                   {
-                    "type": "Control",
-                    "scope": "#/properties/email"
+                    "type": "Category",
+                    "label": "Contact",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/contact",
+                        "options": {
+                          "detail": {
+                            "type": "HorizontalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/city"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/phone"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   },
                   {
-                    "type": "Control",
-                    "scope": "#/properties/notes"
+                    "type": "Category",
+                    "label": "Experience",
+                    "elements": [
+                      {
+                        "type": "ListWithDetail",
+                        "scope": "#/properties/experience",
+                        "options": {
+                          "elementLabelProp": "company",
+                          "detail": {
+                            "type": "VerticalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/company"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/role"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/years"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
+              },
+              "dialog": {
+                "width": 900,
+                "height": "75vh",
+                "draggable": true,
+                "resizable": true
               }
             },
             "columnDefs": [
@@ -39,8 +109,40 @@
                 "field": "email",
                 "minWidth": 220,
                 "maxWidth": 400
+              },
+              {
+                "field": "contact",
+                "width": 180
+              },
+              {
+                "field": "experience",
+                "width": 200
               }
-            ]
+            ],
+            "cells": {
+              "contact": {
+                "summary": {
+                  "type": "Control",
+                  "scope": "#/properties/city"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              },
+              "experience": {
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              }
+            }
           }
         }
       ]
@@ -55,7 +157,88 @@
           "options": {
             "table": true,
             "rowDetail": {
-              "presentation": "panel"
+              "presentation": "panel",
+              "detail": {
+                "type": "Categorization",
+                "elements": [
+                  {
+                    "type": "Category",
+                    "label": "Applicant",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/name"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/email"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/notes",
+                        "options": {
+                          "multi": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Contact",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/contact",
+                        "options": {
+                          "detail": {
+                            "type": "HorizontalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/city"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/phone"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Experience",
+                    "elements": [
+                      {
+                        "type": "ListWithDetail",
+                        "scope": "#/properties/experience",
+                        "options": {
+                          "elementLabelProp": "company",
+                          "detail": {
+                            "type": "VerticalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/company"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/role"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/years"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
             },
             "columnDefs": [
               {
@@ -66,8 +249,40 @@
                 "field": "email",
                 "minWidth": 220,
                 "maxWidth": 400
+              },
+              {
+                "field": "contact",
+                "width": 180
+              },
+              {
+                "field": "experience",
+                "width": 200
               }
-            ]
+            ],
+            "cells": {
+              "contact": {
+                "summary": {
+                  "type": "Control",
+                  "scope": "#/properties/city"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              },
+              "experience": {
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              }
+            }
           }
         }
       ]
@@ -83,7 +298,88 @@
             "table": true,
             "rowDetail": {
               "presentation": "panel",
-              "placement": "bottom"
+              "placement": "bottom",
+              "detail": {
+                "type": "Categorization",
+                "elements": [
+                  {
+                    "type": "Category",
+                    "label": "Applicant",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/name"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/email"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/notes",
+                        "options": {
+                          "multi": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Contact",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/contact",
+                        "options": {
+                          "detail": {
+                            "type": "HorizontalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/city"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/phone"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Experience",
+                    "elements": [
+                      {
+                        "type": "ListWithDetail",
+                        "scope": "#/properties/experience",
+                        "options": {
+                          "elementLabelProp": "company",
+                          "detail": {
+                            "type": "VerticalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/company"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/role"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/years"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
             },
             "columnDefs": [
               {
@@ -94,8 +390,40 @@
                 "field": "email",
                 "minWidth": 220,
                 "maxWidth": 400
+              },
+              {
+                "field": "contact",
+                "width": 180
+              },
+              {
+                "field": "experience",
+                "width": 200
               }
-            ]
+            ],
+            "cells": {
+              "contact": {
+                "summary": {
+                  "type": "Control",
+                  "scope": "#/properties/city"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              },
+              "experience": {
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              }
+            }
           }
         }
       ]
@@ -111,19 +439,229 @@
             "rowDetail": {
               "presentation": "dialog",
               "detail": {
-                "type": "VerticalLayout",
+                "type": "Categorization",
                 "elements": [
                   {
-                    "type": "Control",
-                    "scope": "#/properties/name"
+                    "type": "Category",
+                    "label": "Applicant",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/name"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/email"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/notes",
+                        "options": {
+                          "multi": true
+                        }
+                      }
+                    ]
                   },
                   {
-                    "type": "Control",
-                    "scope": "#/properties/email"
+                    "type": "Category",
+                    "label": "Contact",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/contact",
+                        "options": {
+                          "detail": {
+                            "type": "HorizontalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/city"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/phone"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   },
                   {
-                    "type": "Control",
-                    "scope": "#/properties/notes"
+                    "type": "Category",
+                    "label": "Experience",
+                    "elements": [
+                      {
+                        "type": "ListWithDetail",
+                        "scope": "#/properties/experience",
+                        "options": {
+                          "elementLabelProp": "company",
+                          "detail": {
+                            "type": "VerticalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/company"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/role"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/years"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "dialog": {
+                "width": 900,
+                "height": "75vh",
+                "draggable": true,
+                "resizable": true
+              }
+            },
+            "variant": "ag-grid",
+            "columnDefs": [
+              {
+                "field": "name",
+                "width": 170
+              },
+              {
+                "field": "email",
+                "minWidth": 220,
+                "maxWidth": 400
+              },
+              {
+                "field": "contact",
+                "width": 180
+              },
+              {
+                "field": "experience",
+                "width": 200
+              }
+            ],
+            "cells": {
+              "contact": {
+                "summary": {
+                  "type": "Control",
+                  "scope": "#/properties/city"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              },
+              "experience": {
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Category",
+      "label": "AG Grid: Side panel",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicants",
+          "options": {
+            "rowDetail": {
+              "presentation": "panel",
+              "detail": {
+                "type": "Categorization",
+                "elements": [
+                  {
+                    "type": "Category",
+                    "label": "Applicant",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/name"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/email"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/notes",
+                        "options": {
+                          "multi": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Contact",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/contact",
+                        "options": {
+                          "detail": {
+                            "type": "HorizontalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/city"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/phone"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Experience",
+                    "elements": [
+                      {
+                        "type": "ListWithDetail",
+                        "scope": "#/properties/experience",
+                        "options": {
+                          "elementLabelProp": "company",
+                          "detail": {
+                            "type": "VerticalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/company"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/role"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/years"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -138,35 +676,40 @@
                 "field": "email",
                 "minWidth": 220,
                 "maxWidth": 400
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "type": "Category",
-      "label": "AG Grid: Side panel",
-      "elements": [
-        {
-          "type": "Control",
-          "scope": "#/properties/applicants",
-          "options": {
-            "rowDetail": {
-              "presentation": "panel"
-            },
-            "variant": "ag-grid",
-            "columnDefs": [
-              {
-                "field": "name",
-                "width": 170
               },
               {
-                "field": "email",
-                "minWidth": 220,
-                "maxWidth": 400
+                "field": "contact",
+                "width": 180
+              },
+              {
+                "field": "experience",
+                "width": 200
               }
-            ]
+            ],
+            "cells": {
+              "contact": {
+                "summary": {
+                  "type": "Control",
+                  "scope": "#/properties/city"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              },
+              "experience": {
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              }
+            }
           }
         }
       ]
@@ -181,7 +724,88 @@
           "options": {
             "rowDetail": {
               "presentation": "panel",
-              "placement": "bottom"
+              "placement": "bottom",
+              "detail": {
+                "type": "Categorization",
+                "elements": [
+                  {
+                    "type": "Category",
+                    "label": "Applicant",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/name"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/email"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/notes",
+                        "options": {
+                          "multi": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Contact",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/contact",
+                        "options": {
+                          "detail": {
+                            "type": "HorizontalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/city"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/phone"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Category",
+                    "label": "Experience",
+                    "elements": [
+                      {
+                        "type": "ListWithDetail",
+                        "scope": "#/properties/experience",
+                        "options": {
+                          "elementLabelProp": "company",
+                          "detail": {
+                            "type": "VerticalLayout",
+                            "elements": [
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/company"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/role"
+                              },
+                              {
+                                "type": "Control",
+                                "scope": "#/properties/years"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
             },
             "variant": "ag-grid",
             "columnDefs": [
@@ -193,8 +817,40 @@
                 "field": "email",
                 "minWidth": 220,
                 "maxWidth": 400
+              },
+              {
+                "field": "contact",
+                "width": 180
+              },
+              {
+                "field": "experience",
+                "width": 200
               }
-            ]
+            ],
+            "cells": {
+              "contact": {
+                "summary": {
+                  "type": "Control",
+                  "scope": "#/properties/city"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              },
+              "experience": {
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
+                },
+                "dialog": {
+                  "width": 720,
+                  "draggable": true,
+                  "resizable": true
+                }
+              }
+            }
           }
         }
       ]

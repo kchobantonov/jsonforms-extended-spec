@@ -5858,6 +5858,75 @@ A future kitchen-sink should use separate domain tabs (for example recruitment
 with resumes, booking with dates/times, and inventory with tables), not one
 artificial model containing unrelated fields. It complements focused examples.
 
+### 18.21.2 Detail dialog geometry and interaction
+
+Cell editors accept `options.cells[field].dialog` (or `options.dialog` on the composite cell itself). Whole-row editors accept `options.rowDetail.dialog` when `presentation` is `"dialog"`. Both renderer sets support the same object:
+
+```json
+{
+  "width": 900,
+  "height": "75vh",
+  "maximizable": true,
+  "draggable": true,
+  "resizable": true
+}
+```
+
+Numbers are CSS pixels; strings are CSS dimensions. Omitted width and height keep the renderer's default sizing. The dialog is constrained to the viewport with a margin. Maximize/restore is available by default; `maximizable: false` hides it. Maximizing preserves the normal geometry for restore. Dragging from the title and resizing from the bottom corner are opt-in and unavailable while maximized. Closing resets position and maximization. Geometry changes never apply or discard form edits; Apply and Cancel retain their existing semantics.
+
+Shadcn detail dialogs initially focus the dialog container rather than selecting the first input. Composite cell edit and remove actions appear on hover or keyboard focus and remain visible on touch devices. The remove icon uses the destructive theme color.
+
+The Recruitment: row detail presentations example demonstrates separate cell and row dialog sizes.
+
+**Recommended presentation behavior.** The following are UX recommendations
+(SHOULD), rather than requirements for identical pixels or framework-specific
+markup. They apply to both cell and whole-row dialogs, including dialogs opened
+from AG Grid.
+
+- **Initial position:** open centered in the available viewport, independently of
+  the pointer or invoking row. A framework's slightly higher vertical placement
+  is acceptable if the entire dialog remains accessible. Apply drag offsets
+  relative to this initial position; do not replace the centering transform.
+- **Viewport bounds:** constrain requested dimensions to the available viewport
+  with a visible margin. Re-clamp after viewport changes. Keep the title,
+  close/restore controls, and footer reachable when moving or resizing.
+- **Layout and scrolling:** use a header, a flexible body, and a footer. Keep the
+  body immediately below the header, including when maximized; extra height
+  belongs to the body rather than gaps between sections. Let only the body
+  scroll automatically when its contents exceed the available space. Avoid
+  unnecessary scrollbars and competing nested scroll areas. Keep header and
+  footer visible independently of body scrolling.
+- **Footer:** place Cancel and Apply at the bottom inline end (bottom right in
+  left-to-right layouts), in the renderer's usual order and style. Increasing
+  dialog height should move the footer to the bottom, not leave it floating
+  halfway down the dialog.
+- **Move and resize:** when enabled, use the title area as the drag handle and
+  provide a discoverable resize affordance. Buttons in the title must remain
+  clickable without starting a drag. Enforce a usable minimum size so the
+  header and footer cannot overlap. Geometry changes must preserve the current
+  editor state, active tab, and unsaved values.
+- **Maximize and restore:** place the action next to Close in the header, using
+  the renderer's native icon-button styling and a translated accessible label
+  and tooltip. Maximize uses the available viewport with a margin; Restore
+  returns to the prior normal size and position. Disable moving and manual
+  resizing while maximized. Opening a new editing session starts with the
+  configured normal geometry.
+- **Focus and input:** opening should not select an input's text automatically.
+  Prefer initial focus on the dialog container or heading, retain keyboard
+  focus within the modal, and return it to the invoking control on close.
+  Preserve standard keyboard access to Close, Cancel, Apply, and
+  maximize/restore. Pointer dragging must not be necessary to reach content.
+- **Embedded hosts:** React and web component hosts should present equivalent
+  layout and theme behavior. Portaled content must retain its theme variables
+  and styles, including inside a shadow root. Verify normal and maximized
+  states on narrow viewports and in light/dark themes.
+
+These recommendations describe the intended interaction contract; they do not
+assert that every renderer implements every geometry edge case. In particular,
+viewport-change handling, minimum resize bounds, and keyboard alternatives for
+manual movement/resizing should be checked when evaluating renderer support.
+
+
 ### 18.22 Item labels
 
 Use options.elementLabelProp to select an item-relative dotted data path, such

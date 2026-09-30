@@ -15,6 +15,37 @@
           },
           "notes": {
             "type": "string"
+          },
+          "contact": {
+            "type": "object",
+            "title": "Contact",
+            "properties": {
+              "city": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              }
+            }
+          },
+          "experience": {
+            "type": "array",
+            "title": "Experience",
+            "items": {
+              "type": "object",
+              "properties": {
+                "company": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "years": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
           }
         }
       }
