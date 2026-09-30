@@ -423,5 +423,16 @@
       "uischema.json"
     ],
     "hostRequirements": []
+  },
+  {
+    "id": "additional-items-pagination",
+    "title": "Shipping: additional items pagination",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
   }
 ]

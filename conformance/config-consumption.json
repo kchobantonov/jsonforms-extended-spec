@@ -1368,6 +1368,17 @@
         "packages/jsonforms-react-shadcn-renderers/src/controls/RadioGroupControl.tsx"
       ],
       "finding": "Scoped radio orientation default; local options.vertical takes precedence."
+    },
+    {
+      "path": "config.jsonformsExtended.additionalItems",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "docs/spec.md \u00a718.21.1",
+        "examples/additional-items-pagination/config.json"
+      ],
+      "finding": "Antd and shadcn TupleAdditionalItems consume scoped pagination through the shared collection pagination resolver; local additionalItems.pagination overrides."
     }
   ]
 }

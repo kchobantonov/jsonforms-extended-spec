@@ -1821,5 +1821,134 @@
     },
     "valid": true,
     "section": "18.21.1"
+  },
+  {
+    "id": "additional-items-pagination-false",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "additionalItems": {
+          "pagination": false
+        }
+      }
+    },
+    "valid": true,
+    "section": "18.21.1"
+  },
+  {
+    "id": "additional-items-pagination-true",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "additionalItems": {
+          "pagination": true
+        }
+      }
+    },
+    "valid": true,
+    "section": "18.21.1"
+  },
+  {
+    "id": "additional-items-pagination-{'pagesize': 5}",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "additionalItems": {
+          "pagination": {
+            "pageSize": 5
+          }
+        }
+      }
+    },
+    "valid": true,
+    "section": "18.21.1"
+  },
+  {
+    "id": "collection-pagination-config-off",
+    "schema": "jsonforms-config.schema.json",
+    "value": {
+      "jsonformsExtended": {
+        "array": {
+          "pagination": false
+        },
+        "additionalItems": {
+          "pagination": false
+        },
+        "additionalProperties": {
+          "pagination": false
+        }
+      }
+    },
+    "valid": true,
+    "section": "18.21.1"
+  },
+  {
+    "id": "collection-pagination-config-on",
+    "schema": "jsonforms-config.schema.json",
+    "value": {
+      "jsonformsExtended": {
+        "array": {
+          "pagination": true
+        },
+        "additionalItems": {
+          "pagination": true
+        },
+        "additionalProperties": {
+          "pagination": true
+        }
+      }
+    },
+    "valid": true,
+    "section": "18.21.1"
+  },
+  {
+    "id": "collection-pagination-config-size",
+    "schema": "jsonforms-config.schema.json",
+    "value": {
+      "jsonformsExtended": {
+        "array": {
+          "pagination": {
+            "pageSize": 5
+          }
+        },
+        "additionalItems": {
+          "pagination": {
+            "pageSize": 5
+          }
+        },
+        "additionalProperties": {
+          "pagination": {
+            "pageSize": 5
+          }
+        }
+      }
+    },
+    "valid": true,
+    "section": "18.21.1"
+  },
+  {
+    "id": "collection-pagination-config-invalid",
+    "schema": "jsonforms-config.schema.json",
+    "value": {
+      "jsonformsExtended": {
+        "array": {
+          "pagination": "off"
+        },
+        "additionalItems": {
+          "pagination": "off"
+        },
+        "additionalProperties": {
+          "pagination": "off"
+        }
+      }
+    },
+    "valid": false,
+    "section": "18.21.1"
   }
 ]

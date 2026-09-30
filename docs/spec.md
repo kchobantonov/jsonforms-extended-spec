@@ -1860,13 +1860,26 @@ independently of whether its nested values are empty.
 1. Element `options.confirmation[operation]`
 2. Config `jsonformsExtended.confirmation.renderers[catalogId][operation]`
 3. Config `jsonformsExtended.confirmation.default`
-4. Documented fallback: mixed type change and composite cell deletion use `complex`; other covered
+4. Documented fallback: mixed type change and all delete operations use `complex`; other covered
    operations use `always`
 
 **Catalog IDs are stable semantic identifiers, not component names.** For a
 delete or rename control hosted inside another renderer, use the **owner of
 the action** — a dynamic-property delete belongs to the additional-properties
 catalog even when drawn inside a tree.
+
+Additional-property deletion MUST use catalog ID `additionalProperties`;
+deleting a tuple trailing item MUST use `additionalItems`. Both use operation
+`delete` and fallback `complex`: scalar values (including null, false, zero and
+empty strings), empty objects and empty arrays delete without a prompt. Nonempty
+objects and arrays require confirmation. Explicit policy overrides still apply. Resolve element `options.confirmation.delete`, then the corresponding
+`config.jsonformsExtended.confirmation.renderers` entry, then the global default.
+This applies equally to paginated and unpaginated collections. Adding an item or
+property does not prompt. Fixed tuple positions cannot be deleted by the trailing
+items action. Confirming MUST recheck current permissions, bounds and the target;
+replacing, reordering or rebinding the collection invalidates a pending delete.
+A renderer may conservatively invalidate the pending delete on any collection
+replacement. Use the renderer family's native dialog with translated delete text.
 
 Cancellation leaves committed data, selection and expansion unchanged.
 Confirmation performs the operation **once**, after rechecking mutation guards
@@ -5417,7 +5430,7 @@ Keyboard users must have equivalent access. Rename applies to object-property
 keys, not array indices, and follows the additional-property contract: validate
 names, reject collisions, preserve values, and reassess the schema at the new
 path. Update tree selection after rename. Deletion updates the owning object or
-array and reconciles selection to a surviving node. Apply the shared delete confirmation policy (fallback always); cancel leaves
+array and reconciles selection to a surviving node. Apply the shared delete confirmation policy (fallback complex); cancel leaves
 data and selection unchanged.
 
 After an explicit deletion, reconcile selection using complete data-path segments:
@@ -5553,7 +5566,7 @@ editing the wrong item; do not inject business-data IDs solely for UI state.
 Add initializes an item using its schema/default-generation mechanism, dispatches
 the array change, and applies collapseNewItems after insertion. With restrict,
 maxItems disables/prevents Add and minItems disables/prevents Delete. Disabled or
-read-only state prevents all mutations. Delete follows the shared confirmation policy (fallback always), using a
+read-only state prevents all mutations. Delete follows the shared confirmation policy (fallback complex), using a
 localized dialog when required; cancel preserves data and expansion. Recheck guards on confirmation and
 ensure the operation still targets the intended item. Reordering changes stored
 array order, not merely visual sorting. Guard handlers as well as visible buttons.
@@ -5693,11 +5706,35 @@ Element options override config.jsonformsExtended.array.pagination, then the
 presentation default. Flat config.pagination is not a supported default. Resolve the whole value, not a merge across config levels.
 
 For dynamic object properties use `options.additionalProperties.pagination`,
-with the same shape and default false. Its defaults come from
-config.jsonformsExtended.additionalProperties.pagination, then false. There is
+with the same shape and default true. Its defaults come from
+config.jsonformsExtended.additionalProperties.pagination, then true. There is
 no flat config.additionalProperties fallback.
 It applies only to dynamic entries; declared fields stay outside the paginated
 region. This UI option does not change JSON Schema additionalProperties semantics.
+
+For tuple trailing values use `options.additionalItems.pagination`, resolved against
+`config.jsonformsExtended.additionalItems.pagination`, then true. This applies to
+values after the fixed prefix (draft-07 `additionalItems`, or `items` following
+`prefixItems` in newer drafts), including existing disallowed trailing values
+that need corrective removal. Fixed positions remain outside pagination and
+item labels and edits retain their absolute array indices. Bounds apply to the
+whole array. Pagination never permits adding values forbidden by the schema.
+
+All three scoped config pagination settings accept false, true, or the page-size
+object. False disables pagination by default for that collection kind; local true
+or an object can enable it again. Missing additional-properties or additional-items
+settings enable pagination with page size 5. Resolve the whole pagination value,
+not a merge of page-size fields across levels. For example:
+
+```json
+{
+  "jsonformsExtended": {
+    "array": { "pagination": false },
+    "additionalProperties": { "pagination": false },
+    "additionalItems": { "pagination": { "pageSize": 5 } }
+  }
+}
+```
 
 Pagination is a view over the complete collection, never slicing stored data.
 Validation, duplicate-name checks, bounds, counts and summaries cover every page.
@@ -5710,6 +5747,11 @@ external replacement must not redirect a pending edit to another item.
 Pending editor drafts must be committed, retained or explicitly cancelled under
 the shared editing contract; navigation must never silently discard them.
 Use localized labels and keyboard-accessible page and size controls.
+Place the primary pager in a distinct footer below the current entries, inside
+the collection boundary, for tables, additional items and additional properties.
+Keep Add in the collection header. Use consistent end alignment and spacing
+within each renderer family. For unusually tall scrolling collections, an optional
+second pager at the top MUST share the same page and page-size state as the footer.
 
 For AG Grid, portable pagination settings take precedence over corresponding
 agGridOptions when explicitly supplied. Without portable settings, explicit
@@ -5789,7 +5831,7 @@ within the viewport while their title and actions remain reachable. Preserve foc
 indicators and validation access. Scrolling is independent of pagination.
 Virtualization is optional and must preserve identity, drafts and accessibility.
 
-Focused fixtures: collection-pagination, table-row-details, property-pagination.
+Focused fixtures: collection-pagination, table-row-details, property-pagination, additional-items-pagination.
 A future kitchen-sink should use separate domain tabs (for example recruitment
 with resumes, booking with dates/times, and inventory with tables), not one
 artificial model containing unrelated fields. It complements focused examples.

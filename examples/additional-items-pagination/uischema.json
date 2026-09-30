@@ -1,0 +1,20 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/manifest",
+      "label": "Paginated shipment",
+      "options": {
+        "additionalItems": {
+          "pagination": true
+        }
+      }
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/allPackages",
+      "label": "Unpaginated shipment (config default)"
+    }
+  ]
+}

@@ -323,6 +323,9 @@
             }
           },
           "description": "Radio group defaults only. Local options.vertical overrides, including false."
+        },
+        "additionalItems": {
+          "$ref": "jsonforms-extended-uischema.schema.json#/$defs/additionalItemsPresentation"
         }
       }
     },

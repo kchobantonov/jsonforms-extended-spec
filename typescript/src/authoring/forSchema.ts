@@ -90,6 +90,7 @@ export type OptionsFor<Sub> = CommonControlOptions &
         table?: boolean;
         columnDefs?: { field: string; width?: number; minWidth?: number; maxWidth?: number }[];
         pagination?: PaginationOptions;
+        additionalItems?: { pagination?: PaginationOptions };
         rowDetail?: RowDetailOptions;
         variant?: 'ag-grid' | 'tuple' | 'chips' | 'multi-select';
         showSortButtons?: boolean;

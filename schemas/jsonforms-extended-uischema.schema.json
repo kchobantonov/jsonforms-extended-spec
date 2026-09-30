@@ -932,6 +932,9 @@
           "items": {
             "$ref": "#/$defs/tableColumnDefinition"
           }
+        },
+        "additionalItems": {
+          "$ref": "#/$defs/additionalItemsPresentation"
         }
       }
     },
@@ -1564,7 +1567,7 @@
       }
     },
     "pagination": {
-      "description": "Client-side collection pagination. False disables; true or an object enables. Tables default on; other supported collections default off.",
+      "description": "Client-side collection pagination. False disables; true or an object enables. Tables, additional properties and tuple additional items default on.",
       "oneOf": [
         {
           "type": "boolean"
@@ -1694,6 +1697,15 @@
         "maxWidth": {
           "type": "number",
           "exclusiveMinimum": 0
+        }
+      }
+    },
+    "additionalItemsPresentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pagination": {
+          "$ref": "#/$defs/pagination"
         }
       }
     }
