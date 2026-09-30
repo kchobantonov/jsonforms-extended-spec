@@ -107,3 +107,8 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+Ant Design and shadcn both support this OTP example. Partial codes are committed
+immediately; reveal changes presentation only. Without both length bounds, OTP
+falls back to the ordinary masked password editor. Table cells stay compact and
+masked rather than rendering segmented boxes.

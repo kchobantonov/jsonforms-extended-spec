@@ -82,7 +82,8 @@ This is a targeted source audit, not proof of complete option parity.
 - OTP: implemented by Antd PasswordOtpControl/AntdOtp; documented in §18.24.
   Extended JSON schema already accepts it through open string variant. Added
   discoverable variant examples and TypeScript string variant support.
-  Shadcn has no segmented OTP renderer; do not claim cross-family support.
+  Shadcn now supports segmented OTP, masked password fallback, reveal and clear,
+  including partial input and paste. This closes the OTP gap, not all renderer parity gaps.
 - TypeScript OptionsFor is explicitly a curated subset, not generated from JSON
   schemas. Array variants tuple/chips/multi-select were missing and are now typed.
   Applicability involving enum choices, bounds or format still needs runtime checks.
