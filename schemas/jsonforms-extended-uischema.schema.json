@@ -1576,7 +1576,7 @@
             "pageSize": {
               "type": "integer",
               "minimum": 1,
-              "default": 10
+              "default": 5
             },
             "pageSizeOptions": {
               "type": "array",

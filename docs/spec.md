@@ -5679,7 +5679,7 @@ Renderer families MUST publish gaps until implemented. Expandable table rows are
 optional family capabilities, not required by this contract.
 
 **Pagination.** `options.pagination` is false, true, or an object with
-`pageSize` (positive integer, default 10) and `pageSizeOptions` (nonempty,
+`pageSize` (positive integer, default 5) and `pageSizeOptions` (nonempty,
 unique positive integers, default [5, 10, 25, 50]). True enables the defaults;
 false disables pagination. An object enables it. If the initial pageSize is not
 in the choices, include it in the rendered selector without rewriting options.
@@ -5720,6 +5720,13 @@ use the shared defaults. Do not show two independent pagers.
 properties shown in a regular array table. Each entry has a `field` property name
 and optional positive numeric `width`, `minWidth`, and `maxWidth` in CSS pixels.
 Widths are table layout constraints; content must not overflow into adjacent cells.
+Regular table data columns support interactive resizing through a visible header
+handle. Pointer dragging and keyboard resizing must honor minWidth/maxWidth,
+work in both text directions, and preserve data, selection, and pending edits.
+Authored width is the initial width; user-resized widths persist through ordinary
+row edits and pagination for the mounted table. Selection and action columns do
+not need resize handles. Provide an accessible localized name and current/min/max
+values for each resize handle.
 Omitting the option retains automatic columns. An empty list shows only table
 selection/actions. Unknown fields are ignored; duplicate fields use the first entry.
 Authors should specify minWidth <= maxWidth and keep width within these bounds.
@@ -5754,7 +5761,17 @@ does not introduce a table/detail splitter.
 `options.rowDetail.collapsed` sets initial visibility: `true` starts with the detail
 pane hidden; omitted or `false` starts visible. It applies to both placements.
 The localized show/hide action beside Add toggles visibility without clearing the
-selected row or changing data. Hiding details leaves the table visible and usable.
+selected row or changing data.
+While the detail pane is visible, the table MUST visually highlight the row whose
+details it displays, using the renderer family's selected-row styling and an
+accessible current-row indication (for example, `aria-current="true"`). The
+highlight follows detail selection and disappears when the pane is hidden; reopening
+the pane restores the highlight for its selected row. Detail selection is independent
+of bulk-delete checkbox selection: highlighting a row MUST NOT check its deletion
+checkbox, and checking a deletion checkbox MUST NOT change the detail selection.
+Clicking a row or its ordinary cells updates detail selection without revealing a
+hidden pane. The explicit row Edit details action selects that row and reveals the
+pane if hidden. Hiding details leaves the table visible and usable.
 This is an initial state, not a controlled visibility value: ordinary data updates
 must preserve the user's choice. Placement, resizable and collapsed are invalid
 on dialog presentation.
