@@ -16,9 +16,9 @@ also the worked demonstration of where a project-extension key belongs.
 
 | File | Role |
 | --- | --- |
-| `schema.json` | JSON Schema. Constraints are chosen so each container has exactly one failing descendant. |
+| `schema.json` | JSON Schema. Constraints demonstrate single and multiple descendant errors. |
 | `uischema.json` | UI Schema: a stepper Categorization containing a collapsible Group and an array control. |
-| `data.json` | Realistic data that is deliberately invalid in two places. |
+| `data.json` | Data with invalid nested fields and valid comparison rows. |
 | `config.json` | Global config, showing the flat tier and the `jsonformsExtended` tier side by side. |
 | `translations.json` | English and Bulgarian catalogs, as §24 of the specification requires. Switch locale in the demo to see either; the Internationalization tab shows and edits them. |
 
@@ -72,15 +72,20 @@ removing `i18n` makes the Bulgarian label fall back to the English literal.
 
 ## Validation state
 
-Validated with Ajv (`allErrors`, `strict: false`, ajv-formats), the supplied
-data produces exactly two errors:
+The emergency contact has a short phone number. Certifications include a
+missing name and two entries with an empty name and invalid date, demonstrating
+multi-error summaries. The Composite cells step adds a separate two-row table:
 
-| Instance path | Keyword | Message |
+| Row | Contact object cell | Experience array cell |
 | --- | --- | --- |
-| `/emergencyContact/phone` | `minLength` | must NOT have fewer than 7 characters |
-| `/certifications/1` | `required` | must have required property 'name' |
+| Alex Rivera | One error: required City is missing; Phone still exists. | Two errors: the item lacks Company and Role. |
+| Blair Chen | Valid, no cell indicator. | Valid, no cell indicator. |
 
-One error per container, which is what makes the indicator behavior legible.
+Open the first Contact cell's indicator to inspect its required-field message.
+Open the first Experience cell's indicator to inspect the two-error summary.
+Opening either cell's detail editor shows the individual field errors. The valid
+second row must not inherit the first row's indicators. Scalar cell error icons
+and composite indicators stay on the same line as their editor or summary.
 
 ## Expected behavior
 
@@ -160,3 +165,23 @@ indicator to see separate messages with row context, then expand and collapse th
 list. The certificate-name schema uses `errorMessage` with English and Bulgarian
 translations to demonstrate actionable business wording. Validation counts remain
 unchanged when the summary is collapsed.
+
+## Combinator cells
+
+The Composite cells table also includes three object-valued combinator columns.
+Each uses the normal compact object cell and opens the combinator editor in its
+detail dialog. Alex's row deliberately fails each constraint; Blair's row is valid.
+
+| Column | Invalid case | Expected feedback |
+| --- | --- | --- |
+| OneOf contact | Both email and phone branches match. | The cell indicates the oneOf failure; exactly one branch must match. |
+| AnyOf contact | Neither email nor phone exists. | The cell summarizes branch-required errors and the anyOf failure. |
+| AllOf contact | Phone has only two characters. | The cell indicates the nested phone minLength failure. |
+
+Open each cell to inspect its detail presentation and field errors in both
+renderers. Valid sibling cells have no indicator. Widen the pane or scroll the
+table horizontally to reach all columns; error markers stay beside summaries.
+
+The oneOf editor uses a dropdown in both reference renderers. AnyOf retains
+branch tabs. Each alternative declares its object type and editable fields,
+so the example tests contact editors rather than unconstrained mixed values.

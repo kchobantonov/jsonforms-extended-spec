@@ -1540,21 +1540,43 @@
       ]
     },
     "summary": {
-      "type": "object",
-      "required": [
-        "type",
-        "scope"
-      ],
-      "properties": {
-        "type": {
-          "const": "Control"
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "scope"
+          ],
+          "properties": {
+            "type": {
+              "const": "Control"
+            },
+            "scope": {
+              "type": "string",
+              "pattern": "^#(?:/.*)?$"
+            }
+          },
+          "additionalProperties": true
         },
-        "scope": {
-          "type": "string",
-          "pattern": "^#(?:/.*)?$"
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/label"
+            },
+            {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "const": "Label"
+                }
+              }
+            }
+          ]
         }
-      },
-      "additionalProperties": true
+      ]
     },
     "template": {
       "type": "object",
@@ -1708,6 +1730,13 @@
         "maxWidth": {
           "type": "number",
           "exclusiveMinimum": 0
+        },
+        "scope": {
+          "const": "#",
+          "description": "Bind this column to the whole current row; field is its stable key, not a data property."
+        },
+        "headerName": {
+          "type": "string"
         }
       }
     },

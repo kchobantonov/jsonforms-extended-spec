@@ -12,7 +12,19 @@
     "validation.containerHasErrors": "This section contains errors",
     "error.errorMessage.certificateNameRequired": "Enter the name printed on the certificate.",
     "validation.showMore": "Show {count} more",
-    "validation.showLess": "Show less"
+    "validation.showLess": "Show less",
+    "compositeCells.label": "Composite cells",
+    "applicants.label": "Applicants",
+    "applicants.name.label": "Name",
+    "applicants.contact.label": "Contact",
+    "applicants.contact.city.label": "City",
+    "applicants.contact.phone.label": "Phone",
+    "applicants.experience.label": "Experience",
+    "applicants.experience.company.label": "Company",
+    "applicants.experience.role.label": "Role",
+    "applicants.oneOfContact.label": "OneOf contact",
+    "applicants.anyOfContact.label": "AnyOf contact",
+    "applicants.allOfContact.label": "AllOf contact"
   },
   "bg": {
     "error.minLength": "Стойността е твърде къса.",
@@ -27,6 +39,18 @@
     "validation.containerHasErrors": "Разделът съдържа грешки",
     "error.errorMessage.certificateNameRequired": "Въведете името, отпечатано на сертификата.",
     "validation.showMore": "Покажи още {count}",
-    "validation.showLess": "Покажи по-малко"
+    "validation.showLess": "Покажи по-малко",
+    "compositeCells.label": "Съставни клетки",
+    "applicants.label": "Кандидати",
+    "applicants.name.label": "Име",
+    "applicants.contact.label": "Контакт",
+    "applicants.contact.city.label": "Град",
+    "applicants.contact.phone.label": "Телефон",
+    "applicants.experience.label": "Опит",
+    "applicants.experience.company.label": "Компания",
+    "applicants.experience.role.label": "Длъжност",
+    "applicants.oneOfContact.label": "Контакт oneOf",
+    "applicants.anyOfContact.label": "Контакт anyOf",
+    "applicants.allOfContact.label": "Контакт allOf"
   }
 }

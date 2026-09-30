@@ -22,5 +22,47 @@
       "name": "",
       "expiresOn": "not-a-date"
     }
+  ],
+  "applicants": [
+    {
+      "name": "Alex Rivera",
+      "contact": {
+        "phone": "555-0100"
+      },
+      "experience": [
+        {}
+      ],
+      "oneOfContact": {
+        "email": "alex@example.com",
+        "phone": "555-0100"
+      },
+      "anyOfContact": {},
+      "allOfContact": {
+        "city": "Boston",
+        "phone": "12"
+      }
+    },
+    {
+      "name": "Blair Chen",
+      "contact": {
+        "city": "Seattle"
+      },
+      "experience": [
+        {
+          "company": "Northwind",
+          "role": "Developer"
+        }
+      ],
+      "oneOfContact": {
+        "email": "blair@example.com"
+      },
+      "anyOfContact": {
+        "phone": "555-0101"
+      },
+      "allOfContact": {
+        "city": "Seattle",
+        "phone": "555-0101"
+      }
+    }
   ]
 }

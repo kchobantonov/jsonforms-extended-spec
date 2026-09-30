@@ -65,6 +65,32 @@
               }
             }
           ]
+        },
+        {
+          "type": "Category",
+          "label": "Composite cells",
+          "i18n": "compositeCells",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/applicants",
+              "options": {
+                "table": true,
+                "cells": {
+                  "contact": {
+                    "summary": {
+                      "type": "Control",
+                      "scope": "#/properties/city"
+                    }
+                  },
+                  "experience": {},
+                  "oneOfContact": {},
+                  "anyOfContact": {},
+                  "allOfContact": {}
+                }
+              }
+            }
+          ]
         }
       ]
     }

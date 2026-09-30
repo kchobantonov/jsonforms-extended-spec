@@ -880,6 +880,36 @@ For arrays, `hideArraySummaryValidation: true` also suppresses the child-error
 summary. If it and `showValidationIndicator` are supplied together, either request
 to hide wins. Neither hides the array's own error explanation.
 
+#### Object and array cell summaries
+
+Compact object and array cells MUST expose eligible errors on the cell value
+and its descendants beside the summary, even while the detail editor is closed.
+This is cell-level validation feedback, separate from an enclosing collection's
+header indicator. Suppressing that header indicator does not suppress cell
+feedback. The reference renderers use the existing single-error tooltip and
+multi-error summary interaction, including the localized error count in the
+expanded summary. A permanent numeric badge beside the cell is not required.
+
+For example, when `rows[0].contact.city` is required but missing, the Contact
+cell in row 1 shows an error indicator. An Experience array cell aggregates
+errors from its items. Use normalized control paths, including relocation of
+`required` errors to the missing property, and match complete path segments:
+errors in row 10 must not appear on row 1. Include mapped additional errors and
+follow the validation display policies above. Opening details shows the
+individual field errors; the compact indicator does not replace those messages.
+
+Object-valued cells using `oneOf`, `anyOf`, or `allOf` follow the same rule.
+Include errors on the composition itself as well as eligible descendant errors;
+for example, a oneOf value matching two alternatives still needs an indicator
+even if neither alternative has a field error. Detail dialogs dispatch the
+composed schema through the normal renderer registry. The container-validation
+example includes invalid and valid rows for all three combinators.
+
+Keep the summary or scalar editor and its error indicator on the same line.
+Reserve space for the indicator rather than wrapping it below the control.
+Both Ant Design and shadcn object/array cell renderers provide this feedback,
+including when those cells are hosted by AG Grid.
+
 ### 8.4 Computing container indicators
 
 This is specified because the obvious implementation does not scale and the
@@ -3731,7 +3761,7 @@ Scalar cells continue to use appropriate scalar cell renderers.
 | `options.cells.<property>.summary` | A Control-shaped summary descriptor. For an object, `scope` selects a value relative to that object. For an array, it selects a value relative to each item; `#` selects a primitive item itself. This is not an arbitrary inline form renderer. |
 | `options.cells.<property>.detail` | A UI-schema element or layout defining the dialog form, relative to the cell schema/data. |
 | Detail omitted | Dispatch `{ "type": "Control", "scope": "#", "label": false }` for the whole cell value. |
-| Summary omitted or unresolved | Array item count, object schema title or generic details label, or an unset-value label. These labels should be localizable. |
+| Summary omitted or unresolved | Localized generated description: array item count, empty-object description, field-not-specified label, or object title/generic details label when no field summary is available. Reserve the unset-value label for missing values. |
 
 Array cells use a localized item count by default. An explicit summary descriptor
 enables a short per-item preview: show up to two resolved, nonempty scalar values
@@ -3748,9 +3778,127 @@ strings, summary { "type": "Control", "scope": "#" } can show
 "555-0100, 555-0200 (+1 more)". No new template language or summary-limit option
 is introduced. Both object and array cells retain independent detail configuration.
 
+**Label summaries and row-bound columns.** `options.cells[key].summary` may be
+an existing Control preview descriptor or a Label UI-schema element. A Label
+is dispatched through the renderer registry. `data` remains the whole form root;
+`item` exposes the current row for both property-bound and row-bound columns.
+Label summaries omit object/array type icons. Existing localization, interpolation
+and escaping rules apply;
+for example, `{"type":"Label","text":"{city} · {phone}","options":{"interpolate":true,"textParams":{"city":"{item.contact.city}","phone":"{item.contact.phone}"}}}`.
+Summary rendering is read-only and does not mutate form data. Updates to the
+bound value refresh the summary. Label summaries require the corresponding
+Label capability; interpolation is provided by the extended renderer set.
+
+By default, `columnDefs[].field` selects a property of each row. Setting
+`scope: "#"` binds the column to the entire row instead; `field` remains a stable
+column key used to look up `options.cells[field]` and must not collide with
+another column key. No data property is created. `headerName` sets its heading.
+For example, `{"field":"applicantSummary","scope":"#","headerName":"Applicant","width":260}`
+can use a Label summary containing `{name} — {email}`, with declared
+`textParams` reading `{item.name}` and `{item.email}`. Dynamic parameter
+resolution requires `config.jsonformsExtended.dynamicValues.enabled: true`.
+The gate applies equally to `item`, `data`, `config` and `context`; a Label
+cannot bypass it. Namespaces are read from declared `textParams`, while the
+translated text references only those parameters. Outside a row summary,
+no current row is supplied.
+
+AG Grid sorting and text filters on Label summary columns use the resolved Label text,
+including declared interpolation parameters, rather than the underlying object.
+The same dynamic-value access gate applies to sorting and filtering; neither may
+expose data that the Label is not allowed to read. Native value getters, comparators and filter value getters
+may explicitly override this behavior. Sorting does not change the cell editor
+binding or the source-row identity.
+
+**Row context and updates.** Use the name `item` in both the form context and
+expression namespaces. Resolve it lazily on access; outside an item provider
+it is undefined. Runtime row metadata belongs in the form context, not in
+UI-schema options. Use `item` consistently in normal tables
+and AG Grid; `dataItem`, `itemData` and `rowData` are not additional aliases.
+For a nested table, `item` is the nearest table's current source item, while
+`data` remains the form root. Sorting, filtering and pagination must not
+replace source-item identity with the displayed row index. A property-bound
+Contact summary therefore reads `item.contact.city`, not `item.city`.
+Changing the row or a referenced root value refreshes its summary.
+
+Interpolated Labels must not flash authored template expressions while the
+evaluator loads. Show a compact pending indicator until evaluation is ready;
+local row lookup itself needs no asynchronous fetch. Failed loading must also
+avoid showing raw expressions.
+
+The row context must survive renderer dispatch, lazy loading and package
+boundaries. Providing it must not replace the form's root data or grant
+additional expression access. Rendering, sorting and filtering use the same
+parameter resolution and access policy. Sorting or filtering must not reveal
+values withheld by that policy.
+
+For example, a Label can combine a row name and a root-level form title:
+
+```json
+{
+  "type": "Label",
+  "text": "{name} — {formTitle}",
+  "options": {
+    "interpolate": true,
+    "textParams": {
+      "name": "{item.name}",
+      "formTitle": "{data.title}"
+    }
+  }
+}
+```
+
+This requires `config.jsonformsExtended.dynamicValues.enabled: true`.
+The existing rules governing `config`, `context`, localization and escaping
+continue to apply; a cell summary does not widen their availability.
+
+**Sizing and grid operations.** Long Label text must not impose a content-based
+minimum width that prevents column resizing. Honor configured column minimum
+and maximum widths. Prefer truncating the summary within its column; allow
+horizontal table scrolling when the combined column widths exceed the available
+space. Resizing one column must not redistribute its width into unrelated
+columns. Label presentation does not change these rules.
+
+For the Contact summary `Boston · 555-0100`, AG Grid's Contains text filter can
+match either `Boston` or `555-0100`. Ascending and descending sorts compare
+resolved summary strings, not the raw Contact object or its property name.
+Normal tables share the summary contract; this does not require them to provide
+AG Grid's filtering UI.
+
+Summary and detail share the column binding. `detail` defines the editor and
+`dialog` defines its geometry, as for existing complex cells. A Label summary
+without explicit detail is presentation-only and has no edit action. Row-bound
+columns have no clear action, since clearing a presentation must not remove
+the whole row. Existing Control-based object/array previews retain their
+default detail editor. Custom summaries retain eligible validation feedback.
+These rules apply equally to normal tables and AG Grid in Ant Design and shadcn.
+
 Use translation keys composite.summary.item, composite.summary.items, and
 composite.summary.more with count in the translation context. The details and
 unset fallback labels use composite.summary.details and composite.summary.unset.
+
+**Generated descriptions and data previews.** Render actual scalar previews in
+normal typography. Prefer secondary, italic text for generated descriptions so
+users can distinguish them from stored values, consistently in both Ant Design
+and shadcn. Secondary text must remain readable in light and dark themes; wording
+must convey the state without relying on color alone.
+
+- A missing/null object or array shows localized "Not set".
+- An existing empty object shows "Empty object".
+- For a nonempty object with an explicit summary field that is missing, null,
+  blank, or not scalar, show "{label} not specified" using the field's localized
+  label (for example, "City not specified"). Other fields may still hold data.
+- An object without a usable field label may use its title or generic "Details"
+  as a generated description.
+- An empty array shows "0 items"; an array without usable previews shows its
+  total item count. Both are generated descriptions. Usable array previews keep
+  normal typography, including their existing count suffix.
+- Preserve zero and false as actual data. A city literally named "Contact"
+  therefore appears in normal typography, unlike a generated object title.
+
+Use composite.summary.emptyObject for "Empty object" and
+composite.summary.unspecified with label in the translation context for
+"{label} not specified". Full-text or explanatory tooltips are optional.
+
 
 Example for an array of employees containing an object-valued address and
 an array-valued phoneNumbers property:
@@ -5525,6 +5673,32 @@ the tree and detail panel after type changes, deletion, rename, and external
 data updates without redirecting an edit to the wrong array item/property.
 ### 18.21 Expandable arrays and list with detail
 
+**List overflow.** The list navigation pane SHOULD have a bounded height and
+scroll vertically only when its items exceed that height. Scrolling the list
+must not scroll or replace the selected item's detail editor. This also applies
+when ListWithDetail is nested inside a cell or row detail dialog. The Ant Design
+and shadcn reference renderers cap the list at 20rem; shorter lists retain their
+natural height. This bound applies with pagination disabled as well as to an
+overflowing page when pagination is enabled. It does not change selection,
+item indices, or add/delete restrictions.
+
+**Long list labels (presentation recommendation).** Prefer a single-line label
+with an ellipsis over horizontal scrolling caused only by long text. Keep the
+item's action buttons visible and let the label use the remaining width. Widening
+the list pane should reveal more of the label; typing a longer value should not
+keep increasing the list's horizontal scroll range. Selecting the item exposes
+the full value in its detail editor, so the navigation label need not display
+all of that text at once.
+
+Horizontal scrolling remains appropriate when the pane is too narrow for the
+non-shrinking controls, such as the item avatar and action buttons. Keep those
+controls reachable rather than clipping them. A tooltip showing the full label
+on hover or keyboard focus is an optional enhancement, not a requirement; retain
+the full accessible name even when the visible label is truncated. For example,
+a long company name may appear as "Northwind…" in the list while its complete
+value remains editable in the selected item's Company field.
+
+
 #### Expandable array-item forms
 
 Suggested renderer name: `ArrayLayoutRenderer`. This is an existing JSON Forms
@@ -5787,7 +5961,8 @@ row edits and pagination for the mounted table. Selection and action columns do
 not need resize handles. Provide an accessible localized name and current/min/max
 values for each resize handle.
 Omitting the option retains automatic columns. An empty list shows only table
-selection/actions. Unknown fields are ignored; duplicate fields use the first entry.
+selection/actions. Columns with `scope: "#"` bind to the whole row as described
+in the cell-summary contract; their field is a stable presentation key. Other unknown fields are ignored; duplicate fields use the first entry.
 Authors should specify minWidth <= maxWidth and keep width within these bounds.
 Column visibility never removes data or validation, or limits row detail fields.
 `options.cells[field]` continues to configure editors and composite cell details.
@@ -5926,6 +6101,41 @@ assert that every renderer implements every geometry edge case. In particular,
 viewport-change handling, minimum resize bounds, and keyboard alternatives for
 manual movement/resizing should be checked when evaluating renderer support.
 
+
+### 18.21.3 Scroll regions and renderer styling
+
+Scrolling SHOULD preserve the renderer's theme and standard pointer, wheel,
+touch, and keyboard behavior. Scrollbars SHOULD appear only when content
+overflows; both axes must remain reachable where content can exceed the pane.
+Do not hide overflow merely to conceal a scrollbar.
+
+Use independent scroll regions for bounded list navigation and fixed-height
+side/bottom detail panes. The collection pane and detail editor must each remain
+reachable when the splitter reduces their space. Dialogs keep the header and
+action footer outside the scrolling body, as described in §18.21.2. List
+navigation retains the 20rem reference height limit described in §18.21.
+Pagination and scrolling complement one another: pagination limits item count,
+while scrolling handles oversized items or a constrained viewport.
+
+**Renderer integration decisions:**
+
+- **shadcn:** use the official Radix-based shadcn Scroll Area for list navigation,
+  row detail panes, and detail dialog bodies. Use its themed vertical and
+  horizontal scrollbars as needed. Keep the pinned component available in both
+  the React demo and web component hosts, with the same behavior and theme.
+- **Ant Design:** retain native scrolling. Ant Design has no general-purpose
+  Scroll Area component in its public component catalog. The recommended styling
+  is a subtle theme-token thumb and transparent track, respecting light/dark
+  mode and platform accessibility preferences. This is a styling recommendation;
+  themed native scrollbar styling is not yet claimed as implemented by the
+  reference renderer.
+
+Apply bounds at collection and pane boundaries rather than introducing a
+separate scrollbar around every field or ordinary form section. Expanded array
+forms may still grow vertically when many items are expanded; pagination or
+virtualization remains a possible improvement, not a promise of current support.
+These presentation recommendations do not change validation, selection,
+pagination defaults, or deletion policy.
 
 ### 18.22 Item labels
 

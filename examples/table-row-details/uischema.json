@@ -102,6 +102,12 @@
             },
             "columnDefs": [
               {
+                "field": "applicantSummary",
+                "scope": "#",
+                "headerName": "Applicant summary",
+                "width": 260
+              },
+              {
                 "field": "name",
                 "width": 170
               },
@@ -122,13 +128,24 @@
             "cells": {
               "contact": {
                 "summary": {
-                  "type": "Control",
-                  "scope": "#/properties/city"
+                  "type": "Label",
+                  "text": "{city} · {phone}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "city": "{item.contact.city}",
+                      "phone": "{item.contact.phone}"
+                    }
+                  }
                 },
                 "dialog": {
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                },
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
                 }
               },
               "experience": {
@@ -140,6 +157,19 @@
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                }
+              },
+              "applicantSummary": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{name} — {email}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "name": "{item.name}",
+                      "email": "{item.email}"
+                    }
+                  }
                 }
               }
             }
@@ -242,6 +272,12 @@
             },
             "columnDefs": [
               {
+                "field": "applicantSummary",
+                "scope": "#",
+                "headerName": "Applicant summary",
+                "width": 260
+              },
+              {
                 "field": "name",
                 "width": 170
               },
@@ -262,13 +298,24 @@
             "cells": {
               "contact": {
                 "summary": {
-                  "type": "Control",
-                  "scope": "#/properties/city"
+                  "type": "Label",
+                  "text": "{city} · {phone}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "city": "{item.contact.city}",
+                      "phone": "{item.contact.phone}"
+                    }
+                  }
                 },
                 "dialog": {
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                },
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
                 }
               },
               "experience": {
@@ -280,6 +327,19 @@
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                }
+              },
+              "applicantSummary": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{name} — {email}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "name": "{item.name}",
+                      "email": "{item.email}"
+                    }
+                  }
                 }
               }
             }
@@ -383,6 +443,12 @@
             },
             "columnDefs": [
               {
+                "field": "applicantSummary",
+                "scope": "#",
+                "headerName": "Applicant summary",
+                "width": 260
+              },
+              {
                 "field": "name",
                 "width": 170
               },
@@ -403,13 +469,24 @@
             "cells": {
               "contact": {
                 "summary": {
-                  "type": "Control",
-                  "scope": "#/properties/city"
+                  "type": "Label",
+                  "text": "{city} · {phone}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "city": "{item.contact.city}",
+                      "phone": "{item.contact.phone}"
+                    }
+                  }
                 },
                 "dialog": {
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                },
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
                 }
               },
               "experience": {
@@ -421,6 +498,19 @@
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                }
+              },
+              "applicantSummary": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{name} — {email}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "name": "{item.name}",
+                      "email": "{item.email}"
+                    }
+                  }
                 }
               }
             }
@@ -529,6 +619,12 @@
             "variant": "ag-grid",
             "columnDefs": [
               {
+                "field": "applicantSummary",
+                "scope": "#",
+                "headerName": "Applicant summary",
+                "width": 260
+              },
+              {
                 "field": "name",
                 "width": 170
               },
@@ -549,13 +645,24 @@
             "cells": {
               "contact": {
                 "summary": {
-                  "type": "Control",
-                  "scope": "#/properties/city"
+                  "type": "Label",
+                  "text": "{city} · {phone}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "city": "{item.contact.city}",
+                      "phone": "{item.contact.phone}"
+                    }
+                  }
                 },
                 "dialog": {
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                },
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
                 }
               },
               "experience": {
@@ -567,6 +674,19 @@
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                }
+              },
+              "applicantSummary": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{name} — {email}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "name": "{item.name}",
+                      "email": "{item.email}"
+                    }
+                  }
                 }
               }
             }
@@ -669,6 +789,12 @@
             "variant": "ag-grid",
             "columnDefs": [
               {
+                "field": "applicantSummary",
+                "scope": "#",
+                "headerName": "Applicant summary",
+                "width": 260
+              },
+              {
                 "field": "name",
                 "width": 170
               },
@@ -689,13 +815,24 @@
             "cells": {
               "contact": {
                 "summary": {
-                  "type": "Control",
-                  "scope": "#/properties/city"
+                  "type": "Label",
+                  "text": "{city} · {phone}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "city": "{item.contact.city}",
+                      "phone": "{item.contact.phone}"
+                    }
+                  }
                 },
                 "dialog": {
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                },
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
                 }
               },
               "experience": {
@@ -707,6 +844,19 @@
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                }
+              },
+              "applicantSummary": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{name} — {email}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "name": "{item.name}",
+                      "email": "{item.email}"
+                    }
+                  }
                 }
               }
             }
@@ -810,6 +960,12 @@
             "variant": "ag-grid",
             "columnDefs": [
               {
+                "field": "applicantSummary",
+                "scope": "#",
+                "headerName": "Applicant summary",
+                "width": 260
+              },
+              {
                 "field": "name",
                 "width": 170
               },
@@ -830,13 +986,24 @@
             "cells": {
               "contact": {
                 "summary": {
-                  "type": "Control",
-                  "scope": "#/properties/city"
+                  "type": "Label",
+                  "text": "{city} · {phone}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "city": "{item.contact.city}",
+                      "phone": "{item.contact.phone}"
+                    }
+                  }
                 },
                 "dialog": {
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                },
+                "detail": {
+                  "type": "Control",
+                  "scope": "#"
                 }
               },
               "experience": {
@@ -848,6 +1015,19 @@
                   "width": 720,
                   "draggable": true,
                   "resizable": true
+                }
+              },
+              "applicantSummary": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{name} — {email}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "name": "{item.name}",
+                      "email": "{item.email}"
+                    }
+                  }
                 }
               }
             }

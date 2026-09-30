@@ -18,3 +18,28 @@ All presentations share pagination defaults. Explicit `agGridOptions.columnDefs`
 See docs/spec.md §18.21.1.
 
 Cell dialogs request 720px width; row dialogs request 900px by 75vh. Both enable dragging and resizing, with maximize/restore available in the header.
+
+## Label summaries and row context
+
+All normal-table and AG Grid presentations include an Applicant summary column
+bound to the whole row with `columnDefs[].scope: "#"`. Its `field` is a stable
+column key, not a new schema property. Its Label summary interpolates
+`{name} — {email}` through declared textParams and has no edit action because no detail is supplied.
+The Contact column uses a Label summary with `{city} · {phone}` through declared textParams against
+`item.contact.city` and `item.contact.phone`, and retains its explicit detail editor and validation marker.
+Applicant parameters use `item.name` and `item.email`; `data` still denotes the whole form.
+The dynamicValues gate must be enabled to access either namespace. Label summaries do not display object/array type icons.
+These examples require the existing Label interpolation renderer capability.
+
+## Checks to try
+
+- In an AG Grid presentation, filter Contact with Contains `Boston`, then
+  `555-0100`: both search the resolved summary text.
+- Sort Applicant summary or Contact in either direction. Editing still opens
+  the original row even after sorting, filtering or changing pages.
+- Resize a long summary column smaller: its text should truncate without forcing
+  unrelated columns wider. Scroll the table when its combined widths overflow.
+- Change a row value and verify its Label updates. `item` always means the current
+  source row; `data` continues to provide the whole form.
+- Turn off dynamic values: row/root expressions must not expose their values
+  through rendering, sorting or filtering.

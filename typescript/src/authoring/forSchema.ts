@@ -96,7 +96,7 @@ export type OptionsFor<Sub> = CommonControlOptions &
         collapsible?: boolean;
         collapsed?: boolean;
         table?: boolean;
-        columnDefs?: { field: string; width?: number; minWidth?: number; maxWidth?: number }[];
+        columnDefs?: { field: string; scope?: '#'; headerName?: string; width?: number; minWidth?: number; maxWidth?: number }[];
         pagination?: PaginationOptions;
         additionalItems?: { pagination?: PaginationOptions };
         rowDetail?: RowDetailOptions;
