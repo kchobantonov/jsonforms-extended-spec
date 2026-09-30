@@ -3785,6 +3785,20 @@ is dispatched through the renderer registry. `data` remains the whole form root;
 Label summaries omit object/array type icons. Existing localization, interpolation
 and escaping rules apply;
 for example, `{"type":"Label","text":"{city} · {phone}","options":{"interpolate":true,"textParams":{"city":"{item.contact.city}","phone":"{item.contact.phone}"}}}`.
+Label summary text remains selectable for copying; clicking the text does not
+open an editor. Show a separate edit icon button only when an explicit `detail`
+is configured, with a localized tooltip and accessible name. Without `detail`,
+there is no dialog-opening action. This applies to normal tables and AG Grid.
+A Label summary without explicit details must not display cell validation errors.
+With explicit details, its cell indicator includes only errors under the Control
+scopes exposed by that detail layout. For example, Full name editing firstName
+and lastName must not inherit a Notes error from the same row. Row and collection
+indicators continue to include all their errors. A detail Control scoped to `#`
+includes errors throughout its bound value.
+A virtual Full name column can interpolate `{item.firstName}` and
+`{item.lastName}` and supply a detail layout with controls for those two row
+properties. A row-bound column must not offer an action to clear the whole row.
+
 Summary rendering is read-only and does not mutate form data. Updates to the
 bound value refresh the summary. Label summaries require the corresponding
 Label capability; interpolation is provided by the extended renderer set.
@@ -6136,6 +6150,62 @@ forms may still grow vertically when many items are expanded; pagination or
 virtualization remains a possible improvement, not a promise of current support.
 These presentation recommendations do not change validation, selection,
 pagination defaults, or deletion policy.
+
+### 18.21.4 Suggested collection UX improvements
+
+The following are suggestions for further design and verification across normal
+tables, AG Grid, lists with detail, and expandable item panels. They do not
+introduce new configuration options or assert reference-renderer support.
+Existing normative validation, access, pagination and confirmation rules still
+apply.
+
+- **Errors in hidden row fields.** Consider a row-level error indicator that
+  includes fields absent from the visible columns. Activating it could open
+  the row detail and select the relevant tab or field.
+- **Errors across pages.** Consider a collection-wide error count and a
+  “Go to first error” action that reveals the affected page and item. Counts
+  and navigation should respect the existing error-visibility policy.
+- **Stable selection.** Verify that sorting, filtering and pagination retain
+  the selected source item's identity. Define a predictable result after
+  deleting the selected item, such as selecting a neighbouring item or showing
+  the no-selection state. Avoid silently displaying a different item's detail
+  because its visible index matches the previous selection.
+- **Pending detail edits.** Audit every dismissal or navigation route against
+  the existing discard-confirmation policy: Cancel, close button, Escape,
+  backdrop click, switching rows and hiding a detail panel. Preserve the
+  distinction between staged dialog edits and live panel edits.
+- **Markdown summaries in grid operations.** Prefer readable text for sorting
+  and filtering, excluding Markdown delimiters such as `**` and `~~`.
+  For example, a summary displayed as bold “Boston” should filter and sort as
+  “Boston”. Retain the same interpolation access gates; do not extract values
+  from hidden or refused content.
+- **Keyboard interaction.** Verify that hover-revealed edit and clear actions
+  also appear on keyboard focus, dialog closure returns focus to its opener
+  or a sensible surviving control, and column/pane resize handles support
+  keyboard operation.
+- **Empty and filtered collections.** Distinguish “No items” from “No matching
+  items”. If an added item is excluded by an active filter, consider explaining
+  the result and offering a way to reveal it without silently clearing filters.
+- **Combined layout stress cases.** Check narrow panes, long translated labels,
+  validation counts, action buttons, nested dialogs and long summaries together.
+  Keep actions reachable and apply overflow at the appropriate collection or
+  pane boundary.
+
+**Reference implementation progress.** The React Ant Design and shadcn tables
+now provide collection-wide displayed-error counts and navigation to the first
+affected source row, including another page. Where row details are configured,
+the action opens them; selecting a nested detail tab or focusing the exact field
+is not yet implemented. Row detail action areas include descendant error counts.
+AG Grid uses readable Markdown summary text for sorting/filtering and explains
+when a newly added item is filtered out, with an explicit Clear filters action.
+These additions reuse validation results through a shared path index and cache
+resolved grid summaries with a bounded cache invalidated by form/config/locale
+changes. No additional validation pass is required.
+
+Suggested priorities are readable Markdown sorting/filtering, navigation to
+errors in hidden fields, and stable selection through collection changes.
+Object/array summary error indicators and bounded expandable collections remain
+covered by their respective validation and overflow sections.
 
 ### 18.22 Item labels
 

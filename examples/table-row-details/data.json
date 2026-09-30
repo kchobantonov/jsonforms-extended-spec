@@ -19,7 +19,9 @@
           "role": "Team lead",
           "years": 1
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "01"
     },
     {
       "name": "Applicant 02",
@@ -40,7 +42,9 @@
           "role": "Team lead",
           "years": 2
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "02"
     },
     {
       "name": "Applicant 03",
@@ -61,7 +65,9 @@
           "role": "Team lead",
           "years": 3
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "03"
     },
     {
       "name": "Applicant 04",
@@ -82,7 +88,9 @@
           "role": "Team lead",
           "years": 1
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "04"
     },
     {
       "name": "Applicant 05",
@@ -103,7 +111,9 @@
           "role": "Team lead",
           "years": 2
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "05"
     },
     {
       "name": "Applicant 06",
@@ -124,12 +134,14 @@
           "role": "Team lead",
           "years": 3
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "06"
     },
     {
       "name": "Applicant 07",
       "email": "applicant7@example.com",
-      "notes": "Interview availability to confirm.",
+      "notes": "",
       "contact": {
         "city": "Boston",
         "phone": "555-01006"
@@ -145,7 +157,9 @@
           "role": "Team lead",
           "years": 1
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "07"
     },
     {
       "name": "Applicant 08",
@@ -166,7 +180,9 @@
           "role": "Team lead",
           "years": 2
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "08"
     },
     {
       "name": "Applicant 09",
@@ -187,7 +203,9 @@
           "role": "Team lead",
           "years": 3
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "09"
     },
     {
       "name": "Applicant 10",
@@ -208,7 +226,9 @@
           "role": "Team lead",
           "years": 1
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "10"
     },
     {
       "name": "Applicant 11",
@@ -229,7 +249,9 @@
           "role": "Team lead",
           "years": 2
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "11"
     },
     {
       "name": "Applicant 12",
@@ -250,7 +272,9 @@
           "role": "Team lead",
           "years": 3
         }
-      ]
+      ],
+      "firstName": "Applicant",
+      "lastName": "12"
     }
   ]
 }

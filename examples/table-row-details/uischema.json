@@ -34,7 +34,10 @@
                           "multi": true
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -59,7 +62,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -89,7 +95,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   }
                 ]
               },
@@ -106,6 +115,12 @@
                 "scope": "#",
                 "headerName": "Applicant summary",
                 "width": 260
+              },
+              {
+                "field": "fullName",
+                "scope": "#",
+                "headerName": "Full name",
+                "width": 220
               },
               {
                 "field": "name",
@@ -129,7 +144,7 @@
               "contact": {
                 "summary": {
                   "type": "Label",
-                  "text": "{city} · {phone}",
+                  "text": "{city} \u00b7 {phone}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -162,7 +177,7 @@
               "applicantSummary": {
                 "summary": {
                   "type": "Label",
-                  "text": "{name} — {email}",
+                  "text": "{name} \u2014 {email}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -171,11 +186,40 @@
                     }
                   }
                 }
+              },
+              "fullName": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{first} {last}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "first": "{item.firstName}",
+                      "last": "{item.lastName}"
+                    }
+                  }
+                },
+                "detail": {
+                  "type": "VerticalLayout",
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/firstName"
+                    },
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/lastName"
+                    }
+                  ]
+                }
               }
             }
           }
         }
-      ]
+      ],
+      "options": {
+        "showValidationIndicator": true
+      }
     },
     {
       "type": "Category",
@@ -210,7 +254,10 @@
                           "multi": true
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -235,7 +282,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -265,7 +315,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   }
                 ]
               }
@@ -276,6 +329,12 @@
                 "scope": "#",
                 "headerName": "Applicant summary",
                 "width": 260
+              },
+              {
+                "field": "fullName",
+                "scope": "#",
+                "headerName": "Full name",
+                "width": 220
               },
               {
                 "field": "name",
@@ -299,7 +358,7 @@
               "contact": {
                 "summary": {
                   "type": "Label",
-                  "text": "{city} · {phone}",
+                  "text": "{city} \u00b7 {phone}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -332,7 +391,7 @@
               "applicantSummary": {
                 "summary": {
                   "type": "Label",
-                  "text": "{name} — {email}",
+                  "text": "{name} \u2014 {email}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -341,11 +400,40 @@
                     }
                   }
                 }
+              },
+              "fullName": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{first} {last}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "first": "{item.firstName}",
+                      "last": "{item.lastName}"
+                    }
+                  }
+                },
+                "detail": {
+                  "type": "VerticalLayout",
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/firstName"
+                    },
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/lastName"
+                    }
+                  ]
+                }
               }
             }
           }
         }
-      ]
+      ],
+      "options": {
+        "showValidationIndicator": true
+      }
     },
     {
       "type": "Category",
@@ -381,7 +469,10 @@
                           "multi": true
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -406,7 +497,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -436,7 +530,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   }
                 ]
               }
@@ -447,6 +544,12 @@
                 "scope": "#",
                 "headerName": "Applicant summary",
                 "width": 260
+              },
+              {
+                "field": "fullName",
+                "scope": "#",
+                "headerName": "Full name",
+                "width": 220
               },
               {
                 "field": "name",
@@ -470,7 +573,7 @@
               "contact": {
                 "summary": {
                   "type": "Label",
-                  "text": "{city} · {phone}",
+                  "text": "{city} \u00b7 {phone}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -503,7 +606,7 @@
               "applicantSummary": {
                 "summary": {
                   "type": "Label",
-                  "text": "{name} — {email}",
+                  "text": "{name} \u2014 {email}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -512,11 +615,40 @@
                     }
                   }
                 }
+              },
+              "fullName": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{first} {last}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "first": "{item.firstName}",
+                      "last": "{item.lastName}"
+                    }
+                  }
+                },
+                "detail": {
+                  "type": "VerticalLayout",
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/firstName"
+                    },
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/lastName"
+                    }
+                  ]
+                }
               }
             }
           }
         }
-      ]
+      ],
+      "options": {
+        "showValidationIndicator": true
+      }
     },
     {
       "type": "Category",
@@ -550,7 +682,10 @@
                           "multi": true
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -575,7 +710,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -605,7 +743,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   }
                 ]
               },
@@ -623,6 +764,12 @@
                 "scope": "#",
                 "headerName": "Applicant summary",
                 "width": 260
+              },
+              {
+                "field": "fullName",
+                "scope": "#",
+                "headerName": "Full name",
+                "width": 220
               },
               {
                 "field": "name",
@@ -646,7 +793,7 @@
               "contact": {
                 "summary": {
                   "type": "Label",
-                  "text": "{city} · {phone}",
+                  "text": "{city} \u00b7 {phone}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -679,7 +826,7 @@
               "applicantSummary": {
                 "summary": {
                   "type": "Label",
-                  "text": "{name} — {email}",
+                  "text": "{name} \u2014 {email}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -688,11 +835,40 @@
                     }
                   }
                 }
+              },
+              "fullName": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{first} {last}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "first": "{item.firstName}",
+                      "last": "{item.lastName}"
+                    }
+                  }
+                },
+                "detail": {
+                  "type": "VerticalLayout",
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/firstName"
+                    },
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/lastName"
+                    }
+                  ]
+                }
               }
             }
           }
         }
-      ]
+      ],
+      "options": {
+        "showValidationIndicator": true
+      }
     },
     {
       "type": "Category",
@@ -726,7 +902,10 @@
                           "multi": true
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -751,7 +930,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -781,7 +963,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   }
                 ]
               }
@@ -793,6 +978,12 @@
                 "scope": "#",
                 "headerName": "Applicant summary",
                 "width": 260
+              },
+              {
+                "field": "fullName",
+                "scope": "#",
+                "headerName": "Full name",
+                "width": 220
               },
               {
                 "field": "name",
@@ -816,7 +1007,7 @@
               "contact": {
                 "summary": {
                   "type": "Label",
-                  "text": "{city} · {phone}",
+                  "text": "{city} \u00b7 {phone}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -849,7 +1040,7 @@
               "applicantSummary": {
                 "summary": {
                   "type": "Label",
-                  "text": "{name} — {email}",
+                  "text": "{name} \u2014 {email}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -858,11 +1049,40 @@
                     }
                   }
                 }
+              },
+              "fullName": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{first} {last}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "first": "{item.firstName}",
+                      "last": "{item.lastName}"
+                    }
+                  }
+                },
+                "detail": {
+                  "type": "VerticalLayout",
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/firstName"
+                    },
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/lastName"
+                    }
+                  ]
+                }
               }
             }
           }
         }
-      ]
+      ],
+      "options": {
+        "showValidationIndicator": true
+      }
     },
     {
       "type": "Category",
@@ -897,7 +1117,10 @@
                           "multi": true
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -922,7 +1145,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   },
                   {
                     "type": "Category",
@@ -952,7 +1178,10 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "options": {
+                      "showValidationIndicator": true
+                    }
                   }
                 ]
               }
@@ -964,6 +1193,12 @@
                 "scope": "#",
                 "headerName": "Applicant summary",
                 "width": 260
+              },
+              {
+                "field": "fullName",
+                "scope": "#",
+                "headerName": "Full name",
+                "width": 220
               },
               {
                 "field": "name",
@@ -987,7 +1222,7 @@
               "contact": {
                 "summary": {
                   "type": "Label",
-                  "text": "{city} · {phone}",
+                  "text": "{city} \u00b7 {phone}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -1020,7 +1255,7 @@
               "applicantSummary": {
                 "summary": {
                   "type": "Label",
-                  "text": "{name} — {email}",
+                  "text": "{name} \u2014 {email}",
                   "options": {
                     "interpolate": true,
                     "textParams": {
@@ -1029,11 +1264,40 @@
                     }
                   }
                 }
+              },
+              "fullName": {
+                "summary": {
+                  "type": "Label",
+                  "text": "{first} {last}",
+                  "options": {
+                    "interpolate": true,
+                    "textParams": {
+                      "first": "{item.firstName}",
+                      "last": "{item.lastName}"
+                    }
+                  }
+                },
+                "detail": {
+                  "type": "VerticalLayout",
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/firstName"
+                    },
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/lastName"
+                    }
+                  ]
+                }
               }
             }
           }
         }
-      ]
+      ],
+      "options": {
+        "showValidationIndicator": true
+      }
     }
   ]
 }

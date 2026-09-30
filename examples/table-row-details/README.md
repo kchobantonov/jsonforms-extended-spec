@@ -43,3 +43,27 @@ These examples require the existing Label interpolation renderer capability.
   source row; `data` continues to provide the whole form.
 - Turn off dynamic values: row/root expressions must not expose their values
   through rendering, sorting or filtering.
+
+## Collection error navigation
+
+Applicant 07 intentionally has empty Notes, which violates minLength. Notes is
+not a table column and the row starts on page two. The collection footer shows
+the error count; “Go to first error” reveals the page and opens the row details.
+The row action area also shows its error count. Correct Notes and the indicators
+disappear. AG Grid keeps active filters; the detail editor can still open when
+the affected row is filtered out.
+
+### Label summary editing
+
+All six table variants include a Full name virtual column. Its selectable Label
+combines firstName and lastName; the pencil opens a dialog editing those two
+fields. Applicant summary has no detail and therefore no edit button. Neither
+virtual column offers a clear-row action. The original Name remains a separate
+field in this example.
+
+### Tab validation indicators
+
+Categories explicitly enable `showValidationIndicator`, including Applicant,
+Contact, and Experience in row details. Applicant 07 has an invalid Notes value,
+so its Applicant tab shows the error marker even while another tab is selected.
+The marker clears when the draft value becomes valid.
