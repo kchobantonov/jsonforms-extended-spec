@@ -1611,6 +1611,11 @@
         "resizable": {
           "type": "boolean",
           "default": true
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": false,
+          "description": "Initial panel visibility: true starts hidden; false starts visible. Panel presentation only."
         }
       },
       "allOf": [
@@ -1633,6 +1638,11 @@
                 {
                   "required": [
                     "resizable"
+                  ]
+                },
+                {
+                  "required": [
+                    "collapsed"
                   ]
                 }
               ]

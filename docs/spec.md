@@ -5723,8 +5723,17 @@ Apply commits atomically, Cancel/close discards it under the existing draft and
 confirmation contracts. Recheck identity and mutation guards on Apply; stale
 external replacements must not be overwritten. Read-only users may inspect details.
 Panel presentation shows a selectable table beside a persistent item editor;
-placement is right (default) or bottom, and resizable defaults true. Placement and
-resizable are invalid on dialog presentation. Panel edits follow ListWithDetail's
+placement is right (default) or bottom, and resizable defaults true.
+`options.rowDetail.collapsed` sets initial visibility: `true` starts with the detail
+pane hidden; omitted or `false` starts visible. It applies to both placements.
+The localized show/hide action beside Add toggles visibility without clearing the
+selected row or changing data. Hiding details leaves the table visible and usable.
+This is an initial state, not a controlled visibility value: ordinary data updates
+must preserve the user's choice. Placement, resizable and collapsed are invalid
+on dialog presentation.
+
+For example, `"rowDetail": { "presentation": "panel", "placement": "bottom", "collapsed": true }`
+starts with only the table visible. Panel edits follow ListWithDetail's
 immediate update contract; show its selection prompt when nothing is selected.
 Inline cells may coexist with either presentation.
 

@@ -64,8 +64,8 @@ export type PaginationOptions = boolean | {
   pageSizeOptions?: number[];
 };
 export type RowDetailOptions =
-  | { presentation: 'dialog'; detail?: unknown; placement?: never; resizable?: never }
-  | { presentation: 'panel'; detail?: unknown; placement?: 'right' | 'bottom'; resizable?: boolean };
+  | { presentation: 'dialog'; detail?: unknown; placement?: never; resizable?: never; collapsed?: never }
+  | { presentation: 'panel'; detail?: unknown; placement?: 'right' | 'bottom'; resizable?: boolean; collapsed?: boolean };
 
 export type OptionsFor<Sub> = CommonControlOptions &
   (Sub extends { type: 'number' | 'integer' }
