@@ -165,3 +165,8 @@ or its validation. Labels have matching English and Bulgarian translations.
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Span**, **Weight**, **Sizing precedence**, **Hidden children**, **Spacer**, **Wrapping**, **Conditional columns**, **Fixed and automatic widths**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.

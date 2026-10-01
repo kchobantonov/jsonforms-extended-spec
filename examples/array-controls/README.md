@@ -216,3 +216,12 @@ required by this package.
 All array presentations enable `collapsible`. Use the header toggle to hide and
 restore the panel body without losing data or item expansion. Set `collapsed: true`
 to start closed; item `initCollapsed` remains independent.
+
+The reviewers `contains` rule requires at least one entry with `lead: true`.
+The field-specific `arrayControls.reviewers.error.contains` translation explains how to fix
+that array error in English and Bulgarian, without overriding other contains
+messages or requiring the ajv-errors plugin.
+
+The Reviewers control explicitly declares `i18n: "arrayControls.reviewers"`,
+so the custom error message is scoped to this example rather than the generic
+`reviewers` data path.

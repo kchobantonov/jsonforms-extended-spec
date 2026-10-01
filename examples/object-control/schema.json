@@ -188,6 +188,65 @@
           "title": "Cost centre"
         }
       }
+    },
+    "staticTitled": {
+      "type": "object",
+      "title": "Static fields",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "title": "Reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "staticUntitled": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "title": "Reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dynamicTitled": {
+      "type": "object",
+      "title": "Dynamic fields",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "dynamicUntitled": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "mixedTitled": {
+      "type": "object",
+      "title": "Static and dynamic fields",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "title": "Reference"
+        }
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "mixedUntitled": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string",
+          "title": "Reference"
+        }
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
     }
   }
 }

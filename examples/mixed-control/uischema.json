@@ -2,22 +2,85 @@
   "type": "VerticalLayout",
   "elements": [
     {
-      "type": "Label",
-      "text": "A mixed value carries its own type. The selector says which, the editor beside it says what."
-    },
-    { "type": "Control", "scope": "#/properties/label" },
-    { "type": "Control", "scope": "#/properties/quantity" },
-    { "type": "Separator" },
-    { "type": "Label", "text": "Null, absent, and a value the schema refuses" },
-    { "type": "Control", "scope": "#/properties/surcharge" },
-    { "type": "Control", "scope": "#/properties/reference" },
-    { "type": "Control", "scope": "#/properties/priority" },
-    { "type": "Separator" },
-    { "type": "Label", "text": "Structured values, and an unconstrained one" },
-    { "type": "Control", "scope": "#/properties/payload" },
-    { "type": "Control", "scope": "#/properties/anything" },
-    { "type": "Separator" },
-    { "type": "Label", "text": "Mixed values inside an array" },
-    { "type": "Control", "scope": "#/properties/assignment" }
+      "type": "Categorization",
+      "elements": [
+        {
+          "type": "Category",
+          "label": "Scalar types",
+          "i18n": "featureNavigation.section1",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "A mixed value carries its own type. The selector says which, the editor beside it says what."
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/label"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/quantity"
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Null and invalid values",
+          "i18n": "featureNavigation.section2",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Null, absent, and a value the schema refuses"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/surcharge"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/reference"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/priority"
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Structured values",
+          "i18n": "featureNavigation.section3",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Structured values, and an unconstrained one"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/payload"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/anything"
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Array items",
+          "i18n": "featureNavigation.section4",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Mixed values inside an array"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/assignment"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }

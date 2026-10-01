@@ -1,10 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "JSON Forms configuration \u2014 common profile",
+  "title": "JSON Forms configuration — common profile",
   "description": "Form-wide defaults for controls, layouts, validation messages and shared extensions. Individual elements can override applicable defaults in their options.",
   "type": "object",
   "additionalProperties": true,
   "properties": {
+    "showTypeIndicator": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show object and array type markers in composite cells. Per-cell showTypeIndicator overrides this default, including false."
+    },
     "restrict": {
       "type": "boolean",
       "default": true,
@@ -265,8 +270,8 @@
         },
         "showValidationIndicatorCount": {
           "type": "boolean",
-          "default": true,
-          "description": "Includes the number of errors in a validation indicator. False shows the marker without a count."
+          "default": false,
+          "description": "Opt in to computing and presenting the container error count. Omitted or false uses an error-presence marker without computing a count."
         },
         "confirmation": {
           "allOf": [

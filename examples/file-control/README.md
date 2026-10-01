@@ -73,3 +73,27 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+## Files in table cells
+
+The Table and AG Grid tabs edit the same supporting-document rows. Each row
+contains a document name, a single-file picker, and a multiple-file picker in
+the Related files column. Both table controls explicitly include that array
+column using `options.cells.files: {}`. The first row starts with two files,
+including a long filename to demonstrate truncation and its tooltip. Try replacing
+and clearing a file, then adding and removing rows. Clearing a required file
+should show validation feedback without a repeated field label or help paragraph
+inside the cell. The fixture starts valid.
+
+String-valued pickers select one file. Arrays whose homogeneous items are file
+strings use the same renderer with multiple selection. Supporting files appends
+a batch to an array with minItems: 1, maxItems: 3 and uniqueItems: true.
+The restricted example prevents count violations; the validation-only example
+allows them and exposes normal schema errors. Related files also demonstrates
+an array-valued file cell in both table presentations. Remove files individually;
+the selected batch is appended in chooser order.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Multiple files**, **Single-file encodings**, **File-size limits**, **Table cells**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.

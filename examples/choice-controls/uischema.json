@@ -2,104 +2,132 @@
   "type": "VerticalLayout",
   "elements": [
     {
-      "type": "Label",
-      "text": "Radio group: horizontal by default, wrapping when it runs out of room"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/processing",
-      "options": {
-        "format": "radio"
-      }
-    },
-    {
-      "type": "Separator"
-    },
-    {
-      "type": "Label",
-      "text": "The same control with options.vertical: true"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/workspace",
-      "options": {
-        "format": "radio",
-        "vertical": true
-      }
-    },
-    {
-      "type": "Separator"
-    },
-    {
-      "type": "Label",
-      "text": "Constant-based oneOf choices, stacked"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/department",
-      "options": {
-        "format": "radio",
-        "vertical": true
-      },
-      "i18n": "department"
-    },
-    {
-      "type": "Separator"
-    },
-    {
-      "type": "Label",
-      "text": "Value identity and the unselected state"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/priority",
-      "options": {
-        "format": "radio"
-      }
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/region",
-      "options": {
-        "format": "radio"
-      }
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/supplier",
-      "options": {
-        "format": "radio"
-      }
-    },
-    {
-      "type": "Separator"
-    },
-    {
-      "type": "Label",
-      "text": "Searchable finite choices: options.autocomplete"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/origin",
-      "options": {
-        "autocomplete": true
-      }
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/handler",
-      "options": {
-        "autocomplete": true
-      },
-      "i18n": "handler"
-    },
-    {
-      "type": "Label",
-      "text": "The same choices without it, which is this family's default"
-    },
-    {
-      "type": "Control",
-      "scope": "#/properties/origin"
+      "type": "Categorization",
+      "elements": [
+        {
+          "type": "Category",
+          "label": "Horizontal radio",
+          "i18n": "featureNavigation.section1",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Radio group: horizontal by default, wrapping when it runs out of room"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/processing",
+              "options": {
+                "format": "radio"
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Vertical radio",
+          "i18n": "featureNavigation.section2",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "The same control with options.vertical: true"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/workspace",
+              "options": {
+                "format": "radio",
+                "vertical": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Constant choices",
+          "i18n": "featureNavigation.section3",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Constant-based oneOf choices, stacked"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/department",
+              "options": {
+                "format": "radio",
+                "vertical": true
+              },
+              "i18n": "department"
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Value identity",
+          "i18n": "featureNavigation.section4",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Value identity and the unselected state"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/priority",
+              "options": {
+                "format": "radio"
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/region",
+              "options": {
+                "format": "radio"
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/supplier",
+              "options": {
+                "format": "radio"
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Searchable choices",
+          "i18n": "featureNavigation.section5",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Searchable finite choices: options.autocomplete"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/origin",
+              "options": {
+                "autocomplete": true
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/handler",
+              "options": {
+                "autocomplete": true
+              },
+              "i18n": "handler"
+            },
+            {
+              "type": "Label",
+              "text": "The same choices without it, which is this family's default"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/origin"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

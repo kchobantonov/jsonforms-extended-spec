@@ -1,4 +1,4 @@
-# Recruitment: row detail presentations
+# Table row details: recruitment
 
 One applicant collection with dialog, side panel, and bottom panel details, each shown with a normal table and AG Grid. Both use `options.rowDetail.detail`, an item-relative UI schema for the whole row.
 

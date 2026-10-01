@@ -14,6 +14,18 @@
     ]
   },
   {
+    "id": "additional-items-pagination",
+    "title": "Additional items pagination: shipping",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
     "id": "additional-properties",
     "title": "Additional properties",
     "files": [
@@ -24,6 +36,19 @@
       "uischema.json"
     ],
     "hostRequirements": []
+  },
+  {
+    "id": "ag-grid",
+    "title": "AG Grid: portable options and native overrides",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Register AG Grid and composite cells from the extended renderer set. Use Ant Design or shadcn for the row-detail presentations."
+    ]
   },
   {
     "id": "array-choices",
@@ -111,6 +136,17 @@
     "hostRequirements": []
   },
   {
+    "id": "collection-pagination",
+    "title": "Collection pagination: recruitment",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
     "id": "color-control",
     "title": "Color control",
     "files": [
@@ -170,6 +206,17 @@
     "hostRequirements": []
   },
   {
+    "id": "draft-07-metaschema",
+    "title": "Draft-07 metaschema",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
     "id": "file-control",
     "title": "File control",
     "files": [
@@ -191,6 +238,20 @@
       "uischema.json"
     ],
     "hostRequirements": []
+  },
+  {
+    "id": "kitchen-sink",
+    "title": "Kitchen sink: job application",
+    "files": [
+      "schema.json",
+      "uischema.json",
+      "data.json",
+      "translations.json",
+      "config.json"
+    ],
+    "hostRequirements": [
+      "Register base and extended renderers/cells, including AG Grid and Monaco. Enable standard format validation and load English or Bulgarian renderer messages. Phone validation checks international syntax, not assignment or reachability."
+    ]
   },
   {
     "id": "label-interpolation",
@@ -254,7 +315,7 @@
   },
   {
     "id": "numeric-controls",
-    "title": "Number and integer controls",
+    "title": "Numeric controls: numbers and integers",
     "files": [
       "config.json",
       "data.json",
@@ -315,6 +376,17 @@
     "hostRequirements": []
   },
   {
+    "id": "property-pagination",
+    "title": "Property pagination: booking",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
     "id": "split-layout",
     "title": "Split layout",
     "files": [
@@ -334,6 +406,17 @@
       "data.json",
       "schema.json",
       "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
+    "id": "table-row-details",
+    "title": "Table row details: recruitment",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
       "uischema.json"
     ],
     "hostRequirements": []
@@ -389,63 +472,6 @@
     ],
     "hostRequirements": [
       "Install the extended validator profile in spec.md; plain JSON Schema validation does not implement transforms, dynamic defaults or custom error messages."
-    ]
-  },
-  {
-    "id": "collection-pagination",
-    "title": "Recruitment: table pagination",
-    "files": [
-      "config.json",
-      "data.json",
-      "schema.json",
-      "uischema.json"
-    ],
-    "hostRequirements": []
-  },
-  {
-    "id": "table-row-details",
-    "title": "Recruitment: row detail presentations",
-    "files": [
-      "config.json",
-      "data.json",
-      "schema.json",
-      "uischema.json"
-    ],
-    "hostRequirements": []
-  },
-  {
-    "id": "property-pagination",
-    "title": "Booking: dynamic reference properties",
-    "files": [
-      "config.json",
-      "data.json",
-      "schema.json",
-      "uischema.json"
-    ],
-    "hostRequirements": []
-  },
-  {
-    "id": "additional-items-pagination",
-    "title": "Shipping: additional items pagination",
-    "files": [
-      "config.json",
-      "data.json",
-      "schema.json",
-      "uischema.json"
-    ],
-    "hostRequirements": []
-  },
-  {
-    "id": "ag-grid",
-    "title": "AG Grid: portable options and native overrides",
-    "files": [
-      "config.json",
-      "data.json",
-      "schema.json",
-      "uischema.json"
-    ],
-    "hostRequirements": [
-      "Register AG Grid and composite cells from the extended renderer set. Use Ant Design or shadcn for the row-detail presentations."
     ]
   }
 ]

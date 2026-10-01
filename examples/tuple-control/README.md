@@ -328,3 +328,8 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 - Register the trusted tester functions exported by uischemas.mjs.
 
 Import `uischemas` from [uischemas.mjs](uischemas.mjs) and register its entries.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Positional editors**, **Missing and trailing values**, **Complex and invalid values**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.

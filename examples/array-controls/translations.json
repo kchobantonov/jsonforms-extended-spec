@@ -15,7 +15,8 @@
     "disabled.text": "The opening checklist is fixed: disableAdd and disableRemove take the buttons away, and every field stays editable.",
     "contains.text": "The reviewers array must contain a lead. That failure belongs to the array, not to any one reviewer - and it is reported even when the array is empty.",
     "cellsTab.label": "Scalar and composite cells",
-    "cells.text": "Both views edit the same staff. Try each scalar type, open address and phone details, clear a draft and cancel or apply it, and change grid pages. Sorting changes the view; row dragging changes the stored order."
+    "cells.text": "Both views edit the same staff. Try each scalar type, open address and phone details, clear a draft and cancel or apply it, and change grid pages. Sorting changes the view; row dragging changes the stored order.",
+    "arrayControls.reviewers.error.contains": "Select Lead for at least one reviewer."
   },
   "bg": {
     "intro.text": "Една схема, пет представяния. Кое от тях получавате зависи от формата на елемента и от изрични опции - не от данните.",
@@ -33,6 +34,7 @@
     "disabled.text": "Списъкът за откриване е фиксиран: disableAdd и disableRemove премахват бутоните, а всички полета остават редактируеми.",
     "contains.text": "Масивът с рецензенти трябва да съдържа водещ. Тази грешка принадлежи на масива, а не на конкретен рецензент - и се съобщава дори когато масивът е празен.",
     "cellsTab.label": "Прости и съставни клетки",
-    "cells.text": "Двата изгледа редактират един и същ екип. Изпробвайте простите типове, отворете адреса и телефоните, изчистете чернова и я отменете или приложете, и сменете страницата в таблицата. Сортирането променя изгледа; плъзгането на редове променя записания ред."
+    "cells.text": "Двата изгледа редактират един и същ екип. Изпробвайте простите типове, отворете адреса и телефоните, изчистете чернова и я отменете или приложете, и сменете страницата в таблицата. Сортирането променя изгледа; плъзгането на редове променя записания ред.",
+    "arrayControls.reviewers.error.contains": "Изберете „Водещ“ за поне един рецензент."
   }
 }

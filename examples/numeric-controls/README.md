@@ -1,11 +1,11 @@
-# Example: number and integer controls
+# Numeric controls: numbers and integers
 
 **Example ID:** `numeric-controls`\
-**Demo entry:** **Spec: Number and integer controls** (`#spec-numeric-controls`)\
+**Demo entry:** **Spec: Numeric controls: numbers and integers** (`#spec-numeric-controls`)\
 **Domain:** office stock line\
 **Specs covered:**
 
-- [Number and integer controls](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
+- [Numeric controls: numbers and integers](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
 - [Numeric parsing and representation limits](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
 - [Slider control](../../docs/spec.md#1819-scalar-controls-and-temporal-editing)
 
@@ -87,3 +87,8 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Integers**, **Numbers**, **Slider**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.

@@ -203,3 +203,8 @@ for confirmation; Cancel preserves it, while confirmation removes the value.
 Empty `{}` and `[]` values clear immediately. Change the policy to `always` to
 confirm empty containers too, or `never` to clear populated values immediately.
 Cell `confirmation.delete` overrides the renderer and global policy.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Delete policy**, **Array presentations**, **Type changes**, **Branch changes**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.

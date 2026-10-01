@@ -7,7 +7,12 @@
     "handler.eng": "Engineering",
     "handler.fin": "Finance",
     "handler.ops": "Operations",
-    "enum.noMatches": "No matching choices"
+    "enum.noMatches": "No matching choices",
+    "featureNavigation.section1.label": "Horizontal radio",
+    "featureNavigation.section2.label": "Vertical radio",
+    "featureNavigation.section3.label": "Constant choices",
+    "featureNavigation.section4.label": "Value identity",
+    "featureNavigation.section5.label": "Searchable choices"
   },
   "bg": {
     "department.eng": "Инженеринг",
@@ -17,6 +22,11 @@
     "handler.eng": "Инженеринг",
     "handler.fin": "Финанси",
     "handler.ops": "Операции",
-    "enum.noMatches": "Няма съвпадащи опции"
+    "enum.noMatches": "Няма съвпадащи опции",
+    "featureNavigation.section1.label": "Хоризонтален избор",
+    "featureNavigation.section2.label": "Вертикален избор",
+    "featureNavigation.section3.label": "Избори с константи",
+    "featureNavigation.section4.label": "Идентичност на стойностите",
+    "featureNavigation.section5.label": "Избори с търсене"
   }
 }

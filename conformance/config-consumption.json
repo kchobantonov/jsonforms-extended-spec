@@ -1379,6 +1379,17 @@
         "examples/additional-items-pagination/config.json"
       ],
       "finding": "Antd and shadcn TupleAdditionalItems consume scoped pagination through the shared collection pagination resolver; local additionalItems.pagination overrides."
+    },
+    {
+      "path": "config.showTypeIndicator",
+      "status": "consumed",
+      "evidence": [
+        "packages/jsonforms-react-antd-renderers/src/cells/AntdCompositeCell.tsx",
+        "packages/jsonforms-react-shadcn-renderers/src/cells/CompositeCell.tsx"
+      ],
+      "finding": "Composite cell type markers default to false; explicit cell options override the top-level config default.",
+      "declaredBefore": false,
+      "declaredAfter": true
     }
   ]
 }

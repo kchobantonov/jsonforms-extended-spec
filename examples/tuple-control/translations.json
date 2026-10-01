@@ -21,7 +21,10 @@
     "composite.edit": "Edit {label}",
     "composite.empty": "Clear",
     "error.minimum": "Enter {limit} or more.",
-    "error.maxItems": "This record holds at most {limit} values."
+    "error.maxItems": "This record holds at most {limit} values.",
+    "featureNavigation.section1.label": "Positional editors",
+    "featureNavigation.section2.label": "Missing and trailing values",
+    "featureNavigation.section3.label": "Complex and invalid values"
   },
   "bg": {
     "coordinates.x.label": "Източна координата",
@@ -45,6 +48,9 @@
     "composite.edit": "Редактиране на {label}",
     "composite.empty": "Изчистване",
     "error.minimum": "Въведете {limit} или повече.",
-    "error.maxItems": "Този запис съдържа най-много {limit} стойности."
+    "error.maxItems": "Този запис съдържа най-много {limit} стойности.",
+    "featureNavigation.section1.label": "Позиционни редактори",
+    "featureNavigation.section2.label": "Липсващи и допълнителни стойности",
+    "featureNavigation.section3.label": "Сложни и невалидни стойности"
   }
 }

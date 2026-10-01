@@ -21,5 +21,11 @@
   "quota": {
     "weekly": 40,
     "daily": 8
+  },
+  "inventory": {
+    "reference": "INV-204",
+    "quantity": 12,
+    "warehouse": "Portland",
+    "handling": "Keep dry"
   }
 }

@@ -12,7 +12,8 @@
 - [Honest rendering of invalid data](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
 - [Dynamic property names](../../docs/spec.md#1816-object-controls-and-dynamic-properties)
 
-Five objects whose keys are data rather than schema. The point of the example is
+Five objects whose keys are data rather than schema, plus an object combining
+static fields and dynamic properties. The point of the example is
 that **a key is a value too**: what it may be called, whether it can be reached
 by a data path, and whether it can be renamed or deleted are all separate
 questions, and they have different answers.
@@ -173,3 +174,15 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Dynamic properties**, **Imported keys**, **Option overrides**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
+
+## Static and dynamic properties
+
+The **Static and dynamic properties** tab shows **Inventory details** with schema-defined
+Reference and Quantity fields, followed by editable Warehouse and Handling keys
+in Additional Properties. Both sections belong inside the same object boundary.
+Static fields must not appear again in the dynamic list.

@@ -74,7 +74,7 @@ Those findings are not requirements to reproduce a particular adapter's behavior
 
 ## Collection presentation implementation tracking
 
-Verify renderer support for §18.21.1 pagination, row detail dialogs/panels and dynamic-property pagination. Schema and examples define the target, not implementation completion. Kitchen-sink domain tabs remain future example work.
+Verify renderer support for §18.21.1 pagination, row detail dialogs/panels and dynamic-property pagination. Schema and examples define the target, not implementation completion. The onboarding kitchen-sink example now provides eight domain tabs with bilingual labels and valid/invalid fixtures; live renderer parity still needs verification.
 
 ## Renderer/schema/authoring audit (React, 2026-09-29)
 

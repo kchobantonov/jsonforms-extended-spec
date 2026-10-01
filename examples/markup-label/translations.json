@@ -7,7 +7,11 @@
     "plainAsterisks.text": "Rates are 120 EUR* per seat (*excluding VAT).",
     "unsupported.text": "This notice was authored for a markup language this renderer set does not implement.",
     "fineprint.text": "Seats are held for **15 minutes** after you submit. See the [booking terms](https://example.com/terms).",
-    "error.required": "This field is required."
+    "error.required": "This field is required.",
+    "featureNavigation.section1.label": "Markdown content",
+    "featureNavigation.section2.label": "Headings and literal text",
+    "featureNavigation.section3.label": "Markup options",
+    "featureNavigation.section4.label": "Form integration"
   },
   "bg": {
     "joining.text": "**Инструкции за пристигане.** Вратите отварят в 09:00 ч. Носете имейла за потвърждение — кодът в него изглежда така: `WS-2417`. Прочетете [бележките за достъп до залата](https://example.com/venue) преди да тръгнете или пишете на [организаторите](mailto:workshops@example.com).",
@@ -17,6 +21,10 @@
     "plainAsterisks.text": "Цената е 120 EUR* на място (*без ДДС).",
     "unsupported.text": "Това съобщение е написано за език за маркиране, който този набор от рендери не поддържа.",
     "fineprint.text": "Местата се запазват за **15 минути** след изпращане. Вижте [условията за резервация](https://example.com/terms).",
-    "error.required": "Полето е задължително."
+    "error.required": "Полето е задължително.",
+    "featureNavigation.section1.label": "Markdown съдържание",
+    "featureNavigation.section2.label": "Заглавия и обикновен текст",
+    "featureNavigation.section3.label": "Настройки за маркиране",
+    "featureNavigation.section4.label": "Интеграция във формуляр"
   }
 }

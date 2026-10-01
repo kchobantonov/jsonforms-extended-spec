@@ -1,0 +1,9 @@
+{
+  "showUnfocusedDescription": true,
+  "jsonformsExtended": {
+    "showValidationIndicator": true,
+    "dynamicValues": {
+      "enabled": true
+    }
+  }
+}

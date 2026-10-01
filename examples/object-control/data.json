@@ -38,5 +38,25 @@
   },
   "billing": {
     "purchaseOrder": "PO-88213"
+  },
+  "staticTitled": {
+    "reference": "REF-104"
+  },
+  "staticUntitled": {
+    "reference": "REF-104"
+  },
+  "dynamicTitled": {
+    "department": "Operations"
+  },
+  "dynamicUntitled": {
+    "department": "Operations"
+  },
+  "mixedTitled": {
+    "reference": "REF-104",
+    "department": "Operations"
+  },
+  "mixedUntitled": {
+    "reference": "REF-104",
+    "department": "Operations"
   }
 }

@@ -27,7 +27,7 @@ The [catalog](catalog.json) lists files and required host capabilities.
 | [Markup labels](markup-label/README.md) | [10](../docs/spec.md#10-markdown-policy) |
 | [Mixed control](mixed-control/README.md) | [18.20](../docs/spec.md#1820-mixed-value-controls-and-navigation) |
 | [Null control](null-control/README.md) | [18](../docs/spec.md#18-renderer-behaviour-specifications) |
-| [Number and integer controls](numeric-controls/README.md) | [18.19](../docs/spec.md#1819-scalar-controls-and-temporal-editing) |
+| [Numeric controls: numbers and integers](numeric-controls/README.md) | [18.19](../docs/spec.md#1819-scalar-controls-and-temporal-editing) |
 | [Object control](object-control/README.md) | [18.16](../docs/spec.md#1816-object-controls-and-dynamic-properties) |
 | [Password control](password-control/README.md) | [18.24](../docs/spec.md#1824-one-time-password-presentation) |
 | [Pre-touch error filtering](pre-touch-errors/README.md) | [15.7](../docs/spec.md#157-pre-touch-error-filtering) |
@@ -62,3 +62,5 @@ The static site displays documentation and assets; it never executes the example
 its JSON assets and optional UI-schema registry. `pnpm generate:examples` rebuilds
 that module, and test/build/pack run generation automatically. Consumers add the
 `spec-` ID prefix at registration; no framework-specific per-example list is needed.
+
+English example titles should begin with the feature named by the stable example ID. Add a domain or further explanation after a colon when useful. IDs remain stable when titles are clarified.

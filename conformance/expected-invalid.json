@@ -13,7 +13,7 @@
   {
     "example": "markup-label",
     "file": "uischema.json",
-    "pointer": "/elements/5/options/markup",
+    "pointer": "/elements/0/elements/2/elements/0/options/markup",
     "reason": "Deliberate unsupported raw HTML markup request; renderer must refuse it.",
     "replacement": "plain"
   }

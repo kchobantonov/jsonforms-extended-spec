@@ -102,3 +102,8 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Checkboxes**, **Switch**, **Invalid values**, **Checkbox groups**, **Table cells**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.

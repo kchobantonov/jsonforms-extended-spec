@@ -14,7 +14,10 @@
     "error.format": "This is not a schedule the scheduler can run.",
     "error.pattern": "Six fields separated by single spaces.",
     "error.required": "Give the job a name.",
-    "error.minLength": "At least three characters."
+    "error.minLength": "At least three characters.",
+    "featureNavigation.section1.label": "Schema selection",
+    "featureNavigation.section2.label": "UI schema selection",
+    "featureNavigation.section3.label": "Unsupported dialect"
   },
   "bg": {
     "group.selectedBySchema.label": "Избрано от схемата",
@@ -31,6 +34,9 @@
     "error.format": "Това не е график, който планировчикът може да изпълни.",
     "error.pattern": "Шест полета, разделени с по един интервал.",
     "error.required": "Дайте име на задачата.",
-    "error.minLength": "Поне три знака."
+    "error.minLength": "Поне три знака.",
+    "featureNavigation.section1.label": "Избор чрез схема",
+    "featureNavigation.section2.label": "Избор чрез UI схема",
+    "featureNavigation.section3.label": "Неподдържан диалект"
   }
 }

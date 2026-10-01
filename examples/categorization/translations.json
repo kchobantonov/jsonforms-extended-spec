@@ -16,7 +16,10 @@
     "error.minLength": "Use at least {limit} characters.",
     "error.maximum": "Enter {limit} or fewer.",
     "error.pattern": "Enter a valid phone number.",
-    "error.required": "This field is required."
+    "error.required": "This field is required.",
+    "featureNavigation.section1.label": "Tabs",
+    "featureNavigation.section2.label": "Stepper",
+    "featureNavigation.section3.label": "Accordion"
   },
   "bg": {
     "category.contact.label": "Контакт",
@@ -35,6 +38,9 @@
     "error.minLength": "Използвайте поне {limit} символа.",
     "error.maximum": "Въведете {limit} или по-малко.",
     "error.pattern": "Въведете валиден телефонен номер.",
-    "error.required": "Полето е задължително."
+    "error.required": "Полето е задължително.",
+    "featureNavigation.section1.label": "Раздели",
+    "featureNavigation.section2.label": "Стъпки",
+    "featureNavigation.section3.label": "Акордеон"
   }
 }

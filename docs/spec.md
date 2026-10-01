@@ -814,10 +814,67 @@ for the messages themselves.
 | Option | Type | Default | Behaviour |
 | --- | --- | --- | --- |
 | `showValidationIndicator` | boolean | per container type, below | True shows the aggregated indicator; false hides it |
-| `showValidationIndicatorCount` | boolean | `true` | False shows the marker without a number, and skips computing one |
+| `showValidationIndicatorCount` | boolean | `false` | Explicit true requests a count; omitted or false shows the marker and skips counting |
 
 The second exists because the two cost different amounts: presence is an index
 lookup, a count needs a pass over the errors.
+
+Enabling the indicator does not enable counting. Counts require explicit
+`showValidationIndicatorCount: true` locally or through the namespaced global
+configuration; an explicit local false overrides a global true.
+
+**Nested sections and implementation guidance (non-normative).** A parent
+includes eligible errors in its descendant sections even if a child's indicator
+is disabled or its content is unmounted. Count each matching error entry once
+within a container, even when multiple controls or child sections cover its path.
+Do not simply sum child counts: their covered errors may overlap. An error can
+correctly contribute to both a parent indicator and a child indicator.
+
+The current React implementation caches bound scopes by UI-schema identity and
+shares an error-presence index across containers, keyed by validation-result
+identities. Parent and child presence checks are independent and short-circuit
+on the first matching scope. Explicit counting scans eligible errors against the
+container's scopes. No additional validation run is needed.
+
+A proposed optimization is to cache underlying presence results by UI-schema
+identity, current data path, and validation-result identities, combining direct
+bindings and child results with boolean OR. Such reuse must be independent of
+component mounting and indicator visibility, include additional errors, honor
+validation visibility, and invalidate when relevant inputs change. Benchmark
+before introducing this bookkeeping. Counting may instead reuse sets of matching
+error entries, provided overlaps are not counted twice. These are suggestions,
+not required algorithms: implementations may use more efficient or more correct
+approaches that preserve the specified semantics.
+
+Scope collection includes scoped `ListWithDetail` elements as well as Controls.
+A nested `scope: "#"` refers to the current data path without an extra separator.
+**Deliberate boundary: bound data, not inferred editor coverage.** Structural
+containers aggregate through bound scopes, including hidden descendants. The
+broader proposal to narrow these scopes by resolving actual editor layouts is
+deferred; its absence is intentional, not an oversight.
+
+Indicator aggregation does not independently resolve the `uischemas` registry,
+invoke renderer selection, or inspect mounted controls to infer which fields can
+be edited. Repeating resolution could disagree with the renderer's selection
+because resolution depends on the schema, path, registry order and host context.
+It also duplicates resolution work, introduces recursive-layout/cycle handling
+and more cache-invalidation inputs, and makes correctness harder to preserve.
+Inspecting mounted controls would additionally miss inactive or unmounted tabs.
+These are correctness and performance risks, not a claim of measured overhead.
+
+For example, a container containing a Control bound to `contact` includes eligible
+errors under `contact`, even if a registered editor exposes only `contact.email`.
+An error in `contact.phone` still belongs to the parent indicator. Containers
+inside the selected registered layout aggregate their own descendant scopes;
+they do not narrow the ancestor's coverage. Thus an aggregate marker does not
+promise that every reported error has an editor in the currently selected view.
+
+Label-cell filtering is a limited, separate rule: it examines Control scopes in
+an explicitly supplied detail layout. It does not resolve registered/generated
+layouts to infer coverage and must not be treated as a general container algorithm.
+Any future editor-coverage design would need a reliable shared resolution contract
+and performance evidence before replacing the bound-scope behavior.
+
 
 **Resolution order:** the element's own `options.showValidationIndicator` →
 global `config.jsonformsExtended.showValidationIndicator` → the container
@@ -2771,6 +2828,15 @@ additionalErrors. Its wrapper reads the locale when validation runs; refreshing
 already-produced messages on a locale change requires the host's localization
 or revalidation lifecycle, not a change to form data.
 
+A render-time AJV localization adapter must preserve this precedence too: localize
+a copy of the generated error, then apply the normal per-error translation
+lookup with that localized message as fallback. Do not return the localizer's
+message before checking field-specific and global keyword overrides, and do not
+mutate errors stored in form state. Preserve intentionally empty translations.
+For example, `reviewers.error.contains` may say “Select Lead for at least one
+reviewer.” even when an AJV localizer is active. Verify both a resolved override
+and a missing override; the latter must retain the localized AJV fallback.
+
 **Scalar-composition summaries.** These use the same combined-message and
 per-error override pipeline. For a Control with `i18n: "quantity"`, supported
 overrides include `quantity.error.custom`, `quantity.error.oneOf`,
@@ -3948,6 +4014,18 @@ path. Detail scopes are relative to the address, not the employee or root form.
 Use singular `detail`; per-cell detail is distinct from the array-level
 `options.detail` convention used by item-detail renderers.
 
+**Composite cell type indicators.** Object and array cells omit type markers by
+default. Set `showTypeIndicator: true` in the cell's options (including
+`options.cells.<property>`) to show `{}` for objects or `[]` for arrays.
+The top-level `config.showTypeIndicator` supplies a form-wide default. Resolve
+`options.showTypeIndicator ?? config.showTypeIndicator ?? false`; an explicit
+cell value of `false` suppresses a global `true`.
+The marker is separate from the configured Label or Control summary and must not
+change that summary's text. It is decorative, hidden from assistive technology,
+and independent of edit, clear, and validation indicators. Empty values retain
+localized empty-state text rather than relying on the marker. This option has
+no effect on scalar cells and defaults to `false` in both normal tables and AG Grid.
+
 **Extended dialog contract:** editing is transactional. Opening creates a private
 draft with the original root schema and path context. Apply commits the edited
 value once; Cancel, Escape, the close icon, or backdrop dismissal discard it.
@@ -4817,6 +4895,74 @@ This project extension selects a `Control` targeting a string with schema
 The widget selects one local file, checks supported constraints before reading
 it, and converts an accepted file into the representation stored at the scope.
 This describes local file attachment, not an implicit network upload.
+
+**Table cells and multiple attachments.** A file cell should use a compact
+picker with bounded filename text and accessible select/replace/clear actions.
+Follow the same cell framing as other controls: omit repeated field labels
+and description paragraphs, retain validation feedback, and avoid large drop
+zones or image previews that increase row height. Descriptions in ordinary
+controls follow the shared focus and showUnfocusedDescription rules.
+
+The file control also selects arrays with a homogeneous items schema resolving
+to a supported file string (including an item $ref). A string selects one file;
+an array enables multiple selection and appends accepted encoded values in
+chooser order. Tuple, boolean-item and ordinary string-array schemas do not
+select this renderer.
+
+Array minItems and maxItems govern the total attachment count. With restrict
+enabled, reject an addition that exceeds maxItems and disable removal that
+would violate minItems. With restrict disabled, allow count violations and
+display the normal schema validation feedback. Do not use string minLength or
+maxLength as file-count limits. uniqueItems prevents appending duplicate encoded
+values; without it, duplicates remain separate entries and removal identifies
+one occurrence by position. Each file uses the item schema's encoding and
+file-size constraints; UI file-size options apply to each selected file.
+
+Commit an accepted batch once after reading it. A failed read must preserve
+previous attachments. Do not overwrite externally replaced data with a pending
+read.
+
+**Local operation feedback versus validation.** A rejected selection that leaves
+stored data unchanged SHOULD produce a local warning in the theme's warning
+color. It MUST NOT add a validation error or make otherwise valid data invalid.
+A file-read failure is a local operation error, shown in the error color while
+preserving existing attachments. Neither message belongs in additionalErrors;
+normal schema errors for stored values continue through the validation system.
+
+In table cells, show this feedback as a compact severity icon beside the clear
+action, with the message available on hover, keyboard focus, and activation.
+Do not place a feedback paragraph below the cell editor. Outside cells, themed
+feedback text below the control is appropriate. Localize the message and icon's
+accessible name. Clear stale feedback after a successful operation or external
+value replacement. These messages do not contribute to container error counts.
+
+**Preferred presentation: filename pills.** For multiple-file controls in both
+Ant Design and shadcn, prefer compact filename pills with individual remove
+actions, a themed select-files button, and a separate localized clear-all
+action. This is a presentation recommendation, not a required component or
+layout implementation; an alternative may be used if it preserves the same
+accessibility, bounded sizing, and attachment-management behavior.
+
+Pills are preferred because the same presentation can fit ordinary form
+controls, normal table cells, and AG Grid cells. In a cell, keep the picker and
+actions compact, omit repeated field labels and description paragraphs, and
+avoid a large drop zone or preview gallery. Long filenames should ellipsize
+rather than widen the column, with the full name available on hover and
+keyboard focus. Allow wrapping only within a bounded area; use scrolling or
+an accessible overflow presentation when needed so adding attachments cannot
+grow the row indefinitely. Keep select, remove, and clear-all actions reachable
+when the column is narrow.
+
+Clear-all writes an empty array and, when restrict is enabled, must be disabled
+if minItems is greater than zero. Readonly and clearable apply to both individual
+removal and clear-all. Use localized fallback names when encoding does not
+retain filenames. Derive attachment presence from the stored form data so
+switching tabs or remounting a table cell does not imply that attachments have
+disappeared.
+
+The File control example demonstrates restricted and validation-only arrays
+and an array-valued file column alongside a single-file column.
+
 
 | Schema keyword / UI option | Behavior |
 | --- | --- |
@@ -6065,7 +6211,7 @@ Numbers are CSS pixels; strings are CSS dimensions. Omitted width and height kee
 
 Shadcn detail dialogs initially focus the dialog container rather than selecting the first input. Composite cell edit and remove actions appear on hover or keyboard focus and remain visible on touch devices. The remove icon uses the destructive theme color.
 
-The Recruitment: row detail presentations example demonstrates separate cell and row dialog sizes.
+The Table row details: recruitment example demonstrates separate cell and row dialog sizes.
 
 **Recommended presentation behavior.** The following are UX recommendations
 (SHOULD), rather than requirements for identical pixels or framework-specific
@@ -7111,3 +7257,140 @@ sorting and item expansion. The header, validation indicator and actions remain
 visible. A keyboard-accessible toggle exposes `aria-expanded` and `aria-controls`.
 This is independent of `initCollapsed` and `collapseNewItems`, which affect items.
 Changing form data must not reset panel expansion.
+
+### Kitchen-sink integration example
+
+The [job-application kitchen sink](../examples/kitchen-sink/README.md) combines
+shared controls, normal tables, AG Grid and detail editors with English/Bulgarian
+authoring catalogs. It includes valid and deliberately invalid data fixtures.
+Phone validation is an explicit international syntax pattern; it does not prove
+reachability. Standard email/date/time format validation must be enabled by the
+host. See the example for component coverage and library-locale requirements.
+
+
+### Direct errors on arrays and objects
+
+Normal tables and AG Grid MUST use the same array feedback semantics. Show
+translated errors belonging to the array itself (such as minItems, maxItems,
+and uniqueItems) first. Below those messages, show a localized notice that
+items contain errors. Show the child-error count only when
+`showValidationIndicatorCount` is explicitly enabled through the applicable UI
+options or configuration; the default notice has no count. This notice helps
+users discover errors hidden by pagination. Do not expand child field messages
+into the array header tooltip. Keep navigation to the first invalid item.
+
+Object feedback MUST include only errors belonging to the object itself, without
+a child-error notice or count. A required-property error belongs to the missing
+property, rather than the containing object, for this purpose. When the object's
+resolved detail is a Group, place its direct-error indicator beside the group
+title. For a detail without a group header (such as VerticalLayout), place direct
+error messages above the fields in the error color. This object feedback is
+separate from independently configured validation indicators on other layout
+sections. Local field tooltips continue to show their translated validation
+messages without a path prefix.
+
+Implementations SHOULD reuse the validation path index and memoize direct-error
+formatting. Child summaries need only presence unless counts are requested; they
+should not translate or format all descendant errors. Equivalent implementations
+with better performance or correctness may be used.
+
+
+#### Validation in Additional Properties and Additional Items
+
+Errors must be discoverable inside the form, not only in a host's data or demo
+panel. Use the established error icon, error color, translated messages and
+accessible tooltip behavior. A schema validation error remains part of form
+validity; a rejected local operation that preserves valid data remains local
+operation feedback as described in the File control section.
+
+**Additional Properties:** show `additionalProperties` rejections beside the
+section heading, naming each offending property and displaying its translated
+validation message. Match these errors to the owning object's validation path;
+do not treat them as errors on an unrelated declared field. Preserve literal
+property names, including names containing dots or slashes. Show validation of
+an individual property's value on its editor. Removing or validly renaming a
+rejected property clears the corresponding feedback after validation. Keep
+invalid existing properties visible and correctable without silently deleting
+them. An error at the object path, such as `minProperties`, remains object-level
+feedback under the rules above.
+
+**Additional Items:** distinguish constraints on the whole tuple from errors in
+an individual trailing item. Errors such as `minItems`, `maxItems`, `uniqueItems`,
+and a forbidden tail (`additionalItems: false` in the supported positional
+schema dialect) belong to the tuple as a whole. Show their actual translated
+messages at the tuple boundary; do not arbitrarily assign them to one trailing
+item or repeat them on every item. A forbidden-tail message SHOULD also be
+available beside the Additional Items heading, where corrective removal is
+available. A constraint involving both fixed and trailing positions must retain
+its tuple-wide meaning.
+
+Errors on a specific item belong on that item's editor. When Additional Items
+is paginated, its heading SHOULD include a localized notice that trailing items
+contain errors, including those on other pages. Include a count only when
+`showValidationIndicatorCount` is enabled; omit fixed-prefix errors from this
+tail notice. Navigation should reveal the first invalid trailing item. Keep
+errors for omitted tuple positions discoverable at the tuple boundary.
+
+These are presentation requirements and recommendations, not a requirement to
+rescan or format all validation errors on every render. Reuse indexed validation
+results, format tooltip details on demand, and preserve validation-mode filtering.
+The Additional Items header notice and navigation describe the intended behavior;
+host implementations may still need to add them even when tuple-level messages
+and item-level validation are already supported.
+
+
+#### Property-name validation and rename drafts
+
+A `propertyNames` violation MUST be associated with the offending property name,
+not its value editor or an unqualified message at the object boundary. For example,
+`propertyNames: { "pattern": "^sensor-", "minLength": 9 }` rejects `sensor-x`.
+Show an error indicator beside that name, with the translated length constraint
+in its tooltip. A name error must not imply that the numeric sensor value is
+invalid. When the validator supplies both a specific constraint error and the
+wrapper “property name is invalid”, prefer the specific explanation and avoid
+repeating the wrapper. Preserve key identity for empty and special-character names.
+
+Add and Rename MUST check the full applicable property-name schema, including
+length, pattern, enum, composition, and references supported by the validator.
+Checking only a pattern is insufficient. An unchanged existing invalid name
+must still display its validation error when the rename dialog opens. A proposed
+invalid name must show localized feedback beside the rename input and must not
+be silently accepted. Duplicate-name checks must allow retaining the current
+name without bypassing its schema constraints. Preserve the original property
+and value until a valid rename is committed; cancellation must not mutate data.
+
+Name validation must not depend on whether a host explicitly supplies a validator.
+Use the host validator where available, or an equivalent supported validator;
+do not silently weaken length or other supported constraints to pattern-only
+checks. Keep name errors distinct from `additionalProperties` rejection and from
+validation errors in the property's value.
+
+
+#### Object titles and layout boundaries
+
+A bound object Control represents a data boundary. A VerticalLayout arranging
+controls with scopes such as `#/properties/object/properties/field` does not
+itself establish an object boundary.
+
+Preserve the resolved detail UI schema: do not replace an explicitly authored or
+registered Group with VerticalLayout. Preserve its title, i18n, rules, nested
+Groups and layout behavior. Generated nested object details may use Group;
+generated root details may use VerticalLayout. Render the object's resolved
+title once and respect explicit title suppression.
+
+A bound nested object SHOULD have one visual boundary containing both static
+fields and Additional Properties. When its resolved detail is a Group, that
+Group supplies the boundary; place the dynamic-property section within it rather
+than adding an enclosing object frame. With other detail layouts, the object
+renderer may supply the single boundary. Additional Properties inside an object
+boundary SHOULD use spacing and a section heading without another enclosing
+border. Independently authored nested Groups keep their own boundaries.
+
+For a dynamic-only object, omit the empty static-fields region, but retain the
+object boundary and its title when present. An untitled object still represents
+a bound object; a plain VerticalLayout remains unframed. Direct object errors
+belong beside its title, or above its content when there is no title.
+
+The Object control example compares titled and explicitly untitled objects for
+static-only, dynamic-only, and mixed property schemas in separate feature tabs.
+This rule supersedes earlier guidance to unwrap outer object Groups.

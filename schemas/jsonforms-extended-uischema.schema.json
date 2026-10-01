@@ -29,7 +29,9 @@
               "type": "boolean"
             },
             "showValidationIndicatorCount": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": false,
+              "description": "Opt in to computing and presenting the container error count. Omitted or false uses an error-presence marker without computing a count."
             },
             "showDataIndicator": {
               "type": "boolean"
@@ -604,6 +606,11 @@
             "$ref": "#/$defs/cellOptions"
           }
         },
+        "showTypeIndicator": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show an object or array type marker in a composite cell, independently of its summary."
+        },
         "showEmptyButton": {
           "type": "boolean",
           "description": "Adds Clear to a composite detail dialog."
@@ -840,7 +847,9 @@
           "type": "boolean"
         },
         "showValidationIndicatorCount": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": false,
+          "description": "Opt in to computing and presenting the container error count. Omitted or false uses an error-presence marker without computing a count."
         },
         "showDataIndicator": {
           "type": "boolean"
@@ -951,6 +960,11 @@
         },
         "detail": {
           "$ref": "#/$defs/element"
+        },
+        "showTypeIndicator": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show an object or array type marker in a composite cell, independently of its summary."
         },
         "showEmptyButton": {
           "type": "boolean"

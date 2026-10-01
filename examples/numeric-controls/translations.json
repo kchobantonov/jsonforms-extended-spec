@@ -5,7 +5,10 @@
     "error.multipleOf": "Enter a multiple of {multipleOf}.",
     "error.type": "Enter a whole number.",
     "error.exclusiveMinimum": "Enter a value greater than {limit}.",
-    "error.required": "This field is required."
+    "error.required": "This field is required.",
+    "featureNavigation.section1.label": "Integers",
+    "featureNavigation.section2.label": "Numbers",
+    "featureNavigation.section3.label": "Slider"
   },
   "bg": {
     "error.minimum": "Въведете стойност поне {limit}.",
@@ -13,6 +16,9 @@
     "error.multipleOf": "Въведете число, кратно на {multipleOf}.",
     "error.type": "Въведете цяло число.",
     "error.exclusiveMinimum": "Въведете стойност по-голяма от {limit}.",
-    "error.required": "Полето е задължително."
+    "error.required": "Полето е задължително.",
+    "featureNavigation.section1.label": "Цели числа",
+    "featureNavigation.section2.label": "Числа",
+    "featureNavigation.section3.label": "Плъзгач"
   }
 }

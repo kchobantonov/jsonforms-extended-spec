@@ -7,7 +7,11 @@
     "mixed.rename": "Rename",
     "mixed.delete": "Delete",
     "control.clearValue": "Clear value",
-    "error.type": "This value does not match any type this field allows."
+    "error.type": "This value does not match any type this field allows.",
+    "featureNavigation.section1.label": "Scalar types",
+    "featureNavigation.section2.label": "Null and invalid values",
+    "featureNavigation.section3.label": "Structured values",
+    "featureNavigation.section4.label": "Array items"
   },
   "bg": {
     "mixed.typeLabel": "Тип на стойността",
@@ -17,6 +21,10 @@
     "mixed.rename": "Преименуване",
     "mixed.delete": "Изтриване",
     "control.clearValue": "Изчистване на стойността",
-    "error.type": "Тази стойност не съответства на нито един позволен тип."
+    "error.type": "Тази стойност не съответства на нито един позволен тип.",
+    "featureNavigation.section1.label": "Скаларни типове",
+    "featureNavigation.section2.label": "Null и невалидни стойности",
+    "featureNavigation.section3.label": "Структурирани стойности",
+    "featureNavigation.section4.label": "Елементи на масив"
   }
 }

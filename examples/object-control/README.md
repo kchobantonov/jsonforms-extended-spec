@@ -131,35 +131,18 @@ one.
 Nothing warns you. The form renders, and it ignores what you wrote. If a detail
 appears to have no effect, this is the first thing to check.
 
-### The outermost element of a detail is the object's own frame
+### The outermost Group supplies the object boundary
 
-**Compliance**'s detail is a `Group` labelled *"Dropped, because it is
-outermost"*, wrapping a second `Group` labelled *"Kept, because it is inside"*.
-Only the second label appears.
+**Compliance** uses an outer `Group` labelled *"Object group"*, containing
+another `Group` labelled *"Nested group"*. Both are preserved, including their
+labels and layout behavior. The renderer does not add another object frame
+around the outer Group.
 
-The object renderer unwraps the outermost element, because that position is the
-frame **it** contributes: the control is already placed by whatever parent
-layout holds it, and a Group there would nest a box inside a box — at every
-level of nesting. Everything inside is yours and is untouched.
-
-The rule applies the same way whichever of the three sources supplied the
-detail, so the outer frame is the renderer's call regardless of authorship.
-
-### So a nested object shows no title
-
-That unwrapping has a consequence worth stating plainly: the generated fallback
-for a nested object *is* a labelled `Group`, so removing the outer frame
-removes the only place the object's own title would have appeared. **Identity**,
-**Contact** and **Address** label their fields and not themselves.
-
-That is presentation, not a rule — the specification says to "dispatch a nested
-form at the object's data path" and leaves framing alone, explicitly declining
-to "require a particular card library". Upstream's material renderers keep the
-Group; this set does not, and gets flat nested objects instead of boxes within
-boxes.
-
-It is not a dead end either. **Compliance** shows the way to a titled section:
-put the `Group` one level in, where it is content rather than frame.
+Generated nested object details use a Group, while the root uses a
+VerticalLayout. Additional Properties belongs inside the object boundary,
+without another enclosing border. Dynamic-only objects omit the empty static
+layout. Untitled nested objects keep their boundary; ordinary VerticalLayouts
+that directly bind fields remain unframed.
 
 ### Errors that have a control to land on
 
@@ -167,61 +150,23 @@ put the `Group` one level in, where it is content rather than frame.
 is two levels down, inside a registered layout, which changes nothing: the
 error is mapped to `address.city` and that control displays it.
 
-### Errors that belong to the object
+### Errors that belong to the object or dynamic-property section
 
-Here the answer depends on **where core maps the error**, and the three cases
-diverge:
+| Error | Feedback location |
+| --- | --- |
+| `dependencies` on Billing | Cost centre, when validation maps the failure to that property. |
+| `additionalProperties` on Routing | Error indicator beside Additional Properties, identifying `legacyZone`. |
+| `minProperties` on Preferences | Object-level feedback: beside an object Group title, or above unframed fields. |
 
-| Error | Mapped to | Shown? |
-| --- | --- | --- |
-| `dependencies` on Billing | `billing.costCentre` | **Yes** — on Cost centre |
-| `additionalProperties` on Routing | `routing.legacyZone` | No |
-| `minProperties` on Preferences | `preferences` | No |
+Object feedback does not summarize child-field errors. Existing invalid values
+remain editable; no property is silently removed or synthesized to satisfy a
+constraint. Correcting the relevant data clears the message after validation.
 
-**Billing works, and not by design.** Core maps a `dependencies` failure onto
-the property that is *missing*, and that property has a control, so the message
-lands on Cost centre — not on Purchase order, which is what triggered it. The
-object renderer did nothing; the mapping happened to be lucky.
+### Validity and localization
 
-**Routing is the specification's own illustration of the gap.** The error is
-mapped to `routing.legacyZone`, and that key is even rendered — the
-dynamic-property editor shows it, because the data has it. But that editor does
-not display errors, so the message has a path and still no home. In the
-specification's words: "Core's web error-path mapping associates that failure
-with the offending property, but that association alone does not create a place
-to display it."
-
-**Preferences has nowhere at all.** `minProperties` fails on the object, where
-no control exists. `ObjectRenderer` dispatches a nested form and the
-dynamic-property editor and renders no errors of its own, so nothing is shown.
-
-### What is *not* done wrong
-
-The specification is more concerned with the damage than with the message:
-
-> Provide an object-level explanation instead of mislabeling `name` as required
-> or automatically creating a value.
-
-Both halves of that are honoured. **Language** and **Timezone** are not marked
-as required, and no value is invented to satisfy `minProperties` — Preferences
-stays `{}`. **`legacyZone` keeps its value** rather than being quietly deleted
-to make the error go away: "do not silently delete, rename, or rewrite invalid
-data merely to remove an error without a rendered target."
-
-So the failure mode here is a missing message, not corrupted data, which is the
-better of the two ways to fall short.
-
-### Validity is unaffected
-
-All five errors count. The form is invalid, and a host reading the error
-collection gets all five whether or not any of them is on screen.
-
-### Localization
-
-**Switch the demo to Bulgarian.** Every message that *is* shown translates —
-including the dependency message on Cost centre. The two that are not shown
-have translations waiting in `translations.json` for when they have somewhere
-to go.
+All five fixture errors contribute to form validity. Their visibility in the
+host's data panel is not a substitute for feedback inside the form. English and
+Bulgarian validation messages are provided in `translations.json`.
 
 ## Fallback behaviour
 
@@ -233,12 +178,12 @@ to go.
 | `options.detail` is an object with no `type` | Ignored in silence; resolution continues to the registry, then to generation. |
 | `options.detail` names only some properties | Only those render. The rest are absent, not empty. |
 | A registry entry matches | Used when the control has no usable `detail` of its own. |
-| The detail's outermost element is a `Group` | Unwrapped — that position is the object control's own frame. |
+| The detail's outermost element is a `Group` | Preserved; supplies the object boundary and contains Additional Properties. |
 | A `Group` deeper inside the detail | Kept, with its label. |
 | Object nested in object | Dispatched at its own data path, with no frame of its own. |
 | An error core maps onto a property with a control | Displayed there. |
-| An error core maps onto a property with no control | Not displayed. |
-| An error at the object's own path | Not displayed. |
+| A disallowed additional property | Identified by the Additional Properties error indicator. |
+| An error at the object's own path | Shown beside the object Group title or above its unframed fields. |
 | Any of the above | Counts towards validity, and the data is left exactly as it is. |
 
 ## Conformance scope
@@ -251,3 +196,25 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 - Register the trusted tester functions exported by uischemas.mjs.
 
 Import `uischemas` from [uischemas.mjs](uischemas.mjs) and register its entries.
+
+
+## Feature navigation
+
+The example separates its demonstrations into five tabs instead of one long form:
+
+- **Generated layout:** the default object layout.
+- **Explicit detail:** horizontal layout and nested tabs.
+- **Registry and fallback:** registered layouts, GENERATE, and incomplete detail.
+- **Group layouts:** outer and nested groups.
+- **Object validation:** property count, additional properties, and dependencies.
+
+Tab labels and introductions are available in English and Bulgarian. All tabs
+continue to edit the same form data, with their existing schemas and constraints.
+
+
+## Object title and frame comparisons
+
+The Static fields, Dynamic fields, and Static and dynamic fields tabs each compare
+a titled object with an explicitly untitled (`label: false`) object. Titles appear
+once; dynamic-only objects have no empty static-field frame. One object boundary
+contains static fields and Additional Properties without a second section border.

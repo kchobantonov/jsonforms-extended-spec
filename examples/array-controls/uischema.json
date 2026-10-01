@@ -410,7 +410,8 @@
               "scope": "#/properties/reviewers",
               "options": {
                 "collapsible": true
-              }
+              },
+              "i18n": "arrayControls.reviewers"
             }
           ]
         }

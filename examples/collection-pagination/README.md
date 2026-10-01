@@ -1,4 +1,4 @@
-# Recruitment: table pagination
+# Collection pagination: recruitment
 
 Twelve applicants demonstrate pages of five or ten. Add reveals the new applicant; deletion clamps the current page. Paging never removes stored applicants.
 

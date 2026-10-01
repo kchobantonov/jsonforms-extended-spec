@@ -8,7 +8,11 @@
     "confirm.branchChange.message": "Data that the new selection does not describe will be discarded.",
     "confirm.accept": "Yes",
     "confirm.decline": "No",
-    "additionalProperties.deleteNamed": "Delete {name}"
+    "additionalProperties.deleteNamed": "Delete {name}",
+    "featureNavigation.section1.label": "Delete policy",
+    "featureNavigation.section2.label": "Array presentations",
+    "featureNavigation.section3.label": "Type changes",
+    "featureNavigation.section4.label": "Branch changes"
   },
   "bg": {
     "confirm.delete.title": "Да се изтрие ли стойността?",
@@ -19,6 +23,10 @@
     "confirm.branchChange.message": "Данните, които новият избор не описва, ще бъдат отхвърлени.",
     "confirm.accept": "Да",
     "confirm.decline": "Не",
-    "additionalProperties.deleteNamed": "Изтриване на {name}"
+    "additionalProperties.deleteNamed": "Изтриване на {name}",
+    "featureNavigation.section1.label": "Правила за изтриване",
+    "featureNavigation.section2.label": "Представяне на масиви",
+    "featureNavigation.section3.label": "Промяна на тип",
+    "featureNavigation.section4.label": "Промяна на вариант"
   }
 }

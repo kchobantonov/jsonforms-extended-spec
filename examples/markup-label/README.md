@@ -102,3 +102,8 @@ still parsed, still bold, and its link still goes through the URL policy.
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. No framework registration module is
 required by this package.
+
+
+## Feature navigation
+
+Explore one feature at a time using the tabs: **Markdown content**, **Headings and literal text**, **Markup options**, **Form integration**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
