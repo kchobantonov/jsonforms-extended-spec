@@ -845,6 +845,66 @@
         "showArrayLayoutSortButtons": {
           "type": "boolean",
           "description": "Legacy expandable array sorting flag, combined with showSortButtons using logical OR. Prefer showSortButtons."
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {},
+              "branch": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "label": {
+                "type": "string"
+              },
+              "i18n": {
+                "type": "string"
+              },
+              "disabled": {
+                "type": "boolean"
+              },
+              "content": {
+                "$ref": "#/$defs/uiSchema"
+              },
+              "selectedContent": {
+                "$ref": "#/$defs/uiSchema"
+              },
+              "detail": {
+                "$ref": "#/$defs/uiSchema"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "value"
+                ],
+                "not": {
+                  "required": [
+                    "branch"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "branch"
+                ],
+                "not": {
+                  "required": [
+                    "value"
+                  ]
+                }
+              }
+            ]
+          },
+          "description": "For format cards: optional presentation overrides matched by typed value or oneOf branch index. Omitted entries retain generated labels."
+        },
+        "showRadio": {
+          "type": "boolean",
+          "default": false,
+          "description": "For choice cards, show the native radio circle. Hidden by default; keyboard interaction and accessible radio semantics remain."
         }
       }
     },

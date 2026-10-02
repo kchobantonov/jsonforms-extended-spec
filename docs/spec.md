@@ -7403,3 +7403,52 @@ belong beside its title, or above its content when there is no title.
 The Object control example compares titled and explicitly untitled objects for
 static-only, dynamic-only, and mixed property schemas in separate feature tabs.
 This rule supersedes earlier guidance to unwrap outer object Groups.
+
+
+### Choice cards
+
+A Control with `options.format: "cards"` selects the choice-card renderer (rank
+21) when its resolved schema has `enum` or `oneOf`. Without this explicit format,
+normal renderer selection applies. Selection MUST NOT depend on current data
+validity or availability of images. An enum takes precedence if both occur.
+
+An enum or a oneOf made entirely of const branches selects a value, retaining its
+JSON type and using structural equality. Other oneOf schemas select a branch.
+`options.choices` optionally customizes entries; omitted entries use generated
+value labels or branch titles. An entry identifies exactly one `value` (value
+mode) or zero-based `branch` (branch mode), with optional `label`, `i18n`,
+`disabled`, `content`, `selectedContent`, and `detail`. Entries MUST identify
+existing choices without duplicate identifiers. The i18n prefix resolves
+`<prefix>.label`, falling back to label and then the generated label. Without
+an explicit entry prefix, use `<control-prefix>.choices.<index>.label`.
+
+Card content permits Label (including supported markup), ImageView, and nested
+VerticalLayout/HorizontalLayout elements. Inputs, links, buttons and executable
+templates MUST NOT be placed inside cards. Unsupported content falls back to the
+choice label. Existing translation, markup sanitization and image URL policies
+apply, including host opt-in for image data URLs. A textual label remains visible
+and supplies the accessible name even if an image is blocked or cannot load.
+
+The whole card selects its radio. Native or equivalent radio-group keyboard,
+focus, disabled, and accessible-name behavior is required. Selection MUST remain
+visible independently of image changes, using a distinct selected border. The radio circle is visually hidden by default; `options.showRadio: true`
+shows it. Hiding the circle MUST preserve radio semantics, keyboard interaction,
+and a visible focus outline on the whole card. `selectedContent` replaces content when selected; if only one is given,
+use it for both states. A disabled choice cannot be selected by interaction.
+
+For schema branches, `detail` is the selected branch's editable UI schema, scoped
+relative to the controlled value. If omitted, use normal generated/registered
+branch detail. Display it below the card group, outside the selectable region.
+Preserve the selected branch while its form is incomplete or invalid. Switching
+uses the existing oneOf branch-change defaults, enclosing-property preservation,
+and confirmation policy; clicking the current card does not discard data.
+Validation remains visible at the control and detail fields.
+
+The Choice controls example includes automatic cards, typed const choices,
+image cards, translated markup, selected content, disabled choices, and branch
+forms with explicit and generated details.
+
+Choice-card borders, backgrounds, focus outlines and error colors MUST follow the
+active renderer theme. Branch cards accept `options.confirmation.branchChange:
+"never"` to suppress the destructive-switch prompt, using the shared confirmation
+policy. This changes prompting only; branch data replacement still occurs.

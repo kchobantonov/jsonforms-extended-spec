@@ -15,7 +15,20 @@ import type { DataPath, Scope, SchemaAtPath } from './schemaTypes';
  */
 
 /** Options every control understands, whatever it is bound to. */
+/** Selectable-card presentation; content is presentation-only UI schema. */
+export type CardChoice = ({ value: unknown; branch?: never } | { branch: number; value?: never }) & {
+  label?: string;
+  i18n?: string;
+  disabled?: boolean;
+  content?: UISchemaElement;
+  selectedContent?: UISchemaElement;
+  detail?: UISchemaElement;
+};
+
 export interface CommonControlOptions {
+  format?: string;
+  choices?: CardChoice[];
+  showRadio?: boolean;
   dialog?: DetailDialogOptions;
   readonly?: boolean;
   focus?: boolean;

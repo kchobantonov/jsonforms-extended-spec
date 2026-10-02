@@ -102,6 +102,85 @@
         }
       ],
       "description": "Searching matches the visible label, not the stored constant."
+    },
+    "cardDecision": {
+      "type": "string",
+      "title": "Decision",
+      "enum": [
+        "approve",
+        "decline"
+      ]
+    },
+    "cardLevel": {
+      "title": "Typed choices",
+      "oneOf": [
+        {
+          "const": false,
+          "title": "Off"
+        },
+        {
+          "const": 1,
+          "title": "One"
+        },
+        {
+          "const": 2,
+          "title": "Two"
+        }
+      ]
+    },
+    "cardContact": {
+      "title": "Contact method",
+      "type": "object",
+      "oneOf": [
+        {
+          "title": "Email",
+          "properties": {
+            "kind": {
+              "const": "email",
+              "default": "email"
+            },
+            "address": {
+              "type": "string",
+              "title": "Email address",
+              "format": "email"
+            }
+          },
+          "required": [
+            "kind",
+            "address"
+          ]
+        },
+        {
+          "title": "Postal mail",
+          "properties": {
+            "kind": {
+              "const": "postal",
+              "default": "postal"
+            },
+            "street": {
+              "type": "string",
+              "title": "Street"
+            },
+            "city": {
+              "type": "string",
+              "title": "City"
+            }
+          },
+          "required": [
+            "kind",
+            "street",
+            "city"
+          ]
+        }
+      ]
+    },
+    "cardAutomatic": {
+      "title": "Automatic cards",
+      "enum": [
+        "Small",
+        "Medium",
+        "Large"
+      ]
     }
   }
 }

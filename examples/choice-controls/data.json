@@ -5,5 +5,12 @@
   "priority": 2,
   "supplier": "Legacy",
   "origin": "Salem",
-  "handler": "ops"
+  "handler": "ops",
+  "cardDecision": "approve",
+  "cardLevel": false,
+  "cardAutomatic": "Medium",
+  "cardContact": {
+    "kind": "email",
+    "address": "hello@example.com"
+  }
 }

@@ -99,3 +99,11 @@ required by this package.
 ## Feature navigation
 
 Explore one feature at a time using the tabs: **Horizontal radio**, **Vertical radio**, **Constant choices**, **Value identity**, **Searchable choices**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
+
+
+## Choice cards
+The Choice cards tab covers image data URLs (explicitly enabled in config),
+selected content, rich translated labels, typed values, a disabled card and
+automatic labels. Card branch forms covers explicit Email detail and generated
+Postal detail. Switching populated branch forms uses the shared confirmation
+policy. English and Bulgarian translations accompany the card UI.

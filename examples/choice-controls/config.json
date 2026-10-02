@@ -1,3 +1,10 @@
 {
-  "showUnfocusedDescription": true
+  "showUnfocusedDescription": true,
+  "jsonformsExtended": {
+    "security": {
+      "urlPolicy": {
+        "allowImageDataUrls": true
+      }
+    }
+  }
 }
