@@ -5,6 +5,9 @@ This is the maintained renderer and demo acceptance guide. It complements
 The [coverage map](audit.md) explains the archived sources.
 Portable data and option semantics are governed by spec.md when wording differs.
 
+For implementation traps and cross-platform acceptance checks, also read the
+[implementation guide](implementation-guide.md) and [pitfalls](implementation-pitfalls.md).
+
 ## 1. Purpose
 
 This document is the implementation and acceptance specification for every

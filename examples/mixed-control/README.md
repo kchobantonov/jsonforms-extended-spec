@@ -142,3 +142,17 @@ required by this package.
 ## Feature navigation
 
 Explore one feature at a time using the tabs: **Scalar types**, **Null and invalid values**, **Structured values**, **Array items**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
+
+## Type and composition
+
+The additional tab demonstrates explicit string/integer alternatives, an object whose field is contributed by `allOf`, and overlapping `oneOf` alternatives. The initial `abcd` matches both text branches and is intentionally invalid. Switch the scalar type and check that incompatible typed alternatives disappear. Labels include English and Bulgarian translations.
+
+The Scalar types tab includes both Integer and Number. Quantity starts at 2: select Number and enter 2.5, then select Integer to see the local whole-number error without changing the data.
+
+## Table cells
+
+The Table cells tab uses an array of objects with a mixed `value` property. Rows include string, integer, fractional number, boolean, null, object and array values, plus a missing required value. Use the cell editor to change types and explore structured data; the numeric rows exercise explicit Integer/Number selection. Column and navigation labels include English and Bulgarian translations.
+
+## Optional active-branch feedback
+
+The Branch feedback tab compares two editors for the same value. Global `validateActiveBranch: true` enables the first; `options.validateActiveBranch: false` disables the second. Select Short text without modifying the value to see local feedback only in the first editor. The long-text alternative keeps the document valid.

@@ -4,6 +4,8 @@ One portable specification, authoring schemas and 32 worked examples for JSON
 Forms renderer implementations.
 
 - [Read the specification](docs/spec.md)
+- [Implement a new renderer or port](docs/implementation-guide.md)
+- [Review easily overlooked behaviors](docs/implementation-pitfalls.md)
 - [Browse the examples](examples/README.md)
 - [Use the JSON schemas](schemas/README.md)
 - [Read the migration and schema audit](docs/audit.md)

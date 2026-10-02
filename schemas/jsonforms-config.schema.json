@@ -228,6 +228,11 @@
           "$ref": "jsonforms-uischema.schema.json#/$defs/controlOptions/properties/showNavButtons"
         }
       ]
+    },
+    "validateActiveBranch": {
+      "type": "boolean",
+      "default": true,
+      "description": "Validate the displayed anyOf/oneOf branch for local editor feedback. Control options override global config. False skips additional branch compilation and validation; document validation remains unchanged."
     }
   },
   "$defs": {

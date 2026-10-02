@@ -964,7 +964,7 @@ example includes invalid and valid rows for all three combinators.
 
 Keep the summary or scalar editor and its error indicator on the same line.
 Reserve space for the indicator rather than wrapping it below the control.
-Both Ant Design and shadcn object/array cell renderers provide this feedback,
+Object/array cell renderers provide this feedback,
 including when those cells are hosted by AG Grid.
 
 ### 8.4 Computing container indicators
@@ -3950,7 +3950,7 @@ without explicit detail is presentation-only and has no edit action. Row-bound
 columns have no clear action, since clearing a presentation must not remove
 the whole row. Existing Control-based object/array previews retain their
 default detail editor. Custom summaries retain eligible validation feedback.
-These rules apply equally to normal tables and AG Grid in Ant Design and shadcn.
+These rules apply equally to normal tables and AG Grid across renderer sets.
 
 Use translation keys composite.summary.item, composite.summary.items, and
 composite.summary.more with count in the translation context. The details and
@@ -3958,8 +3958,7 @@ unset fallback labels use composite.summary.details and composite.summary.unset.
 
 **Generated descriptions and data previews.** Render actual scalar previews in
 normal typography. Prefer secondary, italic text for generated descriptions so
-users can distinguish them from stored values, consistently in both Ant Design
-and shadcn. Secondary text must remain readable in light and dark themes; wording
+users can distinguish them from stored values across renderer sets. Secondary text must remain readable in light and dark themes; wording
 must convey the state without relying on color alone.
 
 - A missing/null object or array shows localized "Not set".
@@ -4936,8 +4935,7 @@ feedback text below the control is appropriate. Localize the message and icon's
 accessible name. Clear stale feedback after a successful operation or external
 value replacement. These messages do not contribute to container error counts.
 
-**Preferred presentation: filename pills.** For multiple-file controls in both
-Ant Design and shadcn, prefer compact filename pills with individual remove
+**Preferred presentation: filename pills.** For multiple-file controls, prefer compact filename pills with individual remove
 actions, a themed select-files button, and a separate localized clear-all
 action. This is a presentation recommendation, not a required component or
 layout implementation; an alternative may be used if it preserves the same
@@ -5845,9 +5843,8 @@ data updates without redirecting an edit to the wrong array item/property.
 **List overflow.** The list navigation pane SHOULD have a bounded height and
 scroll vertically only when its items exceed that height. Scrolling the list
 must not scroll or replace the selected item's detail editor. This also applies
-when ListWithDetail is nested inside a cell or row detail dialog. The Ant Design
-and shadcn reference renderers cap the list at 20rem; shorter lists retain their
-natural height. This bound applies with pagination disabled as well as to an
+when ListWithDetail is nested inside a cell or row detail dialog. A 20rem cap is
+one implementation choice; shorter lists should retain their natural height. This bound applies with pagination disabled as well as to an
 overflowing page when pagination is enabled. It does not change selection,
 item indices, or add/delete restrictions.
 
@@ -6218,7 +6215,7 @@ Cell editors accept `options.cells[field].dialog` (or `options.dialog` on the co
 
 Numbers are CSS pixels; strings are CSS dimensions. Omitted width and height keep the renderer's default sizing. The dialog is constrained to the viewport with a margin. Maximize/restore is available by default; `maximizable: false` hides it. Maximizing preserves the normal geometry for restore. Dragging from the title and resizing from the bottom corner are opt-in and unavailable while maximized. Closing resets position and maximization. Geometry changes never apply or discard form edits; Apply and Cancel retain their existing semantics.
 
-Shadcn detail dialogs initially focus the dialog container rather than selecting the first input. Composite cell edit and remove actions appear on hover or keyboard focus and remain visible on touch devices. The remove icon uses the destructive theme color.
+Detail dialogs should initially focus the dialog container rather than selecting the first input. Composite cell edit and remove actions appear on hover or keyboard focus and remain visible on touch devices. The remove icon uses the destructive theme color.
 
 The Table row details: recruitment example demonstrates separate cell and row dialog sizes.
 
@@ -6286,18 +6283,9 @@ navigation retains the 20rem reference height limit described in §18.21.
 Pagination and scrolling complement one another: pagination limits item count,
 while scrolling handles oversized items or a constrained viewport.
 
-**Renderer integration decisions:**
-
-- **shadcn:** use the official Radix-based shadcn Scroll Area for list navigation,
-  row detail panes, and detail dialog bodies. Use its themed vertical and
-  horizontal scrollbars as needed. Keep the pinned component available in both
-  the React demo and web component hosts, with the same behavior and theme.
-- **Ant Design:** retain native scrolling. Ant Design has no general-purpose
-  Scroll Area component in its public component catalog. The recommended styling
-  is a subtle theme-token thumb and transparent track, respecting light/dark
-  mode and platform accessibility preferences. This is a styling recommendation;
-  themed native scrollbar styling is not yet claimed as implemented by the
-  reference renderer.
+Use the platform’s native or themed scrolling primitives while preserving the
+bounded-pane behavior above. See the [web implementation notes](implementation-web-typescript.md)
+for reference-library integration choices.
 
 Apply bounds at collection and pane boundaries rather than introducing a
 separate scrollbar around every field or ordinary form section. Expanded array
@@ -6346,16 +6334,9 @@ apply.
   Keep actions reachable and apply overflow at the appropriate collection or
   pane boundary.
 
-**Reference implementation progress.** The React Ant Design and shadcn tables
-now provide collection-wide displayed-error counts and navigation to the first
-affected source row, including another page. Where row details are configured,
-the action opens them; selecting a nested detail tab or focusing the exact field
-is not yet implemented. Row detail action areas include descendant error counts.
-AG Grid uses readable Markdown summary text for sorting/filtering and explains
-when a newly added item is filtered out, with an explicit Clear filters action.
-These additions reuse validation results through a shared path index and cache
-resolved grid summaries with a bounded cache invalidated by form/config/locale
-changes. No additional validation pass is required.
+Reference implementation coverage and optimization notes are recorded in the
+[web implementation notes](implementation-web-typescript.md); they are not a
+conformance claim for every renderer.
 
 Suggested priorities are readable Markdown sorting/filtering, navigation to
 errors in hidden fields, and stable selection through collection changes.
@@ -7467,3 +7448,36 @@ not preservation or initialization of branch data.
 Choice cards show a separate focus outline for keyboard focus (`focus-visible`).
 Pointer selection retains the selected border without adding a second focus
 outline. Keyboard focus must remain distinguishable from selection.
+
+
+### Mixed types and composition delegation
+
+Selecting a mixed type constrains the current value. Implementations must preserve applicable `allOf`, `anyOf`, and `oneOf` constraints rather than delete them. A delegated branch must respect the selected type. Child property and item types are independent.
+
+An explicitly incompatible alternative may be omitted from the editing choices of `anyOf` or `oneOf`. An incompatible `allOf` branch must remain a contradiction. Untyped branches cannot be rejected on the basis of type-specific keywords: `minimum` does not require a number. Number and integer overlap. Do not deduplicate `oneOf` branches or remove a branch merely because the current incomplete value is invalid.
+
+Original document validation remains authoritative. Reference and conditional handling must retain their semantics; preserving those keywords does not certify conditional field discovery. Analysis must terminate, with conservative handling of unresolved cases. Renderer dispatch, recursive editing and performance need independent integration coverage; helper equivalence tests alone do not establish complete visual authoring.
+
+The Type and composition tab in the mixed-control example covers typed alternatives, fields contributed by allOf and overlapping oneOf branches. The initial overlapping value is deliberately invalid.
+
+
+### Numeric mixed editor selection
+
+When both number and integer are available, an explicit numeric editor selection must persist while editing numeric values. Changing between these editors preserves the value, without a destructive-change prompt. Selecting integer for a fractional value reports a local whole-number error without rounding existing data. The integer editor must not commit new fractional values. This editor-local error does not imply that the original union schema rejects the number. JSON does not record the selected editor: a fresh mount may infer integer for a whole number.
+
+### A single applicable composition branch
+
+When an anyOf or oneOf editor has exactly one branch to display, including after mixed-type narrowing, render that branch directly without a tab or branch selector. Preserve its label, help, enclosing object fields and validation feedback. This is a presentation rule and does not change the original schema or oneOf match counting. Multiple alternatives retain their navigation controls.
+
+
+### Configuring active-branch validation
+
+`validateActiveBranch` is a boolean in global config and Control `options`, defaulting to `true`. An explicit control value takes precedence, including `false`. This applies to displayed anyOf/oneOf branches, including a sole branch and branches reached through mixed-type delegation.
+
+Document validation remains authoritative. A value may satisfy a different alternative while violating the displayed editing branch. With this option enabled, the renderer additionally validates that branch and exposes its errors through normal field styling, accessible feedback, tooltips and inline messages outside cells. These local errors must not change document errors, host onChange validity, stored data, branch selection or submission validity. Hosts must decide submission validity from document validation, not from local editor styling.
+
+With `false`, only document errors are displayed; additional branch compilation and validation must be skipped. This is useful when document-only feedback is preferred or large branch schemas make repeated validation expensive. Native input constraints are independent and may still restrict input or provide library-specific feedback. Disabling this option does not disable AJV document validation.
+
+Only the active branch is validated. Compiled validators should be reused while their schema and validator instance remain unchanged. Data changes can trigger an extra validation pass per nested active branch; no universal performance guarantee is implied. Hidden/disabled validation modes continue to suppress local validation feedback. Unresolvable branch references must not crash the editor; independently compiling a branch is not a guarantee of complete reference support.
+
+Example: `{ "validateActiveBranch": true }` globally, overridden on one Control with `{ "options": { "validateActiveBranch": false } }`. The mixed-control Branch feedback example demonstrates both against the same data, with English and Bulgarian explanatory text.

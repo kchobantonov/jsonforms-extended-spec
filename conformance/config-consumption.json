@@ -1267,7 +1267,7 @@
       "path": "config.pagination",
       "status": "removed",
       "evidence": [
-        "docs/spec.md \u00a718.21.1",
+        "docs/spec.md §18.21.1",
         "docs/todo.md"
       ],
       "finding": "Replaced by component-scoped jsonformsExtended defaults; no generic flat fallback.",
@@ -1278,7 +1278,7 @@
       "path": "config.additionalProperties",
       "status": "removed",
       "evidence": [
-        "docs/spec.md \u00a718.21.1",
+        "docs/spec.md §18.21.1",
         "docs/todo.md"
       ],
       "finding": "Replaced by component-scoped jsonformsExtended defaults; no generic flat fallback.",
@@ -1289,7 +1289,7 @@
       "path": "config.jsonformsExtended.pagination",
       "status": "removed",
       "evidence": [
-        "docs/spec.md \u00a718.21.1",
+        "docs/spec.md §18.21.1",
         "docs/todo.md"
       ],
       "finding": "Replaced by component-scoped jsonformsExtended defaults; no generic flat fallback.",
@@ -1300,7 +1300,7 @@
       "path": "config.jsonformsExtended.additionalProperties",
       "status": "pending-implementation",
       "evidence": [
-        "docs/spec.md \u00a718.21.1",
+        "docs/spec.md §18.21.1",
         "docs/todo.md"
       ],
       "finding": "Target collection presentation contract; runtime consumption is not yet claimed.",
@@ -1313,7 +1313,7 @@
       "declaredBefore": false,
       "declaredAfter": true,
       "evidence": [
-        "docs/spec.md \u00a718.11, \u00a718.21.1"
+        "docs/spec.md §18.11, §18.21.1"
       ],
       "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
     },
@@ -1323,7 +1323,7 @@
       "declaredBefore": false,
       "declaredAfter": true,
       "evidence": [
-        "docs/spec.md \u00a718.11, \u00a718.21.1"
+        "docs/spec.md §18.11, §18.21.1"
       ],
       "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
     },
@@ -1333,7 +1333,7 @@
       "declaredBefore": false,
       "declaredAfter": true,
       "evidence": [
-        "docs/spec.md \u00a718.11, \u00a718.21.1"
+        "docs/spec.md §18.11, §18.21.1"
       ],
       "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
     },
@@ -1343,7 +1343,7 @@
       "declaredBefore": false,
       "declaredAfter": true,
       "evidence": [
-        "docs/spec.md \u00a718.11, \u00a718.21.1"
+        "docs/spec.md §18.11, §18.21.1"
       ],
       "finding": "Component-scoped extension default. Tuple orientation is read by Antd TupleControlRenderer; array pagination implementation remains pending."
     },
@@ -1375,7 +1375,7 @@
       "declaredBefore": false,
       "declaredAfter": true,
       "evidence": [
-        "docs/spec.md \u00a718.21.1",
+        "docs/spec.md §18.21.1",
         "examples/additional-items-pagination/config.json"
       ],
       "finding": "Antd and shadcn TupleAdditionalItems consume scoped pagination through the shared collection pagination resolver; local additionalItems.pagination overrides."
@@ -1388,6 +1388,17 @@
         "packages/jsonforms-react-shadcn-renderers/src/cells/CompositeCell.tsx"
       ],
       "finding": "Composite cell type markers default to false; explicit cell options override the top-level config default.",
+      "declaredBefore": false,
+      "declaredAfter": true
+    },
+    {
+      "path": "config.validateActiveBranch",
+      "status": "consumed",
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/CombinatorBranch.tsx",
+        "packages/jsonforms-react-renderer-common/test/CombinatorBranch.test.tsx"
+      ],
+      "finding": "Defaults true. A control option overrides global config. False bypasses additional branch compilation and validation without changing document validation.",
       "declaredBefore": false,
       "declaredAfter": true
     }

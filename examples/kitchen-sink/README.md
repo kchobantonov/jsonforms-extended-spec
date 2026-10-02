@@ -1,6 +1,6 @@
 # Kitchen sink: job application
 
-A shared Ant Design/shadcn example with English and Bulgarian authoring catalogs.
+A shared renderer example with English and Bulgarian authoring catalogs.
 Register base and extended renderers **and cells**, including AG Grid and Monaco.
 Load the matching renderer locale for built-in actions, pagination and dialogs.
 Use the demo language selector to switch locale.
@@ -55,15 +55,11 @@ The main phone field and table row-detail phone editors request masks for
 8–15 digits prefixed with `+`. `returnMaskedValue: true` preserves that plus in
 storage, matching the schema pattern. The example placeholder is
 `+442079460123`; translated descriptions explain the country code and length.
-Ant Design and shadcn supply this mask editor using the same mask engine. Inline table cells keep their existing editors.
+Renderer implementations should provide the mask behavior described above. Inline table cells keep their existing editors.
 
 ## Domain and source inspiration
 
-This is a job-application example, inspired by the Svelte demo's
-`packages/jsonforms-svelte-demo-common/src/lib/examples/job` schema, UI schemas,
-translations and host actions. Its applicant/job-preference/experience/reference/
-résumé/declaration workflow is the basis for further expansion. This is an adaptation,
-not a direct port: Svelte app-store actions and dynamic defaults are not copied.
+This is a job-application example. See the [implementation notes](../../docs/implementation-web-typescript.md#example-provenance) for source inspiration and adaptation details.
 The stable catalog ID remains `kitchen-sink` to preserve existing demo links.
 Future domain examples should use their own IDs and domain-qualified titles.
 

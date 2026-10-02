@@ -79,6 +79,98 @@
               "scope": "#/properties/assignment"
             }
           ]
+        },
+        {
+          "type": "Category",
+          "label": "Type and composition",
+          "i18n": "mixedComposition.navigation",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Label",
+                  "text": "Choose a type before editing its alternatives. The overlapping text alternatives intentionally start invalid.",
+                  "i18n": "mixedComposition.intro"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/composedScalar",
+                  "i18n": "mixedComposition.composedScalar"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/composedObject",
+                  "i18n": "mixedComposition.composedObject"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/overlappingChoice",
+                  "i18n": "mixedComposition.overlappingChoice"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Table cells",
+          "i18n": "mixedCells.navigation",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Label",
+                  "text": "Edit mixed values through the Value cells. Try switching 2 between Integer and Number, then explore object and array values. The final row deliberately has a missing required value.",
+                  "i18n": "mixedCells.intro"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/mixedRows",
+                  "i18n": "mixedCells.rows",
+                  "options": {
+                    "pagination": {
+                      "pageSize": 10
+                    },
+                    "table": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Branch feedback",
+          "i18n": "branchFeedback.navigation",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Label",
+                  "text": "Both editors share the same valid document value. Select Short text in each: the first reports the active branch error; the second disables that extra feedback. Document validation stays enabled in both.",
+                  "i18n": "branchFeedback.intro"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/branchFeedback",
+                  "label": "Global branch validation enabled",
+                  "i18n": "branchFeedback.enabled"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/branchFeedback",
+                  "label": "Local branch validation disabled",
+                  "i18n": "branchFeedback.disabled",
+                  "options": {
+                    "validateActiveBranch": false
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

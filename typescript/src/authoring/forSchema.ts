@@ -26,6 +26,7 @@ export type CardChoice = ({ value: unknown; branch?: never } | { branch: number;
 };
 
 export interface CommonControlOptions {
+  validateActiveBranch?: boolean;
   format?: string;
   choices?: CardChoice[];
   showRadio?: boolean;

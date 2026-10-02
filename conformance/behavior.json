@@ -233,5 +233,215 @@
       "openCategory": null,
       "dataChanges": 0
     }
+  },
+  {
+    "id": "port-choice-reload",
+    "section": "docs/implementation-pitfalls.md#p01--values-are-compared-by-json-content",
+    "input": {
+      "schema": {
+        "enum": [
+          {
+            "a": 1,
+            "b": 2
+          },
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "data": {
+        "b": 2,
+        "a": 1
+      },
+      "actions": [
+        "Reload data by parsing independent JSON."
+      ]
+    },
+    "expected": {
+      "selectedChoiceIndex": 0,
+      "storedValueType": "object"
+    }
+  },
+  {
+    "id": "port-literal-key",
+    "section": "docs/implementation-pitfalls.md#p02--property-keys-are-literal-data",
+    "input": {
+      "data": {
+        "legacy.key": "A",
+        "legacy": {
+          "key": "B"
+        },
+        "": "C"
+      },
+      "actions": [
+        "Edit the literal legacy.key property to D."
+      ]
+    },
+    "expected": {
+      "data": {
+        "legacy.key": "D",
+        "legacy": {
+          "key": "B"
+        },
+        "": "C"
+      }
+    }
+  },
+  {
+    "id": "port-pattern-intersection",
+    "section": "docs/implementation-pitfalls.md#p03--pattern-constraints-intersect",
+    "input": {
+      "schema": {
+        "type": "object",
+        "patternProperties": {
+          "^x": {
+            "type": "object",
+            "properties": {
+              "left": {
+                "type": "string"
+              }
+            }
+          },
+          "x$": {
+            "type": "object",
+            "properties": {
+              "right": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "data": {
+        "x": {
+          "left": "a",
+          "right": 2
+        }
+      }
+    },
+    "expected": {
+      "editableFieldsAtX": [
+        "left",
+        "right"
+      ]
+    }
+  },
+  {
+    "id": "port-numeric-intent",
+    "section": "docs/implementation-pitfalls.md#p05--numeric-editor-intent-is-not-encoded-in-json",
+    "input": {
+      "schema": {
+        "type": [
+          "integer",
+          "number"
+        ]
+      },
+      "data": 2,
+      "actions": [
+        "Select Number without editing the value.",
+        "Enter 2.5.",
+        "Select Integer without editing the value."
+      ]
+    },
+    "expected": {
+      "data": 2.5,
+      "selectedEditor": "integer",
+      "localWholeNumberError": true,
+      "documentValid": true
+    }
+  },
+  {
+    "id": "port-branch-feedback",
+    "section": "docs/implementation-pitfalls.md#p06--document-validity-and-displayed-branch-feedback-differ",
+    "input": {
+      "schema": {
+        "anyOf": [
+          {
+            "type": "string",
+            "maxLength": 5
+          },
+          {
+            "type": "string",
+            "minLength": 3
+          }
+        ]
+      },
+      "data": "Longer text",
+      "actions": [
+        "Display the short-text branch.",
+        "Observe feedback with validateActiveBranch true.",
+        "Set the control option validateActiveBranch to false."
+      ]
+    },
+    "expected": {
+      "documentValidThroughout": true,
+      "localErrorWhenEnabled": true,
+      "localErrorWhenDisabled": false,
+      "extraBranchValidationWhenDisabled": false
+    }
+  },
+  {
+    "id": "port-summary-search",
+    "section": "docs/implementation-pitfalls.md#p11--summaries-are-part-of-table-behavior",
+    "input": {
+      "data": [
+        {
+          "contact": {
+            "city": "Boston"
+          }
+        },
+        {
+          "contact": {
+            "city": "Seattle"
+          }
+        }
+      ],
+      "summaryDescription": "A Label summary renders the contact city as bold Markdown, using permitted interpolation.",
+      "actions": [
+        "Filter the Contact column for Boston."
+      ]
+    },
+    "expected": {
+      "matchingRowIndices": [
+        0
+      ],
+      "filterTextForFirstRow": "Boston",
+      "dataUnchanged": true
+    }
+  },
+  {
+    "id": "port-cell-error-placement",
+    "section": "docs/implementation-pitfalls.md#p08--errors-belong-to-their-data-location",
+    "input": {
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "active": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "data": [
+        {
+          "active": true
+        },
+        {
+          "active": "false"
+        }
+      ]
+    },
+    "expected": {
+      "invalidCell": {
+        "row": 1,
+        "property": "active"
+      },
+      "localAccessibleFeedback": true,
+      "containerDescendantNotice": true,
+      "ordinaryInlineCellHelp": false
+    }
   }
 ]

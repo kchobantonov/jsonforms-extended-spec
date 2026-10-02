@@ -905,6 +905,11 @@
           "type": "boolean",
           "default": false,
           "description": "For choice cards, show the native radio circle. Hidden by default; keyboard interaction and accessible radio semantics remain."
+        },
+        "validateActiveBranch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Validate the displayed anyOf/oneOf branch for local editor feedback. Control options override global config. False skips additional branch compilation and validation; document validation remains unchanged."
         }
       }
     },

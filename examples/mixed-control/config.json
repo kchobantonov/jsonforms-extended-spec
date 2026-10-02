@@ -1,4 +1,5 @@
 {
   "showUnfocusedDescription": true,
-  "restrict": true
+  "restrict": true,
+  "validateActiveBranch": true
 }
