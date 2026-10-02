@@ -107,3 +107,7 @@ selected content, rich translated labels, typed values, a disabled card and
 automatic labels. Card branch forms covers explicit Email detail and generated
 Postal detail. Switching populated branch forms uses the shared confirmation
 policy. English and Bulgarian translations accompany the card UI.
+
+Card branch forms explicitly uses `confirmation.branchChange: "complex"`. A discriminator-only value switches immediately; entered branch details require confirmation. Branch switch without prompt uses `never`. The default oneOf policy remains `always`.
+
+Card validation demonstrates an absent required choice, an invalid imported enum value, and an invalid email within a selected branch, with English and Bulgarian messages.

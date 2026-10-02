@@ -12,5 +12,10 @@
   "cardContact": {
     "kind": "email",
     "address": "hello@example.com"
+  },
+  "invalidCardDecision": "legacy",
+  "invalidCardContact": {
+    "kind": "email",
+    "address": "not-an-email"
   }
 }

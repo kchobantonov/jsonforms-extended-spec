@@ -7452,3 +7452,18 @@ Choice-card borders, backgrounds, focus outlines and error colors MUST follow th
 active renderer theme. Branch cards accept `options.confirmation.branchChange:
 "never"` to suppress the destructive-switch prompt, using the shared confirmation
 policy. This changes prompting only; branch data replacement still occurs.
+
+
+For choice-card branch changes under the `complex` confirmation policy, exclude
+schema-defined discriminator values when assessing discarded data. A property
+whose branches define distinct primitive `const` values is a discriminator;
+exclude its current value only when it matches one of those constants. For
+example, switching `{ "kind": "email" }` to `{ "kind": "postal" }` needs no
+prompt. Entered detail fields or invalid discriminator values still count as
+discarded data. `always` continues to prompt for the existing discriminator;
+`never` continues to suppress prompts. This exception changes confirmation only,
+not preservation or initialization of branch data.
+
+Choice cards show a separate focus outline for keyboard focus (`focus-visible`).
+Pointer selection retains the selected border without adding a second focus
+outline. Keyboard focus must remain distinguishable from selection.

@@ -286,7 +286,10 @@
                         },
                         "branch": 1
                       }
-                    ]
+                    ],
+                    "confirmation": {
+                      "branchChange": "complex"
+                    }
                   }
                 }
               ]
@@ -347,6 +350,106 @@
                       "branchChange": "never"
                     }
                   }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "label": "Card validation",
+          "i18n": "cards.validation",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Label",
+                  "text": "Choose a required value, correct an imported choice, and fix an invalid email in the selected branch.",
+                  "i18n": "cards.validationIntro"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/requiredCardDecision",
+                  "i18n": "cards.requiredDecision",
+                  "options": {
+                    "format": "cards",
+                    "choices": [
+                      {
+                        "value": "approve",
+                        "label": "Approve",
+                        "i18n": "cards.approve"
+                      },
+                      {
+                        "value": "decline",
+                        "label": "Decline",
+                        "i18n": "cards.decline"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/invalidCardDecision",
+                  "i18n": "cards.invalidDecision",
+                  "options": {
+                    "format": "cards",
+                    "choices": [
+                      {
+                        "value": "approve",
+                        "label": "Approve",
+                        "i18n": "cards.approve"
+                      },
+                      {
+                        "value": "decline",
+                        "label": "Decline",
+                        "i18n": "cards.decline"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/invalidCardContact",
+                  "options": {
+                    "format": "cards",
+                    "choices": [
+                      {
+                        "label": "Email",
+                        "i18n": "cards.contact0",
+                        "content": {
+                          "type": "Label",
+                          "text": "Send electronically",
+                          "i18n": "cards.contactBody0"
+                        },
+                        "branch": 0,
+                        "detail": {
+                          "type": "VerticalLayout",
+                          "elements": [
+                            {
+                              "type": "Control",
+                              "scope": "#/properties/address",
+                              "i18n": "cards.invalidAddress"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "label": "Postal mail",
+                        "i18n": "cards.contact1",
+                        "content": {
+                          "type": "Label",
+                          "text": "Deliver to a street address",
+                          "i18n": "cards.contactBody1"
+                        },
+                        "branch": 1
+                      }
+                    ],
+                    "confirmation": {
+                      "branchChange": "complex"
+                    }
+                  },
+                  "i18n": "cards.invalidContact"
                 }
               ]
             }

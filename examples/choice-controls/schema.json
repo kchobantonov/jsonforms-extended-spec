@@ -3,7 +3,8 @@
   "type": "object",
   "title": "Appointment options",
   "required": [
-    "processing"
+    "processing",
+    "requiredCardDecision"
   ],
   "properties": {
     "processing": {
@@ -180,6 +181,68 @@
         "Small",
         "Medium",
         "Large"
+      ]
+    },
+    "requiredCardDecision": {
+      "type": "string",
+      "title": "Required decision",
+      "enum": [
+        "approve",
+        "decline"
+      ]
+    },
+    "invalidCardDecision": {
+      "type": "string",
+      "title": "Invalid imported decision",
+      "enum": [
+        "approve",
+        "decline"
+      ]
+    },
+    "invalidCardContact": {
+      "title": "Contact with invalid details",
+      "type": "object",
+      "oneOf": [
+        {
+          "title": "Email",
+          "properties": {
+            "kind": {
+              "const": "email",
+              "default": "email"
+            },
+            "address": {
+              "type": "string",
+              "title": "Email address",
+              "format": "email"
+            }
+          },
+          "required": [
+            "kind",
+            "address"
+          ]
+        },
+        {
+          "title": "Postal mail",
+          "properties": {
+            "kind": {
+              "const": "postal",
+              "default": "postal"
+            },
+            "street": {
+              "type": "string",
+              "title": "Street"
+            },
+            "city": {
+              "type": "string",
+              "title": "City"
+            }
+          },
+          "required": [
+            "kind",
+            "street",
+            "city"
+          ]
+        }
       ]
     }
   }
