@@ -64,3 +64,10 @@ that module, and test/build/pack run generation automatically. Consumers add the
 `spec-` ID prefix at registration; no framework-specific per-example list is needed.
 
 English example titles should begin with the feature named by the stable example ID. Add a domain or further explanation after a colon when useful. IDs remain stable when titles are clarified.
+
+## Generic JSON and inferred forms
+
+- [JSON editor: any JSON type](json-editor/README.md) starts without data and uses an explicit `{}` schema.
+- [JSON inference: paste data without a schema](json-inference/README.md) omits schema and data; apply JSON in the Data editor to generate a form.
+
+Catalog assets are optional. Preserve omitted schema/data rather than replacing them with `{}`/`null`; those values have different meanings.

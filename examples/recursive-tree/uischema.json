@@ -54,6 +54,31 @@
           "i18n": "tree.kind"
         }
       ]
+    },
+    {
+      "type": "Category",
+      "label": "Tree editor",
+      "i18n": "tree.editor",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/populated",
+          "label": "Kind",
+          "i18n": "tree.kind",
+          "options": {
+            "recursiveTree": {
+              "childrenProperty": "children",
+              "labelProperty": "name",
+              "detail": {
+                "type": "Control",
+                "scope": "#",
+                "label": "Kind",
+                "i18n": "tree.kind"
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

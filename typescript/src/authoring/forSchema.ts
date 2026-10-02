@@ -26,6 +26,14 @@ export type CardChoice = ({ value: unknown; branch?: never } | { branch: number;
 };
 
 export interface CommonControlOptions {
+  /** Navigate recursive nodes through a tree and selected-node editor. */
+  recursiveTree?: {
+    childrenProperty: string;
+    labelProperty: string;
+    detail?: UISchemaElement;
+  };
+  /** Mixed value presentation; defaults to tree. Code requires Monaco support. */
+  structuredLayout?: 'tree' | 'nested' | 'code';
   validateActiveBranch?: boolean;
   format?: string;
   choices?: CardChoice[];

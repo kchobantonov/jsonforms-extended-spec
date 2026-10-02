@@ -61,3 +61,38 @@ When work reveals an ambiguity or a commonly overlooked behavior:
 5. Link the new material from the relevant example or guide.
 
 Do not catalogue every typo, missing import or accidental regression. Record lessons another competent implementer could reasonably miss when reading the schema/specification. Describe the final behavior rather than a chronological bug history. The entries below were seeded from renderer fixes and existing spec material; they are not an exhaustive audit of all historical changes.
+
+### Authoring mixed values as JSON code
+
+Set `options.structuredLayout: "code"` on a mixed Control, or `jsonformsExtended.mixed.structuredLayout: "code"` in config. Tree remains the default. Code mode edits the entire value, including scalars and null, without a separate type selector. It requires the extended Monaco renderer registry and the additional-error provider (`ExtendedJsonForms`, or the additional-error store integration).
+
+Monaco validates the bound section schema, with local references resolved against the document schema. Invalid JSON text stays in the editor and contributes an owner-scoped additional error; it must not overwrite the last parsed value. Parsed values update normally and AJV reports schema errors. Do not duplicate Monaco schema diagnostics into additional errors. Hosts must gate submission on additional errors as well as schema errors, because an invalid draft is newer than the stored value. Multiple editor models must retain independent schema registrations and clean them up on unmount.
+
+
+## Recursive node tree presentation
+
+A Control can opt into a tree with a selected-node detail pane using
+`options.recursiveTree: { childrenProperty: "children", labelProperty: "name" }`.
+Both properties name direct members of each node, not dotted paths. The tree
+omits intermediate collection and scalar-property entries. Unnamed nodes use
+an index label. The optional `detail` UI schema is relative to the selected node;
+it must not enable recursiveTree again. Branch layouts from the UI schema
+registry remain available. Without this option, recursive controls retain their
+existing nested presentation. This differs from mixed `structuredLayout: "tree"`,
+which navigates arbitrary JSON structure.
+
+The selected node's child collection retains native add/delete behavior and
+uses links to child editors rather than recursively expanding their fields.
+Tree rows also expose rename and delete actions. Rename edits the configured
+label property's value, not an object key, and validates the new value against
+its schema. Delete removes the node from its parent's child array and respects
+minItems, read-only ancestors, and deletion confirmation (the mixed catalog).
+The displayed root cannot be deleted. Confirmation rechecks the current target
+and permissions to avoid deleting a replacement node at a reused array index.
+Editing a node preserves sibling data. Node error indicators include descendants
+and follow the container-indicator and validation-visibility settings. After a
+selected node is removed, select its closest remaining parent. Navigation remains
+available in read-only forms; mutations remain disabled.
+
+Implemented in React Antd and shadcn; other renderer sets do not yet implement
+this option. The recursive-tree example includes a Tree editor tab for comparison.

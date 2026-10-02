@@ -218,3 +218,52 @@ When branch layouts omit a discriminator field, its required error must still be
 ## Validation indicators on collapsed array items
 
 When container indicators are enabled, each array item header must indicate errors at its own data path and in its descendants, even while collapsed. An indicator on the outer collection alone does not identify which item to open. Respect local indicator overrides and validation visibility; valid sibling items must remain unmarked.
+
+## Scoped JSON drafts in mixed controls
+
+Code editors validate a section while local references still belong to the document schema. Assign each editor a unique model and schema registration; preserve registrations owned by other editors. Keep malformed text across blur and contribute an owner-scoped additional error instead of overwriting stored data. Gate Apply/submit on these errors so an older parsed value cannot silently replace the visible draft. Schema diagnostics should remain Monaco markers and ordinary AJV errors, not duplicate additional errors.
+
+## Nested array selection and composed table cells
+
+The presence of item properties does not make an array suitable for a table by default. Apply nested-array detection before selecting the default table presentation; explicit table options can still opt in. Such tables need a composite detail cell for anyOf, oneOf and allOf values as well as object, array and mixed types. Keep specialized enum and scalar cells ahead of the composite fallback.
+
+Executable renderer regressions cover Draft-07 allOf/anyOf/oneOf default panels and an explicit table with a string-or-array anyOf column in Antd and shadcn.
+
+
+## Domain trees versus JSON structure trees
+
+Project recursive child collections onto named nodes; do not introduce a tree
+entry for each scalar field or the intermediate children array. Carry the original
+node schema, root references, absolute data path, permissions and validation into
+the detail renderer. Never expand a recursive schema to construct navigation:
+walk the finite data instead. Reuse native collection actions so defaults and
+confirmation behavior are preserved. Array deletion/reordering must update node
+selection without silently editing a sibling at a reused index.
+
+## An unrestricted schema is not an omitted schema
+
+An explicit `{}` accepts every JSON value; an omitted schema allows a host such as JSON Forms React to infer one from data. Preserve missing initial data as absence, not null. When switching the demo to an omitted schema, remove its previous Monaco schema registration without removing registrations belonging to other editors. Inferred constraints describe the sample and are not an authored business schema.
+
+The current JSON Forms core generator expects an object root. A demo adapter can infer a wrapped property (`Generate.jsonSchema({ value: data }).properties.value`) to support root arrays, scalars and null, and use an unrestricted runtime schema while data is absent. Do not store that runtime fallback as the authored schema; recompute inference when data changes.
+
+
+### Temporary inference workaround — upstream #2478
+
+Track [JSON Forms PR #2478](https://github.com/eclipsesource/jsonforms/pull/2478),
+which includes non-object root inference and regeneration when data changes.
+The React demo adapter (`demoSchema.ts`, called from `App.tsx`) is temporary for
+the installed 3.9.0-alpha.1 dependency. Remove it after upgrading to a released
+version containing the fix, not merely after the PR merges. First verify absent
+data, explicit null, every scalar type, arrays, objects, and replacement of data
+with a different root type. Then pass the omitted schema directly to JSON Forms
+and retain the example regressions against that upstream path. The Monaco
+stale-schema cleanup is separate and should remain.
+
+## Cleared mixed scalars versus absent values
+
+A mixed type selector owns the selected value's type. Clearing its string input
+stores the empty string and keeps String selected. Clearing a number or integer
+input stores zero and keeps its selected type; clearing the type removes the
+value where absence is permitted. Scope this behavior to the exact mixed value
+path, including root and tree-detail values, so ordinary optional scalar fields
+retain their clearing semantics. Check both the clear icon and deleting all text.

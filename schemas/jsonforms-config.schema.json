@@ -354,6 +354,16 @@
             "collapsed": {
               "type": "boolean",
               "description": "Override the shared jsonformsExtended.collapsed default. Omit to inherit; local options.collapsed wins."
+            },
+            "structuredLayout": {
+              "type": "string",
+              "enum": [
+                "nested",
+                "tree",
+                "code"
+              ],
+              "default": "tree",
+              "description": "Mixed value presentation. Tree is the default; nested uses regular object/array controls; code edits the whole value as JSON with Monaco. Local options override jsonformsExtended.mixed."
             }
           }
         },

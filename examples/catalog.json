@@ -240,6 +240,29 @@
     "hostRequirements": []
   },
   {
+    "id": "json-editor",
+    "title": "JSON editor: any JSON type",
+    "files": [
+      "schema.json",
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Preserve omitted schema and data as undefined. Apply Data editor JSON to JSON Forms; when schema is absent, allow core schema inference."
+    ]
+  },
+  {
+    "id": "json-inference",
+    "title": "JSON inference: paste data without a schema",
+    "files": [
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Preserve omitted schema and data as undefined. Apply Data editor JSON to JSON Forms; when schema is absent, allow core schema inference."
+    ]
+  },
+  {
     "id": "kitchen-sink",
     "title": "Kitchen sink: job application",
     "files": [
@@ -459,6 +482,18 @@
     "hostRequirements": []
   },
   {
+    "id": "tree-max-depth",
+    "title": "Tree: maximum five levels",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
     "id": "tuple-control",
     "title": "Tuple control",
     "files": [
@@ -485,17 +520,5 @@
     "hostRequirements": [
       "Install the extended validator profile in spec.md; plain JSON Schema validation does not implement transforms, dynamic defaults or custom error messages."
     ]
-  },
-  {
-    "id": "tree-max-depth",
-    "title": "Tree: maximum five levels",
-    "files": [
-      "config.json",
-      "data.json",
-      "schema.json",
-      "translations.json",
-      "uischema.json"
-    ],
-    "hostRequirements": []
   }
 ]

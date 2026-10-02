@@ -53,18 +53,38 @@
           "elements": [
             {
               "type": "Label",
-              "text": "Structured values, and an unconstrained one"
+              "text": "Compare nested fields and tree navigation below. Both editors update the same payload."
             },
             {
               "type": "Control",
               "scope": "#/properties/payload",
+              "label": "Nested fields",
               "options": {
-                "collapsible": true
+                "structuredLayout": "nested",
+                "collapsed": false
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/payload",
+              "label": "Tree navigation",
+              "options": {
+                "structuredLayout": "tree",
+                "collapsed": false
               }
             },
             {
               "type": "Control",
               "scope": "#/properties/anything"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/payload",
+              "label": "JSON code",
+              "options": {
+                "structuredLayout": "code",
+                "height": 280
+              }
             }
           ]
         },

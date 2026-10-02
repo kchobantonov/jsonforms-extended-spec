@@ -16,7 +16,8 @@
     "tree.content.title": "Content",
     "tree.children.label": "Children",
     "tree.children.title": "Children",
-    "tree.kind.label": "Kind"
+    "tree.kind.label": "Kind",
+    "tree.editor.label": "Tree editor"
   },
   "bg": {
     "tree.populated.label": "Съществуващо дърво",
@@ -35,6 +36,7 @@
     "tree.content.title": "Съдържание",
     "tree.children.label": "Деца",
     "tree.children.title": "Деца",
-    "tree.kind.label": "Вид"
+    "tree.kind.label": "Вид",
+    "tree.editor.label": "Редактор на дърво"
   }
 }

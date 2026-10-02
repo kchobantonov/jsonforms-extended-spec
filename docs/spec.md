@@ -7505,3 +7505,36 @@ For example, `{"jsonformsExtended":{"collapsed":false,"mixed":{"collapsed":true}
 A maximum tree depth can be expressed portably through a finite chain of node definitions. The [five-level tree example](../examples/tree-max-depth/README.md) counts the root as level 1, references the next level for children, and uses maxItems: 0 at level 5. This is a data constraint, independent of collapse or tree navigation. Renderers must honor the collection limit for Add and still expose errors in imported deeper data.
 
 Defaults in referenced alternatives may be applied by a mutating validator while probing a branch. Do not put an empty children default on a Folder alternative if it can leak into a File that forbids children. Test branch creation using the host's actual validator options, not only a non-mutating validator.
+
+### Mixed structured-value presentation
+
+Mixed controls support `options.structuredLayout`: `nested`, `code`, or `tree` (default). Resolve the local option before `config.jsonformsExtended.mixed.structuredLayout`, then fall back to `tree`. Nested presentation dispatches the selected object or array schema through the regular renderers, preserving detail and registered UI schemas. Tree presentation uses tree navigation and a selected-node editor. Both retain type selection, collapse settings and validation feedback. Presentation must not modify data or validation semantics.
+
+### Authoring mixed values as JSON code
+
+Set `options.structuredLayout: "code"` on a mixed Control, or `jsonformsExtended.mixed.structuredLayout: "code"` in config. Tree remains the default. Code mode edits the entire value, including scalars and null, without a separate type selector. It requires the extended Monaco renderer registry and the additional-error provider (`ExtendedJsonForms`, or the additional-error store integration).
+
+Monaco validates the bound section schema, with local references resolved against the document schema. Invalid JSON text stays in the editor and contributes an owner-scoped additional error; it must not overwrite the last parsed value. Parsed values update normally and AJV reports schema errors. Do not duplicate Monaco schema diagnostics into additional errors. Hosts must gate submission on additional errors as well as schema errors, because an invalid draft is newer than the stored value. Multiple editor models must retain independent schema registrations and clean them up on unmount.
+
+
+## Recursive node tree presentation
+
+A Control can opt into a tree with a selected-node detail pane using
+`options.recursiveTree: { childrenProperty: "children", labelProperty: "name" }`.
+Both properties name direct members of each node, not dotted paths. The tree
+omits intermediate collection and scalar-property entries. Unnamed nodes use
+an index label. The optional `detail` UI schema is relative to the selected node;
+it must not enable recursiveTree again. Branch layouts from the UI schema
+registry remain available. Without this option, recursive controls retain their
+existing nested presentation. This differs from mixed `structuredLayout: "tree"`,
+which navigates arbitrary JSON structure.
+
+The selected node's child collection retains native add/delete behavior and
+uses links to child editors rather than recursively expanding their fields.
+Editing a node preserves sibling data. Node error indicators include descendants
+and follow the container-indicator and validation-visibility settings. After a
+selected node is removed, select its closest remaining parent. Navigation remains
+available in read-only forms; mutations remain disabled.
+
+The recursive-tree example includes a Tree editor tab for comparison. See the
+implementation guide for renderer coverage.
