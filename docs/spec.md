@@ -5210,6 +5210,15 @@ string "false" must not be shown as checked. Preserve invalid incoming data for
 correction, expose validation feedback, and do not present it as a valid true or
 false selection. Disabled/read-only state prevents changes.
 
+This feedback also applies to checkbox and switch cells in normal tables and
+grids. A field error such as a type failure at `/team/1/active` MUST be indicated
+on the second row's Active cell, with its localized validation message available
+through the local error indicator. An indeterminate state alone is insufficient.
+The array's child-error summary (for example, "Some items contain errors.") is
+renderer-generated aggregation, not an additional validator error, and MUST NOT
+replace the cell's feedback. Correcting the value MUST clear the local error
+when validation succeeds.
+
 Clearing follows the shared clear-control contract and is distinct from switching
 off: switching off stores false. False still counts as a present value for the
 clear affordance. In dynamic-property context clearing must retain the key under
