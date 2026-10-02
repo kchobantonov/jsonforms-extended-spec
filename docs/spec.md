@@ -635,29 +635,15 @@ take effect.
 
 ### 7.1 Defaults and their resolution order
 
-- `gridColumns`: explicit → `jsonformsExtended.layoutDefaults.gridColumns` →
-  family default → **16**.
+- `gridColumns`: explicit → `jsonformsExtended.layoutDefaults.gridColumns` → **16**.
 - `wrap`: explicit → `jsonformsExtended.layoutDefaults.wrap` → **false**.
-- `gap`: explicit → `jsonformsExtended.layoutDefaults.gap` → **family
-  default**.
+- `gap`: explicit → `jsonformsExtended.layoutDefaults.gap` → **16 CSS pixels**, for both rows and columns.
 
-The recommended fallback gap is **0 unless a family documents another portable
-default** — and a family whose controls carry no horizontal margin of their own
-SHOULD document one, because zero makes two controls placed side by side share
-an edge.
+These defaults are portable requirements, not renderer-family preferences. Explicit `gap: 0` remains zero. Schema defaults document fallback behavior; renderers MUST apply it even when the config object or property is absent, without relying on a validator to insert defaults.
 
-Such a default MUST be **direction-dependent**, and this is not a detail. A
-family whose controls already carry vertical rhythm — a bottom margin on each
-field — adds a column gap *on top of* spacing that is already there, so a
-single non-zero number double-spaces every vertical form. A row may need a
-gutter while a column needs none.
+Layouts own spacing between their children. Renderers MUST avoid adding native field outer margins on top of the layout gap. In Ant Design this requires suppressing Form.Item bottom margins within the layout. Container children such as arrays and objects receive the same gap as ordinary fields. Internal control spacing remains the renderer's responsibility.
 
-The reason to document a non-zero row default at all: **no UI schema written
-for another family sets `gap`**, because those families space children
-themselves. A fallback of zero therefore makes every ported UI schema render
-with its rows touching, and it reads as the author's mistake rather than the
-family's. `gap: 0` at either level restores edge-sharing exactly, so nothing is
-taken away.
+A platform limitation that prevents compliance MUST be documented with its reason and observable fallback; visual preference alone is not a reason to change these defaults.
 
 ### 7.2 Wrapping
 
@@ -1097,6 +1083,10 @@ visible one; when none are visible, no panel is open. **Preserve the selected ca
 `initial` sets initial selection only. Expansion is runtime UI state and
 modifies neither data nor UI schema. Closing a category preserves its data and
 validation.
+
+Accordion expansion uses `options.collapsed`, then `config.jsonformsExtended.collapsed`; the default is false. Without an explicit `initial` selection, true starts all panels closed. Explicit initial selection takes precedence on mount. Changing the effective collapsed setting updates expansion; unrelated updates preserve user selection. Tabs and steppers ignore collapse settings.
+
+Mixed object/array outer frames use the same `collapsible` and `collapsed` options as Group: local options override namespaced config, then flat config. For collapsed, the only global key is `config.jsonformsExtended.collapsed`; there is no flat alias. Mixed frames default to collapsible and expanded. A non-collapsible frame stays open and has no collapse action. Changes to the effective `collapsed` setting update expansion; unrelated data changes preserve user expansion. This does not control expansion of tree nodes or array items.
 
 Accordion panels are stacked vertically; the `vertical` orientation option and
 the stepper-only `showNavButtons` do not alter this presentation.
@@ -5886,7 +5876,7 @@ An empty array shows a localized empty-state message while retaining the toolbar
 
 | UI option | Default and behavior |
 | --- | --- |
-| `initCollapsed` | False: initially open the first item if present. True: initially close all items. Initialization only, not a continuously controlled expansion value. |
+| `collapsed` | False: initially open the first item if present. True: initially close all items. Initialization only, not a continuously controlled expansion value. |
 | `collapseNewItems` | False: open the newly added item. True: leave it closed and preserve existing expansion. |
 | `elementLabelProp` | Optional item-relative dotted data path for its header label. Follow Shared array item labels for choice translations, first-primitive-property fallback, readable item fallback, and preservation of zero/false values. |
 | `detail` | Existing item-detail UI-schema convention; delegate at the item path. Otherwise use registered/generated item UI schemas. |
@@ -5938,7 +5928,7 @@ must remain understandable without color or hover alone.
     "label": "Contacts",
     "options": {
       "elementLabelProp": "name",
-      "initCollapsed": false,
+      "collapsed": false,
       "collapseNewItems": false,
       "showSortButtons": true,
       "detail": {
@@ -7238,14 +7228,14 @@ in this version; any relationship to a future overlay resolver still needs desig
 
 All array presentations (table, expandable items, list with detail, and AG Grid)
 support `options.collapsible` and `options.collapsed`, with the same meaning as
-Group. Both default to false. UI options override namespaced config, then legacy
-flat config. `collapsed` sets the initial state and resynchronizes only when its
+Group. Both default to false. UI options override namespaced config; only
+`collapsible` also accepts legacy flat config. `collapsed` sets the initial state and resynchronizes only when its
 effective value changes. Without `collapsible`, the body is always visible.
 
 Collapse hides the array body, preserving mounted editors, data, selection,
 sorting and item expansion. The header, validation indicator and actions remain
 visible. A keyboard-accessible toggle exposes `aria-expanded` and `aria-controls`.
-This is independent of `initCollapsed` and `collapseNewItems`, which affect items.
+Expandable item forms also use `collapsed` to initialize their item expansion. Outer-panel and item expansion are separate runtime states; toggling one does not toggle the other. `collapseNewItems` controls newly added items.
 Changing form data must not reset panel expansion.
 
 ### Kitchen-sink integration example
@@ -7481,3 +7471,37 @@ With `false`, only document errors are displayed; additional branch compilation 
 Only the active branch is validated. Compiled validators should be reused while their schema and validator instance remain unchanged. Data changes can trigger an extra validation pass per nested active branch; no universal performance guarantee is implied. Hidden/disabled validation modes continue to suppress local validation feedback. Unresolvable branch references must not crash the editor; independently compiling a branch is not a guarantee of complete reference support.
 
 Example: `{ "validateActiveBranch": true }` globally, overridden on one Control with `{ "options": { "validateActiveBranch": false } }`. The mixed-control Branch feedback example demonstrates both against the same data, with English and Bulgarian explanatory text.
+
+
+### Recursive editing and reference ownership
+
+A recursive schema describes potentially nested values, not an instruction to create an infinite document. Editors must preserve finite input data and must not instantiate descendants merely because a referenced schema exists. An empty child collection stays empty until an explicit creation action. A required recursive path with no terminating alternative may admit no finite valid JSON instance; an editor must not attempt infinite default generation to satisfy it.
+
+For a discriminated `oneOf`, the required property with distinct `const` values can identify the branch even while other fields or descendants are invalid. Branch selection is an editing decision, not evidence that the document is valid. An empty node with no fitting branch must allow an explicit first selection; merely displaying the first alternative is not a substitute for initializing it. Branch labels with an explicit schema `i18n` prefix use `<prefix>.label` with the branch title as fallback. Do not fall back to the first branch merely because a referenced alternative cannot be compiled outside its root schema. Selecting a different branch initializes that branch under the existing preservation and confirmation rules, including when both branches are objects.
+
+Render only the active alternative. Descendant editing should follow finite data and explicit user expansion/creation; references must not be eagerly expanded into an unbounded schema tree. Cache reference work by schema identity and resolution context, and keep ordinary schemas on the existing path. A reference-resolution cycle at one schema/data location is different from visiting the same schema at successive child data locations: the latter is normal recursion.
+
+The [recursive tree example](../examples/recursive-tree/README.md) illustrates populated folders, child creation and nested errors with local references. It does not certify all recursive schemas or external reference combinations.
+
+External document loading is a host responsibility unless a separate resolver contract is provided. Validation and rendering must see the same schema documents and URI bases. A `$ref` URL alone must not trigger renderer network requests. A future optional resolver needs cache invalidation, pending/error states, cancellation and a defined URI policy; a boolean `resolveExternalRefs` flag alone is insufficient. No such configuration option is introduced by this example.
+
+### Form-wide detail-dialog defaults
+
+`config.jsonformsExtended.dialog` accepts `width`, `height`, `draggable`, `resizable` and `maximizable`. Each local rowDetail.dialog or cell dialog property overrides the corresponding default, including explicit false. Defaults retain existing behavior when absent. Dialog frames must fit the viewport with the header and action footer visible; long forms scroll inside the body.
+
+
+### Required table column labels
+
+Table and AG Grid column headers show an asterisk when the represented property is required by the item schema. Resolve hideRequiredAsterisk from cell options, then collection options, then global config; explicit false overrides true. Hiding this marker does not change required validation. Optional columns and unbound summary columns do not gain a marker merely because the collection itself is required.
+
+
+The shared global expansion default is `config.jsonformsExtended.collapsed` (false). Group, mixed, accordion and expandable array presentations may override it through their own `options.collapsed`. Per-component defaults are `jsonformsExtended.group.collapsed`, `mixed.collapsed`, `accordion.collapsed`, and `array.collapsed`. Precedence is local `options.collapsed`, component default, shared `jsonformsExtended.collapsed`, then false. Component defaults have no schema default: omission means inherit, and explicit false overrides true. Array items read it on initialization; Group, mixed and categorization outer panels also react to changes in the effective setting.
+
+
+For example, `{"jsonformsExtended":{"collapsed":false,"mixed":{"collapsed":true},"accordion":{"collapsed":true}}}` starts mixed frames and accordion categories collapsed while Groups and arrays inherit expanded. The demo exposes shared expansion and an Inherit/Collapsed/Expanded choice for each component type. Array item expansion remains initialization-only; outer panels react when their effective collapse setting changes.
+
+### Finite tree depth
+
+A maximum tree depth can be expressed portably through a finite chain of node definitions. The [five-level tree example](../examples/tree-max-depth/README.md) counts the root as level 1, references the next level for children, and uses maxItems: 0 at level 5. This is a data constraint, independent of collapse or tree navigation. Renderers must honor the collection limit for Add and still expose errors in imported deeper data.
+
+Defaults in referenced alternatives may be applied by a mutating validator while probing a branch. Do not put an empty children default on a Folder alternative if it can leak into a File that forbids children. Test branch creation using the host's actual validator options, not only a non-mutating validator.

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "JSON Forms configuration — common profile",
+  "title": "JSON Forms configuration \u2014 common profile",
   "description": "Form-wide defaults for controls, layouts, validation messages and shared extensions. Individual elements can override applicable defaults in their options.",
   "type": "object",
   "additionalProperties": true,
@@ -141,14 +141,6 @@
         }
       ]
     },
-    "initCollapsed": {
-      "description": "Starts expandable array items collapsed. When false, the first item starts expanded. This sets the initial state only.",
-      "allOf": [
-        {
-          "$ref": "jsonforms-uischema.schema.json#/$defs/controlOptions/properties/initCollapsed"
-        }
-      ]
-    },
     "collapseNewItems": {
       "description": "Keeps newly added expandable array items collapsed. When false, adding an item opens it.",
       "allOf": [
@@ -262,7 +254,7 @@
         "collapsed": {
           "type": "boolean",
           "default": false,
-          "description": "Initial collapsed state for collapsible group and array panels. A change to this setting updates the state; unrelated form updates preserve user expansion."
+          "description": "Collapsed state for Group, mixed object/array frames and accordion categories. Changes update expansion; unrelated updates preserve user state."
         },
         "showDataIndicator": {
           "type": "boolean",
@@ -319,9 +311,13 @@
           "properties": {
             "pagination": {
               "$ref": "jsonforms-extended-uischema.schema.json#/$defs/pagination"
+            },
+            "collapsed": {
+              "type": "boolean",
+              "description": "Override the shared jsonformsExtended.collapsed default. Omit to inherit; local options.collapsed wins."
             }
           },
-          "description": "Pagination defaults for supported array presentations; local options.pagination overrides."
+          "description": "Defaults for array presentations, including pagination and collapse state."
         },
         "radio": {
           "type": "object",
@@ -336,6 +332,40 @@
         },
         "additionalItems": {
           "$ref": "jsonforms-extended-uischema.schema.json#/$defs/additionalItemsPresentation"
+        },
+        "dialog": {
+          "$ref": "jsonforms-extended-uischema.schema.json#/$defs/detailDialog",
+          "description": "Defaults for row and complex-cell detail dialogs. Local dialog properties override these defaults individually."
+        },
+        "group": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "collapsed": {
+              "type": "boolean",
+              "description": "Override the shared jsonformsExtended.collapsed default. Omit to inherit; local options.collapsed wins."
+            }
+          }
+        },
+        "mixed": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "collapsed": {
+              "type": "boolean",
+              "description": "Override the shared jsonformsExtended.collapsed default. Omit to inherit; local options.collapsed wins."
+            }
+          }
+        },
+        "accordion": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "collapsed": {
+              "type": "boolean",
+              "description": "Override the shared jsonformsExtended.collapsed default. Omit to inherit; local options.collapsed wins."
+            }
+          }
         }
       }
     },
@@ -387,7 +417,8 @@
       "properties": {
         "gap": {
           "$ref": "#/$defs/dimension",
-          "description": "Space between layout children, as pixels or a CSS dimension. When omitted, the layout uses its normal directional spacing."
+          "description": "Space between layout children, in pixels or a CSS dimension. Defaults to 16 CSS pixels in both rows and columns. Explicit zero disables the gap.",
+          "default": 16
         },
         "wrap": {
           "type": "boolean",

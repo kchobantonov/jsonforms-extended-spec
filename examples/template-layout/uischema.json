@@ -113,6 +113,63 @@
               "template": "<p>never rendered</p>"
             }
           ]
+        },
+        {
+          "type": "Category",
+          "name": "nested",
+          "label": "Nested slots",
+          "i18n": "nestedSlots.tab",
+          "elements": [
+            {
+              "type": "TemplateLayout",
+              "lang": "jsx",
+              "template": "<div data-nested-root>{elements}</div>",
+              "elements": [
+                {
+                  "type": "TemplateLayout",
+                  "name": "header",
+                  "lang": "jsx",
+                  "template": "<header>{elements['greeting']}</header>",
+                  "elements": [
+                    {
+                      "type": "TemplateLayout",
+                      "name": "greeting",
+                      "lang": "jsx",
+                      "template": "<div>Hello {data.customerName}</div>"
+                    }
+                  ]
+                },
+                {
+                  "type": "TemplateLayout",
+                  "lang": "jsx",
+                  "template": "<section>{elements}</section>",
+                  "elements": [
+                    {
+                      "type": "VerticalLayout",
+                      "elements": [
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/customerName"
+                        },
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/priority"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Button",
+                      "label": "Handle action",
+                      "i18n": "nestedSlots.action",
+                      "options": {
+                        "action": "template-action"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

@@ -244,3 +244,7 @@ error collection produces an empty list.
 
 The optional [host.mjs](host.mjs) demonstrates native in-memory values.
 Those functions have no JSON representation; keep them in trusted host code.
+
+## Consolidated demo coverage
+
+Nested slots exercises a named child inside two levels of positional `{elements}` insertion, with controls and an action button.

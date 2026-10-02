@@ -97,3 +97,7 @@ the selected batch is appended in chooser order.
 ## Feature navigation
 
 Explore one feature at a time using the tabs: **Multiple files**, **Single-file encodings**, **File-size limits**, **Table cells**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
+
+### File-column search
+
+In AG Grid, filter File and Related files by the decoded stored filename only. Multiple-file cells match any of their filenames. File content, base64 payloads and MIME metadata must not contribute to default column or quick-filter search. Encodings without a stored filename contribute empty search text. Verify that `receipt.txt` matches its row while a substring found only in its encoded payload does not.

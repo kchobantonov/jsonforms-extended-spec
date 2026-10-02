@@ -1,6 +1,6 @@
 {
   "en": {
-    "intro.text": "One schema, five presentations. Which one you get is decided by the item shape and by explicit options - not by the data.",
+    "intro.text": "Compare array presentations, complex cells, row dialogs and panels. The tabs share the same data.",
     "tableTab.label": "Table",
     "expandableTab.label": "Expandable",
     "listTab.label": "List with detail",
@@ -16,10 +16,18 @@
     "contains.text": "The reviewers array must contain a lead. That failure belongs to the array, not to any one reviewer - and it is reported even when the array is empty.",
     "cellsTab.label": "Scalar and composite cells",
     "cells.text": "Both views edit the same staff. Try each scalar type, open address and phone details, clear a draft and cancel or apply it, and change grid pages. Sorting changes the view; row dragging changes the stored order.",
-    "arrayControls.reviewers.error.contains": "Select Lead for at least one reviewer."
+    "arrayControls.reviewers.error.contains": "Select Lead for at least one reviewer.",
+    "staffPostalCode.label": "Postal code",
+    "staffCountry.label": "Country",
+    "rowDialogTab.label": "Row and cell dialogs",
+    "rowDialogHelp.text": "Edit details opens the whole session. Editing Room opens only the complex cell. Both dialogs can be moved by their header, resized from the corner, and maximized or restored. Apply commits; Cancel discards the draft.",
+    "rowSideTab.label": "Side panel",
+    "rowSideHelp.text": "Edit a session in the side panel; changes apply immediately. Room still has its own movable, resizable, maximizable cell dialog.",
+    "rowBottomTab.label": "Bottom panel",
+    "rowBottomHelp.text": "Edit details opens the initially collapsed bottom panel. Changes apply immediately; Room uses an independent cell dialog."
   },
   "bg": {
-    "intro.text": "Една схема, пет представяния. Кое от тях получавате зависи от формата на елемента и от изрични опции - не от данните.",
+    "intro.text": "Сравнете представянията на масиви, сложните клетки, диалозите и панелите за редове. Разделите споделят едни и същи данни.",
     "tableTab.label": "Таблица",
     "expandableTab.label": "Разгъваеми",
     "listTab.label": "Списък с детайли",
@@ -35,6 +43,14 @@
     "contains.text": "Масивът с рецензенти трябва да съдържа водещ. Тази грешка принадлежи на масива, а не на конкретен рецензент - и се съобщава дори когато масивът е празен.",
     "cellsTab.label": "Прости и съставни клетки",
     "cells.text": "Двата изгледа редактират един и същ екип. Изпробвайте простите типове, отворете адреса и телефоните, изчистете чернова и я отменете или приложете, и сменете страницата в таблицата. Сортирането променя изгледа; плъзгането на редове променя записания ред.",
-    "arrayControls.reviewers.error.contains": "Изберете „Водещ“ за поне един рецензент."
+    "arrayControls.reviewers.error.contains": "Изберете „Водещ“ за поне един рецензент.",
+    "staffPostalCode.label": "Пощенски код",
+    "staffCountry.label": "Държава",
+    "rowDialogTab.label": "Диалози за ред и клетка",
+    "rowDialogHelp.text": "Редактирането на реда отваря цялата сесия, а Room отваря само клетката. Двата диалога се местят чрез заглавието, преоразмеряват от ъгъла и максимизират. Прилагането записва, отказът отменя черновата.",
+    "rowSideTab.label": "Страничен панел",
+    "rowSideHelp.text": "Редактирайте сесията в страничния панел; промените се прилагат веднага. Room запазва отделен диалог с местене, преоразмеряване и максимизиране.",
+    "rowBottomTab.label": "Долен панел",
+    "rowBottomHelp.text": "Редактирането на реда отваря първоначално свития долен панел. Промените се прилагат веднага; Room използва отделен диалог."
   }
 }

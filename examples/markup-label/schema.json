@@ -17,7 +17,7 @@
     },
     "acceptsTerms": {
       "type": "boolean",
-      "title": "I accept the booking terms"
+      "title": "I accept the booking"
     }
   },
   "required": ["attendeeName", "email"]

@@ -513,6 +513,44 @@
               ]
             }
           ]
+        },
+        {
+          "type": "Category",
+          "label": "Nested presentation",
+          "i18n": "nestedSizing.tab",
+          "elements": [
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Label",
+                  "text": "Quarter-width label",
+                  "i18n": "nestedSizing.label",
+                  "options": {
+                    "layout": {
+                      "span": 4
+                    }
+                  }
+                },
+                {
+                  "type": "Group",
+                  "label": "Nested group",
+                  "i18n": "nestedSizing.group",
+                  "options": {
+                    "layout": {
+                      "span": 8
+                    }
+                  },
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/notes"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

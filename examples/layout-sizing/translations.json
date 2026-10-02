@@ -14,7 +14,10 @@
     "featureNavigation.section5.label": "Spacer",
     "featureNavigation.section6.label": "Wrapping",
     "featureNavigation.section7.label": "Conditional columns",
-    "featureNavigation.section8.label": "Fixed and automatic widths"
+    "featureNavigation.section8.label": "Fixed and automatic widths",
+    "nestedSizing.tab.label": "Nested presentation",
+    "nestedSizing.label.text": "Quarter-width label",
+    "nestedSizing.group.label": "Nested group"
   },
   "bg": {
     "control.clearValue": "Изчистване на стойността",
@@ -31,6 +34,9 @@
     "featureNavigation.section5.label": "Отстояние",
     "featureNavigation.section6.label": "Пренасяне",
     "featureNavigation.section7.label": "Условни колони",
-    "featureNavigation.section8.label": "Фиксирани и автоматични ширини"
+    "featureNavigation.section8.label": "Фиксирани и автоматични ширини",
+    "nestedSizing.tab.label": "Вложено представяне",
+    "nestedSizing.label.text": "Етикет с четвърт ширина",
+    "nestedSizing.group.label": "Вложена група"
   }
 }

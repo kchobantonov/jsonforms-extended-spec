@@ -127,3 +127,7 @@ required by this package.
 ## Feature navigation
 
 Explore one feature at a time using the tabs: **Identity group**, **Contact group**, **Insurance group**, **Audit group**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
+
+## Consolidated demo coverage
+
+The False and zero tab starts collapsed with `false` and `0`: both count as present data.

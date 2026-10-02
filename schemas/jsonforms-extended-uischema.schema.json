@@ -577,7 +577,7 @@
           "type": "boolean",
           "default": false
         },
-        "initCollapsed": {
+        "collapsed": {
           "type": "boolean",
           "default": false,
           "description": "Initialization only, not a controlled expansion value."
@@ -1025,8 +1025,8 @@
         "disableRemove": {
           "$ref": "#/$defs/controlOptions/properties/disableRemove"
         },
-        "initCollapsed": {
-          "$ref": "#/$defs/controlOptions/properties/initCollapsed"
+        "collapsed": {
+          "$ref": "#/$defs/controlOptions/properties/collapsed"
         },
         "collapseNewItems": {
           "$ref": "#/$defs/controlOptions/properties/collapseNewItems"

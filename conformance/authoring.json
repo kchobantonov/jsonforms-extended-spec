@@ -1590,18 +1590,18 @@
     "valid": false
   },
   {
-    "id": "config-initCollapsed",
+    "id": "config-collapsed",
     "schema": "jsonforms-config.schema.json",
     "value": {
-      "initCollapsed": false
+      "collapsed": false
     },
     "valid": true
   },
   {
-    "id": "config-bad-initCollapsed",
+    "id": "config-bad-collapsed",
     "schema": "jsonforms-config.schema.json",
     "value": {
-      "initCollapsed": "false"
+      "collapsed": "false"
     },
     "valid": false
   },

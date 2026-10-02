@@ -1326,3 +1326,22 @@ renderer families, with an error count and the actual errors available on hover
 and keyboard focus. The icon has an accessible name. Additional errors remain
 visible alongside schema validation errors, with useful paths and source labels
 where available. A count alone is insufficient to explain an invalid form.
+
+### Example source navigation
+
+When a demo hosts both spec fixtures and original JSON Forms examples, provide
+an **Example source** selector above sidebar search: **Spec examples**, **JSON
+Forms originals**, and **All examples**. Prefer Spec initially when present;
+otherwise use All. All also includes host-specific additions. Search combines
+with this filter rather than replacing it. Identify sources from registration
+metadata, not arbitrary display-label matching.
+
+Filtering changes the navigation list only. Preserve the currently open form
+and its edits, and allow direct example URLs even if their source is excluded
+from the menu. Show an empty-results state when search and source have no
+matches. Use the host UI library's accessible select or equivalent navigation
+control. The source choice may remain session-local; it is not form config.
+
+### Layout default conformance
+
+All ports must follow the portable defaults in §7.1. Antd and shadcn use a 16px gap in both directions; Antd suppresses native field bottom margins within managed layouts. The older PrimeReact layout and upstream MUI layout integration have not been certified against this revised contract and require adaptation/verification; this is an implementation gap, not an allowed alternative default.

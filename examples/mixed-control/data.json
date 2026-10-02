@@ -64,5 +64,7 @@
       "name": "Missing value"
     }
   ],
-  "branchFeedback": "Longer text"
+  "branchFeedback": {
+    "text": "Longer text"
+  }
 }

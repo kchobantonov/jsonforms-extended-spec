@@ -284,7 +284,7 @@
       "declaredAfter": true
     },
     {
-      "path": "config.initCollapsed",
+      "path": "config.collapsed",
       "status": "consumed",
       "evidence": [
         "packages/jsonforms-react-antd-renderers/src/layouts/ArrayLayout.tsx"

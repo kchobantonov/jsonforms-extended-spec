@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "JSON Forms UI schema — common profile",
+  "title": "JSON Forms UI schema \u2014 common profile",
   "description": "Common element vocabulary and portable options. Use the extended profile for the complete vocabulary. Unknown options are retained; passing this schema does not assert renderer support.",
   "$ref": "#/$defs/element",
   "$defs": {
@@ -409,6 +409,11 @@
             },
             "showNavButtons": {
               "type": "boolean"
+            },
+            "collapsed": {
+              "type": "boolean",
+              "default": false,
+              "description": "Accordion collapsed state. Explicit initial selection takes precedence on mount."
             }
           }
         },
@@ -534,10 +539,10 @@
           "type": "boolean",
           "default": false
         },
-        "initCollapsed": {
+        "collapsed": {
           "type": "boolean",
           "default": false,
-          "description": "Initialization only, not a controlled expansion value."
+          "description": "Collapsed outer mixed frame or accordion state; initial closed state for expandable array items. Array items use this at mount; Group, mixed and categorization panels react to changes in the setting."
         },
         "collapseNewItems": {
           "type": "boolean",
@@ -910,6 +915,10 @@
           "type": "boolean",
           "default": true,
           "description": "Validate the displayed anyOf/oneOf branch for local editor feedback. Control options override global config. False skips additional branch compilation and validation; document validation remains unchanged."
+        },
+        "collapsible": {
+          "type": "boolean",
+          "description": "Whether the mixed object/array outer frame can collapse; defaults to true for mixed frames."
         }
       }
     },

@@ -124,7 +124,14 @@
     "agreements.label": "Declarations",
     "attachment.description": "Upload a PDF résumé. The demo stores the selected file locally in form data; it does not submit an application.",
     "policy.description": "For technical applicants: edit a small JSON configuration using the code editor.",
-    "error.const": "Confirm this declaration before submitting."
+    "error.const": "Confirm this declaration before submitting.",
+    "profileStep.label": "Profile",
+    "jobStep.label": "Job",
+    "referencesStep.label": "References",
+    "finishStep.label": "Finish",
+    "documentsGuide.text": "**Prepare your résumé.** Upload a PDF that describes your experience and skills.",
+    "documentsResources.text": "Need help preparing your application? This demonstration contact address is illustrative.",
+    "applicationHelp.label": "Email the recruitment team"
   },
   "bg": {
     "firstName.label": "Име",
@@ -251,6 +258,13 @@
     "agreements.label": "Декларации",
     "attachment.description": "Добавете PDF автобиография. Демонстрацията съхранява файла в данните на формуляра и не изпраща кандидатура.",
     "policy.description": "За технически позиции: редактирайте малка JSON конфигурация в редактора за код.",
-    "error.const": "Потвърдете декларацията преди изпращане."
+    "error.const": "Потвърдете декларацията преди изпращане.",
+    "profileStep.label": "Профил",
+    "jobStep.label": "Работа",
+    "referencesStep.label": "Препоръки",
+    "finishStep.label": "Завършване",
+    "documentsGuide.text": "**Подгответе автобиографията си.** Качете PDF, който описва опита и уменията ви.",
+    "documentsResources.text": "Нуждаете се от помощ за кандидатурата? Този демонстрационен адрес е примерен.",
+    "applicationHelp.label": "Пишете на екипа за подбор"
   }
 }

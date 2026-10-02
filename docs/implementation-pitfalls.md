@@ -8,6 +8,8 @@ Companion to the [implementation guide](implementation-guide.md). These entries 
 
 **Behavior:** Reloaded structurally equal values remain selected; choosing them preserves their JSON types. Object member order is immaterial; array order matters. Missing, null, false, zero and empty string remain distinct.
 
+**UI-library adaptation:** If a native select/radio accepts only scalar values, use unique internal option IDs and map them back to the original JSON values on selection. Do not use stringified objects as React keys: different objects become `[object Object]`. Internal IDs must not enter form data; translated labels must not determine identity.
+
 **Check:** Parse data separately from the schema and reload it. Object/array dropdowns, radios, cards and cells retain selection. See [choice controls](../examples/choice-controls/README.md).
 
 ## P02 — Property keys are literal data
@@ -149,3 +151,70 @@ Companion to the [implementation guide](implementation-guide.md). These entries 
 ## Portable acceptance vectors
 
 The `port-*` entries in [behavior.json](../conformance/behavior.json) cover representative cases from this guide. They require renderer-specific adapters; passing the specification package checks alone does not execute these UI scenarios.
+
+
+## P19. Recursive branch selection and finite creation
+
+**Distinction:** Reusing a schema at a child data path is legitimate recursion. Expanding all references or recursively creating defaults before the user chooses a branch can fail to terminate. Compiling an extracted branch without its root definitions can also make a populated folder look like a file.
+
+**Expected behavior:** Use a distinct required discriminator as an editing hint when available, retain original document validation, create one requested node at a time, and preserve siblings. Do not interpret an invalid descendant as a reason to switch its parent branch. An object-to-object branch change must still initialize the selected branch under the usual confirmation policy.
+
+**Check:** Use [recursive-tree](../examples/recursive-tree/README.md): load a folder containing another folder and files; load an invalid file inside a folder; add a single child to an empty folder; choose its branch, edit it and delete it. Separately test schema-only reference cycles and non-terminating required recursion. The example is local-reference coverage, not external resolver certification.
+
+## Dialog movement uses measured geometry
+
+Bound dragging against the dialog's measured rectangle and the viewport, not a
+fixed fraction of screen width or height. Allow negative offsets from its initial
+position so its top and left edges can reach the viewport origin. Recompute bounds
+at the start of each drag after user resizing. Keep the header and window actions
+reachable. Verify row and cell dialogs at all four edges, including after resizing;
+UI-library centering and transforms must be included in the measured position.
+
+## File search uses names, not payloads
+
+Default grid search values for file cells are decoded filenames, including every filename in a multiple-file cell. Never use the raw data URL or base64 content as the search value. Nameless encodings contribute no filename text. Keep stored values unchanged and preserve explicit host grid overrides. Test both column filtering and quick filtering against filename-only and payload-only queries.
+
+## Dialog height includes its viewport offset
+
+A viewport-relative maximum height must also account for the dialog’s initial top offset and bottom margin. A dialog limited to viewport height minus 32px cannot start 100px down. Keep the header and footer outside the shrinking, scrolling body so users can reach actions without scrolling the modal overlay or page. Apply form-wide dialog defaults before per-dialog overrides, including explicit false.
+
+## Portable layout spacing defaults
+
+Absent layout/config spacing resolves to 16 CSS pixels for rows and columns, with wrap false and gridColumns 16. JSON Schema default annotations do not insert values by themselves; implement the fallback at runtime. Remove native outer field margins within managed layouts rather than adding them to the gap. Test adjacent fields, adjacent collections, mixed children, nested layouts and explicit zero. A family-specific preference does not justify a different fallback.
+
+
+## Expansion settings belong to the presentation boundary
+
+Group and mixed outer frames share collapsed/collapsible settings; accordion categories share collapsed while permitting all panels to close. Array-item initialization and tree-node expansion remain independent. Test local false overriding global true, reopening by the user, unrelated data updates, and a later configuration change.
+
+
+## Required fields in table columns
+
+A table header replaces the repeated cell label, so it must carry the required marker for its bound item property. Resolve hideRequiredAsterisk at cell, collection and global levels without changing validation. Test a required and optional column together, then toggle the setting after mount. A required collection does not make all its columns required.
+
+
+## Discriminator branch layouts
+
+When a branch selector already sets a const-valued discriminator, an authored branch UI schema can omit its redundant one-option field. Label the selector with the discriminator's user-facing name, retain the discriminator in data and validation, and apply the branch layouts recursively through the UI schema registry. Do not globally hide every const field: explicit branch layouts express author intent.
+
+## Clearing externally loaded branch data
+
+A remembered oneOf selection must not leave a phantom branch editor after the bound node is removed by external data replacement. Clear the selector and branch fields for a missing node, or an empty object matching no branch. Do not erase legitimate scalar values or invalid nonempty data merely because validation fails. Test replacement after a branch was previously displayed, as well as a fresh empty mount.
+
+## Equivalent composition feedback
+
+Document validation may report the same missing property through multiple alternatives, and local active-branch validation may report it again. Present equivalent errors once: compare instance path, keyword, parameters and message, rather than schema location alone. Preserve different constraint parameters, messages and targets. Deduplication of displayed branch feedback must not alter document validation or its emitted errors.
+
+## Unselected object branches in array slots
+
+Adding an object-choice node must follow its enclosing default, not implicitly choose the first branch when the authored flow requires a choice. The tree examples declare default: {} on node unions, with whole-object defaults on File/Folder branches. Per-property discriminator defaults can mutate an empty node during AJV branch probing.
+
+Clearing an object-only oneOf array item retains {} and its index. Writing undefined would serialize to null. Clearing an optional object property can remove it. Do not apply object placeholders to scalar or nullable unions; distinguish actual array parents from numeric object-property names.
+
+## Required discriminator feedback on the selector
+
+When branch layouts omit a discriminator field, its required error must still be visible on the branch selector, with native invalid styling, accessible invalid state and translated guidance. A container indicator alone does not identify what the user must choose. Match the missing property at the exact node path; sibling and descendant failures must not mark the wrong selector. Respect the configured validation visibility.
+
+## Validation indicators on collapsed array items
+
+When container indicators are enabled, each array item header must indicate errors at its own data path and in its descendants, even while collapsed. An indicator on the outer collection alone does not identify which item to open. Respect local indicator overrides and validation visibility; valid sibling items must remain unmarked.

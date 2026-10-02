@@ -170,3 +170,7 @@ required by this package.
 ## Feature navigation
 
 Explore one feature at a time using the tabs: **Span**, **Weight**, **Sizing precedence**, **Hidden children**, **Spacer**, **Wrapping**, **Conditional columns**, **Fixed and automatic widths**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
+
+## Consolidated demo coverage
+
+Nested presentation applies spans to a Label and a Group as well as ordinary controls.

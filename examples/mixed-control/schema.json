@@ -186,20 +186,36 @@
       }
     },
     "branchFeedback": {
-      "type": "string",
       "title": "Branch feedback",
       "anyOf": [
         {
-          "type": "string",
+          "type": "object",
           "title": "Short text",
-          "maxLength": 5
+          "properties": {
+            "text": {
+              "type": "string",
+              "maxLength": 5
+            }
+          },
+          "required": [
+            "text"
+          ]
         },
         {
-          "type": "string",
+          "type": "object",
           "title": "Long text",
-          "minLength": 3
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 3
+            }
+          },
+          "required": [
+            "text"
+          ]
         }
-      ]
+      ],
+      "type": "object"
     }
   }
 }

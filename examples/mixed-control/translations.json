@@ -35,7 +35,7 @@
     "mixedCells.value.label": "Value",
     "mixedCells.intro.text": "Edit mixed values through the Value cells. Try switching 2 between Integer and Number, then explore object and array values. The final row deliberately has a missing required value.",
     "branchFeedback.navigation.label": "Branch feedback",
-    "branchFeedback.intro.text": "Both editors share the same valid document value. Select Short text in each: the first reports the active branch error; the second disables that extra feedback. Document validation stays enabled in both.",
+    "branchFeedback.intro.text": "Both editors edit the same value, initially \"Longer text\". In each editor, select the Short text tab (maximum 5 characters). Only the first should show a length error: the second disables active-branch feedback. The value remains valid for the document because Long text accepts it (minimum 3 characters). Switch back to Long text to clear the first error. Other tabs contain unrelated deliberate errors.",
     "branchFeedback.enabled.label": "Global branch validation enabled",
     "branchFeedback.disabled.label": "Local branch validation disabled"
   },
@@ -75,7 +75,7 @@
     "mixedCells.value.label": "Стойност",
     "mixedCells.intro.text": "Редактирайте смесените стойности чрез клетките Стойност. Превключете 2 между цяло число и число, след което разгледайте обектите и масивите. В последния ред умишлено липсва задължителна стойност.",
     "branchFeedback.navigation.label": "Проверка на клона",
-    "branchFeedback.intro.text": "Двата редактора споделят една валидна стойност. Изберете Short text във всеки: първият показва грешката на активния клон, а вторият изключва тази допълнителна проверка. Проверката на документа остава включена.",
+    "branchFeedback.intro.text": "Двата редактора променят една и съща стойност, първоначално \"Longer text\". Във всеки изберете Short text (до 5 знака). Само първият трябва да показва грешка за дължината: вторият изключва проверката на активния клон. Стойността остава валидна за документа, защото Long text я приема (поне 3 знака). Върнете се към Long text, за да изчистите първата грешка. Другите раздели съдържат отделни умишлени грешки.",
     "branchFeedback.enabled.label": "Глобалната проверка на клона е включена",
     "branchFeedback.disabled.label": "Локалната проверка на клона е изключена"
   }

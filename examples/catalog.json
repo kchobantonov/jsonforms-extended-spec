@@ -387,6 +387,18 @@
     "hostRequirements": []
   },
   {
+    "id": "recursive-tree",
+    "title": "Recursive tree: files and folders",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
     "id": "split-layout",
     "title": "Split layout",
     "files": [
@@ -473,5 +485,17 @@
     "hostRequirements": [
       "Install the extended validator profile in spec.md; plain JSON Schema validation does not implement transforms, dynamic defaults or custom error messages."
     ]
+  },
+  {
+    "id": "tree-max-depth",
+    "title": "Tree: maximum five levels",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
   }
 ]

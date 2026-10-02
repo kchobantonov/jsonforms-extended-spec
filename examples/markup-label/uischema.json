@@ -111,8 +111,35 @@
               }
             },
             {
-              "type": "Control",
-              "scope": "#/properties/acceptsTerms"
+              "type": "HorizontalLayout",
+              "options": {
+                "wrap": true,
+                "align": "center",
+                "gap": 8
+              },
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/acceptsTerms",
+                  "options": {
+                    "layout": {
+                      "width": "auto"
+                    }
+                  }
+                },
+                {
+                  "type": "Link",
+                  "label": "terms",
+                  "i18n": "bookingTermsLink",
+                  "href": "https://example.com/terms",
+                  "target": "_blank",
+                  "options": {
+                    "layout": {
+                      "width": "auto"
+                    }
+                  }
+                }
+              ]
             }
           ]
         }

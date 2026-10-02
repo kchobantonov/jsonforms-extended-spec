@@ -135,6 +135,33 @@
               ]
             }
           ]
+        },
+        {
+          "type": "Category",
+          "label": "False and zero",
+          "i18n": "presence.tab",
+          "elements": [
+            {
+              "type": "Group",
+              "label": "False and zero count as data",
+              "i18n": "presence.group",
+              "options": {
+                "collapsible": true,
+                "collapsed": true,
+                "showDataIndicator": true
+              },
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/active"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/count"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

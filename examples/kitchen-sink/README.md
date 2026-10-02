@@ -68,3 +68,19 @@ The two reference tables demonstrate alternative editors over separate sample
 collections. Integration metadata is an optional administrative extension,
 not an applicant name field. This remains a component demonstration; no submission
 or real recruitment backend is connected.
+
+### Usable detail dialogs
+
+The example config enables dragging, resizing and maximizing for row and complex-cell dialogs through `jsonformsExtended.dialog`. Phone fields in the applicant and reference-row forms use international phone masks; validation still checks syntax. Open References: table and References: AG Grid row editors: the header and action buttons must remain within the viewport while the form body scrolls.
+
+### Navigation
+
+Four steps (Profile, Job, References, Finish) use the existing stepper with localized Next/Previous actions and direct step selection. Each step contains two to four related tabs. All eleven original sections remain available, with category validation indicators retained at both levels. Navigation does not submit or discard data. Check both English and Bulgarian labels and navigate away from and back to edited fields.
+
+### Horizontal sizing in the form
+
+Profile → Applicant and account uses 6/10 spans for first/last name, 2:1 weights for email/phone, and a flexible password beside a fixed 220px verification-code field. Job → Job preferences uses 2:1 weights for position/department and a fixed 140px age field beside a flexible budget. These rows wrap at their minimum widths and inherit the portable gap. Existing masks, labels and translations are preserved. Narrow the form with the demo splitter to inspect wrapping.
+
+### Presentation elements
+
+Finish → Résumé and documents includes a decorative ImageView with an embedded SVG data URL and empty alt, a translated Markdown Label, a horizontal Separator (divider), an explicit 24px Spacer before the help section, and a translated mailto Link. The recruitment address is illustrative. These elements preserve form data and use the normal image/link URL policy.

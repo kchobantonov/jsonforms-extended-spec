@@ -156,3 +156,9 @@ The Table cells tab uses an array of objects with a mixed `value` property. Rows
 ## Optional active-branch feedback
 
 The Branch feedback tab compares two editors for the same value. Global `validateActiveBranch: true` enables the first; `options.validateActiveBranch: false` disables the second. Select Short text without modifying the value to see local feedback only in the first editor. The long-text alternative keeps the document valid.
+
+### Branch feedback comparison
+
+The two labelled groups bind the same object, `branchFeedback`, whose `text` starts as `Longer text`. Each exposes Short text (maxLength 5) and Long text (minLength 3) tabs. Select Short text in both: only the enabled group shows a local length error. The document value remains valid through Long text. Switching to Long text clears local feedback. This comparison uses object branches so its navigation is visible independently of scalar editor selection.
+
+The structured payload starts collapsed using `config.jsonformsExtended.mixed.collapsed: true`, overriding the shared expanded default. Opening the frame does not change tree-node expansion or data.

@@ -111,7 +111,7 @@
               "scope": "#/properties/announcements",
               "options": {
                 "elementLabelProp": "text",
-                "initCollapsed": true,
+                "collapsed": true,
                 "collapseNewItems": true,
                 "hideAvatar": true,
                 "hideArraySummaryValidation": true,
@@ -237,13 +237,24 @@
                       "elements": [
                         {
                           "type": "Control",
-                          "scope": "#/properties/street",
-                          "options": {}
+                          "scope": "#/properties/street"
+                        },
+                        {
+                          "type": "HorizontalLayout",
+                          "elements": [
+                            {
+                              "type": "Control",
+                              "scope": "#/properties/city"
+                            },
+                            {
+                              "type": "Control",
+                              "scope": "#/properties/postalCode"
+                            }
+                          ]
                         },
                         {
                           "type": "Control",
-                          "scope": "#/properties/city",
-                          "options": {}
+                          "scope": "#/properties/country"
                         }
                       ]
                     }
@@ -283,13 +294,24 @@
                       "elements": [
                         {
                           "type": "Control",
-                          "scope": "#/properties/street",
-                          "options": {}
+                          "scope": "#/properties/street"
+                        },
+                        {
+                          "type": "HorizontalLayout",
+                          "elements": [
+                            {
+                              "type": "Control",
+                              "scope": "#/properties/city"
+                            },
+                            {
+                              "type": "Control",
+                              "scope": "#/properties/postalCode"
+                            }
+                          ]
                         },
                         {
                           "type": "Control",
-                          "scope": "#/properties/city",
-                          "options": {}
+                          "scope": "#/properties/country"
                         }
                       ]
                     }
@@ -412,6 +434,248 @@
                 "collapsible": true
               },
               "i18n": "arrayControls.reviewers"
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "rowDialog",
+          "label": "Row and cell dialogs",
+          "i18n": "rowDialogTab",
+          "elements": [
+            {
+              "type": "Label",
+              "i18n": "rowDialogHelp",
+              "text": "Edit details opens the whole session. Editing Room opens only the complex cell. Both dialogs can be moved by their header, resized from the corner, and maximized or restored. Apply commits; Cancel discards the draft."
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/sessions",
+              "options": {
+                "table": true,
+                "showSortButtons": true,
+                "cells": {
+                  "room": {
+                    "summary": {
+                      "type": "Control",
+                      "scope": "#/properties/name",
+                      "options": {}
+                    },
+                    "detail": {
+                      "type": "VerticalLayout",
+                      "elements": [
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/name",
+                          "options": {}
+                        },
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/floor",
+                          "options": {}
+                        }
+                      ]
+                    },
+                    "dialog": {
+                      "width": 720,
+                      "height": "60vh",
+                      "draggable": true,
+                      "resizable": true,
+                      "maximizable": true
+                    }
+                  }
+                },
+                "collapsible": true,
+                "rowDetail": {
+                  "presentation": "dialog",
+                  "detail": {
+                    "type": "VerticalLayout",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/title"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/track"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/minutes"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/room"
+                      }
+                    ]
+                  },
+                  "dialog": {
+                    "width": 900,
+                    "height": "75vh",
+                    "draggable": true,
+                    "resizable": true,
+                    "maximizable": true
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "rowSide",
+          "label": "Side panel",
+          "i18n": "rowSideTab",
+          "elements": [
+            {
+              "type": "Label",
+              "i18n": "rowSideHelp",
+              "text": "Edit a session in the side panel; changes apply immediately. Room still has its own movable, resizable, maximizable cell dialog."
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/sessions",
+              "options": {
+                "table": true,
+                "showSortButtons": true,
+                "cells": {
+                  "room": {
+                    "summary": {
+                      "type": "Control",
+                      "scope": "#/properties/name",
+                      "options": {}
+                    },
+                    "detail": {
+                      "type": "VerticalLayout",
+                      "elements": [
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/name",
+                          "options": {}
+                        },
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/floor",
+                          "options": {}
+                        }
+                      ]
+                    },
+                    "dialog": {
+                      "width": 720,
+                      "height": "60vh",
+                      "draggable": true,
+                      "resizable": true,
+                      "maximizable": true
+                    }
+                  }
+                },
+                "collapsible": true,
+                "rowDetail": {
+                  "presentation": "panel",
+                  "detail": {
+                    "type": "VerticalLayout",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/title"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/track"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/minutes"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/room"
+                      }
+                    ]
+                  },
+                  "placement": "right",
+                  "collapsed": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "rowBottom",
+          "label": "Bottom panel",
+          "i18n": "rowBottomTab",
+          "elements": [
+            {
+              "type": "Label",
+              "i18n": "rowBottomHelp",
+              "text": "Edit details opens the initially collapsed bottom panel. Changes apply immediately; Room uses an independent cell dialog."
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/sessions",
+              "options": {
+                "table": true,
+                "showSortButtons": true,
+                "cells": {
+                  "room": {
+                    "summary": {
+                      "type": "Control",
+                      "scope": "#/properties/name",
+                      "options": {}
+                    },
+                    "detail": {
+                      "type": "VerticalLayout",
+                      "elements": [
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/name",
+                          "options": {}
+                        },
+                        {
+                          "type": "Control",
+                          "scope": "#/properties/floor",
+                          "options": {}
+                        }
+                      ]
+                    },
+                    "dialog": {
+                      "width": 720,
+                      "height": "60vh",
+                      "draggable": true,
+                      "resizable": true,
+                      "maximizable": true
+                    }
+                  }
+                },
+                "collapsible": true,
+                "rowDetail": {
+                  "presentation": "panel",
+                  "detail": {
+                    "type": "VerticalLayout",
+                    "elements": [
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/title"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/track"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/minutes"
+                      },
+                      {
+                        "type": "Control",
+                        "scope": "#/properties/room"
+                      }
+                    ]
+                  },
+                  "placement": "bottom",
+                  "collapsed": true
+                }
+              }
             }
           ]
         }

@@ -70,7 +70,7 @@ only described:
 
 | Option | `speakers` | `announcements` |
 | --- | --- | --- |
-| `initCollapsed` | default — the first item opens | `true` — everything starts closed |
+| `collapsed` | default — the first item opens | `true` — everything starts closed |
 | `collapseNewItems` | default — a new item opens | `true` — a new item stays closed |
 | `hideAvatar` | default — the index marker shows | `true` — marker gone, index still readable |
 | `hideArraySummaryValidation` | default — child summary shows | `true` — summary hidden, **validation unchanged** |
@@ -215,7 +215,7 @@ required by this package.
 
 All array presentations enable `collapsible`. Use the header toggle to hide and
 restore the panel body without losing data or item expansion. Set `collapsed: true`
-to start closed; item `initCollapsed` remains independent.
+to start closed; item `collapsed` remains independent.
 
 The reviewers `contains` rule requires at least one entry with `lead: true`.
 The field-specific `arrayControls.reviewers.error.contains` translation explains how to fix
@@ -225,3 +225,13 @@ messages or requiring the ajv-errors plugin.
 The Reviewers control explicitly declares `i18n: "arrayControls.reviewers"`,
 so the custom error message is scoped to this example rather than the generic
 `reviewers` data path.
+
+## Consolidated demo coverage
+
+Staff cells include an alpha color and a composite address with a nested horizontal layout. Both the table and grid share these cell details.
+
+## Row and cell editing
+
+The **Row and cell dialogs**, **Side panel**, and **Bottom panel** tabs edit the same Sessions data. Row details include Title, Track, Minutes and Room; the Room cell has an independent detail editor. Both dialog types explicitly enable `draggable`, `resizable` and `maximizable`. Drag the header, use the resize corner, and maximize/restore from the header. Dialog changes are drafts until Apply; Cancel discards them. Panel edits apply immediately. The bottom panel starts collapsed.
+
+Acceptance: edit a Room in its cell dialog, cancel, then apply; repeat through the row dialog. Exercise geometry controls on both dialogs. Compare immediate edits in the side and bottom panels and verify sibling rows stay unchanged.

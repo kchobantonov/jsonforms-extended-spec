@@ -11,7 +11,8 @@
     "featureNavigation.section1.label": "Markdown content",
     "featureNavigation.section2.label": "Headings and literal text",
     "featureNavigation.section3.label": "Markup options",
-    "featureNavigation.section4.label": "Form integration"
+    "featureNavigation.section4.label": "Form integration",
+    "bookingTermsLink.label": "terms"
   },
   "bg": {
     "joining.text": "**Инструкции за пристигане.** Вратите отварят в 09:00 ч. Носете имейла за потвърждение — кодът в него изглежда така: `WS-2417`. Прочетете [бележките за достъп до залата](https://example.com/venue) преди да тръгнете или пишете на [организаторите](mailto:workshops@example.com).",
@@ -25,6 +26,7 @@
     "featureNavigation.section1.label": "Markdown съдържание",
     "featureNavigation.section2.label": "Заглавия и обикновен текст",
     "featureNavigation.section3.label": "Настройки за маркиране",
-    "featureNavigation.section4.label": "Интеграция във формуляр"
+    "featureNavigation.section4.label": "Интеграция във формуляр",
+    "bookingTermsLink.label": "условията"
   }
 }
