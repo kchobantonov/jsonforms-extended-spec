@@ -49,7 +49,16 @@
     "cards.invalidDecision.error.enum": "The imported value is not an available choice. Select a card.",
     "cards.invalidContact.label": "Contact with invalid details",
     "cards.invalidAddress.label": "Email address",
-    "cards.invalidAddress.error.format": "Enter a valid email address."
+    "cards.invalidAddress.error.format": "Enter a valid email address.",
+    "compositeChoices.objectDropdown.label": "Object dropdown",
+    "compositeChoices.option0.title": "Email route",
+    "compositeChoices.option1.title": "Postal route",
+    "compositeChoices.objectRadio.label": "Object radio choices",
+    "compositeChoices.arrayDropdown.label": "Array dropdown",
+    "compositeChoices.arrayRadio.label": "Array radio choices",
+    "compositeChoices.navigation.label": "Object and array choices",
+    "compositeChoices.intro.text": "These choices store complete objects and arrays. Initial JSON values must appear selected. Edit, save, and reload the data: matching uses content rather than JavaScript object identity.",
+    "compositeChoices.rows.label": "Composite choices in cells"
   },
   "bg": {
     "department.eng": "Инженеринг",
@@ -101,6 +110,15 @@
     "cards.invalidDecision.error.enum": "Импортираната стойност не е наличен избор. Изберете карта.",
     "cards.invalidContact.label": "Контакт с невалидни данни",
     "cards.invalidAddress.label": "Имейл адрес",
-    "cards.invalidAddress.error.format": "Въведете валиден имейл адрес."
+    "cards.invalidAddress.error.format": "Въведете валиден имейл адрес.",
+    "compositeChoices.objectDropdown.label": "Падащ избор на обект",
+    "compositeChoices.option0.title": "Имейл",
+    "compositeChoices.option1.title": "Поща",
+    "compositeChoices.objectRadio.label": "Радио избор на обект",
+    "compositeChoices.arrayDropdown.label": "Падащ избор на масив",
+    "compositeChoices.arrayRadio.label": "Радио избор на масив",
+    "compositeChoices.navigation.label": "Избор на обекти и масиви",
+    "compositeChoices.intro.text": "Тези избори записват цели обекти и масиви. Началните JSON стойности трябва да са избрани. След редактиране, запис и зареждане съпоставянето използва съдържанието.",
+    "compositeChoices.rows.label": "Сложни стойности в клетки"
   }
 }

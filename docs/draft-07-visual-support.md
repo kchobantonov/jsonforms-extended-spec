@@ -26,7 +26,7 @@ of an unsatisfiable schema, including the boolean schema `false`.
 | patternProperties | Both AdditionalProperties implementations now use the shared resolver, combining all matching patterns through allOf. A shadcn regression test verifies fields contributed by two overlapping object patterns. Arbitrary compositions remain subject to the limitations below. |
 | homogeneous items | Array editing exists, including object details and scalar collections. |
 | tuple items and additionalItems | Dedicated tuple/tail editors exist. Position semantics constrain deletion; this is not an ordinary reorderable array. |
-| enum and const | Scalar enum and titled constant choices exist. Arbitrary object/array enum values are not certified: shadcn EnumControl uses Object.is for selection, which does not provide structural JSON equality for reloaded objects. |
+| enum and const | Scalar enum and titled constant choices exist. Shadcn dropdowns, radio groups, and enum cells now use structural equality for object/array values reloaded from JSON, with regression coverage. Composite enum support across other renderer families remains uncertified. |
 | allOf, anyOf, oneOf | Dedicated composition renderers exist, but coverage is partial. Shared schemaForType drops these keywords while constructing typed editor schemas. Whole-document validation can still reject data; the delegated editor may omit applicable structure. |
 | if / then / else | No general branch-aware layout generation found in the audited renderers. Branches that introduce fields need explicit layout/renderer support; they cannot be dismissed as validation-only. |
 | dependencies | Property dependency checks alone are validation. Schema dependencies that introduce fields have the same authoring concern as conditional schemas. |
@@ -70,4 +70,4 @@ using it to validate instances.
 
 Priority follow-up: conditional/schema-dependency field discovery;
 composition-preserving mixed delegation;
-recursive editing tests; structural equality for composite enum values.
+recursive editing tests; composite enum parity across renderer families.

@@ -111,3 +111,5 @@ policy. English and Bulgarian translations accompany the card UI.
 Card branch forms explicitly uses `confirmation.branchChange: "complex"`. A discriminator-only value switches immediately; entered branch details require confirmation. Branch switch without prompt uses `never`. The default oneOf policy remains `always`.
 
 Card validation demonstrates an absent required choice, an invalid imported enum value, and an invalid email within a selected branch, with English and Bulgarian messages.
+
+Object and array choices demonstrates preloaded nested object and array constants in dropdowns, radios, and table cells. These values must remain selected after JSON reload. This also provides a parity fixture for renderer families whose composite choice support is not yet certified.

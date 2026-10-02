@@ -17,5 +17,45 @@
   "invalidCardContact": {
     "kind": "email",
     "address": "not-an-email"
-  }
+  },
+  "objectDropdown": {
+    "mode": "postal",
+    "settings": {
+      "priority": 2
+    }
+  },
+  "objectRadio": {
+    "mode": "postal",
+    "settings": {
+      "priority": 2
+    }
+  },
+  "arrayDropdown": [
+    "postal",
+    {
+      "priority": 2
+    }
+  ],
+  "arrayRadio": [
+    "postal",
+    {
+      "priority": 2
+    }
+  ],
+  "compositeRows": [
+    {
+      "objectChoice": {
+        "mode": "postal",
+        "settings": {
+          "priority": 2
+        }
+      },
+      "arrayChoice": [
+        "postal",
+        {
+          "priority": 2
+        }
+      ]
+    }
+  ]
 }

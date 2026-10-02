@@ -454,6 +454,54 @@
               ]
             }
           ]
+        },
+        {
+          "type": "Category",
+          "label": "Object and array choices",
+          "i18n": "compositeChoices.navigation",
+          "elements": [
+            {
+              "type": "VerticalLayout",
+              "elements": [
+                {
+                  "type": "Label",
+                  "text": "These choices store complete objects and arrays. Initial JSON values must appear selected. Edit, save, and reload the data: matching uses content rather than JavaScript object identity.",
+                  "i18n": "compositeChoices.intro"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/objectDropdown",
+                  "i18n": "compositeChoices.objectDropdown"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/objectRadio",
+                  "i18n": "compositeChoices.objectRadio",
+                  "options": {
+                    "format": "radio"
+                  }
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/arrayDropdown",
+                  "i18n": "compositeChoices.arrayDropdown"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/arrayRadio",
+                  "i18n": "compositeChoices.arrayRadio",
+                  "options": {
+                    "format": "radio"
+                  }
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/compositeRows",
+                  "i18n": "compositeChoices.rows"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

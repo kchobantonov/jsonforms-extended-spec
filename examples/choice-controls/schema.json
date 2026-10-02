@@ -244,6 +244,163 @@
           ]
         }
       ]
+    },
+    "objectDropdown": {
+      "title": "Object dropdown",
+      "oneOf": [
+        {
+          "const": {
+            "mode": "email",
+            "settings": {
+              "priority": 1
+            }
+          },
+          "title": "Email",
+          "i18n": "compositeChoices.option0"
+        },
+        {
+          "const": {
+            "mode": "postal",
+            "settings": {
+              "priority": 2
+            }
+          },
+          "title": "Postal mail",
+          "i18n": "compositeChoices.option1"
+        }
+      ]
+    },
+    "objectRadio": {
+      "title": "Object radio choices",
+      "oneOf": [
+        {
+          "const": {
+            "mode": "email",
+            "settings": {
+              "priority": 1
+            }
+          },
+          "title": "Email",
+          "i18n": "compositeChoices.option0"
+        },
+        {
+          "const": {
+            "mode": "postal",
+            "settings": {
+              "priority": 2
+            }
+          },
+          "title": "Postal mail",
+          "i18n": "compositeChoices.option1"
+        }
+      ]
+    },
+    "arrayDropdown": {
+      "title": "Array dropdown",
+      "oneOf": [
+        {
+          "const": [
+            "email",
+            {
+              "priority": 1
+            }
+          ],
+          "title": "Email route",
+          "i18n": "compositeChoices.option0"
+        },
+        {
+          "const": [
+            "postal",
+            {
+              "priority": 2
+            }
+          ],
+          "title": "Postal route",
+          "i18n": "compositeChoices.option1"
+        }
+      ]
+    },
+    "arrayRadio": {
+      "title": "Array radio choices",
+      "oneOf": [
+        {
+          "const": [
+            "email",
+            {
+              "priority": 1
+            }
+          ],
+          "title": "Email route",
+          "i18n": "compositeChoices.option0"
+        },
+        {
+          "const": [
+            "postal",
+            {
+              "priority": 2
+            }
+          ],
+          "title": "Postal route",
+          "i18n": "compositeChoices.option1"
+        }
+      ]
+    },
+    "compositeRows": {
+      "type": "array",
+      "title": "Composite choices in cells",
+      "items": {
+        "type": "object",
+        "properties": {
+          "objectChoice": {
+            "oneOf": [
+              {
+                "const": {
+                  "mode": "email",
+                  "settings": {
+                    "priority": 1
+                  }
+                },
+                "title": "Email",
+                "i18n": "compositeChoices.option0"
+              },
+              {
+                "const": {
+                  "mode": "postal",
+                  "settings": {
+                    "priority": 2
+                  }
+                },
+                "title": "Postal mail",
+                "i18n": "compositeChoices.option1"
+              }
+            ]
+          },
+          "arrayChoice": {
+            "oneOf": [
+              {
+                "const": [
+                  "email",
+                  {
+                    "priority": 1
+                  }
+                ],
+                "title": "Email route",
+                "i18n": "compositeChoices.option0"
+              },
+              {
+                "const": [
+                  "postal",
+                  {
+                    "priority": 2
+                  }
+                ],
+                "title": "Postal route",
+                "i18n": "compositeChoices.option1"
+              }
+            ]
+          }
+        }
+      }
     }
   }
 }
