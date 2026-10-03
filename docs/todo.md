@@ -1,5 +1,8 @@
 # Design and implementation backlog
 
+Reviewed against current React source and tests on 2026-10-02. Completed
+features are not pending proposals; remaining parity work is identified below.
+
 The published JSON schemas describe the implemented authoring vocabulary. A
 feature appearing in spec.md does not by itself qualify for a schema definition.
 This backlog separates proposals from implementation work. Source issue lists
@@ -51,7 +54,7 @@ configuration schema remains, with a description limited to interpolation.
 
 ## Proposed authoring features awaiting design or implementation
 
-Mixed-control type-specific detail options, composite-dialog removal settings,
+Composite-dialog removal settings,
 a separate clear-button option, pending-analysis/submit policy, touch-aware
 container summaries, and structured diagnostics require a settled contract and
 behavioral evidence before their authoring shapes are promoted. Their absence
@@ -74,7 +77,10 @@ Those findings are not requirements to reproduce a particular adapter's behavior
 
 ## Collection presentation implementation tracking
 
-Verify renderer support for §18.21.1 pagination, row detail dialogs/panels and dynamic-property pagination. Schema and examples define the target, not implementation completion. The onboarding kitchen-sink example now provides eight domain tabs with bilingual labels and valid/invalid fixtures; live renderer parity still needs verification.
+Antd and shadcn have pagination, row-detail and collection examples with runtime
+regression tests. Remaining work is interaction/accessibility coverage, browser
+layout checks and parity in other renderer families. Do not treat those open
+checks as absence of the implemented features.
 
 ## Renderer/schema/authoring audit (React, 2026-09-29)
 
@@ -96,8 +102,44 @@ This is a targeted source audit, not proof of complete option parity.
 - Split/layout options need a separate element-aware parity review. Properties
   such as action/params belong to Button schemas; array map/filter calls are not
   UI options. A raw text scan cannot establish conformance.
-- Collection pagination and rowDetail are target contracts with runtime support
-  still pending, recorded in config-consumption.json.
+- Collection pagination and rowDetail have runtime implementations and tests in
+  Antd and shadcn. The earlier pending-runtime assessment is superseded; remaining
+  work is coverage and renderer-family parity.
 - Add systematic per-capability vectors linking tester selection, option
   declarations, authoring acceptance, and renderer behavior. Open schemas accepting
   an option must never be interpreted as evidence that a renderer implements it.
+
+## TODO — remaining Draft-07 visual behavior
+
+Conditional object field discovery is implemented for the documented opt-in
+slice; broader composition coverage remains open. Track executable work in the
+[React renderer TODO](https://github.com/kchobantonov/jsonforms-react-renderers/blob/master/docs/TODO.md#draft-07-visual-support-follow-up).
+
+- Extend conditional discovery and authored placement across anyOf/oneOf,
+  referenced branches and named templates, with reference-scope regressions.
+- Add contains matching-item feedback and explanations of not failures. Do not
+  infer editable fields from a negated schema.
+- Implement boolean false presentation with absence as the quiet default:
+  hide absent optional forbidden fields and exclude them from add choices.
+  Existing forbidden data must have visible feedback and an allowed removal
+  path, without automatic deletion. Root false and required false properties
+  need an impossibility explanation, since deleting data cannot make them valid.
+  In a graphical schema editor, prohibitions remain visible to the author.
+- Settle explicit default/example actions and writeOnly summary/preview policy.
+- Broaden reference-scope coverage and assess useful format/content editors.
+
+## FUTURE — graphical authoring for Draft-07 constraints
+
+Provide constraint panels and reference selection, preserve unsupported keywords
+on round trips, and keep inactive-branch preview state separate from runtime data.
+Drag/drop must preserve field bindings and unknown options. These editor features
+are planned work, not implemented capabilities or new published option shapes.
+See [conditional authoring guidance](conditional-fields.md).
+
+## Completed since the migration audit
+
+Mixed type-specific details, shared editor detail modes, conditional object field
+discovery and Template/Slot examples now have documented authoring contracts and
+regression coverage. Their implemented slices are in the published schemas.
+Remaining conditional-composition and named-template diagnostic/cycle gaps stay
+in the React backlog. The drag-and-drop editor itself remains future work.
