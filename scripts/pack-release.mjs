@@ -29,6 +29,7 @@ try {
     await symlink(packed,join(consumer,'node_modules/@chobantonov/jsonforms-extended-spec'));
     execFileSync(process.execPath,['--input-type=module','-e', `
       import { readFileSync } from 'node:fs';
+      import assert from 'node:assert/strict';
       const resolve = name => import.meta.resolve('@chobantonov/jsonforms-extended-spec/' + name);
       const catalog = JSON.parse(readFileSync(new URL(resolve('examples/catalog.json'))));
       if (catalog.length !== ${report.examples}) throw new Error('Catalog missing');
@@ -36,7 +37,20 @@ try {
       if (!schema.$id) throw new Error('Schema missing');
       await import(resolve('examples/object-control/uischemas.mjs'));
       const { examples } = await import(resolve('examples'));
-      if (examples.length !== catalog.length || !examples.every(e => e.schema && e.uischema)) throw new Error('Example module incomplete');
+      assert.deepEqual(examples.map(e => e.id), catalog.map(e => e.id), 'Example catalog mismatch');
+      for (const entry of catalog) {
+        const example = examples.find(e => e.id === entry.id);
+        // Inference fixtures deliberately omit schema and data. Compare the
+        // packaged module with its catalog instead of requiring those values.
+        for (const file of entry.files.filter(file => file.endsWith('.json'))) {
+          const key = file.slice(0, -5);
+          const expected = JSON.parse(readFileSync(new URL(resolve('examples/' + entry.id + '/' + file))));
+          assert.deepEqual(example[key], expected, entry.id + ': ' + file);
+        }
+        for (const key of ['schema', 'data', 'uischema']) {
+          assert.equal(Object.hasOwn(example, key), entry.files.includes(key + '.json'), entry.id + ': ' + key + ' presence');
+        }
+      }
       if (typeof examples.find(e => e.id === 'tuple-control').uischemas[0].tester !== 'function') throw new Error('Registry hook missing');
       const { forSchema } = await import(resolve('typescript'));
       if (forSchema({type:'object',properties:{name:{type:'string'}}}).scope('name') !== '#/properties/name') throw new Error('Authoring export missing');
