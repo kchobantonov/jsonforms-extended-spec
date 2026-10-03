@@ -71,3 +71,9 @@ English example titles should begin with the feature named by the stable example
 - [JSON inference: paste data without a schema](json-inference/README.md) omits schema and data; apply JSON in the Data editor to generate a form.
 
 Catalog assets are optional. Preserve omitted schema/data rather than replacing them with `{}`/`null`; those values have different meanings.
+
+- [Array detail modes](array-detail-modes/README.md): default, generated, registered, fallback, and inline layouts.
+
+- [Editor details](editor-details/README.md): object generation, per-type mixed layouts, and registered cell editors.
+
+- [Templates and slots](template-slots/README.md): named registry lookup, fallback and nested overrides.

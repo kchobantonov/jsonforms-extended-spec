@@ -949,10 +949,38 @@
               "description": "Direct string property used to label nodes."
             },
             "detail": {
-              "$ref": "#/$defs/element"
+              "$ref": "#/$defs/detail"
             }
           },
           "description": "Opt-in recursive node tree with a selected-node detail pane. Existing nested presentation is unchanged when absent."
+        },
+        "object-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when object is selected. Takes precedence over detail; scoped to that value."
+        },
+        "array-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when array is selected. Takes precedence over detail; scoped to that value."
+        },
+        "string-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when string is selected. Takes precedence over detail; scoped to that value."
+        },
+        "number-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when number is selected. Takes precedence over detail; scoped to that value."
+        },
+        "integer-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when integer is selected. Takes precedence over detail; scoped to that value."
+        },
+        "boolean-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when boolean is selected. Takes precedence over detail; scoped to that value."
+        },
+        "null-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when null is selected. Takes precedence over detail; scoped to that value."
         }
       }
     },
@@ -964,7 +992,7 @@
           "$ref": "#/$defs/summary"
         },
         "detail": {
-          "$ref": "#/$defs/element"
+          "$ref": "#/$defs/detail"
         },
         "showTypeIndicator": {
           "type": "boolean",
@@ -1066,13 +1094,11 @@
       }
     },
     "detail": {
-      "description": "GENERATE, an inline element, or the legacy bare elements container. Inline elements are recursively validated.",
+      "description": "Editor detail: inline UI schema or upstream string mode. GENERATE bypasses the registry; other strings consult it. Tuple containers use a separate position-layout contract.",
       "anyOf": [
         {
           "type": "string",
-          "enum": [
-            "GENERATE"
-          ]
+          "description": "Array detail: DEFAULT preserves normal presentation; GENERATE forces generation; REGISTERED and other strings (including GENERATED) use registry lookup with generation fallback. String comparisons are case-insensitive. Inline UI schemas are recursively validated."
         },
         {
           "$ref": "#/$defs/element"

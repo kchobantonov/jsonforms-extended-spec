@@ -578,9 +578,7 @@
           "default": false
         },
         "collapsed": {
-          "type": "boolean",
-          "default": false,
-          "description": "Initialization only, not a controlled expansion value."
+          "type": "boolean"
         },
         "collapseNewItems": {
           "type": "boolean",
@@ -924,9 +922,6 @@
         "collapsible": {
           "type": "boolean"
         },
-        "collapsed": {
-          "type": "boolean"
-        },
         "pagination": {
           "$ref": "#/$defs/pagination"
         },
@@ -953,6 +948,34 @@
           "type": "boolean",
           "default": true,
           "description": "Validate the displayed anyOf/oneOf branch for local editor feedback. Control options override global config. False skips additional branch compilation and validation; document validation remains unchanged."
+        },
+        "object-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when object is selected. Takes precedence over detail; scoped to that value."
+        },
+        "array-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when array is selected. Takes precedence over detail; scoped to that value."
+        },
+        "string-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when string is selected. Takes precedence over detail; scoped to that value."
+        },
+        "number-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when number is selected. Takes precedence over detail; scoped to that value."
+        },
+        "integer-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when integer is selected. Takes precedence over detail; scoped to that value."
+        },
+        "boolean-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when boolean is selected. Takes precedence over detail; scoped to that value."
+        },
+        "null-detail": {
+          "$ref": "#/$defs/detail",
+          "description": "Mixed editor detail override when null is selected. Takes precedence over detail; scoped to that value."
         }
       }
     },
@@ -964,7 +987,7 @@
           "$ref": "#/$defs/summary"
         },
         "detail": {
-          "$ref": "#/$defs/element"
+          "$ref": "#/$defs/detail"
         },
         "showTypeIndicator": {
           "type": "boolean",
@@ -1026,7 +1049,7 @@
           "$ref": "#/$defs/controlOptions/properties/disableRemove"
         },
         "collapsed": {
-          "$ref": "#/$defs/controlOptions/properties/collapsed"
+          "type": "boolean"
         },
         "collapseNewItems": {
           "$ref": "#/$defs/controlOptions/properties/collapseNewItems"
@@ -1206,9 +1229,6 @@
           "$ref": "#/$defs/controlOptions/properties/showArrayLayoutSortButtons"
         },
         "collapsible": {
-          "type": "boolean"
-        },
-        "collapsed": {
           "type": "boolean"
         },
         "columnDefs": {
@@ -1441,6 +1461,13 @@
           "type": "string",
           "description": "Which named child of the enclosing template to place.",
           "minLength": 1
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element"
+          },
+          "description": "The first child is fallback content when no named slot content is supplied. Wrap multiple controls in one layout."
         }
       },
       "required": [
@@ -1483,13 +1510,11 @@
       }
     },
     "detail": {
-      "description": "GENERATE, an inline element, or the legacy bare elements container. Inline elements are recursively validated.",
+      "description": "Editor detail: inline UI schema or upstream string mode. GENERATE bypasses the registry; other strings consult it. Tuple containers use a separate position-layout contract.",
       "anyOf": [
         {
           "type": "string",
-          "enum": [
-            "GENERATE"
-          ]
+          "description": "Array detail: DEFAULT preserves normal presentation; GENERATE forces generation; REGISTERED and other strings (including GENERATED) use registry lookup with generation fallback. String comparisons are case-insensitive. Inline UI schemas are recursively validated."
         },
         {
           "$ref": "#/$defs/element"
@@ -1605,7 +1630,8 @@
       "properties": {
         "name": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "description": "Exact name of the registered UI-schema model (entry.uischema.name), not a ranked tester lookup."
         },
         "elements": {
           "type": "array",
@@ -1663,7 +1689,7 @@
           ]
         },
         "detail": {
-          "$ref": "#/$defs/element"
+          "$ref": "#/$defs/detail"
         },
         "placement": {
           "enum": [

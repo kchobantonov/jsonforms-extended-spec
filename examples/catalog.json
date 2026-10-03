@@ -75,6 +75,18 @@
     "hostRequirements": []
   },
   {
+    "id": "array-detail-modes",
+    "title": "Array detail modes: generated and registered",
+    "files": [
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Register the trusted tester functions exported by uischemas.mjs."
+    ]
+  },
+  {
     "id": "boolean-controls",
     "title": "Boolean controls",
     "files": [
@@ -215,6 +227,18 @@
       "uischema.json"
     ],
     "hostRequirements": []
+  },
+  {
+    "id": "editor-details",
+    "title": "Editor details: objects, mixed types, and cells",
+    "files": [
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Register the trusted tester functions exported by uischemas.mjs."
+    ]
   },
   {
     "id": "file-control",
@@ -468,6 +492,18 @@
     ],
     "hostRequirements": [
       "Register the requested template-language engines. Native function templates require a host adapter and are not part of the serialized fixture."
+    ]
+  },
+  {
+    "id": "template-slots",
+    "title": "Templates and slots: named UI schema reuse",
+    "files": [
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Register the trusted uischemas.mjs module in the UI-schema registry."
     ]
   },
   {

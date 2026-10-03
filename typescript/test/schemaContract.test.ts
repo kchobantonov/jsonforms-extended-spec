@@ -329,6 +329,13 @@ describe('the common UI vocabulary', () => {
         elements: [{ type: 'Control', scope: '#/properties/b' }],
       },
       'GENERATE',
+      'generate',
+      'DEFAULT',
+      'default',
+      'REGISTERED',
+      'registered',
+      'GENERATED',
+      'custom',
     ]) {
       expect(
         validate({
@@ -570,4 +577,30 @@ describe('the two UI schemas', () => {
       expect(text, name).not.toContain('material');
     }
   });
+});
+
+it.each([BASE_UISCHEMA, EXTENDED_UISCHEMA])('validates editor detail modes in %s', (schemaName) => {
+  const validate = compile(schemaName);
+  for (const detail of ['GENERATE', 'REGISTERED', {type: 'Control', scope: '#'}]) {
+    expect(validate({type:'Control',scope:'#',options:{
+      'object-detail':detail,
+      recursiveTree:{childrenProperty:'children',labelProperty:'name',detail},
+      cells:{value:{detail}},
+      rowDetail:{presentation:'dialog',detail}
+    }})).toBe(true);
+  }
+  expect(validate({type:'Control',scope:'#',options:{'object-detail':true}})).toBe(false);
+});
+
+it('validates named template models and slot fallback content', async () => {
+  const validate = compile(EXTENDED_UISCHEMA);
+  // @ts-ignore Trusted example registry supplied by the host.
+  const { uischemas } = await import('../../examples/template-slots/uischemas.mjs');
+  for (const entry of uischemas) {
+    expect(validate(entry.uischema), JSON.stringify(validate.errors)).toBe(true);
+  }
+  expect(validate({ type: 'Template', name: 'card' })).toBe(true);
+  expect(validate({ type: 'Template' })).toBe(false);
+  expect(validate({ type: 'Slot', name: 'body', elements: [{ type: 'Control' }] })).toBe(false);
+  expect(validate({ type: 'Slot', name: 'body', elements: [{ type: 'Control', scope: '#' }] })).toBe(true);
 });

@@ -267,3 +267,40 @@ input stores zero and keeps its selected type; clearing the type removes the
 value where absence is permitted. Scope this behavior to the exact mixed value
 path, including root and tree-detail values, so ordinary optional scalar fields
 retain their clearing semantics. Check both the clear icon and deleting all text.
+
+## Detail strings are selection instructions
+
+Do not dispatch a detail string as a UI-schema element. Resolve it through core's
+findUISchema with the item schema, registry, schema scope, data path, and root
+schema. GENERATE bypasses the registry; other strings consult it. Test using a
+matching registered layout, since generation and registry fallback look identical
+without one. DEFAULT does not force nested presentation, but does not suppress
+nesting required by the item schema either.
+
+A generated detail may be a Control that delegates to an object renderer. Carry
+GENERATE into that delegated control, otherwise it can re-enter registry lookup.
+Do not inherit a mixed root's field layout into unrelated descendant schemas.
+
+## Named templates are separate from ranked detail lookup
+
+Resolve Template.name against entry.uischema.name in registry order without
+calling testers. Slot.name resolves the inherited caller-content map, with local
+named children overriding it; fallback is the first Slot.elements child.
+Preserve schema, path and enabled state through both dispatches. A UI-model name
+is not a data binding. Named-only registry entries should return -1 from testers
+so ordinary detail selection does not accidentally choose them.
+
+The template-slots example covers supplied content, fallback, empty slots and
+nested overrides. React shared-renderer tests execute these cases, and Antd and
+shadcn integration tests render the example through their native registries. Missing-name
+diagnostics, duplicate-name diagnostics and cycle protection remain gaps in the
+current React implementation; do not treat its silent behavior as certification
+of those normative requirements.
+
+## Image diagnostics must fit their container
+
+Do not print a refused image URL or embedded data payload in the form. Use a
+short warning with an icon and an explanation available on hover, keyboard focus
+and touch. Keep the explanation bounded and wrap long text; allow Escape to
+close it. Source refusal must still prevent the image from loading. The shared
+React ImageView renderer implements this presentation for its consumers.

@@ -456,3 +456,56 @@ The widening is safe in the direction that matters: the value really is a
 schema and really is a UI schema, JSON Forms does not mutate either, and what
 is lost at the boundary is only the extra precision — lost *after* every check
 above has already run.
+
+### Array detail modes
+
+Array control options accept the exported ArrayDetail type: an inline UI schema,
+a legacy elements container, or a string mode. Use detail: 'GENERATE' to bypass
+registered layouts and detail: 'REGISTERED' to prefer a registered layout.
+DEFAULT keeps normal renderer selection. Values are case-insensitive; other
+strings (including GENERATED) use registry lookup, matching upstream core.
+See examples/array-detail-modes for executable layouts and trusted registrations.
+
+## Editor detail modes and mixed type overrides
+
+The detail resolver is also used for object and mixed editors. Explicit editor
+details in composite cells, tuple-field editors, recursiveTree.detail, and row
+editors accept the same string modes or inline layout. GENERATE bypasses registry
+lookup and preserves that intent through a fallback Control. REGISTERED and other
+strings use the registry before the context-specific fallback. DEFAULT preserves
+normal presentation; it does not mean table outside array selection. An omitted
+option retains the editor's existing default, which may already be a registered
+layout. Scopes in inline layouts are relative to the edited value's schema.
+
+Tuple container detail remains a position layout scoped to the whole tuple.
+Do not apply an array-item editor layout to each tuple position.
+
+Mixed controls accept object-detail, array-detail, string-detail, number-detail,
+integer-detail, boolean-detail, and null-detail. For the current mixed value,
+the selected type's option takes precedence over detail, including string modes.
+This is a project extension, not a new upstream detail mode. It does not change
+structuredLayout (tree/nested/code). Tree mode uses it for that mixed value's root
+detail pane; it does not impose a root-specific layout on every descendant.
+Code presentation edits the whole value and does not use these field layouts.
+Null retains the existing no-value-control presentation.
+
+Implemented and tested for React Antd and shadcn. Other renderer sets are not
+claimed to support these extensions. See the editor-details example.
+
+## Authoring named templates and slots
+
+Template and Slot are extended elements; use the explicit `f.raw(...)` escape
+hatch in the schema-bound authoring API. Their `name` is a top-level UI-model
+property, not an option or a data path:
+
+```ts
+f.raw({ type: 'Template', name: 'contact-card', elements: [
+  { type: 'Control', name: 'body', scope: '#/properties/name' }
+] });
+```
+
+Register a layout with `uischema.name: 'contact-card'` containing
+`{ type: 'Slot', name: 'body' }`. Its registry tester can return -1: named lookup
+ignores rankings. The raw escape hatch does not type-check the slot contract;
+validate authored models against the extended UI-schema JSON Schema. See the
+[complete example](../examples/template-slots/README.md).

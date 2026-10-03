@@ -14,6 +14,14 @@ import type { DataPath, Scope, SchemaAtPath } from './schemaTypes';
  * See `typescript/README.md` for what this does and does not catch.
  */
 
+/**
+ * DEFAULT leaves array presentation to renderer selection. GENERATE bypasses
+ * the registry. Other strings, including REGISTERED and GENERATED, consult it.
+ * Comparisons are case-insensitive, matching JSON Forms core.
+ */
+export type EditorDetail = string | UISchemaElement | { elements: UISchemaElement[] };
+export type ArrayDetail = EditorDetail;
+
 /** Options every control understands, whatever it is bound to. */
 /** Selectable-card presentation; content is presentation-only UI schema. */
 export type CardChoice = ({ value: unknown; branch?: never } | { branch: number; value?: never }) & {
@@ -26,11 +34,20 @@ export type CardChoice = ({ value: unknown; branch?: never } | { branch: number;
 };
 
 export interface CommonControlOptions {
+  /** Editor layout or upstream detail-resolution mode. */
+  detail?: EditorDetail;
+  'object-detail'?: EditorDetail;
+  'array-detail'?: EditorDetail;
+  'string-detail'?: EditorDetail;
+  'number-detail'?: EditorDetail;
+  'integer-detail'?: EditorDetail;
+  'boolean-detail'?: EditorDetail;
+  'null-detail'?: EditorDetail;
   /** Navigate recursive nodes through a tree and selected-node editor. */
   recursiveTree?: {
     childrenProperty: string;
     labelProperty: string;
-    detail?: UISchemaElement;
+    detail?: EditorDetail;
   };
   /** Mixed value presentation; defaults to tree. Code requires Monaco support. */
   structuredLayout?: 'tree' | 'nested' | 'code';
@@ -94,8 +111,8 @@ export type DetailDialogOptions = {
   resizable?: boolean;
 };
 export type RowDetailOptions =
-  | { presentation: 'dialog'; dialog?: DetailDialogOptions; detail?: unknown; placement?: never; resizable?: never; collapsed?: never }
-  | { presentation: 'panel'; detail?: unknown; placement?: 'right' | 'bottom'; resizable?: boolean; collapsed?: boolean };
+  | { presentation: 'dialog'; dialog?: DetailDialogOptions; detail?: EditorDetail; placement?: never; resizable?: never; collapsed?: never }
+  | { presentation: 'panel'; detail?: EditorDetail; placement?: 'right' | 'bottom'; resizable?: boolean; collapsed?: boolean };
 
 export type OptionsFor<Sub> = CommonControlOptions &
   (Sub extends { type: 'number' | 'integer' }
@@ -125,7 +142,7 @@ export type OptionsFor<Sub> = CommonControlOptions &
         variant?: 'ag-grid' | 'tuple' | 'chips' | 'multi-select';
         showSortButtons?: boolean;
         restrict?: boolean;
-        detail?: unknown;
+        detail?: ArrayDetail;
         cells?: Record<string, unknown>;
       }
     : Sub extends { type: 'object' }

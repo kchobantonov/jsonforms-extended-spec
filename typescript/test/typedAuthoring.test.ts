@@ -111,3 +111,23 @@ describe('what the types reject', () => {
     expect(missing).toBeDefined();
   });
 });
+
+it('authors the upstream array detail modes without altering their spelling', () => {
+  for (const detail of ['DEFAULT', 'generate', 'REGISTERED', 'GENERATED', 'custom']) {
+    const control = f.control('orders', {options: {detail}});
+    expect(control.options?.detail).toBe(detail);
+  }
+  // @ts-expect-error Detail must be a mode or layout, not a boolean.
+  f.control('orders', {options: {detail: true}});
+});
+
+it('authors editor modes and per-type mixed details', () => {
+  const editor = f.control('address', {options: {
+    detail: 'REGISTERED',
+    'object-detail': {type: 'Control', scope: '#/properties/city'},
+    recursiveTree: {childrenProperty: 'children', labelProperty: 'name', detail: 'GENERATE'}
+  }});
+  expect(editor.options?.detail).toBe('REGISTERED');
+  // @ts-expect-error Detail overrides must be editor layouts or strings.
+  f.control('address', {options: {'object-detail': true}});
+});

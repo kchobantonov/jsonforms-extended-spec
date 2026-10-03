@@ -96,3 +96,69 @@ available in read-only forms; mutations remain disabled.
 
 Implemented in React Antd and shadcn; other renderer sets do not yet implement
 this option. The recursive-tree example includes a Tree editor tab for comparison.
+
+## Array detail resolution
+
+Array controls support these case-insensitive string modes:
+
+| detail | Behavior |
+| --- | --- |
+| Omitted or DEFAULT | Keep normal array presentation. Schema nesting may still require a nested editor. |
+| GENERATE | Use a nested editor and generate its detail UI schema without consulting the registry. |
+| REGISTERED | Use a nested editor; consult the UI-schema registry, then generate if no entry matches. |
+| Other strings, including GENERATED | Same registry-first behavior as REGISTERED, matching JSON Forms core. |
+| Inline UI schema | Use that layout for the item, with scopes relative to the item schema. |
+
+GENERATE is the canonical upstream implementation spelling. The upstream controls
+webpage says GENERATED, but that spelling does not bypass the registry in core.
+An explicit table option retains this project's table-selection precedence.
+Registry lookup and detail rendering are separate from renderer selection:
+DEFAULT does not force a table for structurally nested items.
+Use the existing detail mechanism for custom layouts instead of inventing a
+second generated/registered switch.
+
+The array-detail-modes example demonstrates a matching registry entry, generation,
+inline layout, DEFAULT, and registry fallback. Runtime coverage is provided for
+React Antd and shadcn; this statement does not establish parity for other platforms.
+
+## Editor detail modes and mixed type overrides
+
+The detail resolver is also used for object and mixed editors. Explicit editor
+details in composite cells, tuple-field editors, recursiveTree.detail, and row
+editors accept the same string modes or inline layout. GENERATE bypasses registry
+lookup and preserves that intent through a fallback Control. REGISTERED and other
+strings use the registry before the context-specific fallback. DEFAULT preserves
+normal presentation; it does not mean table outside array selection. An omitted
+option retains the editor's existing default, which may already be a registered
+layout. Scopes in inline layouts are relative to the edited value's schema.
+
+Tuple container detail remains a position layout scoped to the whole tuple.
+Do not apply an array-item editor layout to each tuple position.
+
+Mixed controls accept object-detail, array-detail, string-detail, number-detail,
+integer-detail, boolean-detail, and null-detail. For the current mixed value,
+the selected type's option takes precedence over detail, including string modes.
+This is a project extension, not a new upstream detail mode. It does not change
+structuredLayout (tree/nested/code). Tree mode uses it for that mixed value's root
+detail pane; it does not impose a root-specific layout on every descendant.
+Code presentation edits the whole value and does not use these field layouts.
+Null retains the existing no-value-control presentation.
+
+Implemented and tested for React Antd and shadcn. Other renderer sets are not
+claimed to support these extensions. See the editor-details example.
+
+## Named templates are separate from ranked detail lookup
+
+Resolve Template.name against entry.uischema.name in registry order without
+calling testers. Slot.name resolves the inherited caller-content map, with local
+named children overriding it; fallback is the first Slot.elements child.
+Preserve schema, path and enabled state through both dispatches. A UI-model name
+is not a data binding. Named-only registry entries should return -1 from testers
+so ordinary detail selection does not accidentally choose them.
+
+The template-slots example covers supplied content, fallback, empty slots and
+nested overrides. React shared-renderer tests execute these cases, and Antd and
+shadcn integration tests render the example through their native registries. Missing-name
+diagnostics, duplicate-name diagnostics and cycle protection remain gaps in the
+current React implementation; do not treat its silent behavior as certification
+of those normative requirements.

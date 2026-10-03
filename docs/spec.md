@@ -1735,7 +1735,8 @@ structural composition alone requires no script permission.
 
 - **Template** resolves a reusable named UI schema from the registry. The
   top-level `name` is required; the lookup finds the first registry entry
-  whose name matches. **This is name lookup, not ranked tester selection** —
+  whose `entry.uischema.name` exactly matches (case-sensitive), rather than a
+  name on the registry entry itself. **This is name lookup, not ranked tester selection** —
   testers are not evaluated for it. Duplicate names SHOULD be avoided and
   diagnosed. A missing template renders no substituted content and SHOULD
   produce a diagnostic.
@@ -1743,7 +1744,13 @@ structural composition alone requires no script permission.
   template context.
 
 `Template.elements` supplies named slot contents, merged over inherited
-contents with local names taking precedence. Named reuse **preserves the
+contents with local names taking precedence. Unnamed supplied children do not
+fill slots; later children with the same name replace earlier ones. Slot fallback
+is its first `elements` child; further fallback children are not dispatched.
+An unfilled slot without fallback renders nothing. `Slot` does not search the
+UI-schema registry itself. Wrap several fallback controls in one layout.
+See [Templates and slots](../examples/template-slots/README.md) for complete
+registry and caller models. Named reuse **preserves the
 caller's schema and data path** and does not create a new data object.
 Recursive named references MUST be guarded against unbounded expansion.
 
@@ -3296,7 +3303,7 @@ For object controls, array item forms, list-with-detail and any renderer using
 the shared mechanism, select the form description in this order:
 
 1. If `options.detail` is an **inline UI-schema element with a `type`**, use it.
-2. If `options.detail` is the literal `"GENERATE"`, generate the fallback form
+2. If `options.detail` is `"GENERATE"` (case-insensitive), generate the fallback form
    and **bypass registered UI schemas**. Emit the uppercase spelling; matching
    SHOULD be case-insensitive.
 3. Otherwise use the **highest-ranked applicable registered** UI schema.
@@ -7538,3 +7545,53 @@ available in read-only forms; mutations remain disabled.
 
 The recursive-tree example includes a Tree editor tab for comparison. See the
 implementation guide for renderer coverage.
+
+## Array detail resolution
+
+Array controls support these case-insensitive string modes:
+
+| detail | Behavior |
+| --- | --- |
+| Omitted or DEFAULT | Keep normal array presentation. Schema nesting may still require a nested editor. |
+| GENERATE | Use a nested editor and generate its detail UI schema without consulting the registry. |
+| REGISTERED | Use a nested editor; consult the UI-schema registry, then generate if no entry matches. |
+| Other strings, including GENERATED | Same registry-first behavior as REGISTERED, matching JSON Forms core. |
+| Inline UI schema | Use that layout for the item, with scopes relative to the item schema. |
+
+GENERATE is the canonical upstream implementation spelling. The upstream controls
+webpage says GENERATED, but that spelling does not bypass the registry in core.
+An explicit table option retains this project's table-selection precedence.
+Registry lookup and detail rendering are separate from renderer selection:
+DEFAULT does not force a table for structurally nested items.
+Use the existing detail mechanism for custom layouts instead of inventing a
+second generated/registered switch.
+
+The array-detail-modes example demonstrates a matching registry entry, generation,
+inline layout, DEFAULT, and registry fallback. Runtime coverage is provided for
+React Antd and shadcn; this statement does not establish parity for other platforms.
+
+## Editor detail modes and mixed type overrides
+
+The detail resolver is also used for object and mixed editors. Explicit editor
+details in composite cells, tuple-field editors, recursiveTree.detail, and row
+editors accept the same string modes or inline layout. GENERATE bypasses registry
+lookup and preserves that intent through a fallback Control. REGISTERED and other
+strings use the registry before the context-specific fallback. DEFAULT preserves
+normal presentation; it does not mean table outside array selection. An omitted
+option retains the editor's existing default, which may already be a registered
+layout. Scopes in inline layouts are relative to the edited value's schema.
+
+Tuple container detail remains a position layout scoped to the whole tuple.
+Do not apply an array-item editor layout to each tuple position.
+
+Mixed controls accept object-detail, array-detail, string-detail, number-detail,
+integer-detail, boolean-detail, and null-detail. For the current mixed value,
+the selected type's option takes precedence over detail, including string modes.
+This is a project extension, not a new upstream detail mode. It does not change
+structuredLayout (tree/nested/code). Tree mode uses it for that mixed value's root
+detail pane; it does not impose a root-specific layout on every descendant.
+Code presentation edits the whole value and does not use these field layouts.
+Null retains the existing no-value-control presentation.
+
+Implemented and tested for React Antd and shadcn. Other renderer sets are not
+claimed to support these extensions. See the editor-details example.
