@@ -92,8 +92,9 @@ value." For a field that *should* accept other values, the encoding is
 ## Standalone host setup
 
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
-with the relevant renderer capabilities. No framework registration module is
-required by this package.
+with the relevant renderer capabilities. Register the trusted tester functions
+exported by `uischemas.mjs` for the Card detail modes tab. The generated example
+module includes these registrations for demo hosts.
 
 
 ## Feature navigation
@@ -113,3 +114,23 @@ Card branch forms explicitly uses `confirmation.branchChange: "complex"`. A disc
 Card validation demonstrates an absent required choice, an invalid imported enum value, and an invalid email within a selected branch, with English and Bulgarian messages.
 
 Object and array choices demonstrates preloaded nested object and array constants in dropdowns, radios, and table cells. These values must remain selected after JSON reload. This also provides a parity fixture for renderer families whose composite choice support is not yet certified.
+
+
+## Card detail modes
+
+The **Card detail modes** tab presents the same `cardContact` value twice:
+
+- `choices[].detail: "GENERATE"` bypasses the matching registry entry and shows
+  the generated branch fields, including the discriminator.
+- `choices[].detail: "REGISTERED"` uses `uischemas.mjs` for Email. Its custom
+  **Registered email address** label makes registry selection visible, and its
+  layout omits the discriminator already controlled by the cards.
+
+Edit either email address and the other presentation updates. Switch to Postal
+mail (confirm discarding populated details): no registry entry matches that
+branch, so REGISTERED falls back to generation and both show Street and City.
+The existing Card branch forms tab retains its inline Email detail for comparison.
+The new tab and registered label have English and Bulgarian translations.
+
+See the [implementation guide](../../docs/implementation-guide.md#choice-card-branch-details)
+for executed renderer coverage of this example.

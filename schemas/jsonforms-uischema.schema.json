@@ -482,7 +482,15 @@
       "properties": {
         "format": {
           "type": "string",
-          "description": "Presentation hint; never rewrites the data schema format."
+          "description": "Presentation hint; never rewrites the data schema format. Unknown or unavailable formats remain valid authoring values; renderer capability determines their presentation.",
+          "examples": [
+            "radio",
+            "date",
+            "date-time",
+            "time",
+            "password",
+            "table"
+          ]
         },
         "variant": {
           "type": "string",
@@ -703,7 +711,27 @@
               "seconds"
             ]
           },
-          "description": "Which panels the picker offers. Date views select the calendar's granularity; time views select which time columns are drawn. The finest date view named is where the calendar lands. It does not change the save format - a year/month picker storing a full date is a legitimate request, and asking for hours and minutes does not stop seconds being stored. An array naming no view of a kind the control uses leaves that half to the display format, rather than blanking it."
+          "description": "Which panels the picker offers. Date views select the calendar's granularity; time views select which time columns are drawn. The finest date view named is where the calendar lands. It does not change the save format - a year/month picker storing a full date is a legitimate request, and asking for hours and minutes does not stop seconds being stored. An array naming no view of a kind the control uses leaves that half to the display format, rather than blanking it. Views the control cannot use are accepted and ignored.",
+          "examples": [
+            [
+              "year",
+              "month",
+              "day"
+            ],
+            [
+              "hours",
+              "minutes",
+              "seconds"
+            ],
+            [
+              "year",
+              "month",
+              "day",
+              "hours",
+              "minutes",
+              "seconds"
+            ]
+          ]
         },
         "height": {
           "$ref": "#/$defs/dimension"
@@ -878,7 +906,7 @@
                 "$ref": "#/$defs/uiSchema"
               },
               "detail": {
-                "$ref": "#/$defs/uiSchema"
+                "$ref": "#/$defs/detail"
               }
             },
             "oneOf": [
@@ -985,6 +1013,25 @@
         "conditionalFields": {
           "type": "boolean",
           "description": "Opt in to active conditional object field discovery (if/then/else and Draft-07 dependencies). Local false overrides config. Explicit detail layouts retain placement; inactive branch-only controls are omitted without deleting data."
+        },
+        "pagination": {
+          "$ref": "#/$defs/pagination"
+        },
+        "rowDetail": {
+          "$ref": "#/$defs/rowDetail"
+        },
+        "additionalItems": {
+          "$ref": "#/$defs/additionalItemsPresentation"
+        },
+        "additionalProperties": {
+          "$ref": "#/$defs/additionalPropertiesPresentation"
+        },
+        "columnDefs": {
+          "description": "Selects and orders table or AG Grid columns with optional width constraints. Explicit agGridOptions.columnDefs replaces this list for AG Grid.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/tableColumnDefinition"
+          }
         }
       }
     },
@@ -1020,6 +1067,9 @@
         },
         "clearable": {
           "type": "boolean"
+        },
+        "dialog": {
+          "$ref": "#/$defs/detailDialog"
         }
       }
     },
@@ -1181,6 +1231,201 @@
     },
     "condition": {
       "$ref": "jsonforms-rule.schema.json#/$defs/condition"
+    },
+    "pagination": {
+      "description": "Client-side collection pagination. False disables; true or an object enables. Tables, additional properties and tuple additional items default on.",
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pageSize": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 5
+            },
+            "pageSizeOptions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "default": [
+                5,
+                10,
+                25,
+                50
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "tableColumnDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field"
+      ],
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "minWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "maxWidth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "scope": {
+          "const": "#",
+          "description": "Bind this column to the whole current row; field is its stable key, not a data property."
+        },
+        "headerName": {
+          "type": "string"
+        }
+      }
+    },
+    "detailDialog": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "width": {
+          "oneOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "height": {
+          "oneOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "maximizable": {
+          "type": "boolean",
+          "default": true
+        },
+        "draggable": {
+          "type": "boolean",
+          "default": false
+        },
+        "resizable": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "additionalItemsPresentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pagination": {
+          "$ref": "#/$defs/pagination"
+        }
+      }
+    },
+    "additionalPropertiesPresentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pagination": {
+          "$ref": "#/$defs/pagination"
+        }
+      }
+    },
+    "rowDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "presentation"
+      ],
+      "properties": {
+        "presentation": {
+          "enum": [
+            "dialog",
+            "panel"
+          ]
+        },
+        "detail": {
+          "$ref": "#/$defs/detail"
+        },
+        "placement": {
+          "enum": [
+            "right",
+            "bottom"
+          ],
+          "default": "right"
+        },
+        "resizable": {
+          "type": "boolean",
+          "default": true
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": false,
+          "description": "Initial panel visibility: true starts hidden; false starts visible. Panel presentation only."
+        },
+        "dialog": {
+          "$ref": "#/$defs/detailDialog"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "presentation": {
+                "const": "dialog"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "placement"
+                  ]
+                },
+                {
+                  "required": [
+                    "resizable"
+                  ]
+                },
+                {
+                  "required": [
+                    "collapsed"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   },
   "$id": "https://kchobantonov.github.io/jsonforms-extended-spec/schemas/jsonforms-uischema.schema.json"

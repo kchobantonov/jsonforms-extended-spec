@@ -24,7 +24,7 @@ test('catalog includes every example directory exactly once', async () => {
   assert.equal(new Set(catalog.map(x=>x.id)).size,catalog.length);
 });
 test('trusted registry hooks use portable UI schemas and pure testers', async () => {
-  for (const name of ['object-control','tuple-control']) {
+  for (const name of ['object-control','tuple-control','choice-controls']) {
     const { uischemas } = await import(`../examples/${name}/uischemas.mjs`);
     for (const entry of uischemas) {
       assert.equal(typeof entry.tester,'function');
@@ -47,10 +47,12 @@ test('spec and walkthroughs stay independent of component libraries', async () =
 });
 
 test('published schemas do not advertise unimplemented options', async () => {
+  // The per-type detail overrides were promoted: the editor-details example
+  // authors them and the renderers read them, so they belong in the published
+  // schemas and no longer belong on this list.
   const absent = new Set(['$dynamic', 'showRemoveButton', 'removeLabel',
     'showClearButton', 'timezone', 'saveTimezone',
-    'showTimezoneSelector', 'timezoneChangeMode', 'allowHtml', 'allowImages',
-    ...['string','number','integer','boolean','null','object','array'].map(t => `${t}-detail`)]);
+    'showTimezoneSelector', 'timezoneChangeMode', 'allowHtml', 'allowImages']);
   function inspect(node) {
     if (!node || typeof node !== 'object') return;
     for (const key of Object.keys(node.properties ?? {})) assert.ok(!absent.has(key), `Unsupported schema option: ${key}`);

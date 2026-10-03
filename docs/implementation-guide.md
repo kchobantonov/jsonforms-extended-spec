@@ -168,3 +168,21 @@ of those normative requirements.
 See [conditional field presentation and graphical authoring](conditional-fields.md).
 Use `options.conditionalFields: true` on an object Control or the default
 `config.jsonformsExtended.conditionalFields`. Local false opts out.
+
+
+## Choice-card branch details
+
+Resolve each branch card's detail mode before dispatching its editor. GENERATE
+must bypass registry selection, including a previously selected registered
+layout; REGISTERED uses the resolved branch schema with the control's schema
+scope, data path and document root. Inline layouts remain relative to the branch
+value. Missing registrations fall back to generation. Value-choice cards do not
+use branch editors.
+
+React Antd and shadcn integration tests cover generation with a matching registry,
+registry selection and fallback, inline layouts, and editing a nested value.
+Other renderer families are not verified by these tests.
+
+The choice-controls Card detail modes example is executed in Antd and shadcn
+integration tests in English and Bulgarian, including registry fallback for Postal
+mail. Its trusted registry is also validated by the spec authoring tests.

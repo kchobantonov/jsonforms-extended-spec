@@ -134,7 +134,9 @@
       "translations.json",
       "uischema.json"
     ],
-    "hostRequirements": []
+    "hostRequirements": [
+      "Register the trusted tester functions exported by uischemas.mjs to compare choice-card detail modes."
+    ]
   },
   {
     "id": "code-editor",

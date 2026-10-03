@@ -513,7 +513,7 @@
       "properties": {
         "format": {
           "type": "string",
-          "description": "Presentation hint; never rewrites the data schema format."
+          "description": "Presentation hint; never rewrites the data schema format. Unknown or unavailable formats remain valid authoring values; renderer capability determines their presentation."
         },
         "variant": {
           "type": "string",
@@ -739,7 +739,27 @@
               "seconds"
             ]
           },
-          "description": "Which panels the picker offers. Date views select the calendar's granularity; time views select which time columns are drawn. The finest date view named is where the calendar lands. It does not change the save format - a year/month picker storing a full date is a legitimate request, and asking for hours and minutes does not stop seconds being stored. An array naming no view of a kind the control uses leaves that half to the display format, rather than blanking it."
+          "description": "Which panels the picker offers. Date views select the calendar's granularity; time views select which time columns are drawn. The finest date view named is where the calendar lands. It does not change the save format - a year/month picker storing a full date is a legitimate request, and asking for hours and minutes does not stop seconds being stored. An array naming no view of a kind the control uses leaves that half to the display format, rather than blanking it. Views the control cannot use are accepted and ignored.",
+          "examples": [
+            [
+              "year",
+              "month",
+              "day"
+            ],
+            [
+              "hours",
+              "minutes",
+              "seconds"
+            ],
+            [
+              "year",
+              "month",
+              "day",
+              "hours",
+              "minutes",
+              "seconds"
+            ]
+          ]
         },
         "showActions": {
           "type": "boolean"
@@ -980,6 +1000,72 @@
         "conditionalFields": {
           "type": "boolean",
           "description": "Opt in to active conditional object field discovery (if/then/else and Draft-07 dependencies). Local false overrides config. Explicit detail layouts retain placement; inactive branch-only controls are omitted without deleting data."
+        },
+        "choices": {
+          "type": "array",
+          "description": "Selectable cards instead of a plain choice list. Each entry selects either a data value or a combinator branch; an entry carrying both says nothing a renderer can act on, which is why they are mutually exclusive.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "description": "The data value this card selects."
+              },
+              "branch": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "The combinator branch this card selects, by index."
+              },
+              "label": {
+                "type": "string"
+              },
+              "i18n": {
+                "type": "string"
+              },
+              "disabled": {
+                "type": "boolean"
+              },
+              "content": {
+                "$ref": "#/$defs/uiSchema",
+                "description": "Presentation-only UI schema drawn inside the card."
+              },
+              "selectedContent": {
+                "$ref": "#/$defs/uiSchema",
+                "description": "Drawn instead of content while the card is selected."
+              },
+              "detail": {
+                "$ref": "#/$defs/detail",
+                "description": "The editor the card reveals once selected."
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "value"
+                ],
+                "not": {
+                  "required": [
+                    "branch"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "branch"
+                ],
+                "not": {
+                  "required": [
+                    "value"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "showRadio": {
+          "type": "boolean",
+          "default": false,
+          "description": "Keeps the native radio control visible inside each card. Hidden by default; keyboard interaction and accessible radio semantics remain either way."
         }
       }
     },
@@ -1274,9 +1360,6 @@
             },
             "restrict": {
               "type": "boolean"
-            },
-            "pagination": {
-              "$ref": "#/$defs/pagination"
             }
           }
         }
@@ -1646,38 +1729,7 @@
       }
     },
     "pagination": {
-      "description": "Client-side collection pagination. False disables; true or an object enables. Tables, additional properties and tuple additional items default on.",
-      "oneOf": [
-        {
-          "type": "boolean"
-        },
-        {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "pageSize": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 5
-            },
-            "pageSizeOptions": {
-              "type": "array",
-              "minItems": 1,
-              "uniqueItems": true,
-              "items": {
-                "type": "integer",
-                "minimum": 1
-              },
-              "default": [
-                5,
-                10,
-                25,
-                50
-              ]
-            }
-          }
-        }
-      ]
+      "$ref": "jsonforms-uischema.schema.json#/$defs/pagination"
     },
     "rowDetail": {
       "type": "object",
@@ -1749,96 +1801,16 @@
       ]
     },
     "additionalPropertiesPresentation": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "pagination": {
-          "$ref": "#/$defs/pagination"
-        }
-      }
+      "$ref": "jsonforms-uischema.schema.json#/$defs/additionalPropertiesPresentation"
     },
     "tableColumnDefinition": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "field"
-      ],
-      "properties": {
-        "field": {
-          "type": "string",
-          "minLength": 1
-        },
-        "width": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-        "minWidth": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-        "maxWidth": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-        "scope": {
-          "const": "#",
-          "description": "Bind this column to the whole current row; field is its stable key, not a data property."
-        },
-        "headerName": {
-          "type": "string"
-        }
-      }
+      "$ref": "jsonforms-uischema.schema.json#/$defs/tableColumnDefinition"
     },
     "additionalItemsPresentation": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "pagination": {
-          "$ref": "#/$defs/pagination"
-        }
-      }
+      "$ref": "jsonforms-uischema.schema.json#/$defs/additionalItemsPresentation"
     },
     "detailDialog": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "width": {
-          "oneOf": [
-            {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            {
-              "type": "string",
-              "minLength": 1
-            }
-          ]
-        },
-        "height": {
-          "oneOf": [
-            {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            {
-              "type": "string",
-              "minLength": 1
-            }
-          ]
-        },
-        "maximizable": {
-          "type": "boolean",
-          "default": true
-        },
-        "draggable": {
-          "type": "boolean",
-          "default": false
-        },
-        "resizable": {
-          "type": "boolean",
-          "default": false
-        }
-      }
+      "$ref": "jsonforms-uischema.schema.json#/$defs/detailDialog"
     }
   },
   "$id": "https://kchobantonov.github.io/jsonforms-extended-spec/schemas/jsonforms-extended-uischema.schema.json"

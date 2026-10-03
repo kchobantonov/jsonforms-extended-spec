@@ -5127,6 +5127,24 @@ serialized UI-model features. Conformance examples should cover masked versus
 unmasked storage, custom tokens, incomplete input, separators versus length
 limits, and selection alongside temporal controls.
 
+#### 18.18.7 Null control
+
+Select a Control whose schema is `type: "null"`. A property admitting only
+`null` has one legal value and no choice to offer. The control exists so the
+property is present and legible rather than silently unrendered, and so its
+required state and its errors have somewhere to appear.
+
+Present the value as set or not set. Do not present the absence of a value as
+the value `null`, nor the reverse; §18.20 states that distinction and the null
+control MUST NOT blur it. Clearing writes absence, not `null`.
+
+A multi-typed schema that merely includes `null` selects the mixed-value
+control of §18.20, not this one.
+
+Register the control in the cells registry as well as the renderer registry.
+A column dispatches through the cells registry, so a control registered only
+as a renderer falls back to a text cell (§18.14).
+
 ### 18.19 Scalar controls and temporal editing
 
 #### Schema references and renderer applicability
@@ -7414,9 +7432,11 @@ shows it. Hiding the circle MUST preserve radio semantics, keyboard interaction,
 and a visible focus outline on the whole card. `selectedContent` replaces content when selected; if only one is given,
 use it for both states. A disabled choice cannot be selected by interaction.
 
-For schema branches, `detail` is the selected branch's editable UI schema, scoped
-relative to the controlled value. If omitted, use normal generated/registered
-branch detail. Display it below the card group, outside the selectable region.
+For schema branches, `detail` accepts an inline UI schema or the string modes
+of §18.6. Inline scopes are relative to the controlled value. `GENERATE` bypasses
+the registry and generates from the resolved branch schema. `REGISTERED`,
+`DEFAULT`, and other strings consult the registry before generating a fallback.
+If omitted, use normal generated/registered branch detail. Display it below the card group, outside the selectable region.
 Preserve the selected branch while its form is incomplete or invalid. Switching
 uses the existing oneOf branch-change defaults, enclosing-property preservation,
 and confirmation policy; clicking the current card does not discard data.
@@ -7524,7 +7544,7 @@ Set `options.structuredLayout: "code"` on a mixed Control, or `jsonformsExtended
 Monaco validates the bound section schema, with local references resolved against the document schema. Invalid JSON text stays in the editor and contributes an owner-scoped additional error; it must not overwrite the last parsed value. Parsed values update normally and AJV reports schema errors. Do not duplicate Monaco schema diagnostics into additional errors. Hosts must gate submission on additional errors as well as schema errors, because an invalid draft is newer than the stored value. Multiple editor models must retain independent schema registrations and clean them up on unmount.
 
 
-## Recursive node tree presentation
+### Recursive node tree presentation
 
 A Control can opt into a tree with a selected-node detail pane using
 `options.recursiveTree: { childrenProperty: "children", labelProperty: "name" }`.
@@ -7546,7 +7566,7 @@ available in read-only forms; mutations remain disabled.
 The recursive-tree example includes a Tree editor tab for comparison. See the
 implementation guide for renderer coverage.
 
-## Array detail resolution
+### Array detail resolution
 
 Array controls support these case-insensitive string modes:
 
@@ -7567,10 +7587,11 @@ Use the existing detail mechanism for custom layouts instead of inventing a
 second generated/registered switch.
 
 The array-detail-modes example demonstrates a matching registry entry, generation,
-inline layout, DEFAULT, and registry fallback. Runtime coverage is provided for
-React Antd and shadcn; this statement does not establish parity for other platforms.
+inline layout, DEFAULT, and registry fallback. Two of the reference renderer sets
+provide runtime coverage; this statement does not establish parity for other
+renderer families or platforms.
 
-## Editor detail modes and mixed type overrides
+### Editor detail modes and mixed type overrides
 
 The detail resolver is also used for object and mixed editors. Explicit editor
 details in composite cells, tuple-field editors, recursiveTree.detail, and row
@@ -7593,10 +7614,11 @@ detail pane; it does not impose a root-specific layout on every descendant.
 Code presentation edits the whole value and does not use these field layouts.
 Null retains the existing no-value-control presentation.
 
-Implemented and tested for React Antd and shadcn. Other renderer sets are not
-claimed to support these extensions. See the editor-details example.
+Implemented and tested in two of the reference renderer sets. Other renderer
+sets are not claimed to support these extensions. See the editor-details
+example.
 
-## Conditional fields
+### Conditional fields
 
 See [conditional field presentation and graphical authoring](conditional-fields.md).
 Use `options.conditionalFields: true` on an object Control or the default

@@ -312,3 +312,30 @@ validator schema. Moving a field in a graphical editor changes its layout, not i
 data scope. Branch-only fields can be placed explicitly in details; inactive values
 must survive toggling. In Draft-07 a closed base object still rejects properties
 introduced only by another subschema; visual discovery cannot legalize those values.
+
+
+## Array summary visibility after indicator refactoring
+
+When replacing preformatted array errors with a path-based header indicator,
+carry `hideArraySummaryValidation` into the new calculation. Filtering an unused
+error-text prop no longer hides descendant feedback. Resolve the local option
+before the global setting, including explicit false. Preserve the array's own
+errors and item-level indicators while hiding the outer descendant summary.
+
+Acceptance cases: invalid children with global hiding, local false overriding
+global true, and an array type error with hiding enabled. Antd's
+expandable-array tests execute these cases; this does not certify other renderers.
+
+
+## Choice-card branch details
+
+Resolve each branch card's detail mode before dispatching its editor. GENERATE
+must bypass registry selection, including a previously selected registered
+layout; REGISTERED uses the resolved branch schema with the control's schema
+scope, data path and document root. Inline layouts remain relative to the branch
+value. Missing registrations fall back to generation. Value-choice cards do not
+use branch editors.
+
+React Antd and shadcn integration tests cover generation with a matching registry,
+registry selection and fallback, inline layouts, and editing a nested value.
+Other renderer families are not verified by these tests.

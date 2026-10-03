@@ -30,7 +30,7 @@ export type CardChoice = ({ value: unknown; branch?: never } | { branch: number;
   disabled?: boolean;
   content?: UISchemaElement;
   selectedContent?: UISchemaElement;
-  detail?: UISchemaElement;
+  detail?: EditorDetail;
 };
 
 export interface CommonControlOptions {

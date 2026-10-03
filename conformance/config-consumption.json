@@ -289,9 +289,9 @@
       "evidence": [
         "packages/jsonforms-react-antd-renderers/src/layouts/ArrayLayout.tsx"
       ],
-      "finding": "Consumed from config merged with local array options; applicability is the expandable array presentation. InitCollapsed is used for initial state only.",
+      "finding": "The flat key is no longer declared or consumed by resolveCollapsed. Use options.collapsed, then jsonformsExtended.<component>.collapsed, then jsonformsExtended.collapsed; absent settings default to false.",
       "declaredBefore": true,
-      "declaredAfter": true
+      "declaredAfter": false
     },
     {
       "path": "config.jsonformsExtended",
@@ -1411,6 +1411,98 @@
       "finding": "Object controls in React Antd and shadcn resolve local conditionalFields before the namespaced default. Defaults off.",
       "declaredBefore": false,
       "declaredAfter": true
+    },
+    {
+      "path": "config.jsonformsExtended.accordion",
+      "status": "container",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/categoryState.ts"
+      ],
+      "finding": "Component-scoped extension default for accordion categorization."
+    },
+    {
+      "path": "config.jsonformsExtended.accordion.collapsed",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/groupState.ts",
+        "packages/jsonforms-react-renderer-common/src/categoryState.ts"
+      ],
+      "finding": "resolveCollapsed reads local options, then this component scope, then the shared jsonformsExtended.collapsed. A local false overrides a scoped true."
+    },
+    {
+      "path": "config.jsonformsExtended.array.collapsed",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/groupState.ts",
+        "packages/jsonforms-react-renderer-common/src/arrayPanelState.ts"
+      ],
+      "finding": "Scoped initial collapse for array containers, through the same resolver."
+    },
+    {
+      "path": "config.jsonformsExtended.dialog",
+      "status": "container",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/detailDialog.ts"
+      ],
+      "finding": "Form-wide detail-dialog geometry defaults; local dialog properties override them individually rather than as a block."
+    },
+    {
+      "path": "config.jsonformsExtended.group",
+      "status": "container",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/groupState.ts"
+      ],
+      "finding": "Component-scoped extension default for Group."
+    },
+    {
+      "path": "config.jsonformsExtended.group.collapsed",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/groupState.ts"
+      ],
+      "finding": "resolveCollapsed reads local options, then this component scope, then the shared jsonformsExtended.collapsed."
+    },
+    {
+      "path": "config.jsonformsExtended.mixed",
+      "status": "container",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-antd-renderers/src/complex/MixedRenderer.tsx"
+      ],
+      "finding": "Component-scoped extension defaults for the mixed-value control."
+    },
+    {
+      "path": "config.jsonformsExtended.mixed.collapsed",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/groupState.ts"
+      ],
+      "finding": "Scoped initial collapse for the mixed-value control, through the same resolver."
+    },
+    {
+      "path": "config.jsonformsExtended.mixed.structuredLayout",
+      "status": "consumed",
+      "declaredBefore": false,
+      "declaredAfter": true,
+      "evidence": [
+        "packages/jsonforms-react-antd-renderers/src/complex/MixedRenderer.tsx"
+      ],
+      "finding": "Default mixed presentation: tree, nested or code. Local options.structuredLayout takes precedence; code additionally requires the code-editor capability."
     }
   ]
 }

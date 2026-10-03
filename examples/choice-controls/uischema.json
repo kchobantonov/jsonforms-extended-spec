@@ -298,6 +298,72 @@
         },
         {
           "type": "Category",
+          "label": "Card detail modes",
+          "i18n": "cards.detailModes",
+          "elements": [
+            {
+              "type": "Label",
+              "text": "Compare the same contact using generated and registered details. Email has a matching registry layout; postal mail demonstrates registry fallback. Both controls edit the same value.",
+              "i18n": "cards.detailModesIntro"
+            },
+            {
+              "type": "Group",
+              "label": "Generated contact details",
+              "i18n": "cards.detailGENERATE",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/cardContact",
+                  "options": {
+                    "format": "cards",
+                    "confirmation": {
+                      "branchChange": "complex"
+                    },
+                    "choices": [
+                      {
+                        "branch": 0,
+                        "detail": "GENERATE"
+                      },
+                      {
+                        "branch": 1,
+                        "detail": "GENERATE"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "Group",
+              "label": "Registered contact details",
+              "i18n": "cards.detailREGISTERED",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/cardContact",
+                  "options": {
+                    "format": "cards",
+                    "confirmation": {
+                      "branchChange": "complex"
+                    },
+                    "choices": [
+                      {
+                        "branch": 0,
+                        "detail": "REGISTERED"
+                      },
+                      {
+                        "branch": 1,
+                        "detail": "REGISTERED"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Category",
           "label": "Branch switch without prompt",
           "i18n": "cards.noPrompt",
           "elements": [

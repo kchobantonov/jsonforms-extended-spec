@@ -58,7 +58,12 @@
     "compositeChoices.arrayRadio.label": "Array radio choices",
     "compositeChoices.navigation.label": "Object and array choices",
     "compositeChoices.intro.text": "These choices store complete objects and arrays. Initial JSON values must appear selected. Edit, save, and reload the data: matching uses content rather than JavaScript object identity.",
-    "compositeChoices.rows.label": "Composite choices in cells"
+    "compositeChoices.rows.label": "Composite choices in cells",
+    "cards.detailModes.label": "Card detail modes",
+    "cards.detailModesIntro.text": "Compare the same contact using generated and registered details. Email has a matching registry layout; postal mail demonstrates registry fallback. Both controls edit the same value.",
+    "cards.detailGENERATE.label": "Generated contact details",
+    "cards.detailREGISTERED.label": "Registered contact details",
+    "cards.registeredAddress.label": "Registered email address"
   },
   "bg": {
     "department.eng": "Инженеринг",
@@ -119,6 +124,11 @@
     "compositeChoices.arrayRadio.label": "Радио избор на масив",
     "compositeChoices.navigation.label": "Избор на обекти и масиви",
     "compositeChoices.intro.text": "Тези избори записват цели обекти и масиви. Началните JSON стойности трябва да са избрани. След редактиране, запис и зареждане съпоставянето използва съдържанието.",
-    "compositeChoices.rows.label": "Сложни стойности в клетки"
+    "compositeChoices.rows.label": "Сложни стойности в клетки",
+    "cards.detailModes.label": "Режими на подробностите за картите",
+    "cards.detailModesIntro.text": "Сравнете един и същ контакт с генерирани и регистрирани подробности. За имейл има регистрирано оформление; за пощенски адрес се използва автоматично генериране. Двата контрола редактират една и съща стойност.",
+    "cards.detailGENERATE.label": "Генерирани подробности за контакта",
+    "cards.detailREGISTERED.label": "Регистрирани подробности за контакта",
+    "cards.registeredAddress.label": "Регистриран имейл адрес"
   }
 }

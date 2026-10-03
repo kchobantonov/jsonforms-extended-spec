@@ -1601,7 +1601,9 @@
     "id": "config-bad-collapsed",
     "schema": "jsonforms-config.schema.json",
     "value": {
-      "collapsed": "false"
+      "jsonformsExtended": {
+        "collapsed": "false"
+      }
     },
     "valid": false
   },
@@ -1950,5 +1952,225 @@
     },
     "valid": false,
     "section": "18.21.1"
+  },
+  {
+    "id": "choice-detail-generate",
+    "schema": "jsonforms-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "branch": 0,
+            "detail": "GENERATE"
+          }
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "choice-detail-registered",
+    "schema": "jsonforms-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "branch": 0,
+            "detail": "REGISTERED"
+          }
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "choice-missing-identifier",
+    "schema": "jsonforms-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "label": "Missing"
+          }
+        ]
+      }
+    },
+    "valid": false
+  },
+  {
+    "id": "choice-both-identifiers",
+    "schema": "jsonforms-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "value": null,
+            "branch": 0
+          }
+        ]
+      }
+    },
+    "valid": false
+  },
+  {
+    "id": "choice-null-value",
+    "schema": "jsonforms-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "value": null
+          }
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "ignored-temporal-views",
+    "schema": "jsonforms-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "format": "date",
+        "views": [
+          "hours"
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "cron-format-hint",
+    "schema": "jsonforms-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "format": "cron"
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "extended-choice-detail-generate",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "branch": 0,
+            "detail": "GENERATE"
+          }
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "extended-choice-detail-registered",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "branch": 0,
+            "detail": "REGISTERED"
+          }
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "extended-choice-missing-identifier",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "label": "Missing"
+          }
+        ]
+      }
+    },
+    "valid": false
+  },
+  {
+    "id": "extended-choice-both-identifiers",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "value": null,
+            "branch": 0
+          }
+        ]
+      }
+    },
+    "valid": false
+  },
+  {
+    "id": "extended-choice-null-value",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "choices": [
+          {
+            "value": null
+          }
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "extended-ignored-temporal-views",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "format": "date",
+        "views": [
+          "hours"
+        ]
+      }
+    },
+    "valid": true
+  },
+  {
+    "id": "extended-cron-format-hint",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#",
+      "options": {
+        "format": "cron"
+      }
+    },
+    "valid": true
   }
 ]
