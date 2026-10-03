@@ -604,3 +604,10 @@ it('validates named template models and slot fallback content', async () => {
   expect(validate({ type: 'Slot', name: 'body', elements: [{ type: 'Control' }] })).toBe(false);
   expect(validate({ type: 'Slot', name: 'body', elements: [{ type: 'Control', scope: '#' }] })).toBe(true);
 });
+
+it.each([BASE_UISCHEMA, EXTENDED_UISCHEMA])('validates conditional field options in %s', name => {
+ const validate=compile(name);
+ expect(validate({type:'Control',scope:'#',options:{conditionalFields:true}})).toBe(true);
+ expect(validate({type:'Control',scope:'#',options:{conditionalFields:false}})).toBe(true);
+ expect(validate({type:'Control',scope:'#',options:{conditionalFields:'auto'}})).toBe(false);
+});

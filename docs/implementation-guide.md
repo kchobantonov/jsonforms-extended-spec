@@ -162,3 +162,9 @@ shadcn integration tests render the example through their native registries. Mis
 diagnostics, duplicate-name diagnostics and cycle protection remain gaps in the
 current React implementation; do not treat its silent behavior as certification
 of those normative requirements.
+
+## Conditional fields
+
+See [conditional field presentation and graphical authoring](conditional-fields.md).
+Use `options.conditionalFields: true` on an object Control or the default
+`config.jsonformsExtended.conditionalFields`. Local false opts out.

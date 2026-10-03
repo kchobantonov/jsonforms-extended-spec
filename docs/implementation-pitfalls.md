@@ -304,3 +304,11 @@ short warning with an icon and an explanation available on hover, keyboard focus
 and touch. Keep the explanation bounded and wrap long text; allow Escape to
 close it. Source refusal must still prevent the image from loading. The shared
 React ImageView renderer implements this presentation for its consumers.
+
+## Conditional presentation is not schema rewriting
+
+Resolve branch activity independently of error visibility and preserve the original
+validator schema. Moving a field in a graphical editor changes its layout, not its
+data scope. Branch-only fields can be placed explicitly in details; inactive values
+must survive toggling. In Draft-07 a closed base object still rejects properties
+introduced only by another subschema; visual discovery cannot legalize those values.

@@ -131,3 +131,10 @@ it('authors editor modes and per-type mixed details', () => {
   // @ts-expect-error Detail overrides must be editor layouts or strings.
   f.control('address', {options: {'object-detail': true}});
 });
+
+it('authors conditional fields with an explicit opt-out', () => {
+  expect(f.control('address', {options: {conditionalFields: true}}).options?.conditionalFields).toBe(true);
+  expect(f.control('address', {options: {conditionalFields: false}}).options?.conditionalFields).toBe(false);
+  // @ts-expect-error The opt-in is a boolean, not a presentation mode.
+  f.control('address', {options: {conditionalFields: 'auto'}});
+});

@@ -183,6 +183,17 @@
     "hostRequirements": []
   },
   {
+    "id": "conditional-fields",
+    "title": "Conditional fields: generated and authored layouts",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "uischema.json"
+    ],
+    "hostRequirements": []
+  },
+  {
     "id": "container-validation-indicator",
     "title": "Container validation indicator",
     "files": [

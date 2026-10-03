@@ -77,3 +77,9 @@ Catalog assets are optional. Preserve omitted schema/data rather than replacing 
 - [Editor details](editor-details/README.md): object generation, per-type mixed layouts, and registered cell editors.
 
 - [Templates and slots](template-slots/README.md): named registry lookup, fallback and nested overrides.
+
+## Conditional fields
+
+See [conditional field presentation and graphical authoring](../docs/conditional-fields.md).
+Use `options.conditionalFields: true` on an object Control or the default
+`config.jsonformsExtended.conditionalFields`. Local false opts out.

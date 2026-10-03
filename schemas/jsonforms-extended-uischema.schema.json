@@ -976,6 +976,10 @@
         "null-detail": {
           "$ref": "#/$defs/detail",
           "description": "Mixed editor detail override when null is selected. Takes precedence over detail; scoped to that value."
+        },
+        "conditionalFields": {
+          "type": "boolean",
+          "description": "Opt in to active conditional object field discovery (if/then/else and Draft-07 dependencies). Local false overrides config. Explicit detail layouts retain placement; inactive branch-only controls are omitted without deleting data."
         }
       }
     },

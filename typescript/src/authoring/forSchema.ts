@@ -34,6 +34,8 @@ export type CardChoice = ({ value: unknown; branch?: never } | { branch: number;
 };
 
 export interface CommonControlOptions {
+  /** Opt in to conditional object field discovery; local false overrides config. */
+  conditionalFields?: boolean;
   /** Editor layout or upstream detail-resolution mode. */
   detail?: EditorDetail;
   'object-detail'?: EditorDetail;

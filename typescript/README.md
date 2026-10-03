@@ -509,3 +509,9 @@ Register a layout with `uischema.name: 'contact-card'` containing
 ignores rankings. The raw escape hatch does not type-check the slot contract;
 validate authored models against the extended UI-schema JSON Schema. See the
 [complete example](../examples/template-slots/README.md).
+
+## Conditional fields
+
+See [conditional field presentation and graphical authoring](../docs/conditional-fields.md).
+Use `options.conditionalFields: true` on an object Control or the default
+`config.jsonformsExtended.conditionalFields`. Local false opts out.

@@ -376,6 +376,11 @@
               "description": "Override the shared jsonformsExtended.collapsed default. Omit to inherit; local options.collapsed wins."
             }
           }
+        },
+        "conditionalFields": {
+          "type": "boolean",
+          "default": false,
+          "description": "Default opt-in for conditional field presentation in object controls. Local options.conditionalFields overrides."
         }
       }
     },

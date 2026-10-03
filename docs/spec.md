@@ -7595,3 +7595,9 @@ Null retains the existing no-value-control presentation.
 
 Implemented and tested for React Antd and shadcn. Other renderer sets are not
 claimed to support these extensions. See the editor-details example.
+
+## Conditional fields
+
+See [conditional field presentation and graphical authoring](conditional-fields.md).
+Use `options.conditionalFields: true` on an object Control or the default
+`config.jsonformsExtended.conditionalFields`. Local false opts out.
