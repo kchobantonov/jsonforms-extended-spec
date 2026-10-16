@@ -1822,6 +1822,7 @@ type Script = string; // async function body
 
 interface ButtonElement extends BaseUISchemaElement, Internationalizable {
   type: 'Button';
+  options?: { fullWidth?: boolean; [key: string]: unknown };
   label?: string;
   icon?: string;
   color?: ButtonSemanticColor;
@@ -1831,7 +1832,7 @@ interface ButtonElement extends BaseUISchemaElement, Internationalizable {
 }
 ```
 
-**Every one of these is a top-level field, not an option.** A renderer that
+**The action, script, label, icon, color and params fields are top-level fields, not options.** A renderer that
 reads them from `options` leaves a conformant button with no action name and —
 worse — **no `params` at all**, because that field has no option spelling.
 `params` is what lets one command serve several buttons:
@@ -1858,6 +1859,32 @@ treatment.
 
 **Colour names are semantic, not literal.** Each family maps them to its own
 palette, which is the point of naming them this way rather than by colour.
+
+### Button width
+
+`options.fullWidth` is a portable boolean component option, default `false`.
+When `true`, the button MUST fill the available inline width of its containing
+layout cell. It MUST NOT change that cell's size, grid span or flex allocation.
+Omitted or false retains the native button's normal intrinsic sizing.
+This option does not introduce a universal layout property or a `block` alias.
+
+Child sizing remains in `options.layout`: `width` sets an explicit allocation,
+`span` selects grid columns, and `weight` allocates relative flex space.
+For example, two buttons filling equal halves of a twelve-column layout:
+
+```json
+{
+  "type": "HorizontalLayout",
+  "options": { "gridColumns": 12 },
+  "elements": [
+    { "type": "Button", "label": "Save", "action": "save", "color": "primary", "options": { "layout": { "span": 6 }, "fullWidth": true } },
+    { "type": "Button", "label": "Cancel", "action": "cancel", "color": "secondary", "options": { "layout": { "span": 6 }, "fullWidth": true } }
+  ]
+}
+```
+
+Map this to native UI capabilities (for example Ant Design `block`) or a width
+utility on the button itself. Preserve focus, disabled and pending behavior.
 
 ### 14.1 The action path
 
@@ -7001,7 +7028,7 @@ gridColumns         gap       wrap      minItemWidth
 resizable rows      align     justify   collapsible
 collapsed showDataIndicator   interpolate
 markup    textParams          initial   responsive
-name      size      $dynamic
+name      size      fullWidth $dynamic
 ```
 
 Renderer-specific namespaces MUST NOT redefine these with incompatible

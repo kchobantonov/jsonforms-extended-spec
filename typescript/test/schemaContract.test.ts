@@ -611,3 +611,10 @@ it.each([BASE_UISCHEMA, EXTENDED_UISCHEMA])('validates conditional field options
  expect(validate({type:'Control',scope:'#',options:{conditionalFields:false}})).toBe(true);
  expect(validate({type:'Control',scope:'#',options:{conditionalFields:'auto'}})).toBe(false);
 });
+
+it.each([true, false, undefined])('accepts Button fullWidth %s', (fullWidth) => {
+  expect(compile(EXTENDED_UISCHEMA)({ type: 'Button', options: { fullWidth } })).toBe(true);
+});
+it.each(['true', 1, null])('rejects nonboolean Button fullWidth %s', (fullWidth) => {
+  expect(compile(EXTENDED_UISCHEMA)({ type: 'Button', options: { fullWidth } })).toBe(false);
+});

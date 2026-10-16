@@ -339,3 +339,11 @@ use branch editors.
 React Antd and shadcn integration tests cover generation with a matching registry,
 registry selection and fallback, inline layouts, and editing a nested value.
 Other renderer families are not verified by these tests.
+
+## Button width and layout allocation
+
+`options.fullWidth` fills the button's allocated cell; it does not allocate a
+whole row. Applying it only to the wrapper leaves the visible button intrinsic.
+Check two `options.layout.span: 6` buttons in a twelve-column horizontal layout:
+each fills its own cell, remains beside its sibling and respects the gap.
+Toggle true to false and omit the option; native intrinsic sizing returns.

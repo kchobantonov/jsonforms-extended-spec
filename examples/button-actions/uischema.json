@@ -36,7 +36,8 @@
             {
               "type": "HorizontalLayout",
               "options": {
-                "gap": "0.5rem"
+                "gap": "0.5rem",
+                "gridColumns": 12
               },
               "elements": [
                 {
@@ -46,7 +47,13 @@
                   "params": {
                     "locale": "en"
                   },
-                  "color": "secondary"
+                  "color": "secondary",
+                  "options": {
+                    "layout": {
+                      "span": 6
+                    },
+                    "fullWidth": true
+                  }
                 },
                 {
                   "type": "Button",
@@ -55,7 +62,13 @@
                   "params": {
                     "locale": "bg"
                   },
-                  "color": "secondary"
+                  "color": "secondary",
+                  "options": {
+                    "layout": {
+                      "span": 6
+                    },
+                    "fullWidth": true
+                  }
                 }
               ]
             },

@@ -255,3 +255,5 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 
 The optional [host.mjs](host.mjs) demonstrates native in-memory values.
 Those functions have no JSON representation; keep them in trusted host code.
+
+The language buttons demonstrate `options.fullWidth: true` inside equal `options.layout.span: 6` cells of a twelve-column layout. The other buttons retain intrinsic width.
