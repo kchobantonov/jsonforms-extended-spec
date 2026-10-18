@@ -23,6 +23,13 @@ other overlay examples in spec.md are retained design notes, not current API
 contracts. The proposed `bind`/`template` descriptors and their conformance
 vectors have been removed from the published schemas and current test vectors.
 
+Section 11 now consolidates the two dynamic design discussions, including ordered
+rules, CEL, trusted local functions, explicit external inputs and aspect redispatch.
+The agreed design uses element-shaped overlays in both unconditional and ordered
+conditional forms, and retains `bind` alongside CEL expressions and templates.
+Other recommendations remain proposals; no runtime support or schema acceptance
+is claimed. The acceptance cases there are a design checklist, not executed tests.
+
 Before implementation, resolve:
 
 - The use cases and boundary between overlays, rules, interpolation, host context

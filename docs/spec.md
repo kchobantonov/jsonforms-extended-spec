@@ -1,6 +1,6 @@
 # JSON Forms Extended UI Model — Consolidated Specification
 
-**Status:** consolidated v1 draft for review.\
+**Status:** consolidated v1 specification; future proposals are explicitly marked.\
 **Scope:** portable UI-model semantics and runtime/renderer behaviour layered
 on JSON Forms.\
 **Out of scope:** visual-editor UX, palette/inspector design, editor
@@ -1469,130 +1469,246 @@ direction for an unknown one is the smaller grammar.
 
 ## 11. Dynamic values and path grammar
 
-**FUTURE — design discussion, refinement, then implementation required.**
-The following is a retained proposal, not a finalized API. Neither the overlay
-shape, path grammar, security policy, resolution order nor lifecycle is committed.
-It is excluded from published schemas and current conformance vectors.
-See [TODO.md](todo.md#future--dynamic-ui-element-overlays). The existing Label
-interpolation feature and its `dynamicValues.enabled` data-access gate are
-implemented independently and do not implement this proposal.
+**FUTURE — revised design proposal, pending decisions and implementation.**
+This section consolidates the dynamic design and UI architecture discussions.
+The overlay shape and retention of `bind` are agreed design decisions; the feature
+is not yet an approved runtime API or current conformance requirement.
+Published schemas, TypeScript exports and executable conformance vectors exclude
+this feature. See [the design backlog](todo.md#future--dynamic-ui-element-overlays).
+Existing Label interpolation and its `dynamicValues.enabled` gate remain separate.
 
-`$dynamic` recursively overlays static values on a UI element.
+### 11.1 Overlay shape and boundaries
 
-A leaf is **exactly** `{ "bind": "..." }` or `{ "template": "..." }` — one
-key, string value. Extra descriptor keys are invalid.
+Agreed shape: top-level `$dynamic` mirrors the UI element. Both an unconditional
+object and an ordered array of `{ when?, overlay }` rules are supported by the
+design. In either form, overlay keys target element properties: `src` updates an
+Image source, while `options.width` updates its width option. `when` controls
+whether an overlay applies; it does not restrict its targets to options. There
+is no implicit options-only shorthand.
 
-**Only `undefined` means no override.** `null`, `false`, `0` and the empty
-string are real overrides. Objects overlay recursively; **arrays replace whole
-values**. The source UI schema is never mutated.
+```json
+{
+  "type": "Image",
+  "src": "/default.svg",
+  "options": { "width": 200 },
+  "$dynamic": {
+    "src": { "bind": "external.branding.logo" },
+    "options": {
+      "width": { "expression": "external.compact ? 100 : 200" }
+    }
+  }
+}
+```
 
-Resolution occurs **before testers** and covers nested children, array detail
-and generated schemas, and all dispatch paths.
+```json
+{
+  "type": "Control",
+  "scope": "#/properties/companyName",
+  "options": { "readonly": false },
+  "$dynamic": [
+    {
+      "when": { "expression": "data.personType == 'company'" },
+      "overlay": { "options": { "readonly": true } }
+    },
+    {
+      "when": { "expression": "external.canEditCompany" },
+      "overlay": { "options": { "readonly": false } }
+    }
+  ]
+}
+```
 
-### 11.1 What may not be dynamic
+Keep `type`, `scope`, `elements`, `rule`, `i18n`, `name` and `$dynamic` static.
+Do not introduce generic `visible` or `enabled` properties through this proposal:
+JSON Forms rules continue to control visibility and enablement. An effective
+`readonly: false` cannot revoke host, ancestor or schema restrictions.
 
-Static denylist: `type`, `scope`, `elements`, `rule`, `i18n`, `name`,
-`$dynamic`, and the canonical `options.variant`.
+Unlike the older proposal, allow `options.variant` **only after** integration
+proves that resolution precedes normal renderer selection. A changed selection
+can legitimately remount an editor; pending drafts and focus need an explicit
+lifecycle policy before this capability is approved. Unchanged selections must
+retain component identity. Layout presentation options may change through their
+existing canonical paths; overlays do not invent a second sizing vocabulary.
 
-These determine identity and dispatch.
+### 11.2 Value descriptors and trusted functions
 
-A second, narrower restriction is on the **leaf kind** rather than the
-property: translated text may be supplied by `bind` but never by `template`
-(§9). The denylist above is about what may not be dynamic at all; this is
-about which of the two leaves may supply it. Note that resolution happens before
-testers and testers are re-evaluated when values change, so an option that
-*participates in selection* can still change which renderer wins. An
-implementation SHOULD keep options that dynamic values supply out of tester
-inputs, so an arriving value updates a renderer rather than replacing it —
-replacing it discards focus and any local state.
+Recommended portable leaves:
 
-### 11.2 Namespaces
+| Descriptor | Meaning |
+| --- | --- |
+| `{ "bind": "external.branding.logo" }` | Restricted path lookup, retaining the value's type. |
+| `{ "expression": "external.compact ? 100 : 200" }` | Typed computation using a defined CEL profile. |
+| `{ "template": "/assets/{data.imageId}.svg" }` | String interpolation using the restricted path grammar. |
 
-`data`, `item`, `locale`, `config`, `context`.
+Each descriptor has exactly one recognized key with a string value. Literal
+strings remain literal. Never interpret arbitrary strings as JavaScript.
+The design retains `bind` alongside CEL expressions and templates.
+Descriptors can occur in nested objects and array entries. Before implementation,
+settle an explicit literal-object escape for values whose actual shape is itself
+`{ "bind": "..." }`, `{ "expression": "..." }` or `{ "template": "..." }`.
+Do not silently guess whether such an object is data or a descriptor.
 
-`item` is the nearest enclosing array-detail item, otherwise undefined.
-`context` is safe host-exposed values, **not** arbitrary host functions.
-`config` MUST NOT expose the `jsonformsExtended` namespace.
+Trusted TypeScript authoring may additionally use synchronous function leaves
+and boolean-returning conditions. Functions and JSON descriptors may coexist in
+that local profile; functions are not serializable portable JSON. Reject promises,
+never compile function strings, and do not infer trust from a JSON feature flag.
+Typed helpers should share option contracts across ports; framework lifecycle
+adapters need not share implementation code.
 
-### 11.3 Path grammar
+CEL is the preferred expression language, not a selected TypeScript dependency.
+Its [language specification](https://github.com/cel-expr/cel-spec) defines portable
+expression semantics. Selecting a library still requires compatibility and cost
+checks. Freeze a shared profile covering missing values, null, numeric conversion,
+allowed functions, collection operations, and evaluation limits before publishing
+syntax. Do not substitute JavaScript truthiness or numeric semantics. No host
+methods, network access, writes or arbitrary callbacks are exposed to portable
+expressions. Bound input, compilation cache and evaluation work.
+
+### 11.3 Environment and path grammar
+
+Recommended explicit environment:
+
+| Root | Proposed meaning |
+| --- | --- |
+| `data` | Full form document, including in nested/detail renderers. |
+| `item` | Nearest enclosing array-detail item; missing outside such a detail. |
+| `value` | Current bound Control value; missing for unbound elements. |
+| `path` | Current dispatcher data path, using the adapter's documented encoding. |
+| `locale` | Current locale. |
+| `external` | Immutable, host-exposed values from `FormContext.external`. |
+| `config` | Permitted application configuration, excluding `jsonformsExtended`. |
+| `errors` | Read-only validation-error snapshot; exact profile remains to be defined. |
+
+This is an environment contract, not unrestricted access to FormContext.
+Recommend `external` for new host bindings. Existing Label `context` bindings and
+namespace gates remain compatible; changing those requires a separate migration.
+Do not publish `external` as an implemented FormContext API yet.
+
+Keep UI navigation state in host-owned `external` initially. The resolver reads
+snapshots and never writes back. A separate mutable `state` API is deferred.
+For workflow panels, preserve a preferred stable section ID separately from the
+currently available fallback section; fallback does not overwrite preference.
+
+Restricted `bind` paths retain dot/bracket access, numeric array indexes, quoted
+literal keys, and string/array `.length`, for example:
 
 ```text
 data.customer.name
-data.items.0.price
 data.items[0].price
-data.metadata['some key']
-data.metadata["field.with.dots"]
-context['help host']
+data.metadata['field.with.dots']
+external['help host']
 locale
 ```
 
-`.length` is allowed for arrays and strings. **Own-property lookup only.**
-`__proto__`, `prototype` and `constructor` are forbidden. **No calls, no
-operators, no method invocation.**
+Own-property lookup only; reject `__proto__`, `prototype` and `constructor` at
+every path/merge depth. No calls or operators in `bind`. Computation belongs in
+`expression`. Do not pass host objects with getters, methods or mutable capabilities
+into the portable environment. Missing data is distinct from JSON null; the CEL
+adapter must define how absence is represented without treating it as null.
 
-That last restriction is what makes `$dynamic` safe without a permission:
-nothing is compiled, so enabling dynamic values is **not** permission to
-execute anything (§13).
+### 11.4 Evaluation, merge and fallback
 
-Two consequences an author meets immediately:
+Recommended evaluation algorithm:
 
-- **A path is a fixed string.** Indexing by a form value — a lookup table
-  keyed on another field — is not expressible. Host context must be resolved
-  per session rather than exposed as a table to index.
-- **A binding reads; it cannot derive.** A boolean that depends on a
-  comparison cannot be written here. That is what **rules** are for. The
-  division is: `$dynamic` reads, rules decide.
+1. Start each evaluation from the original static element, not the prior result.
+2. Evaluate rules in order against one immutable environment snapshot. Rules do
+   not observe earlier overlays. Omitted `when` means true; otherwise require a
+   boolean literal, CEL result or trusted-function result. False skips the rule;
+   a missing, non-boolean or failed result skips it with a diagnostic.
+3. Resolve matching overlays, validate each target against its property contract,
+   and merge valid results. Later matching values win.
+4. Recursively merge plain objects; replace arrays as whole values. Validate an
+   array replacement as a unit. Do not partially install an invalid array.
+5. A missing/undefined, failed or invalid value preserves the value accumulated
+   **in this evaluation**. It does not retain a previous evaluation's successful
+   result. Null, false, zero and empty strings override only where the target
+   contract accepts them. There is no deletion operator in v1.
+6. Strip only the current element's `$dynamic` before dispatch, preserving nested
+   children's descriptors for their own resolution. Never mutate authored schema,
+   form data or external context.
 
-### 11.4 Template grammar
+Unknown static options survive. Custom dynamic targets require a declared
+property contract; define the extension registration API before approving those
+targets. Apply existing URL, markup, validation and permission policies after
+resolution as for static values. Failure diagnostics identify the element, rule
+and target without exposing form values or secrets; repeated failures should not
+flood logs. No `otherwise`, priority or `stop` feature is needed initially.
 
-The template parser is quote-aware. `{{` emits a literal `{` and `}}` a
-literal `}`; a **single** `{` starts a placeholder ending at the matching `}`
-outside quoted bracket content.
+Rebuilding from static values is especially important for permissions: a rule
+that stops matching must not leave an old overlay in place. UI restrictions are
+not a substitute for host authorization.
 
-**This is inverted from the most widely known templating convention**, so
-`{{data.firstName}}` is literal text rather than a binding, and an
-implementation SHOULD emit a development warning when it sees that shape.
+### 11.5 Templates and internationalization
 
-An invalid or unresolved placeholder makes the **whole template** undefined —
-not partial — which then falls back to the static value.
+Retain the existing quote-aware path interpolation convention: `{path}` substitutes,
+`{{`/`}}` escape braces. An unresolved placeholder invalidates the whole dynamic
+template and preserves the current evaluation's fallback. CEL is confined to
+`expression`; it does not silently expand the existing Label grammar.
 
-`template` uses the **same grammar and the same expression language** as §9's
-text interpolation — there is one of each in this model. What differs is the
-source and the failure policy: a template's string is authored in the UI
-schema and is never translated, and an unresolved placeholder makes the whole
-value undefined (§9.3).
+Translated messages continue through §9 catalogs and interpolation, including
+English, Bulgarian and arbitrary host locales. Templates must not bypass that
+pipeline. Prefer catalog messages with interpolated values for labels, descriptions
+and placeholders; dynamic templates are useful for non-message strings such as
+URLs, which still pass the normal URL policy. Do not add a second ICU/catalog
+system or hardcoded locale branches as part of `$dynamic`.
 
-It therefore MUST NOT be used for translated text. A template writes a
-finished string onto the element, so the catalog is never consulted and the
-form shows one language everywhere. For anything a reader sees as a message,
-use `i18n` with `interpolate`; `template` is for strings that are not
-messages — a URL, an image source, a placeholder.
+### 11.6 Integration and reactivity
 
-### 11.5 Reactivity
+Preferred integration candidate: a high-priority **aspect renderer and redispatch**.
+Its tester detects an own top-level `$dynamic` key, the aspect resolves the current
+element, then redispatches the effective element through the normal registry.
+The stripped key prevents re-entry. Descendants resolve independently when mounted.
+A numeric rank is not a universal guarantee: registry installation must establish
+precedence and detect competing aspects. The portable contract specifies behavior,
+not one framework's dispatcher or HOC implementation.
 
-The resolution layer supplies each renderer with its **effective UI element**
-through ordinary reactive properties and updates it when resolved values
-change. Renderers consume ordinary effective properties; they **do not**
-inspect `$dynamic` descriptors and cannot distinguish a static value from a
-resolved one.
+Registry wrappers applied after selection cannot support dynamic tester inputs.
+A root-only dispatcher wrapper may be bypassed by official nested layouts. Prefer
+the aspect candidate, but verify both claims against each installed adapter before
+calling it supported. Cover official layouts, generated details, arrays, table
+cells, templates and registered UI schemas, including separate cell registries.
+Forward schema, root schema, path, registry and inherited permissions unchanged;
+avoid stale connected-renderer props or altered rule behavior through redispatch.
 
-There is therefore nothing for a renderer to subscribe to. Three obligations
-follow:
+Use explicit opt-in integration. The exact activation API remains undecided:
+the existing `dynamicValues.enabled` interpolation gate must not silently enable
+CEL or trusted callbacks. Disabled integration performs no resolution and does not
+intercept ordinary renderer selection. Enabled integration preserves recursion
+safety even for malformed descriptors and reports the failure.
 
-1. **Effective identity MUST remain stable while values are unchanged.** This
-   reads like a performance note and is not: an implementation that returns a
-   fresh element on every pass defeats memoization, re-runs every tester in
-   the form on every keystroke, and re-renders every subtree.
-2. **Renderers derive from properties during render.** Capturing a value at
-   construction — an initializer that runs once, an effect with no
-   dependencies — silently ignores every later change. A renderer that
-   performs work from a resolved value MUST key that work on the value, and
-   discard results that arrive out of order.
-3. **The integration updates and rebinds nested dispatches as well as
-   top-level ones**, without remounting unchanged renderer selections or
-   discarding unrelated local state.
+Start with immutable namespace snapshots and namespace-level invalidation.
+External-only and locale-only changes trigger reevaluation without data writes.
+Memoize compiled definitions by source element identity plus evaluator/profile
+configuration; bound expression caches. Preserve the effective element reference
+when results are unchanged and share unchanged children. Do not promise automatic
+tracking of deep mutations, exact dependencies for trusted callbacks, or cheap
+structural comparison of arbitrarily large objects. Path-level subscriptions are
+an optimization after profiling, not a v1 requirement.
 
-Binding resolution never implies write-back to its source.
+### 11.7 Proposed acceptance cases and remaining decisions
+
+These are design acceptance cases, **not executed renderer tests**:
+
+- Ordered matching rules, omitted conditions, false conditions and invalid booleans.
+- Missing, null, false, zero and empty values; nested merge and whole-array replacement.
+- A matching rule becomes false: restore static values, not yesterday's overlay.
+- One valid rule followed by an invalid override: retain the earlier valid value.
+- External-only changes and separate array-item instances, including reorder/delete.
+- A dynamic variant changes normal selection without redispatch recursion; unchanged
+  results preserve focus, caret, pending drafts and component identity.
+- Official rules and inherited readonly cannot be bypassed by effective options.
+- Nested/generated/registered details, templates and compact cell dispatch paths.
+- Disabled integration, malformed descriptors, prototype keys, unsafe URLs, evaluation
+  limits and diagnostic deduplication without data disclosure.
+- Catalog text remains localized in English, Bulgarian and a host-provided locale.
+- Trusted functions and portable descriptors obey the same target/fallback contract;
+  serialized input cannot introduce executable functions.
+
+Before promotion settle: literal-object escaping; CEL profile and implementation; error/environment exposure;
+activation and namespace permissions; custom target contracts; and variant-change
+pending-draft policy. Prove adapter dispatch behavior in React and Svelte, and
+separately in Vue before claiming Vue support. Then add runtime tests, publish only
+implemented authoring shapes, and supply runnable examples.
 
 ## 12. URL and extension security configuration
 
@@ -1602,7 +1718,7 @@ Recommended configuration:
 {
   "restrict": true,
   "jsonformsExtended": {
-    "layoutDefaults": { "gridColumns": 16, "gap": 0, "wrap": false },
+    "layoutDefaults": { "gridColumns": 16, "gap": 16, "wrap": false },
     "dynamicValues": {
       "enabled": false,
       "namespaces": {
@@ -1631,8 +1747,8 @@ Recommended configuration:
 **Defaults when extension config is absent:** `restrict` true unless explicitly
 false; dynamic values disabled; script evaluation disabled; schemes
 https/http/mailto; relative URLs allowed; image data URLs disallowed; Markdown
-enabled on the basic profile with images and HTML off; 16 grid columns, gap 0,
-no wrap.
+enabled on the basic profile with images and HTML off; 16 grid columns, a gap of 16 CSS pixels in both rows and columns,
+no wrap. Explicit `gap: 0` disables spacing.
 
 `restrict` resolves from element `options.restrict`, then global
 `config.restrict`, then this model's preferred default of **true**. It is not

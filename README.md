@@ -10,7 +10,7 @@ Forms renderer implementations.
 - [Use the JSON schemas](schemas/README.md)
 - [Read the migration and schema audit](docs/audit.md)
 
-The specification is a consolidated v1 draft. It separates accepted contracts
+This is the consolidated v1 specification. It separates accepted contracts
 from future design work and documents optional capabilities explicitly.
 The published schemas cover implemented features only; see [design backlog](docs/todo.md)
 for design discussions and implementation work, including `$dynamic`.

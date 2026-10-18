@@ -347,3 +347,16 @@ whole row. Applying it only to the wrapper leaves the visible button intrinsic.
 Check two `options.layout.span: 6` buttons in a twelve-column horizontal layout:
 each fills its own cell, remains beside its sibling and respects the gap.
 Toggle true to false and omit the option; native intrinsic sizing returns.
+
+## Future dynamic overlays: fallback is per evaluation
+
+This entry applies to the unimplemented [§11 proposal](spec.md#11-dynamic-values-and-path-grammar),
+not current renderer conformance. Recompute overlays from the authored static
+element on each evaluation. Starting from the last effective element leaves stale
+readonly/presentation values when a condition stops matching. An invalid later
+overlay preserves an earlier valid overlay from the same evaluation, not an older
+runtime result. Preserve inherited restrictions regardless of an option override.
+
+Proposed acceptance: a company rule sets readonly true; changing to a non-company
+restores static false, while host readonly remains enforced. Repeat with a later
+invalid expression and verify diagnostics without leaking bound values.
