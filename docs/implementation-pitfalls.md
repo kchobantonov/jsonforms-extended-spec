@@ -360,3 +360,39 @@ runtime result. Preserve inherited restrictions regardless of an option override
 Proposed acceptance: a company rule sets readonly true; changing to a non-company
 restores static false, while host readonly remains enforced. Repeat with a later
 invalid expression and verify diagnostics without leaking bound values.
+
+
+## Collection key snapshots must preserve literal keys
+
+Do not identify a collection's keys by joining them with a delimiter. JSON object
+keys may contain that delimiter, including escaped NUL characters: `["a", "b\u0000c"]`
+and `["a", "b", "c"]` produce the same NUL-joined string. Use a lossless snapshot
+(such as JSON encoding of the key array) or compare the arrays structurally.
+Otherwise replacing properties can retain stale editors or miss pagination changes.
+
+Acceptance: replace those two key lists at the same control path, check that every
+new property is rendered and removed properties disappear, and verify that adding
+an item selects its page. The React shared pagination regression executes the page
+case, and the React Antd additional-property regression executes property
+replacement. Shadcn and generic property replacement are not certified by those tests.
+
+## Template subscriptions and runtime bindings
+
+Template subscriptions must follow replacement of the whole data value as well
+as edits inside it. Property names are literal keys: `a.b` and nested `a.b`
+are different dependencies, and primitive or null roots still need updates.
+Use the framework's subscription/snapshot mechanism rather than a render-time
+mutable path tracker that can retain an obsolete object or miss primitive reads.
+
+Keep a compiled template's identity tied to its authored source. Changing runtime
+bindings, including a stricter URL policy, must update the rendered output without
+remounting unchanged controls or losing their unsaved drafts. A stable component
+with context/props can carry current bindings without exposing speculative render
+writes through refs shared with an already committed tree.
+
+Executed React regression coverage: shared extended-renderer
+`trackedSnapshot.test.tsx` checks literal keys, whole-object replacement, primitive
+and null roots, and a policy update preserving an input node, its unsaved value,
+and template hook state. The `template-data-subscription-replacement` and
+`template-policy-update-preserves-draft` vectors are framework-neutral acceptance
+cases; they are not evidence that other renderer adapters have executed them.
