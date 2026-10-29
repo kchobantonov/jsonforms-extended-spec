@@ -197,13 +197,13 @@ The four keywords come from `ajv-formats`, not JSON Schema, and Ajv compares
 them only when the schema carries a `format` it can order — so they belong on
 the schema-based side and do nothing for a UI-selected control.
 
-### One divergence, deliberate
+### Restriction precedence
 
-`restrict` resolves from element `options.restrict`, then
-`config.jsonformsExtended.restrict`, then **`true`** — §15's "shared preferred
-default". The flat `config.restrict` is *not* consulted, because JSON Forms
-core seeds it to `false` and, once merged, an author's `false` cannot be told
-from that seed. Reading it would make the specified default unreachable.
+`restrict` resolves from element `options.restrict`, then authored flat
+`config.restrict`, then **`true`** — §15's shared preferred default. The
+`jsonformsExtended` namespace has no `restrict` setting. Renderers must
+preserve the difference between an omitted host setting and JSON Forms core's
+injected `restrict: false` when applying the preferred default.
 
 ## In other structures
 

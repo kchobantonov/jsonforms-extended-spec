@@ -1706,8 +1706,8 @@ These are design acceptance cases, **not executed renderer tests**:
 
 Before promotion settle: literal-object escaping; CEL profile and implementation; error/environment exposure;
 activation and namespace permissions; custom target contracts; and variant-change
-pending-draft policy. Prove adapter dispatch behavior in React and Svelte, and
-separately in Vue before claiming Vue support. Then add runtime tests, publish only
+pending-draft policy. Prove adapter dispatch behavior in multiple framework
+implementations and test each additional framework before claiming support. Then add runtime tests, publish only
 implemented authoring shapes, and supply runnable examples.
 
 ## 12. URL and extension security configuration
@@ -1757,8 +1757,7 @@ strict mode, and no separate renderer `strict` option is introduced.
 
 Hosts must resolve this default from the authored config before a core integration
 seeds its own defaults: an injected `restrict: false` is not an author choice.
-A legacy adapter that reads `jsonformsExtended.restrict` must translate that
-setting at its integration boundary; it is not a second portable authoring key.
+The extension namespace does not define a second `restrict` key.
 
 **URL-bearing targets:** `Link.href`, `ImageView.src` including
 scope-resolved sources, and Markdown links and images.
@@ -5153,18 +5152,21 @@ or encoding it. This measures original bytes, not the length of the base64 or
 data-URL string. With restriction enabled, reject size-invalid selections
 immediately: do not invoke conversion or write the rejected file to form data.
 Keep the previous committed value unchanged on rejection, clear the rejected
-native selection, and expose the error so the form does not appear valid
-merely because its previous value passed validation. With restriction disabled,
-conversion may proceed, but the size error still contributes to validity.
+native selection, and show the local warning described above. A rejected file
+has not become form data, so its size must not invalidate an otherwise valid
+committed value. With restriction disabled, conversion may proceed; a size-invalid
+file that is committed does contribute to validity.
 
-Publish renderer-detected size/read/conversion failures through the combined
-additionalErrors integration, not solely local control display text. Own errors
-per control instance, preserve host errors, and display one localized summary
-beneath the control. Include constraint/limit information in params as useful.
-Remove stale owned errors on successful replacement, explicit clear, or cancel.
-Pending reads and errors must participate in the same command-validity
-integration described for Monaco; ordinary schema rules do not acquire this
-dependency automatically.
+Publish size errors for accepted, size-invalid files through the combined
+additionalErrors integration, not solely local control display text. Own those
+errors per control instance, preserve host errors, and display one localized
+summary beneath an ordinary control or compact feedback in a cell. Include the
+original byte size and constraint/limit information in params as useful. A
+rejected selection and a read/conversion failure that preserves the previous
+value remain local operation feedback, not additionalErrors. Remove stale owned
+size errors on successful replacement, explicit clear, or cancel. Pending reads
+must participate in the same command-validity integration described for Monaco;
+ordinary schema rules do not acquire this dependency automatically.
 
 **Cancelling the file chooser leaves no selected file and clears the scoped
 form value**, including when a previous attachment was present. Apply the same

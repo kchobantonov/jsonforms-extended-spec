@@ -51,7 +51,12 @@ Select an image for the logo to see the schema-derived media filter.
 For the bounded text attachment, try files of 0, 1, 1023 and 1024 bytes: only
 the middle two satisfy both exclusive bounds. Main attachments accept exactly
 1048576 bytes and reject larger selections. A rejected replacement must leave
-the previous committed attachment intact.
+the previous committed attachment and its validity intact while showing a local
+warning naming the refused file. A failed read likewise leaves the committed
+value intact and shows a local error. With `restrict: false`, an accepted file
+outside a size bound is stored but contributes an owned size error to form
+validity. Try each case with an already valid attachment and check that local
+operation feedback does not become an additional error.
 
 ## Fallback behavior
 

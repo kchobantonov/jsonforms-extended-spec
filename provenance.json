@@ -129,7 +129,7 @@
     }
   ],
   "additionalReconciliationNotes": [
-    "Retain the portable flat config.restrict spelling. Require host resolution before core defaults are injected; document the reference implementation namespaced spelling as adapter compatibility rather than a second canonical setting.",
+    "Retain the portable flat config.restrict spelling. Require host resolution before core defaults are injected; remove the former namespaced spelling rather than treating it as adapter compatibility.",
     "Reconcile temporal text range feedback with picker prevention across both the shared restrict section and the temporal catalog.",
     "Image-data opt-in admits SVG images in the reference URL policy; hosts may apply a narrower MIME policy.",
     "Published schemas are limited to implemented authoring features. Removed the speculative $dynamic overlay vocabulary and vectors, reserved layout hints, unconsumed type-detail/dialog settings, and unverified read-only separation opt-in. TODO.md tracks design versus implementation work; the implemented Label interpolation dynamicValues gate remains.",

@@ -396,3 +396,49 @@ and null roots, and a policy update preserving an input node, its unsaved value,
 and template hook state. The `template-data-subscription-replacement` and
 `template-policy-update-preserves-draft` vectors are framework-neutral acceptance
 cases; they are not evidence that other renderer adapters have executed them.
+
+## P20 — File operation feedback follows committed data
+
+**Trap:** Publish a rejected file's size or a failed read as an owned validation
+error while retaining the previous valid attachment. The form then becomes
+invalid because of data it never stored. Conversely, accept an out-of-bounds
+file with restriction disabled and show only transient local feedback.
+
+**Behavior:** Reject a restricted size-invalid selection before reading, keep
+the committed value and its validity, and show a local warning. A read or
+conversion failure likewise preserves the committed value and shows a local
+error. An unrestricted file that is successfully stored with a known invalid
+original byte size contributes an owned size error. Pending reads participate
+in command validity; imported encoded values have no inferred byte-size result.
+
+**Check:** Begin with a valid attachment. Reject an oversized replacement and
+fail a later read; verify the original value and validity remain, with warning
+and error feedback respectively. Then turn restriction off, store a size-invalid
+file, and verify its owned error joins host errors without replacing them.
+See [file control](../examples/file-control/README.md).
+
+## P21 — Imported choice errors belong to their item and field
+
+**Trap:** Keep an out-of-domain array value visible as a pill while displaying
+only errors reported at the array path. Validators report an invalid member at
+the member path, so the field appears valid even though the document is not.
+
+**Behavior:** Preserve the incoming value and its removal action. Mark the
+specific invalid pill and expose its translated item error at the field. Keep
+array-level constraints, such as `minItems`, alongside item errors. Schema
+errors follow the form's validation visibility mode; host additional errors
+remain visible. Removing or correcting the member clears its marker and message.
+
+**Check:** In the [array choices](../examples/array-choices/README.md) example,
+the imported `Fax` value remains visible but is marked invalid because the item
+schema offers only `Email` and `SMS`. The other pill stays unmarked. Removing
+`Fax` clears that item error without changing other array fields.
+
+Invalid token outlines must remain visible on all four sides inside clipped or
+scrollable multi-select containers. An outer box-shadow ring can be clipped at
+the top and bottom; use an actual border or an inset outline, with the native
+error color. Reserve the same border space on valid tokens to avoid size shifts.
+Visual acceptance: the imported `Fax` pill has a continuous error-colored
+outline around its rounded perimeter while `Email` remains unmarked, including
+when tokens wrap or scroll. React Shadcn has a DOM class regression for its
+border; this is not a browser visual test or verification of Svelte support.

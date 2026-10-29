@@ -751,16 +751,6 @@
       "declaredAfter": false
     },
     {
-      "path": "config.jsonformsExtended.restrict",
-      "status": "consumed",
-      "evidence": [
-        "packages/jsonforms-react-renderer-common/src/temporalBounds.ts"
-      ],
-      "finding": "Actual form-wide fallback for effectiveRestrict, below local options and above true. Added as reference-adapter compatibility; it is not read by every flat-merge control.",
-      "declaredBefore": false,
-      "declaredAfter": true
-    },
-    {
       "path": "config.jsonformsExtended.security",
       "status": "consumed",
       "evidence": [
@@ -1079,7 +1069,7 @@
         "packages/jsonforms-react-antd-renderers/src/layouts/ArrayLayout.tsx",
         "packages/jsonforms-react-antd-renderers/src/complex/AdditionalProperties.tsx"
       ],
-      "finding": "Flat restrict is read by merged-options controls, but temporal effectiveRestrict deliberately ignores it and reads options.restrict, then jsonformsExtended.restrict, then true. Core seeds flat restrict=false; portable default=true requires host adaptation.",
+      "finding": "Flat restrict governs temporal pickers as well as other controls. Local options.restrict takes precedence; authored flat config.restrict follows; omitted values default to true. Core-seeded false is not an authored choice.",
       "declaredBefore": true,
       "declaredAfter": true
     },
