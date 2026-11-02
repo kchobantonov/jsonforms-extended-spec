@@ -41,7 +41,7 @@ Before implementation, resolve:
   values, URL substitution and permissions.
 - Resolution timing across nested, generated and detail UI schemas; stable
   identity, async replacement policy, focus and local-state preservation.
-- Diagnostics, fallback behavior, and migration/versioning of the eventual API.
+- Diagnostics, fallback behavior, and versioning of the eventual API.
 
 Then implement the resolver and integration tests before adding schema shapes.
 
@@ -102,8 +102,6 @@ This is a targeted source audit, not proof of complete option parity.
   Applicability involving enum choices, bounds or format still needs runtime checks.
 - Shadcn RadioGroupControl used orientation instead of the canonical vertical option;
   React fix accompanies this audit.
-- Shadcn multiLine is a compatibility alias for multi, and array labelRef is a
-  family fallback; do not publish them as new portable names.
 - Shadcn FileControlRenderer reads accept as a fallback for schema contentMediaType.
   Decide whether this remains family-specific before declaring a portable option.
 - Split/layout options need a separate element-aware parity review. Properties
@@ -143,7 +141,7 @@ Drag/drop must preserve field bindings and unknown options. These editor feature
 are planned work, not implemented capabilities or new published option shapes.
 See [conditional authoring guidance](conditional-fields.md).
 
-## Completed since the migration audit
+## Completed authoring work
 
 Mixed type-specific details, shared editor detail modes, conditional object field
 discovery and Template/Slot examples now have documented authoring contracts and

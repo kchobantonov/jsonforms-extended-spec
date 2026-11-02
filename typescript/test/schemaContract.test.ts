@@ -216,7 +216,6 @@ describe('the two config schemas', () => {
       'showValidationIndicator',
       'showDataIndicator',
       'collapsible',
-      'restrict',
     ]) {
       expect(base.$defs.extended.properties, key).toHaveProperty(key);
     }

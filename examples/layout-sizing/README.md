@@ -132,20 +132,6 @@ overflow.
 | `span` above `gridColumns` | Clamped, with a diagnostic. |
 | `span` in a vertical layout | Ignored, with a diagnostic — it does not create a horizontal grid. |
 | `span` not a positive integer, `weight` not finite and positive, a negative dimension | Ignored, with a diagnostic. |
-| `columns` or `trim` | Diagnosed. Both are outside the portable contract — see below. |
-
-## Two options that are not part of this
-
-**`columns`** is a legacy 2–16 sizing encoding. The portable contract replaces it with `options.layout.span` against a
-configurable `gridColumns`, so a control carrying `columns` now draws a
-diagnostic rather than being silently mis-sized.
-
-**`trim`** narrowed a control by suppressing its full width. The contract
-"excludes the trim sizing option" and says to "use the shared layout sizing
-options to control width" — `options.layout.width` or `maxWidth`.
-
-Both are recorded in [21](../../docs/spec.md#6-layout-types-and-sizing),
-including what changes for a form that used them.
 
 ## Conformance scope
 

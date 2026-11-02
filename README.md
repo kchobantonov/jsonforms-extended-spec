@@ -8,7 +8,7 @@ Forms renderer implementations.
 - [Review easily overlooked behaviors](docs/implementation-pitfalls.md)
 - [Browse the examples](examples/README.md)
 - [Use the JSON schemas](schemas/README.md)
-- [Read the migration and schema audit](docs/audit.md)
+- [Read the authoring-schema audit](docs/audit.md)
 
 This is the consolidated v1 specification. It separates accepted contracts
 from future design work and documents optional capabilities explicitly.
@@ -114,9 +114,8 @@ See [the TypeScript guide](typescript/README.md) for schema-aware authoring help
 
 Use [the renderer/demo acceptance guide](docs/renderer-and-demo.md),
 [renderer selection](docs/renderer-selection.md), and the
-[migration audit](docs/audit.md). These maintained guides contain the portable
-requirements. [History TODO](docs/history/TODO.md) tracks any unresolved migration
-questions; renderer implementation gaps belong in their renderer repositories.
+[authoring-schema audit](docs/audit.md). These maintained guides contain the
+portable requirements; renderer implementation gaps belong in their renderer repositories.
 
 ## Automatic example discovery
 

@@ -460,7 +460,7 @@ above has already run.
 ### Array detail modes
 
 Array control options accept the exported ArrayDetail type: an inline UI schema,
-a legacy elements container, or a string mode. Use detail: 'GENERATE' to bypass
+an elements container, or a string mode. Use detail: 'GENERATE' to bypass
 registered layouts and detail: 'REGISTERED' to prefer a registered layout.
 DEFAULT keeps normal renderer selection. Values are case-insensitive; other
 strings (including GENERATED) use registry lookup, matching upstream core.

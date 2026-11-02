@@ -53,8 +53,7 @@ example:
 }
 ```
 
-Both UI profiles reference this same schema. The old common-profile
-`#/$defs/rule` and `#/$defs/condition` references remain available as aliases.
+Both UI profiles reference this same schema.
 Nested AND/OR conditions are checked recursively, including embedded draft-07
 schemas. Empty AND and OR lists are valid core conditions (true and false,
 respectively). READONLY and WRITABLE reflect the audited core 3.9.0-alpha.1;
@@ -70,6 +69,6 @@ Known options inside cell overrides are checked as control options. This checks
 their shape, not whether every renderer is available as a cell. Monaco and grid
 vendor option bags remain open. See [the audit](https://github.com/kchobantonov/jsonforms-react-renderers/blob/master/docs/jsonforms-react-antd-implementation-gaps.md#complete-configuration-property-review)
 for every config property and its actual consumer. Global declarations are limited
-to traced config paths. Keep field-dependent `elementLabelProp`, `childLabelProp`,
+to traced config paths. Keep field-dependent `elementLabelProp`,
 `detail`, `summary` and `cells` on their controls; isolated merged-config readers
 do not establish a common global default.

@@ -4,7 +4,7 @@
 **Scope:** portable UI-model semantics and runtime/renderer behaviour layered
 on JSON Forms.\
 **Out of scope:** visual-editor UX, palette/inspector design, editor
-migrations, editor design mode, and implementation-specific source organization.
+versioning, editor design mode, and implementation-specific source organization.
 
 ## About this document
 
@@ -175,14 +175,10 @@ A worked shape:
 **Namespace keys are literals on the wire.** An implementation may refer to
 them through constants in code, but authored UI schemas, configuration
 documents, examples and fixtures spell them out. Renaming a namespace is
-therefore a breaking change to authored documents and requires a migration,
-not merely a constant edit.
+therefore a change to authored documents, not merely a constant edit.
 
-**Relocating an existing key** follows a sequence, because authored documents
-already use the old spelling: read the namespaced location first and fall back
-to the flat one; emit a deprecation diagnostic when only the flat location
-resolves; update examples and fixtures; drop the fallback in a release that
-says so. New options adopt the correct tier immediately and need no fallback.
+**Authors use the declared namespace for each option.** Implementations read
+only the locations specified in this document and its schemas.
 
 ## 2. Reference type declarations
 
@@ -911,13 +907,15 @@ the enclosing container is one of the few places such an error can surface.
   control presentation and the indicator follows; it does not reveal them.
   Under a no-validation mode there are no computed schema errors to aggregate.
   Host-supplied additional errors remain available in all modes.
-- Where pre-touch filtering suppresses a keyword before touch, the indicator
-  suppresses the same errors — and MUST **recompute** as descendants become
-  touched rather than latching its initial state.
+- The indicator summarizes displayable section errors independently of a
+  descendant Control's pre-touch text filter. It can show a quiet navigation cue
+  before the Control has been touched, while inline required-field feedback
+  remains hidden until blur.
 - A locale change refreshes the accessible name and any count without a data
   edit.
 - A shown count counts the errors the indicator is permitted to represent
-  after filtering, not the raw validator error count.
+  after validation-mode filtering, not the raw validator error count. A
+  Control's pre-touch text filter does not reduce the section count.
 
 For arrays, `hideArraySummaryValidation: true` also suppresses the child-error
 summary. If it and `showValidationIndicator` are supplied together, either request
@@ -1086,7 +1084,7 @@ validation.
 
 Accordion expansion uses `options.collapsed`, then `config.jsonformsExtended.collapsed`; the default is false. Without an explicit `initial` selection, true starts all panels closed. Explicit initial selection takes precedence on mount. Changing the effective collapsed setting updates expansion; unrelated updates preserve user selection. Tabs and steppers ignore collapse settings.
 
-Mixed object/array outer frames use the same `collapsible` and `collapsed` options as Group: local options override namespaced config, then flat config. For collapsed, the only global key is `config.jsonformsExtended.collapsed`; there is no flat alias. Mixed frames default to collapsible and expanded. A non-collapsible frame stays open and has no collapse action. Changes to the effective `collapsed` setting update expansion; unrelated data changes preserve user expansion. This does not control expansion of tree nodes or array items.
+Mixed object/array outer frames use the same `collapsible` and `collapsed` options as Group: local options override namespaced config. The global collapsed key is `config.jsonformsExtended.collapsed`. Mixed frames default to collapsible and expanded. A non-collapsible frame stays open and has no collapse action. Changes to the effective `collapsed` setting update expansion; unrelated data changes preserve user expansion. This does not control expansion of tree nodes or array items.
 
 Accordion panels are stacked vertically; the `vertical` orientation option and
 the stepper-only `showNavButtons` do not alter this presentation.
@@ -1580,8 +1578,7 @@ Recommended explicit environment:
 | `errors` | Read-only validation-error snapshot; exact profile remains to be defined. |
 
 This is an environment contract, not unrestricted access to FormContext.
-Recommend `external` for new host bindings. Existing Label `context` bindings and
-namespace gates remain compatible; changing those requires a separate migration.
+Recommend `external` for new host bindings. Label `context` bindings and namespace gates use their declared contracts.
 Do not publish `external` as an implemented FormContext API yet.
 
 Keep UI navigation state in host-owned `external` initially. The resolver reads
@@ -1937,6 +1934,7 @@ type Script = string; // async function body
 
 interface ButtonElement extends BaseUISchemaElement, Internationalizable {
   type: 'Button';
+  name?: string;
   options?: { fullWidth?: boolean; [key: string]: unknown };
   label?: string;
   icon?: string;
@@ -1957,13 +1955,16 @@ worse — **no `params` at all**, because that field has no option spelling.
 ```
 
 Without it, two languages require two action names and the host grows a branch
-per language. An implementation MAY additionally read `options.action` and
-`options.label` below the top-level fields, for documents already authored
-that way.
+per language.
 
 `action` and `script` are mutually exclusive. **Where an element carries both,
 `action` wins** — it is the portable half, and the one a host can intercept.
 Carrying both is an authoring error, and a diagnostic SHOULD say so.
+
+When neither `action` nor `script` is present, a stable element `name` supplies
+the command identifier. Without `name`, the host receives an empty action name.
+A translated label never becomes a command identifier. An explicit `script`
+runs when `action` is absent, even if the element has a `name`.
 
 Button invokes commands; Link performs navigation. A renderer may offer a
 link-like Button appearance through its documented styling options while
@@ -2112,6 +2113,10 @@ Confirmation performs the operation **once**, after rechecking mutation guards
 and its target. A stale confirmation MUST NOT be applied to an unrelated
 replacement item. Dialog text is localized and action-specific, with
 accessible focus handling.
+Portable dialog catalog keys are `confirm.delete.title`/`message`,
+`confirm.typeChange.title`/`message`, `confirm.branchChange.title`/`message`,
+and `confirm.accept`/`confirm.decline`. Example catalogs may supply
+action-specific wording through these same keys.
 
 The runtime resolves configuration into one shared policy; individual UI
 libraries MUST NOT give these values different meanings.
@@ -2123,8 +2128,8 @@ libraries MUST NOT give these values different meanings.
 | Source | Spelling and role |
 | --- | --- |
 | Component property | `readonly: true` establishes form-wide read-only state; element settings cannot override it |
-| Global config | `readonly` or `readOnly` supplies a default, subject to core precedence. **Not** an unconditional form-wide lock |
-| UI-schema options | Prefer `options.readonly`; accept `options.readOnly` as a compatibility spelling. Requests read-only behaviour independently of schema annotation |
+| Global config | `readonly` supplies a default, subject to core precedence. **Not** an unconditional form-wide lock |
+| UI-schema options | `options.readonly` requests read-only behaviour independently of schema annotation |
 | JSON Schema | `readOnly` is the standard spelling. Lowercase is **not** the schema keyword |
 
 JSON Schema `readOnly` is an **annotation**. Standard validation does not
@@ -2135,13 +2140,12 @@ restrictions.
 Precedence, preserving core's own resolver: form-wide `readonly: true` wins
 first, then applicable read-only rules, then explicit UI options, then
 explicit config values, then schema `readOnly: true`, then inherited renderer
-read-only. Within options or config, the lowercase spelling is checked before
-the camel-case one. **An explicit `false` at an earlier level overrides a
+read-only. **An explicit `false` at an earlier level overrides a
 later source, including schema and inherited annotations — but cannot override
-form-wide `readonly: true`.** Avoid authoring both spellings together.
+form-wide `readonly: true`.**
 
 `separateReadonlyFromDisabled` distinguishes effective read-only state from
-enabled state. With the compatibility default `false`, read-only sources
+enabled state. With the default `false`, read-only sources
 participate in disabling controls. With `true`, the integration and renderer
 MUST honour read-only separately from enabled, **including guarding
 mutations**. Setting it alone does not prove every renderer supports
@@ -2349,10 +2353,9 @@ be lost merely because a matching schema error was suppressed. Matching
 additional errors may have their text suppressed; their structured entries and
 validity contribution are unchanged.
 
-**A summary that claims the same behaviour must track child touch state** and
-MUST NOT permanently suppress a matching error simply because filtering
-remains enabled after the child is touched. A family that does not implement
-summary participation MUST document that rather than let it be assumed.
+Pre-touch filtering applies to inline Control error text. Group and Category
+validation indicators summarize displayable structured errors independently of
+Control touch state, so they may guide navigation before a child is blurred.
 
 ### 15.8 Read-only interaction and restrictive editing
 
@@ -2829,8 +2832,7 @@ For example, this schema requests normalization of a nested string:
 With the registered transform implementation, validating
 `{"name":" Alice "}` can change the value to `{"name":"ALICE"}`.
 This is a data transformation, not presentation formatting or a renderer action.
-The `trim` transformation is unrelated to the excluded renderer sizing option
-of the same name. The web integration also supplies project transformations
+The web integration also supplies project transformations
 such as capitalize and startCase; their registration does not make them standard
 JSON Schema behavior.
 
@@ -3195,9 +3197,10 @@ composition-based input methods. String length constraints operate on the
 **stored representation**; a displayed representation may differ, and a
 grapheme is not necessarily one code unit.
 
-**Initial focus.** `options.focus` requests initial focus. At most one element
-should claim it; where several do, the first in document order wins and a
-diagnostic SHOULD report the rest.
+**Initial focus.** `options.focus` requests initial focus. Authors SHOULD
+identify one intended target per active view. When several controls request
+focus, the result is not portable; a diagnostic SHOULD report the conflict.
+The detailed lifecycle and focusability rules are in §18.28.
 
 **Descriptions and required markers.** `showUnfocusedDescription` controls
 whether a description is visible when the control is unfocused.
@@ -5109,7 +5112,7 @@ and an array-valued file column alongside a single-file column.
 | Schema `contentMediaType` | Fallback source for the file-dialog filter when UI accept is absent; use it when a meaningful platform filter can be derived. |
 | UI `formatMinimum`, `formatMaximum` | Inclusive lower/upper limits on original file size in bytes. |
 | UI `formatExclusiveMinimum`, `formatExclusiveMaximum` | Exclusive lower/upper limits on original file size in bytes. |
-| Legacy schema-side numeric bounds | Require a separately declared file-size validator profile. Their keyword semantics must be checked by that validator integration. |
+| Schema-side numeric bounds | Require a separately declared file-size validator profile. Their keyword semantics must be checked by that validator integration. |
 | UI `restrict` | Enables preventive file-size enforcement according to section 15. Size validation and error reporting remain active when restriction is disabled. |
 | UI `clearable`, `focus` | Shared clear-action and focus behavior. |
 
@@ -5219,7 +5222,6 @@ belong in renderer-family specifications.
 | Default mask tokens | `#`: ASCII digit; `@`: ASCII letter; `*`: ASCII letter or digit | Defines accepted characters at each token position in the inspected profile. |
 | UI `returnMaskedValue` | Boolean; false | False stores the unmasked value; true stores the value including mask literals. |
 | UI `tokens` | Token definitions; absent uses defaults | Customizes accepted characters. The inspected profile accepts regex strings or token objects containing a pattern, and falsy entries remove tokens. Additional token-object fields are masking-library-specific. |
-| UI `maskReplacers` | Existing compatibility option | Alternative token configuration. Prefer `tokens` for new documents; when both are present, the inspected profile uses `tokens` rather than merging both configurations. |
 | UI `tokensReplace` | Boolean; true | Controls whether supplied tokens replace the masking library's default token definitions. This differs from overriding entries in the renderer's token map. |
 | UI `eager` | Boolean; false | Requests eager insertion of mask literals according to the supported masking-library contract. |
 | UI `reversed` | Boolean; false | Requests mask processing from the end according to the supported masking-library contract. |
@@ -5479,7 +5481,7 @@ height growth is outside this contract for now.
 ```
 
 Use the shared layout sizing options to control width. The portable contract
-excludes the trim sizing option and introduces no negative no-resize alias.
+introduces no negative no-resize alias.
 With restrict enabled, maxLength participates in supported entry prevention;
 minLength and pattern retain their validation roles. Clearing follows the shared
 contract, including preserving an empty string and its key in dynamic-property
@@ -5543,6 +5545,12 @@ Decimal precision is not a separate portable option here. Renderer-specific
 precision settings must document whether they affect display, rounding, or stored
 values; no arbitrary rounding or loss of supplied precision is implied by this
 contract.
+
+This contract does not define a serializable formatted-number policy. A
+JavaScript-authored cell may provide renderer-specific formatting and parsing
+callbacks for an integer value, but those runtime functions do not change the
+stored numeric type, schema validation, or the portable string meaning of
+`options.format`. A JSON-authored UI schema cannot carry such callbacks.
 
 #### Numeric parsing and representation limits
 
@@ -5786,7 +5794,7 @@ renderer family; document any unsupported behavior and fallback.
 | `placeholder` | String; defaults to effective display format | Replaces the input hint without changing parsing or storage. |
 | `focus` | Boolean | Requests initial input focus where supported. |
 | `clearable` | Boolean; shared inspected bindings default to true when enabled | Exposes a clear action; empty-value serialization follows the renderer/host clear-value contract. Required validation remains independent. |
-| `views` | Date-only array drawn from `year`, `month`, `day`; absent uses default picker navigation | Restricts selectable calendar views, e.g. year/month selection without a day grid. This does not automatically change `dateSaveFormat`. |
+| `views` | Date accepts `year`, `month`, `day`; Time accepts `hours`, `minutes`, `seconds`; Date-time accepts all six. Absent uses the display-format-derived picker defaults. | Selects the finest calendar view and available time columns as defined in §18.2a. A view outside the control domain is ignored. Views never change `dateSaveFormat`, `timeSaveFormat`, or `dateTimeSaveFormat`. |
 | `pickerIcon` | Renderer-specific icon representation | Changes the picker trigger icon where supported; icon names are not cross-library portable. |
 
 The inspected JavaScript profile uses Day.js format tokens and expands
@@ -7255,10 +7263,10 @@ keep component rendering and library-specific props inside their adapters.
 
 ## 29. JSON schema artifacts and validation boundary
 
-The common config schema includes the audited core's `readonly`, `readOnly`,
-`separateReadonlyFromDisabled` and legacy `trim` settings. Describing a core
+The common config schema includes the audited core's `readonly` and
+`separateReadonlyFromDisabled` settings. Describing a core
 setting does not establish renderer support: separate read-only presentation
-needs adapter verification, and portable sizing continues to exclude `trim`.
+needs adapter verification.
 The reference core version and implementation differences are recorded in
 [the audit](audit.md).
 
@@ -7398,8 +7406,7 @@ in this version; any relationship to a future overlay resolver still needs desig
 
 All array presentations (table, expandable items, list with detail, and AG Grid)
 support `options.collapsible` and `options.collapsed`, with the same meaning as
-Group. Both default to false. UI options override namespaced config; only
-`collapsible` also accepts legacy flat config. `collapsed` sets the initial state and resynchronizes only when its
+Group. Both default to false. UI options override namespaced config. `collapsed` sets the initial state and resynchronizes only when its
 effective value changes. Without `collapsible`, the body is always visible.
 
 Collapse hides the array body, preserving mounted editors, data, selection,

@@ -14,11 +14,11 @@ Companion to the [implementation guide](implementation-guide.md). These entries 
 
 ## P02 — Property keys are literal data
 
-**Trap:** Interpret dots, slashes, brackets or an empty key as navigation syntax; trim imported names.
+**Trap:** Interpret dots, slashes, brackets or an empty key as navigation syntax; trim imported names; read inherited members such as `constructor` from a schema property map.
 
-**Behavior:** Address exact keys with the platform's correct path encoding. Separate display labels from binding paths. Renaming/deleting affects only the intended key and preserves values.
+**Behavior:** Address exact keys with the platform's correct path encoding and require own members when reading data or schema property maps. Separate display labels from binding paths. Renaming/deleting affects only the intended key and preserves values.
 
-**Check:** Edit `legacy.key`, `notes/1`, `items[0]`, `""` and whitespace-bearing keys independently. See [additional properties](../examples/additional-properties/README.md).
+**Check:** Edit `legacy.key`, `notes/1`, `items[0]`, `""` and whitespace-bearing keys independently. A recursive-tree label named `constructor` remains visible, but Rename is unavailable when that field has no own schema property. A literal dotted `childrenProperty` keeps selected child and grandchild detail edits and child-link navigation on those exact members. See [additional properties](../examples/additional-properties/README.md).
 
 ## P03 — Pattern constraints intersect
 

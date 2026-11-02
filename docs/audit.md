@@ -1,4 +1,4 @@
-# Migration and authoring-schema audit
+# Authoring-schema audit
 
 Audited on 2026-09-27 against the local `jsonforms-react-renderers` checkout at
 `e931e46c237f371dc283c291746640d653a32190` and its installed JSON Forms core
@@ -17,7 +17,7 @@ Unknown extensions and vendor option bags deliberately remain open. The remainin
 adapter differences below prevent claiming that every schema-valid setting has
 the same behavior in the reference renderer.
 
-## Migration evidence
+## Source reconciliation
 
 - The source checkout HEAD equals `provenance.json`'s recorded commit.
 - All 15 recorded SHA-256 document hashes match the source files.
@@ -37,13 +37,9 @@ the same behavior in the reference renderer.
   standalone `.mjs` hooks where needed. The package tests their imports and the
   UI schemas returned by the object and tuple registries.
 
-The source schema properties omitted during migration mostly have recorded
-reasons: `start`/`responsive` are reserved, `trim` sizing is excluded, generic
-`saveFormat` was replaced by format-specific names, and `gridHeight`/`gridWidth`
-are obsolete spellings. `map` accesses in choice renderers are JavaScript array
-methods, not an authoring option. `showRemoveButton` remains unimplemented.
-Core's legacy `config.trim` and `separateReadonlyFromDisabled` are now described
-explicitly without claiming renderer support.
+The published schemas describe current authoring inputs. `start`/`responsive`
+are reserved, and `showRemoveButton` remains unimplemented.
+`separateReadonlyFromDisabled` is described without claiming renderer support.
 
 ## Coverage reviewed
 
@@ -65,27 +61,23 @@ schema definitions; renderer selection still depends on the bound data schema.
 | SplitLayout/splitter, Spacer, ImageView, Separator, Link | Extended element shapes and sizing |
 | Button, TemplateLayout, Template, Slot, markup Label | Action/template fields, named composition, markup/security/interpolation settings |
 | Base and extended cells | Cell overrides reuse known control-option shapes; registry availability still limits actual cell support |
-| Core config | Defaults, read-only aliases and version-specific separation setting |
+| Core config | Defaults, read-only settings and version-specific separation setting |
 
 No missing registered element discriminator was found. A renderer such as cron
-is a specialized Control, not a separate UI element type. Legacy `columns`
-layout code is still exported upstream but is no longer registered; it does not
-justify restoring the replaced sizing vocabulary.
+is a specialized Control, not a separate UI element type. The portable sizing vocabulary uses layout options.
 
 ## Corrections made
 
 1. Added [a standalone rule schema](../schemas/jsonforms-rule.schema.json). Both UI
-   profiles reference it; old common-profile definition references remain aliases.
+   profiles reference it.
 2. Validate nested condition schemas against the standard draft-07 meta-schema.
    Reject incomplete AND/OR/LEAF nodes even when a second condition shape would
    otherwise let them pass. Allow core's empty AND/OR lists.
 3. Reject serialized `condition.validate` strings. Core checks for a function;
    it does not compile strings. Function conditions belong to trusted host code.
-4. Type `readOnly` as well as `readonly`, including options on layout elements.
-   Add the core config aliases, the separation setting, and annotated legacy trim.
-5. Type the implemented `showArrayTableSortButtons` and
-   `showArrayLayoutSortButtons` compatibility flags. Their runtime OR with
-   `showSortButtons` is documented; false does not negate another true flag.
+4. Type `readonly` in options on layout elements.
+   Add the core config read-only setting and the separation setting.
+5. Type `showSortButtons` for array reordering.
 6. Type confirmed flat renderer defaults for array presentation, descriptions
    and choices. The follow-up audit removed global label-path, detail and summary
    declarations: these are per-control inputs with only isolated merged-config
@@ -136,7 +128,7 @@ The old documents should not replace the current schemas:
 ## Validation boundary
 
 Regression cases cover standalone and attached rules, malformed nested schemas,
-read-only aliases, core config types, categorization, sorting flags, cells and
+read-only settings, core config types, categorization, sorting flags, cells and
 editor defaults. `pnpm run check` runs them together with all existing fixtures,
 reference/link checks, the site build and the packed-consumer check. The tests
 use bundled schemas and require neither source checkout nor a network request.

@@ -86,9 +86,9 @@ test('every declared config path has a consumption audit and removed paths stay 
     if (node.$ref) {
       const [target, fragment = ''] = node.$ref.split('#');
       const targetFile = target || file;
-      // UI-schema values aren't global config members. Monaco has an explicit
-      // config bag whose documented children do need coverage.
-      if (documents.has(targetFile) && (!targetFile.includes('uischema') || path.includes('.monaco'))) {
+      // Every schema referenced from a config property contributes its declared
+      // members, including shared UI-schema definitions used by config bags.
+      if (documents.has(targetFile)) {
         const id = `${targetFile}#${fragment}:${path}`;
         if (!seen.has(id)) {
           let value = documents.get(targetFile);
@@ -117,7 +117,7 @@ test('every declared config path has a consumption audit and removed paths stay 
     else assert.equal(declared.has(item.path), false, item.path);
   }
   const common = documents.get('jsonforms-config.schema.json');
-  for (const key of ['elementLabelProp', 'childLabelProp', 'detail', 'summary']) {
+  for (const key of ['elementLabelProp', 'detail', 'summary']) {
     assert.equal(Object.hasOwn(common.properties, key), false);
     assert.ok(Object.hasOwn(documents.get('jsonforms-uischema.schema.json').$defs.controlOptions.properties, key));
   }

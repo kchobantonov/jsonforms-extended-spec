@@ -94,8 +94,8 @@ and follow the container-indicator and validation-visibility settings. After a
 selected node is removed, select its closest remaining parent. Navigation remains
 available in read-only forms; mutations remain disabled.
 
-Implemented in React Antd and shadcn; other renderer sets do not yet implement
-this option. The recursive-tree example includes a Tree editor tab for comparison.
+Implemented in React Antd and shadcn, and in Svelte Flowbite, shadcn and
+Skeleton. The recursive-tree example includes a Tree editor tab for comparison.
 
 ## Array detail resolution
 

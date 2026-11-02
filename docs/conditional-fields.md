@@ -76,5 +76,7 @@ by this feature. Keep JSON Schema validation and UI-schema placement separate.
    positive field discovery from a negated schema.
 4. Explicit default/example actions and false-schema explanations.
 
-See [conditional-fields](../examples/conditional-fields/README.md). Antd and
-shadcn execute the shared resolver; other renderer families are not certified.
+See [conditional-fields](../examples/conditional-fields/README.md). React Antd and
+shadcn, and Svelte Flowbite, shadcn and Skeleton execute the conditional-field
+contract. Each implementation records its native and production acceptance;
+other renderer families are not certified.

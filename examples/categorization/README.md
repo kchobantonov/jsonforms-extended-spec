@@ -88,9 +88,8 @@ still works.
 
 **Click the open accordion header.** It closes, and the accordion is left with
 nothing open — collapse all three and you are looking at the form's outline.
-This is a deliberate divergence from §8, which fixes the accordion at *exactly*
-one open category; see [the specification](../../docs/spec.md#86-categorization).
-Two open at once is still impossible.
+Section 8 allows an explicit all-closed state; opening a category closes any
+other open category. Two open at once is still impossible.
 
 **Close the accordion, then toggle `Business account`.** It stays closed.
 Closing is a state you chose, so the "selected category became hidden, open

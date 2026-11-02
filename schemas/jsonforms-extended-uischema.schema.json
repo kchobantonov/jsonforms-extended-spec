@@ -51,9 +51,6 @@
             },
             "readonly": {
               "type": "boolean"
-            },
-            "readOnly": {
-              "type": "boolean"
             }
           }
         },
@@ -560,10 +557,6 @@
           "type": "string",
           "description": "Item-relative dotted DATA path for an item's header label - not a JSON pointer."
         },
-        "childLabelProp": {
-          "type": "string",
-          "description": "Legacy alias of elementLabelProp. The specification says not to introduce an additional alias; it is read for compatibility."
-        },
         "showSortButtons": {
           "type": "boolean",
           "default": false,
@@ -927,18 +920,6 @@
             "hsb"
           ]
         },
-        "readOnly": {
-          "type": "boolean",
-          "description": "Core alias of readonly; readonly takes precedence when both are present."
-        },
-        "showArrayTableSortButtons": {
-          "type": "boolean",
-          "description": "Legacy table sorting flag, combined with showSortButtons using logical OR. Prefer showSortButtons."
-        },
-        "showArrayLayoutSortButtons": {
-          "type": "boolean",
-          "description": "Legacy expandable array sorting flag, combined with showSortButtons using logical OR. Prefer showSortButtons."
-        },
         "collapsible": {
           "type": "boolean"
         },
@@ -1126,9 +1107,6 @@
         "elementLabelProp": {
           "$ref": "#/$defs/controlOptions/properties/elementLabelProp"
         },
-        "childLabelProp": {
-          "$ref": "#/$defs/controlOptions/properties/childLabelProp"
-        },
         "showSortButtons": {
           "$ref": "#/$defs/controlOptions/properties/showSortButtons"
         },
@@ -1309,15 +1287,6 @@
         "colorSaveFormat": {
           "$ref": "#/$defs/controlOptions/properties/colorSaveFormat"
         },
-        "readOnly": {
-          "$ref": "#/$defs/controlOptions/properties/readOnly"
-        },
-        "showArrayTableSortButtons": {
-          "$ref": "#/$defs/controlOptions/properties/showArrayTableSortButtons"
-        },
-        "showArrayLayoutSortButtons": {
-          "$ref": "#/$defs/controlOptions/properties/showArrayLayoutSortButtons"
-        },
         "collapsible": {
           "type": "boolean"
         },
@@ -1406,13 +1375,6 @@
           "properties": {
             "disabled": {
               "type": "boolean"
-            },
-            "action": {
-              "type": "string",
-              "description": "Read beneath the top-level field."
-            },
-            "label": {
-              "type": "string"
             },
             "fullWidth": {
               "type": "boolean",
