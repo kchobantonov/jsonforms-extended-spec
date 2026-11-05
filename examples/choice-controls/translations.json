@@ -63,7 +63,17 @@
     "cards.detailModesIntro.text": "Compare the same contact using generated and registered details. Email has a matching registry layout; postal mail demonstrates registry fallback. Both controls edit the same value.",
     "cards.detailGENERATE.label": "Generated contact details",
     "cards.detailREGISTERED.label": "Registered contact details",
-    "cards.registeredAddress.label": "Registered email address"
+    "cards.registeredAddress.label": "Registered email address",
+    "cardContact.choices.0.label": "Email",
+    "cardContact.choices.1.label": "Postal mail",
+    "cardContact.address.label": "Email address",
+    "compositeChoices.option0": "Email route",
+    "compositeChoices.option1": "Postal route",
+    "department.Engineering": "Engineering",
+    "department.Finance": "Finance",
+    "handler.Engineering": "Engineering",
+    "handler.Finance": "Finance",
+    "handler.Operations": "Operations"
   },
   "bg": {
     "department.eng": "Инженеринг",
@@ -129,6 +139,16 @@
     "cards.detailModesIntro.text": "Сравнете един и същ контакт с генерирани и регистрирани подробности. За имейл има регистрирано оформление; за пощенски адрес се използва автоматично генериране. Двата контрола редактират една и съща стойност.",
     "cards.detailGENERATE.label": "Генерирани подробности за контакта",
     "cards.detailREGISTERED.label": "Регистрирани подробности за контакта",
-    "cards.registeredAddress.label": "Регистриран имейл адрес"
+    "cards.registeredAddress.label": "Регистриран имейл адрес",
+    "cardContact.choices.0.label": "Имейл",
+    "cardContact.choices.1.label": "Поща",
+    "cardContact.address.label": "Имейл адрес",
+    "compositeChoices.option0": "Имейл",
+    "compositeChoices.option1": "Поща",
+    "department.Engineering": "Инженеринг",
+    "department.Finance": "Финанси",
+    "handler.Engineering": "Инженеринг",
+    "handler.Finance": "Финанси",
+    "handler.Operations": "Операции"
   }
 }

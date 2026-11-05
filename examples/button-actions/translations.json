@@ -15,7 +15,18 @@
     "slow.text": "A slow command: the button shows a spinner and refuses a second press until it finishes.",
     "conflict.text": "Declares an action and a script. The action wins, and the console says so.",
     "neither.text": "Declares neither. It still fires an event, with an empty action, rather than being a dead control.",
-    "typescript.text": "Scripts written as TypeScript functions. They need no permission, and they cannot be serialized - look for them in the UI schema panel and they are not there."
+    "typescript.text": "Scripts written as TypeScript functions. They need no permission, and they cannot be serialized - look for them in the UI schema panel and they are not there.",
+    "unavailable.label": "Unavailable",
+    "slowButton.label": "Submit slowly",
+    "neitherButton.label": "Declares neither",
+    "logButton.label": "Log the form data",
+    "bothButton.label": "Declares both",
+    "nativeArrow.label": "Arrow function",
+    "nativeClassic.label": "Classic function",
+    "nativeAsync.label": "Async function",
+    "fullName.label": "Full name",
+    "email.label": "Email",
+    "newsletter.label": "Newsletter"
   },
   "bg": {
     "intro.text": "Бутонът изпълнява команда. Той не знае какво означава тя - подава я на приложението и изчаква.",
@@ -33,6 +44,17 @@
     "slow.text": "Бавна команда: бутонът показва индикатор и отказва второ натискане, докато не приключи.",
     "conflict.text": "Декларира действие и скрипт. Действието печели, а конзолата го отбелязва.",
     "neither.text": "Не декларира нито едното. Все пак изпраща събитие с празно действие, вместо да е мъртъв бутон.",
-    "typescript.text": "Скриптове, написани като функции на TypeScript. Не изискват разрешение и не могат да се сериализират - в панела с UI схемата ги няма."
+    "typescript.text": "Скриптове, написани като функции на TypeScript. Не изискват разрешение и не могат да се сериализират - в панела с UI схемата ги няма.",
+    "unavailable.label": "Недостъпно",
+    "slowButton.label": "Бавно изпращане",
+    "neitherButton.label": "Без зададена команда",
+    "logButton.label": "Извеждане на данните в конзолата",
+    "bothButton.label": "Действие и скрипт",
+    "nativeArrow.label": "Стрелкова функция",
+    "nativeClassic.label": "Обикновена функция",
+    "nativeAsync.label": "Асинхронна функция",
+    "fullName.label": "Пълно име",
+    "email.label": "Имейл",
+    "newsletter.label": "Бюлетин"
   }
 }

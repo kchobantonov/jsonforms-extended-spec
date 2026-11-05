@@ -44,6 +44,7 @@
       "config.json",
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": [
@@ -80,6 +81,7 @@
     "files": [
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": [
@@ -156,6 +158,7 @@
       "config.json",
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": []
@@ -191,6 +194,7 @@
       "config.json",
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": []
@@ -237,6 +241,7 @@
       "config.json",
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": []
@@ -247,6 +252,7 @@
     "files": [
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": [
@@ -275,6 +281,20 @@
       "uischema.json"
     ],
     "hostRequirements": []
+  },
+  {
+    "id": "job-application",
+    "title": "Job application",
+    "files": [
+      "config.json",
+      "data.json",
+      "schema.json",
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Handle the authored locale and theme actions; register native nested UI-schema testers where supported."
+    ]
   },
   {
     "id": "json-editor",
@@ -442,6 +462,7 @@
       "config.json",
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": []
@@ -489,6 +510,7 @@
       "config.json",
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": []
@@ -513,6 +535,7 @@
     "files": [
       "data.json",
       "schema.json",
+      "translations.json",
       "uischema.json"
     ],
     "hostRequirements": [

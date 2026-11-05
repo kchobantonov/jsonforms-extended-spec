@@ -1,10 +1,16 @@
 {
   "en": {
     "featureNavigation.section1.label": "Paginated items",
-    "featureNavigation.section2.label": "Unpaginated items"
+    "featureNavigation.section2.label": "Unpaginated items",
+    "shipment.reference.label": "Shipment reference",
+    "shipment.0.label": "Paginated shipment",
+    "shipment.1.label": "Unpaginated shipment (config default)"
   },
   "bg": {
     "featureNavigation.section1.label": "Елементи със страници",
-    "featureNavigation.section2.label": "Елементи без страници"
+    "featureNavigation.section2.label": "Елементи без страници",
+    "shipment.reference.label": "Номер на пратката",
+    "shipment.0.label": "Пратка със страници",
+    "shipment.1.label": "Пратка без страници (настройка по подразбиране)"
   }
 }
