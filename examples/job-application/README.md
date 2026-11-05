@@ -8,3 +8,6 @@ locale changes and theme changes, so hosts must supply those action handlers.
 `uischema.json` is portable. Hosts may register native UI-schema testers for
 specific nested forms; those testers are renderer-specific and are not part of
 the canonical fixture.
+
+The sample profile picture is an inline PNG. `config.json` opts into image data
+URLs so hosts can display that picture under the URL policy.

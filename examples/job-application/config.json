@@ -1,7 +1,10 @@
 {
   "jsonformsExtended": {
     "security": {
-      "allowScriptEvaluation": true
+      "allowScriptEvaluation": true,
+      "urlPolicy": {
+        "allowImageDataUrls": true
+      }
     }
   }
 }
