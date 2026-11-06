@@ -450,11 +450,13 @@ name changes application state by itself. A dispatcher that accepts the event
 without registering the command makes the button appear active but ineffective.
 
 **Behavior:** Keep the action name and parameters in portable JSON. The host
-registers the command and updates its own locale or theme state; the renderer
-only dispatches and awaits the action. Preserve any example-specific handler
+registers the command and updates the form-level locale or theme state; the
+renderer only dispatches and awaits the action. Preserve any example-specific handler
 before applying a host fallback.
 
 **Check:** In the [Job application](../examples/job-application/README.md),
-activate Bulgarian and English and observe the field labels switch both ways.
-Toggle theme twice and observe the host return to its original mode. Run these
-checks with direct renderer and webcomponent hosts where both are supported.
+activate Bulgarian and English and observe the form labels switch both ways
+while the application language stays unchanged. Toggle theme twice and observe
+the form return to its original mode while the application theme stays
+unchanged. Run these checks with direct
+renderer and webcomponent hosts where both are supported.

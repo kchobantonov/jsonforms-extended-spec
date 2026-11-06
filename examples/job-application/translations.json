@@ -172,7 +172,12 @@
         "toggle-theme": "Toggle Theme"
       },
       "group": {
-        "address-information": "Address Information"
+        "address-information": {
+          "label": "Address Information"
+        },
+        "position-information": {
+          "label": "Position Information"
+        }
       },
       "category": {
         "personal-information": "Personal Information",
@@ -361,7 +366,12 @@
         "toggle-theme": "Смени тема"
       },
       "group": {
-        "address-information": "Информация за адреса"
+        "address-information": {
+          "label": "Информация за адреса"
+        },
+        "position-information": {
+          "label": "Информация за позицията"
+        }
       },
       "category": {
         "personal-information": "Лична информация",

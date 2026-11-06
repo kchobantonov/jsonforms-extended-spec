@@ -297,7 +297,7 @@
       "uischemas.json"
     ],
     "hostRequirements": [
-      "Register host actions changeLang (params.lang: en or bg) and toggleMode (switch light/dark)."
+      "Register host actions changeLang (params.lang: en or bg) and toggleMode; both affect only the form, not the application chrome."
     ]
   },
   {

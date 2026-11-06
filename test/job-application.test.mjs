@@ -36,7 +36,7 @@ test('job application UI labels and visible fields have both translations', () =
     for (const [field, value] of Object.entries(node)) {
       if ((field === 'label' || field === 'i18n' || field === 'text') &&
           typeof value === 'string' && value.startsWith('static-text.')) {
-        keys.add(value);
+        keys.add(field === 'i18n' ? `${value}.label` : value);
       }
       if (typeof value === 'object') {
         for (const item of Array.isArray(value) ? value : [value]) walkUi(item);
@@ -44,6 +44,7 @@ test('job application UI labels and visible fields have both translations', () =
     }
   };
   walkUi(job.uischema);
+  keys.add('Job Application');
   for (const entry of job.uischemas) walkUi(entry.uischema);
   const walkFields = (schema, path = '') => {
     for (const [name, property] of Object.entries(schema.properties ?? {})) {

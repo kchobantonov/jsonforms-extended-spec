@@ -111,7 +111,8 @@
             }
           ]
         }
-      ]
+      ],
+      "i18n": "static-text.group.address-information"
     }
   },
   {
@@ -145,7 +146,8 @@
           "type": "Control",
           "scope": "#/properties/jobDetails/properties/availableStartDateTime"
         }
-      ]
+      ],
+      "i18n": "static-text.group.position-information"
     }
   }
 ]
