@@ -70,11 +70,11 @@ Companion to the [implementation guide](implementation-guide.md). These entries 
 
 ## P09 — Error translations have defined precedence
 
-**Trap:** Let a generic validator locale overwrite authored field/keyword translations, or invent a conflicting translation lookup scheme.
+**Trap:** Let a generic validator locale overwrite authored field/keyword translations, or accept only flat catalog entries when a portable example groups keys as nested JSON.
 
-**Behavior:** Follow the spec's i18n prefixes and error lookup order, preserving localized validator messages as fallback. Document the namespace so applications know which keys are reserved. Do not translate stored data.
+**Behavior:** Follow the spec's i18n prefixes and error lookup order, preserving localized validator messages as fallback. Resolve literal dotted catalog keys before nested paths. Document the namespace so applications know which keys are reserved. Do not translate stored data.
 
-**Check:** Override a reviewers contains message with a lead-reviewer explanation, switch locale, and check both local and container feedback.
+**Check:** Override a reviewers contains message with a lead-reviewer explanation, switch locale, and check both local and container feedback. In the Job application, resolve `static-text.English` and category labels from nested entries in both locales.
 
 ## P10 — Object and collection boundaries convey ownership
 

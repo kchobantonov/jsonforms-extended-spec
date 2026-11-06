@@ -1,0 +1,151 @@
+[
+  {
+    "uischema": {
+      "type": "HorizontalLayout",
+      "name": "applicant",
+      "elements": [
+        {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "ImageView",
+              "scope": "#/properties/applicant/properties/profilePicture",
+              "alt": "Profile Picture",
+              "options": {
+                "width": 192,
+                "height": 192
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/applicant/properties/profilePicture"
+            }
+          ],
+          "options": {
+            "layout": {
+              "weight": 1,
+              "minWidth": 220
+            }
+          }
+        },
+        {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/applicant/properties/firstName"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/applicant/properties/lastName"
+                }
+              ]
+            },
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/applicant/properties/gender"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/applicant/properties/dateOfBirth"
+                }
+              ]
+            },
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/applicant/properties/email"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/applicant/properties/phoneNumber"
+                }
+              ]
+            }
+          ],
+          "options": {
+            "layout": {
+              "weight": 3,
+              "minWidth": 420
+            }
+          }
+        }
+      ],
+      "options": {
+        "wrap": true
+      }
+    }
+  },
+  {
+    "uischema": {
+      "type": "Group",
+      "name": "applicantAddress",
+      "label": "Address Information",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/applicant/properties/address/properties/street"
+        },
+        {
+          "type": "HorizontalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/applicant/properties/address/properties/city"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/applicant/properties/address/properties/state"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/applicant/properties/address/properties/zipCode"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "uischema": {
+      "type": "Group",
+      "name": "jobDetails",
+      "label": "Position Information",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/jobDetails/properties/position"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/jobDetails/properties/salaryExpectation"
+        },
+        {
+          "type": "HorizontalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/jobDetails/properties/availableStartDate"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/jobDetails/properties/availableStartTime"
+            }
+          ]
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/jobDetails/properties/availableStartDateTime"
+        }
+      ]
+    }
+  }
+]

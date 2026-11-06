@@ -54,9 +54,9 @@ are annotations: do not mutate UI schemas or config while validating them.
 
 `examples/catalog.json` lists the assets and host requirements for each example.
 Read each JSON asset fresh for each form; mutable demo state must not overwrite
-shared fixtures. JavaScript registry examples are trusted host code in
-`uischemas.mjs`, with no framework imports. String scripts in JSON require the
-host's explicit execution permission.
+shared fixtures. Registered UI schemas and their declarative match conditions
+live in `uischemas.json`, so hosts in any language can use the same examples.
+String scripts in JSON require the host's explicit execution permission.
 
 ## Develop and verify
 

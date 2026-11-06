@@ -35,7 +35,7 @@ try {
       if (catalog.length !== ${report.examples}) throw new Error('Catalog missing');
       const schema = JSON.parse(readFileSync(new URL(resolve('schemas/jsonforms-extended-uischema.schema.json'))));
       if (!schema.$id) throw new Error('Schema missing');
-      await import(resolve('examples/object-control/uischemas.mjs'));
+      JSON.parse(readFileSync(new URL(resolve('examples/object-control/uischemas.json'))));
       const { examples } = await import(resolve('examples'));
       assert.deepEqual(examples.map(e => e.id), catalog.map(e => e.id), 'Example catalog mismatch');
       for (const entry of catalog) {
@@ -45,7 +45,7 @@ try {
         for (const file of entry.files.filter(file => file.endsWith('.json'))) {
           const key = file.slice(0, -5);
           const expected = JSON.parse(readFileSync(new URL(resolve('examples/' + entry.id + '/' + file))));
-          assert.deepEqual(example[key], expected, entry.id + ': ' + file);
+          assert.deepEqual(key === 'uischemas' ? example[key].map(({ tester: _tester, ...registered }) => registered) : example[key], expected, entry.id + ': ' + file);
         }
         for (const key of ['schema', 'data', 'uischema']) {
           assert.equal(Object.hasOwn(example, key), entry.files.includes(key + '.json'), entry.id + ': ' + key + ' presence');

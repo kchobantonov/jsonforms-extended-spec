@@ -58,12 +58,22 @@ The [catalog](catalog.json) lists files and required host capabilities.
 
 Pass `schema.json`, `uischema.json` and `data.json` to the form host. Apply
 `config.json` and `translations.json` where present. Create a translator for the
-active locale and rebuild it when that locale changes. Register optional detail
-UI schemas separately; a JSON editor cannot preserve function-valued testers.
+active locale and rebuild it when that locale changes.
 
-Two examples export trusted tester functions in `uischemas.mjs`. Button and
-template examples offer optional native hooks in `host.mjs`. String template
-engines and script evaluation are separate capabilities and permissions.
+Registered UI schemas live in portable `uischemas.json`. Each entry has a
+`uischema` and an optional declarative `match`. A named template omits `match`
+and is looked up by `uischema.name`. A ranked detail entry uses these fields:
+
+- `rank`: score returned when all conditions match (otherwise -1).
+- `schemaPointer`: JSON Pointer into the candidate data schema.
+- `equals` or `exists: true`: compare the pointer value or require it to exist.
+- `schemaPath` and `notSchemaPath`: optional exact path filters.
+
+The generated JavaScript examples export converts these JSON match objects to
+JSON Forms tester functions. Other language hosts can evaluate the same fields
+without JavaScript. Button and template examples offer optional native hooks in
+`host.mjs`; string template engines and script evaluation are separate
+capabilities and permissions.
 
 Invalid initial data demonstrates validation and preservation. The portable
 package checks schema/UI/config authoring; the renderer adapter suite checks

@@ -1,0 +1,16 @@
+[
+  {
+    "match": {
+      "rank": 10,
+      "schemaPath": "#/properties/cardContact",
+      "schemaPointer": "/properties/address/format",
+      "equals": "email"
+    },
+    "uischema": {
+      "type": "Control",
+      "scope": "#/properties/address",
+      "label": "Registered email address",
+      "i18n": "cards.registeredAddress"
+    }
+  }
+]

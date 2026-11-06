@@ -1,0 +1,51 @@
+[
+  {
+    "match": {
+      "rank": 10,
+      "schemaPointer": "/properties/kind/const",
+      "equals": "file"
+    },
+    "uischema": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/name"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/content"
+        }
+      ]
+    }
+  },
+  {
+    "match": {
+      "rank": 10,
+      "schemaPointer": "/properties/kind/const",
+      "equals": "folder"
+    },
+    "uischema": {
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/name"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/children",
+          "options": {
+            "collapsible": true,
+            "detail": {
+              "type": "Control",
+              "scope": "#",
+              "label": "Kind",
+              "i18n": "tree.kind"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

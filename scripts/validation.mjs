@@ -68,6 +68,20 @@ export async function validateProject(root) {
       if (file === 'uischemas.json') {
         for (const item of data) {
           if (!checks['jsonforms-extended-uischema.schema.json'](item.uischema)) failures.push(`${entry.id}/${file}: invalid registered UI schema`);
+          if (item.match !== undefined) {
+            const match = item.match;
+            const allowed = new Set(['rank', 'schemaPath', 'notSchemaPath', 'schemaPointer', 'exists', 'equals']);
+            if (!match || typeof match !== 'object' || Array.isArray(match) ||
+              Object.keys(match).some(key => !allowed.has(key)) ||
+              !Number.isFinite(match.rank) || match.rank < 0 ||
+              typeof match.schemaPointer !== 'string' || !match.schemaPointer.startsWith('/') ||
+              (match.schemaPath !== undefined && typeof match.schemaPath !== 'string') ||
+              (match.notSchemaPath !== undefined && typeof match.notSchemaPath !== 'string') ||
+              (match.exists !== undefined && match.exists !== true) ||
+              (!Object.hasOwn(match, 'equals') && match.exists !== true)) {
+              failures.push(`${entry.id}/${file}: invalid portable registry match`);
+            }
+          }
           checked++;
         }
       }

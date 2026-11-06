@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { validators, readJson, validateProject, dataSchemaValidator } from '../scripts/validation.mjs';
+import { examples } from '../examples/index.js';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const checks = await validators(root);
 for (const vector of await readJson(join(root,'conformance/authoring.json'))) {
@@ -23,12 +24,13 @@ test('catalog includes every example directory exactly once', async () => {
   assert.deepEqual(catalog.map(x=>x.id).sort(),entries.filter(x=>x.isDirectory()).map(x=>x.name).sort());
   assert.equal(new Set(catalog.map(x=>x.id)).size,catalog.length);
 });
-test('trusted registry hooks use portable UI schemas and pure testers', async () => {
-  for (const name of ['object-control','tuple-control','choice-controls']) {
-    const { uischemas } = await import(`../examples/${name}/uischemas.mjs`);
-    for (const entry of uischemas) {
-      assert.equal(typeof entry.tester,'function');
-      assert.equal(entry.tester({title:'unrelated'},'#',''),-1);
+test('portable JSON registries hydrate pure testers for JavaScript hosts', async () => {
+  for (const example of examples.filter(entry => entry.uischemas)) {
+    const portable = await readJson(join(root, 'examples', example.id, 'uischemas.json'));
+    assert.deepEqual(example.uischemas.map(({ tester: _tester, ...entry }) => entry), portable);
+    for (const entry of example.uischemas) {
+      assert.equal(typeof entry.tester, 'function');
+      assert.equal(entry.tester({ title: 'unrelated' }, '#', ''), -1);
       assert.ok(checks['jsonforms-extended-uischema.schema.json'](entry.uischema));
     }
   }

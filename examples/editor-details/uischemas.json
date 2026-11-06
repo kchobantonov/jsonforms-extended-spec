@@ -1,0 +1,14 @@
+[
+  {
+    "match": {
+      "rank": 10,
+      "schemaPointer": "/properties/name",
+      "exists": true
+    },
+    "uischema": {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Registered name"
+    }
+  }
+]

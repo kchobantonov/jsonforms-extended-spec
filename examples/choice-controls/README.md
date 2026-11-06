@@ -93,7 +93,7 @@ value." For a field that *should* accept other values, the encoding is
 
 Load the JSON assets listed in [the catalog](../catalog.json) into a host
 with the relevant renderer capabilities. Register the trusted tester functions
-exported by `uischemas.mjs` for the Card detail modes tab. The generated example
+exported by `uischemas.json` for the Card detail modes tab. The generated example
 module includes these registrations for demo hosts.
 
 
@@ -122,7 +122,7 @@ The **Card detail modes** tab presents the same `cardContact` value twice:
 
 - `choices[].detail: "GENERATE"` bypasses the matching registry entry and shows
   the generated branch fields, including the discriminator.
-- `choices[].detail: "REGISTERED"` uses `uischemas.mjs` for Email. Its custom
+- `choices[].detail: "REGISTERED"` uses `uischemas.json` for Email. Its custom
   **Registered email address** label makes registry selection visible, and its
   layout omits the discriminator already controlled by the cards.
 

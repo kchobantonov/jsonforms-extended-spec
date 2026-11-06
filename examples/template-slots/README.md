@@ -1,6 +1,6 @@
 # Named templates and slots
 
-Load `uischemas.mjs` into the host's `uischemas` registry. This file is trusted
+Load `uischemas.json` into the host's `uischemas` registry. This file is trusted
 host code; the UI models themselves contain no executable templates.
 
 - `Template.name` matches **entry.uischema.name**, exactly and case-sensitively.

@@ -12,7 +12,13 @@ test('the browser example module includes the catalog and canonical data', async
   for (const entry of catalog) {
     const actual = examples.find(e => e.id === entry.id);
     for (const file of entry.files.filter(file => file.endsWith('.json'))) {
-      assert.deepEqual(actual[file.slice(0, -5)], JSON.parse(await readFile(new URL(`../examples/${entry.id}/${file}`, import.meta.url))));
+      const expected = JSON.parse(await readFile(new URL(`../examples/${entry.id}/${file}`, import.meta.url)));
+      if (file === 'uischemas.json') {
+        assert.deepEqual(actual.uischemas.map(({ tester: _tester, ...registered }) => registered), expected);
+        assert.ok(actual.uischemas.every(registered => registered.tester() === -1));
+      } else {
+        assert.deepEqual(actual[file.slice(0, -5)], expected);
+      }
     }
   }
   assert.equal(typeof examples.find(e => e.id === 'object-control').uischemas[0].tester, 'function');

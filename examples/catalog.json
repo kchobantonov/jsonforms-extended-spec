@@ -82,10 +82,11 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": [
-      "Register the trusted tester functions exported by uischemas.mjs."
+      "Use the portable registry in uischemas.json."
     ]
   },
   {
@@ -134,10 +135,11 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": [
-      "Register the trusted tester functions exported by uischemas.mjs to compare choice-card detail modes."
+      "Use the portable registry in uischemas.json to compare choice-card detail modes."
     ]
   },
   {
@@ -253,10 +255,11 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": [
-      "Register the trusted tester functions exported by uischemas.mjs."
+      "Use the portable registry in uischemas.json."
     ]
   },
   {
@@ -290,10 +293,11 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": [
-      "Handle the authored locale and theme actions; register native nested UI-schema testers where supported."
+      "Handle the authored locale and theme actions."
     ]
   },
   {
@@ -413,10 +417,11 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": [
-      "Register the trusted tester functions exported by uischemas.mjs."
+      "Use the portable registry in uischemas.json."
     ]
   },
   {
@@ -475,7 +480,8 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": []
   },
@@ -536,10 +542,11 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": [
-      "Register the trusted uischemas.mjs module in the UI-schema registry."
+      "Use the portable named templates in uischemas.json."
     ]
   },
   {
@@ -561,7 +568,8 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": []
   },
@@ -573,10 +581,11 @@
       "data.json",
       "schema.json",
       "translations.json",
-      "uischema.json"
+      "uischema.json",
+      "uischemas.json"
     ],
     "hostRequirements": [
-      "Register the trusted tester functions exported by uischemas.mjs."
+      "Use the portable registry in uischemas.json."
     ]
   },
   {

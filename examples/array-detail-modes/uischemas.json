@@ -1,0 +1,15 @@
+[
+  {
+    "match": {
+      "rank": 10,
+      "schemaPointer": "/properties/name",
+      "exists": true,
+      "notSchemaPath": "#/properties/fallback"
+    },
+    "uischema": {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Registered name"
+    }
+  }
+]

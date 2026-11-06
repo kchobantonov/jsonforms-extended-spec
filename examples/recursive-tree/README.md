@@ -13,7 +13,7 @@ Automated coverage in the two tested renderer families: mount all three tabs wit
 
 ### One discriminator editor
 
-The File/Folder branch selector is labelled Kind. Registered branch UI schemas omit the const-valued kind field and lay out Name with Content or Children. The children detail reuses the Kind selector at each depth. The discriminator remains required in the JSON Schema and stored in data; branch selection sets it. Hosts must register uischemas.mjs alongside the example UI schema.
+The File/Folder branch selector is labelled Kind. Registered branch UI schemas omit the const-valued kind field and lay out Name with Content or Children. The children detail reuses the Kind selector at each depth. The discriminator remains required in the JSON Schema and stored in data; branch selection sets it. Hosts must register uischemas.json alongside the example UI schema.
 
 Folder children omit an array default. AJV configured with useDefaults can apply defaults while probing referenced alternatives; branch selection initializes the selected branch instead.
 

@@ -30,7 +30,7 @@ depending on where core maps the error.
 | --- | --- |
 | `schema.json` | Ten objects: seven that differ in where their layout comes from, three that fail in ways no single field can explain. |
 | `uischema.json` | Five controls carry `options.detail`, in four different forms; the rest take what they are given. |
-| `uischemas.mjs` | Registry entries for `address` and `handover`. A **`.ts` file**, because a registry entry carries a tester function and a function is not JSON. The `handover` entry is never used, on purpose. |
+| `uischemas.json` | Registry entries for `address` and `handover`. A **`.ts` file**, because a registry entry carries a tester function and a function is not JSON. The `handover` entry is never used, on purpose. |
 | `data.json` | Two required properties missing, one empty object, one undeclared key, one unmet dependency. The objects that demonstrate layout are all valid, so the error table stays about errors. |
 | `config.json` | `showUnfocusedDescription` and `restrict`, both top level. |
 | `translations.json` | English and Bulgarian, including messages for the three object-level failures. |
@@ -193,9 +193,9 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 
 ## Standalone host setup
 
-- Register the trusted tester functions exported by uischemas.mjs.
+- Register the trusted tester functions exported by uischemas.json.
 
-Import `uischemas` from [uischemas.mjs](uischemas.mjs) and register its entries.
+Import `uischemas` from [uischemas.json](uischemas.json) and register its entries.
 
 
 ## Feature navigation

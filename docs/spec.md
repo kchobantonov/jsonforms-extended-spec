@@ -1330,6 +1330,13 @@ against. A renderer set's complete default set SHOULD live in one place, so it
 is enumerable and a missing translation degrades to a sensible default rather
 than an empty element.
 
+A portable locale catalog MAY spell a dotted key as one literal property or
+as nested JSON objects. Resolve an exact own property first, then traverse the
+dot-separated segments through own properties. The final value must be a string.
+For example, `"static-text": { "English": "English" }` supplies
+`static-text.English`; a literal `"static-text.English"` wins if both exist.
+This lookup concerns catalog keys, never data paths.
+
 **Interpolation belongs to the translator.** Core performs none: a default
 like `Delete {name}` renders literally unless the translator substitutes. A
 message showing a raw placeholder to the user is the symptom of a renderer

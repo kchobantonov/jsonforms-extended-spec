@@ -25,9 +25,9 @@ at one position can change another.
 | `data.json` | One empty tuple, one with a trailing value its schema forbids, one invalid position, and two complex positions. |
 | `config.json` | `showUnfocusedDescription` and `restrict`, both top level. |
 | `translations.json` | English and Bulgarian, including the two per-position label keys and the `{position}` fallback. |
-| `uischemas.mjs` | Registry entries for the complex positions, one per entry shape. **`.ts`, not `.json`** — see below. |
+| `uischemas.json` | Registry entries for the complex positions, one per entry shape. **`.ts`, not `.json`** — see below. |
 
-### Why `uischemas.mjs` and not `uischemas.json`
+### Why `uischemas.json` and not `uischemas.json`
 
 A registry entry carries a **tester function**, and the UI-schema registry is
 host code rather than part of the serialized UI model: the renderer contract says to "use the
@@ -325,9 +325,9 @@ by a host adapter; the package validates the authored assets, not live UI behavi
 
 ## Standalone host setup
 
-- Register the trusted tester functions exported by uischemas.mjs.
+- Register the trusted tester functions exported by uischemas.json.
 
-Import `uischemas` from [uischemas.mjs](uischemas.mjs) and register its entries.
+Import `uischemas` from [uischemas.json](uischemas.json) and register its entries.
 
 
 ## Feature navigation

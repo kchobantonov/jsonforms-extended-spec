@@ -593,8 +593,8 @@ it.each([BASE_UISCHEMA, EXTENDED_UISCHEMA])('validates editor detail modes in %s
 
 it('validates named template models and slot fallback content', async () => {
   const validate = compile(EXTENDED_UISCHEMA);
-  // @ts-ignore Trusted example registry supplied by the host.
-  const { uischemas } = await import('../../examples/template-slots/uischemas.mjs');
+  const { examples } = await import('../../examples/index.js');
+  const uischemas = examples.find((example) => example.id === 'template-slots')?.uischemas ?? [];
   for (const entry of uischemas) {
     expect(validate(entry.uischema), JSON.stringify(validate.errors)).toBe(true);
   }
