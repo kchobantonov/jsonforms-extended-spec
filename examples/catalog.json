@@ -297,7 +297,7 @@
       "uischemas.json"
     ],
     "hostRequirements": [
-      "Handle the authored locale and theme actions."
+      "Register host actions changeLang (params.lang: en or bg) and toggleMode (switch light/dark)."
     ]
   },
   {

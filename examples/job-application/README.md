@@ -3,7 +3,9 @@
 A nested application form kept alongside the broader kitchen-sink journey. It
 exercises applicant details, skills, experience, preferences, agreements,
 resumes, and references in one realistic record. The authored buttons request
-locale changes and theme changes, so hosts must supply those action handlers.
+locale changes and theme changes. Hosts register `changeLang` (read `params.lang`
+as `en` or `bg`) and `toggleMode` (switch light/dark); these actions do not
+change application state on their own.
 
 `uischema.json` and the named forms in `uischemas.json` are portable. The
 generated example export includes that registry, so hosts can render the

@@ -442,3 +442,19 @@ Visual acceptance: the imported `Fax` pill has a continuous error-colored
 outline around its rounded perimeter while `Email` remains unmarked, including
 when tokens wrap or scroll. React Shadcn has a DOM class regression for its
 border; this is not a browser visual test or verification of Svelte support.
+
+## P22 — Portable actions require host registration
+
+**Trap:** Render a Button from the shared UI schema and assume its `action`
+name changes application state by itself. A dispatcher that accepts the event
+without registering the command makes the button appear active but ineffective.
+
+**Behavior:** Keep the action name and parameters in portable JSON. The host
+registers the command and updates its own locale or theme state; the renderer
+only dispatches and awaits the action. Preserve any example-specific handler
+before applying a host fallback.
+
+**Check:** In the [Job application](../examples/job-application/README.md),
+activate Bulgarian and English and observe the field labels switch both ways.
+Toggle theme twice and observe the host return to its original mode. Run these
+checks with direct renderer and webcomponent hosts where both are supported.
