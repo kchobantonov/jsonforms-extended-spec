@@ -1,0 +1,142 @@
+{
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "label": {
+        "type": "string"
+      },
+      "readonly": {
+        "type": "boolean"
+      },
+      "presentation": {
+        "type": "string",
+        "enum": [
+          "automatic",
+          "radio"
+        ]
+      },
+      "compact": {
+        "type": "boolean"
+      },
+      "slider": {
+        "type": "boolean"
+      },
+      "flatLayout": {
+        "type": "boolean"
+      },
+      "showExtra": {
+        "type": "boolean"
+      },
+      "useAlternate": {
+        "type": "boolean"
+      },
+      "hideNameInHideMode": {
+        "type": "boolean"
+      },
+      "amountLabel": {
+        "type": "string"
+      },
+      "invalidLabel": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "label",
+      "readonly",
+      "presentation",
+      "compact"
+    ]
+  },
+  "data": {
+    "label": "Subscription plan",
+    "readonly": false,
+    "presentation": "automatic",
+    "compact": false,
+    "slider": false,
+    "flatLayout": false,
+    "showExtra": false,
+    "useAlternate": false,
+    "hideNameInHideMode": false,
+    "amountLabel": "Amount",
+    "invalidLabel": false
+  },
+  "uischema": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/label",
+        "label": "Preview label",
+        "i18n": "dynamicPlayground.previewLabel"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/readonly",
+        "label": "Preview readonly",
+        "i18n": "dynamicPlayground.previewReadonly"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/presentation",
+        "label": "Preview presentation",
+        "i18n": "dynamicPlayground.previewPresentation"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/compact",
+        "label": "Compact preview spacing",
+        "i18n": "dynamicPlayground.compactSpacing"
+      },
+      {
+        "type": "Group",
+        "label": "Advanced",
+        "i18n": "dynamicAdvanced.advanced",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/slider",
+            "amountLabel": "Use slider editor",
+            "i18n": "dynamicAdvanced.useSlider"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/flatLayout",
+            "amountLabel": "Use flat extra layout",
+            "i18n": "dynamicAdvanced.flatLayout"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/showExtra",
+            "amountLabel": "Show extra field",
+            "i18n": "dynamicAdvanced.showExtra"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/useAlternate",
+            "amountLabel": "Edit alternate name",
+            "i18n": "dynamicAdvanced.editAlternate"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/hideNameInHideMode",
+            "amountLabel": "Hide name when mode is hide",
+            "i18n": "dynamicAdvanced.hideName"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/amountLabel",
+            "amountLabel": "Amount label",
+            "i18n": "dynamicAdvanced.amountLabel"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/invalidLabel",
+            "amountLabel": "Try invalid label binding",
+            "i18n": "dynamicAdvanced.invalidLabel"
+          }
+        ]
+      }
+    ]
+  }
+}

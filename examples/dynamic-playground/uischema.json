@@ -1,0 +1,36 @@
+{
+  "type": "VerticalLayout",
+  "options": {
+    "gap": 24
+  },
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Name",
+      "i18n": "dynamicPlayground.name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/plan",
+      "label": "Plan",
+      "i18n": "dynamicPlayground.plan"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/alternate"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/amount"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/mode"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/members"
+    }
+  ]
+}

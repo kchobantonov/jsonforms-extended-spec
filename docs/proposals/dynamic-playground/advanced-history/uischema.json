@@ -1,0 +1,25 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/alternate"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/amount"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/mode"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/members"
+    }
+  ]
+}

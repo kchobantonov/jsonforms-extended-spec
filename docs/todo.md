@@ -18,17 +18,25 @@ schema containing speculative options.
 
 ## FUTURE — dynamic UI-element overlays
 
-`$dynamic` is not implemented and its design is not final. Section 11 and all
-other overlay examples in spec.md are retained design notes, not current API
-contracts. The proposed `bind`/`template` descriptors and their conformance
-vectors have been removed from the published schemas and current test vectors.
+`$dynamic` has an experimental Svelte implementation, but its full lifecycle
+and cross-adapter design are not final. Section 11 and other overlay examples
+remain design notes, not current portable API contracts. The proposed
+`bind`/`template` descriptors and their conformance vectors remain outside the
+published common/extended schemas and current test vectors.
 
 Section 11 now consolidates the two dynamic design discussions, including ordered
 rules, CEL, trusted local functions, explicit external inputs and aspect redispatch.
 The agreed design uses element-shaped overlays in both unconditional and ordered
 conditional forms, and retains `bind` alongside CEL expressions and templates.
-Other recommendations remain proposals; no runtime support or schema acceptance
-is claimed. The acceptance cases there are a design checklist, not executed tests.
+Other recommendations remain proposals; the Svelte adapter's focused runtime
+tests do not certify the entire contract or another adapter. The acceptance
+cases there are a design checklist, not executed cross-adapter tests.
+
+The [two-form playground](../examples/dynamic-playground/README.md) now supplies
+concrete assets and a host-derived alternative. Section 11 describes parent
+consumers, renderer lifecycle and the TypeScript boundary. The ordinary host-driven example is in
+the catalog; its host-mapping tests are not renderer certification. The proposed
+`$dynamic` descriptor is a separate experimental catalog asset.
 
 Before implementation, resolve:
 
@@ -36,14 +44,17 @@ Before implementation, resolve:
   and any future remote choice provider.
 - Descriptor shape, path/expression syntax, supported namespaces and the
   distinction between missing, null, false, zero and empty values.
-- Which fields may change, especially options that influence renderer selection.
+- How generic field changes, including renderer selection and structural
+  replacements, handle focus and parent-consumed metadata under the immediate
+  draft-discard policy.
 - Trust boundaries, own-property access, prototype protection, permitted context
   values, URL substitution and permissions.
 - Resolution timing across nested, generated and detail UI schemas; stable
   identity, async replacement policy, focus and local-state preservation.
 - Diagnostics, fallback behavior, and versioning of the eventual API.
 
-Then implement the resolver and integration tests before adding schema shapes.
+Complete the resolver lifecycle and integration matrix before adding the shape
+to the published common/extended schemas.
 
 **Existing feature to preserve:** Label interpolation already uses
 `jsonformsExtended.dynamicValues.enabled` to expose data/item/config/context.

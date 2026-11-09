@@ -9,7 +9,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const md = new MarkdownIt();
 const slug = text => text.toLowerCase().replace(/[^\p{L}\p{N}_\- ]/gu, '').replaceAll(' ', '-');
 const catalog = await readJson(join(root, 'examples/catalog.json'));
-const docs = ['README.md', 'docs/spec.md', 'docs/renderer-and-demo.md', 'docs/renderer-selection.md', 'docs/todo.md', 'docs/audit.md', 'docs/history/TODO.md', 'typescript/README.md', 'schemas/README.md', 'examples/README.md', ...catalog.map(x => `examples/${x.id}/README.md`)];
+const docs = ['docs/proposals/dynamic-playground/README.md', 'README.md', 'docs/spec.md', 'docs/renderer-and-demo.md', 'docs/renderer-selection.md', 'docs/todo.md', 'docs/audit.md', 'docs/history/TODO.md', 'typescript/README.md', 'schemas/README.md', 'examples/README.md', ...catalog.map(x => `examples/${x.id}/README.md`)];
 const headings = new Map();
 for (const path of docs) {
   const ids = new Set(); const counts = new Map();

@@ -1,0 +1,15 @@
+{
+  "name": "Ada",
+  "plan": "pro",
+  "alternate": "Grace",
+  "amount": 25,
+  "mode": "normal",
+  "members": [
+    {
+      "name": "Ada"
+    },
+    {
+      "name": "Grace"
+    }
+  ]
+}

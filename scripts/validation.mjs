@@ -50,7 +50,7 @@ export async function validateProject(root) {
     if (checks['example.schema.json'] && !checks['example.schema.json'](entry)) failures.push(`${entry.id}: invalid catalog entry`);
     for (const file of entry.files) {
       const data = await readJson(join(root, 'examples', entry.id, file));
-      let schemaName = { 'uischema.json': 'jsonforms-extended-uischema.schema.json', 'config.json':'jsonforms-extended-config.schema.json', 'schema.json':'http://json-schema.org/draft-07/schema#' }[file];
+      let schemaName = { 'uischema.json': 'jsonforms-extended-uischema.schema.json', 'dynamic-uischema.json': 'jsonforms-dynamic-uischema.schema.json', 'config.json':'jsonforms-extended-config.schema.json', 'schema.json':'http://json-schema.org/draft-07/schema#' }[file];
       if (schemaName) {
         const validate = file === 'schema.json' ? dataSchemaValidator : checks[schemaName];
         const exceptions = invalid.filter(x => x.example === entry.id && x.file === file);

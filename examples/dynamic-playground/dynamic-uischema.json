@@ -1,0 +1,294 @@
+{
+  "type": "VerticalLayout",
+  "options": {
+    "gap": 24
+  },
+  "$dynamic": {
+    "options": {
+      "gap": {
+        "expression": "external.settings.compact ? 8 : 24"
+      }
+    }
+  },
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Name",
+      "$dynamic": [
+        {
+          "overlay": {
+            "i18n": {
+              "expression": "value == '' ? 'dynamicAdvanced.emptyName' : 'dynamicAdvanced.name'"
+            }
+          },
+          "when": {
+            "expression": "has(data.name)"
+          }
+        },
+        {
+          "when": {
+            "expression": "!has(data.name)"
+          },
+          "overlay": {
+            "i18n": "dynamicAdvanced.emptyName"
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.hideNameInHideMode"
+          },
+          "overlay": {
+            "rule": {
+              "effect": "HIDE",
+              "condition": {
+                "scope": "#/properties/mode",
+                "schema": {
+                  "const": "hide"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "i18n": "dynamicAdvanced.name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/plan",
+      "label": "Plan",
+      "i18n": "",
+      "$dynamic": [
+        {
+          "overlay": {
+            "label": {
+              "bind": "external.settings.label"
+            },
+            "options": {
+              "readonly": {
+                "bind": "external.settings.readonly"
+              }
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.presentation == 'radio'"
+          },
+          "overlay": {
+            "options": {
+              "format": "radio"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Label",
+      "text": "Configuration",
+      "i18n": "dynamicAdvanced.configuration"
+    },
+    {
+      "type": "Label",
+      "text": "Restrictions enabled",
+      "i18n": "dynamicAdvanced.restrictions.enabled",
+      "$dynamic": {
+        "i18n": {
+          "expression": "config.restrict == true ? 'dynamicAdvanced.restrictions.enabled' : 'dynamicAdvanced.restrictions.disabled'"
+        }
+      }
+    },
+    {
+      "type": "Label",
+      "text": "Renderer path",
+      "i18n": "dynamicAdvanced.rendererPath"
+    },
+    {
+      "type": "Label",
+      "text": "/",
+      "$dynamic": {
+        "text": {
+          "expression": "path == '' ? '/' : path"
+        }
+      }
+    },
+    {
+      "type": "Label",
+      "text": "No core errors",
+      "i18n": "dynamicAdvanced.status.noErrors",
+      "$dynamic": {
+        "i18n": {
+          "expression": "size(errors) > 0 ? 'dynamicAdvanced.status.hasErrors' : 'dynamicAdvanced.status.noErrors'"
+        }
+      }
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Edit name",
+      "$dynamic": [
+        {
+          "when": {
+            "expression": "external.settings.useAlternate"
+          },
+          "overlay": {
+            "scope": "#/properties/alternate",
+            "label": "Edit alternate name",
+            "i18n": "dynamicAdvanced.editAlternate"
+          }
+        }
+      ],
+      "i18n": "dynamicAdvanced.editName"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/amount",
+      "label": "Amount",
+      "i18n": "",
+      "$dynamic": [
+        {
+          "overlay": {
+            "label": {
+              "bind": "external.settings.amountLabel"
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.invalidLabel"
+          },
+          "overlay": {
+            "label": {
+              "bind": "external.settings.missingLabel"
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.slider"
+          },
+          "overlay": {
+            "options": {
+              "slider": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/mode",
+      "label": "Mode",
+      "i18n": "dynamicAdvanced.mode"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/members",
+      "label": "Members",
+      "options": {
+        "collapsed": false,
+        "detail": {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/name",
+              "label": "Member name",
+              "i18n": "dynamicAdvanced.memberName"
+            }
+          ]
+        }
+      },
+      "i18n": "dynamicAdvanced.members",
+      "$dynamic": {
+        "options": {
+          "detail": {
+            "type": "VerticalLayout",
+            "elements": [
+              {
+                "type": "Control",
+                "scope": "#/properties/name",
+                "label": "Member name",
+                "i18n": "dynamicAdvanced.memberName"
+              },
+              {
+                "type": "Label",
+                "text": "Ada",
+                "$dynamic": {
+                  "text": {
+                    "template": "{item.name}"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "Group",
+      "label": "Extra fields",
+      "elements": [
+        {
+          "type": "Label",
+          "text": "Turn on Show extra field",
+          "i18n": "dynamicAdvanced.extraPrompt"
+        }
+      ],
+      "$dynamic": [
+        {
+          "when": {
+            "expression": "external.settings.flatLayout"
+          },
+          "overlay": {
+            "type": "VerticalLayout"
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.showExtra"
+          },
+          "overlay": {
+            "elements": [
+              {
+                "type": "Label",
+                "text": "Extra field is available",
+                "i18n": "dynamicAdvanced.extraAvailable"
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/alternate",
+                "label": "Extra name",
+                "i18n": "dynamicAdvanced.extraName"
+              },
+              {
+                "type": "Label",
+                "text": "Ada",
+                "$dynamic": {
+                  "text": {
+                    "template": "{data.name}"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "i18n": "dynamicAdvanced.extraFields"
+    },
+    {
+      "type": "Label",
+      "text": "Locale",
+      "i18n": "dynamicAdvanced.locale"
+    },
+    {
+      "type": "Label",
+      "text": "en",
+      "$dynamic": {
+        "text": {
+          "bind": "locale"
+        }
+      }
+    }
+  ]
+}

@@ -15,6 +15,30 @@ Helpers: `@chobantonov/jsonforms-extended-spec/typescript`
 Everything below is compiled and asserted in
 [`test/typedAuthoring.test.ts`](test/typedAuthoring.test.ts).
 
+The experimental `$dynamic` profile is also typed for Control, Label,
+Category and layout helpers. Descriptor leaves retain the declared type of
+known options while arbitrary extension keys remain available:
+
+```ts
+f.control('email', {
+  $dynamic: [
+    { overlay: { label: { bind: 'external.settings.label' } } },
+    {
+      when: { expression: "external.settings.presentation == 'radio'" },
+      overlay: { options: { format: 'radio' } },
+    },
+  ],
+});
+```
+
+`DynamicSpec<T>` describes portable JSON descriptors;
+`TrustedDynamicSpec<T>` separately admits synchronous function leaves for
+in-process authoring. A host must explicitly enable that trusted runtime
+profile. Neither TypeScript nor the schema can prove an expression's result
+type, so the runtime still validates resolved values. See
+[`typedDynamic.test.ts`](test/typedDynamic.test.ts) for positive and negative
+compile-time cases.
+
 ## The shape of it
 
 ```ts

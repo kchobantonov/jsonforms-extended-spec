@@ -1,6 +1,7 @@
 import type { JsonSchema, UISchemaElement } from '@jsonforms/core';
 import type { CssLength } from './cssLength';
 import type { DataPath, Scope, SchemaAtPath } from './schemaTypes';
+import type { DynamicSpec, DynamicTarget } from './dynamic';
 
 /**
  * Authoring a UI schema against the JSON Schema it is bound to.
@@ -191,6 +192,7 @@ export interface TypedControl<S, P extends ControlPath<S> = ControlPath<S>> {
   i18n?: string;
   options?: OptionsFor<SchemaAtPath<S, P>>;
   rule?: TypedRule<S>;
+  $dynamic?: DynamicSpec<DynamicTarget<TypedControl<S, P>>>;
 }
 
 /** An unbound label element. */
@@ -200,6 +202,7 @@ export interface TypedLabelElement<S> {
   i18n?: string;
   options?: Record<string, unknown>;
   rule?: TypedRule<S>;
+  $dynamic?: DynamicSpec<DynamicTarget<TypedLabelElement<S>>>;
 }
 
 /** One tab or step of a `Categorization`. */
@@ -210,6 +213,7 @@ export interface TypedCategory<S> {
   elements: TypedElement<S>[];
   options?: Record<string, unknown>;
   rule?: TypedRule<S>;
+  $dynamic?: DynamicSpec<DynamicTarget<TypedCategory<S>>>;
 }
 
 export interface TypedLayout<S> {
@@ -238,6 +242,7 @@ export interface TypedLayout<S> {
     showValidationIndicator?: boolean;
   };
   rule?: TypedRule<S>;
+  $dynamic?: DynamicSpec<DynamicTarget<TypedLayout<S>>>;
 }
 
 /**

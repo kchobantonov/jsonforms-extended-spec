@@ -35,7 +35,9 @@ checks and renderer interactions require semantic tests. See the separate
 [behavior vectors](../conformance/behavior.json). Deliberate authoring failures in
 examples are listed in [expected-invalid.json](../conformance/expected-invalid.json).
 
-`$dynamic` has no schema definition or current conformance vectors. Reserved
+`$dynamic` is excluded from the published common/extended schemas and current
+conformance vectors. The separate `jsonforms-dynamic-uischema.schema.json`
+validates the experimental portable descriptor syntax only. Reserved
 layout hints and unimplemented options are likewise omitted. Unknown extension
 keys remain permitted for interoperability; this is not validation of their
 shape or a promise of support. `dynamicValues.enabled` remains because Label

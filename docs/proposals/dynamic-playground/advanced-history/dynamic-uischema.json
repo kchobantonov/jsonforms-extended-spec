@@ -1,0 +1,270 @@
+{
+  "type": "VerticalLayout",
+  "options": {
+    "gap": 16,
+    "exampleExtension": {
+      "theme": "plain",
+      "keep": true
+    },
+    "exampleChoices": [
+      "static"
+    ]
+  },
+  "$dynamic": {
+    "options": {
+      "exampleExtension": {
+        "theme": {
+          "bind": "external.settings.label"
+        }
+      },
+      "exampleChoices": [
+        "first",
+        {
+          "bind": "data.mode"
+        }
+      ],
+      "exampleLiteral": {
+        "literal": {
+          "bind": "ordinary payload"
+        }
+      }
+    }
+  },
+  "elements": [
+    {
+      "type": "Label",
+      "text": "Configuration",
+      "i18n": "dynamicAdvanced.configuration"
+    },
+    {
+      "type": "Label",
+      "text": "Restrictions enabled",
+      "i18n": "dynamicAdvanced.restrictions.enabled",
+      "$dynamic": {
+        "i18n": {
+          "expression": "config.restrict == true ? 'dynamicAdvanced.restrictions.enabled' : 'dynamicAdvanced.restrictions.disabled'"
+        }
+      }
+    },
+    {
+      "type": "Label",
+      "text": "Renderer path",
+      "i18n": "dynamicAdvanced.rendererPath"
+    },
+    {
+      "type": "Label",
+      "text": "/",
+      "$dynamic": {
+        "text": {
+          "expression": "path == '' ? '/' : path"
+        }
+      }
+    },
+    {
+      "type": "Label",
+      "text": "No core errors",
+      "i18n": "dynamicAdvanced.status.noErrors",
+      "$dynamic": {
+        "i18n": {
+          "expression": "size(errors) > 0 ? 'dynamicAdvanced.status.hasErrors' : 'dynamicAdvanced.status.noErrors'"
+        }
+      }
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Name",
+      "$dynamic": [
+        {
+          "overlay": {
+            "options": {
+              "exampleLocale": {
+                "template": "locale={locale}"
+              },
+              "exampleValue": {
+                "template": "value={value}"
+              }
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.hideNameInHideMode"
+          },
+          "overlay": {
+            "rule": {
+              "effect": "HIDE",
+              "condition": {
+                "scope": "#/properties/mode",
+                "schema": {
+                  "const": "hide"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "i18n": "dynamicAdvanced.name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Edit name",
+      "$dynamic": [
+        {
+          "when": {
+            "expression": "external.settings.useAlternate"
+          },
+          "overlay": {
+            "scope": "#/properties/alternate",
+            "label": "Edit alternate name",
+            "i18n": "dynamicAdvanced.editAlternate"
+          }
+        }
+      ],
+      "i18n": "dynamicAdvanced.editName"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/amount",
+      "label": "Amount",
+      "i18n": "",
+      "$dynamic": [
+        {
+          "overlay": {
+            "label": {
+              "bind": "external.settings.label"
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.invalidLabel"
+          },
+          "overlay": {
+            "label": {
+              "bind": "external.settings.missingLabel"
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.slider"
+          },
+          "overlay": {
+            "options": {
+              "slider": true
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "size(errors) > 0"
+          },
+          "overlay": {
+            "options": {
+              "exampleErrorState": "invalid form"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/mode",
+      "label": "Mode",
+      "i18n": "dynamicAdvanced.mode"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/members",
+      "label": "Members",
+      "options": {
+        "collapsed": false,
+        "detail": {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/name",
+              "label": "Member name",
+              "i18n": "dynamicAdvanced.memberName"
+            }
+          ]
+        }
+      },
+      "i18n": "dynamicAdvanced.members",
+      "$dynamic": {
+        "options": {
+          "detail": {
+            "type": "VerticalLayout",
+            "elements": [
+              {
+                "type": "Control",
+                "scope": "#/properties/name",
+                "label": "Member name",
+                "$dynamic": {
+                  "options": {
+                    "exampleMember": {
+                      "template": "member={item.name}"
+                    }
+                  }
+                },
+                "i18n": "dynamicAdvanced.memberName"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "Group",
+      "label": "Extra fields",
+      "elements": [
+        {
+          "type": "Label",
+          "text": "Turn on Show extra field",
+          "i18n": "dynamicAdvanced.extraPrompt"
+        }
+      ],
+      "$dynamic": [
+        {
+          "when": {
+            "expression": "external.settings.flatLayout"
+          },
+          "overlay": {
+            "type": "VerticalLayout"
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.showExtra"
+          },
+          "overlay": {
+            "elements": [
+              {
+                "type": "Label",
+                "text": "Extra field is available",
+                "i18n": "dynamicAdvanced.extraAvailable"
+              },
+              {
+                "type": "Control",
+                "scope": "#/properties/alternate",
+                "label": "Extra name",
+                "$dynamic": {
+                  "options": {
+                    "exampleData": {
+                      "template": "name={data.name}"
+                    }
+                  }
+                },
+                "i18n": "dynamicAdvanced.extraName"
+              }
+            ]
+          }
+        }
+      ],
+      "i18n": "dynamicAdvanced.extraFields"
+    }
+  ]
+}

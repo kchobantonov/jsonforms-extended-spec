@@ -1,0 +1,39 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/plan",
+      "label": "Plan",
+      "$dynamic": [
+        {
+          "overlay": {
+            "label": {
+              "bind": "external.settings.label"
+            },
+            "options": {
+              "readonly": {
+                "bind": "external.settings.readonly"
+              }
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.presentation == 'radio'"
+          },
+          "overlay": {
+            "options": {
+              "format": "radio"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -148,6 +148,25 @@ Companion to the [implementation guide](implementation-guide.md). These entries 
 
 **Check:** Mount, update schema/data/locale, disconnect and reconnect. Use the packaged implementation as well as source tests. Test nullable and recursive data without automatically materializing infinite children.
 
+## Dynamic overlays preserve typed values and committed data
+
+**Trap:** Treat a CEL integer as a JavaScript number without checking its range,
+or forward its `bigint` result to a JSON-only renderer. Treat a literal
+`{ "bind": "..." }` value as a path lookup. Replace a focused editor without
+transferring focus, or flush its invalid draft into committed data during teardown.
+
+**Behavior:** Convert only safe CEL integers to JSON numbers. Use the explicit
+`literal` descriptor to preserve descriptor-shaped data. Resolve overlays before
+normal tester selection. Under the chosen immediate replacement policy, discard
+uncommitted drafts and IME work in the replaced editor without writing them to
+committed form data. A permission restriction takes effect on the same update.
+
+**Check:** Change a numeric Image width with a CEL ternary, then request an
+out-of-range integer and verify fallback. Forward a literal descriptor-shaped
+extension value unchanged. Change presentation during an invalid text draft and
+composition, then verify the old draft is discarded, committed data is retained,
+and only the affected editor swaps.
+
 ## Portable acceptance vectors
 
 The `port-*` entries in [behavior.json](../conformance/behavior.json) cover representative cases from this guide. They require renderer-specific adapters; passing the specification package checks alone does not execute these UI scenarios.
@@ -244,20 +263,32 @@ selection without silently editing a sibling at a reused index.
 
 An explicit `{}` accepts every JSON value; an omitted schema allows a host such as JSON Forms React to infer one from data. Preserve missing initial data as absence, not null. When switching the demo to an omitted schema, remove its previous Monaco schema registration without removing registrations belonging to other editors. Inferred constraints describe the sample and are not an authored business schema.
 
-The current JSON Forms core generator expects an object root. A demo adapter can infer a wrapped property (`Generate.jsonSchema({ value: data }).properties.value`) to support root arrays, scalars and null, and use an unrestricted runtime schema while data is absent. Do not store that runtime fallback as the authored schema; recompute inference when data changes.
+JSON Forms 3.9.0-alpha.2 infers schemas for absent data, explicit null, arrays,
+objects and scalar roots. Pass an omitted schema directly to JSON Forms React so
+inference follows replacement data, including a change of root type. Earlier
+3.9.0-alpha.1 installations needed a demo adapter that inferred a wrapped
+property for non-object roots; remove that adapter when upgrading. The Monaco
+stale-schema cleanup remains independent.
 
+Acceptance example: render `json-inference` with no authored schema and absent
+data, then replace data with an object, array, string, number, boolean, and
+null. Each root must render without a stale schema or an inapplicable renderer.
+The Antd and Shadcn `genericJsonExamples.test.tsx` files in the React renderer
+repository execute this sequence against JSON Forms React 3.9.0-alpha.2.
 
-### Temporary inference workaround — upstream #2478
+## Unrestricted array items need a control fallback
 
-Track [JSON Forms PR #2478](https://github.com/eclipsesource/jsonforms/pull/2478),
-which includes non-object root inference and regeneration when data changes.
-The React demo adapter (`demoSchema.ts`, called from `App.tsx`) is temporary for
-the installed 3.9.0-alpha.1 dependency. Remove it after upgrading to a released
-version containing the fix, not merely after the PR merges. First verify absent
-data, explicit null, every scalar type, arrays, objects, and replacement of data
-with a different root type. Then pass the omitted schema directly to JSON Forms
-and retain the example regressions against that upstream path. The Monaco
-stale-schema cleanup is separate and should remain.
+With JSON Schema `items: true`, JSON Forms 3.9.0-alpha.2 resolves the item
+schema to the boolean `true`. Generating a default VerticalLayout from that
+schema yields no controls. An array renderer must fall back to a Control scoped
+at `#` for the item so a nested mixed value still exposes its type selector
+and View action. Preserve registered and explicitly supplied detail UI schemas.
+Do not treat the default-open first item as closed when testing the child row.
+
+Executable acceptance: Antd `MixedRenderer.test.tsx` renders both array and
+object children of an `items: true` array with a type selector and View icon;
+Shadcn `mixedWorkspace.test.tsx` checks the same unrestricted child types.
+These are React renderer tests, not claims about other renderer sets.
 
 ## Cleared mixed scalars versus absent values
 
@@ -348,18 +379,26 @@ Check two `options.layout.span: 6` buttons in a twelve-column horizontal layout:
 each fills its own cell, remains beside its sibling and respects the gap.
 Toggle true to false and omit the option; native intrinsic sizing returns.
 
-## Future dynamic overlays: fallback is per evaluation
+## Experimental dynamic overlays: fallback is per evaluation
 
-This entry applies to the unimplemented [§11 proposal](spec.md#11-dynamic-values-and-path-grammar),
-not current renderer conformance. Recompute overlays from the authored static
+This entry applies to the experimental [§11 profile](spec.md#11-dynamic-values-and-path-grammar),
+which does not establish cross-adapter conformance. Recompute overlays from the authored static
 element on each evaluation. Starting from the last effective element leaves stale
 readonly/presentation values when a condition stops matching. An invalid later
 overlay preserves an earlier valid overlay from the same evaluation, not an older
-runtime result. Preserve inherited restrictions regardless of an option override.
+runtime result. Generic resolver failures fall back; a syntactically safe JSON
+value that an individual renderer rejects follows that renderer's ordinary
+invalid-field behavior. The resolver has no target contract registry. Preserve
+inherited restrictions regardless of an option override.
 
 Proposed acceptance: a company rule sets readonly true; changing to a non-company
 restores static false, while host readonly remains enforced. Repeat with a later
 invalid expression and verify diagnostics without leaking bound values.
+Do not copy every form-data node for each external-only overlay. Conservatively
+identify referenced environment roots, and share validated immutable snapshots
+between occurrences for one source namespace version. A trusted function may read
+every root. Keep the combined size limit and prevent one function from mutating
+a shared snapshot before another occurrence evaluates.
 
 
 ## Collection key snapshots must preserve literal keys
@@ -462,3 +501,48 @@ the form return to its original mode while the application theme stays
 unchanged. Check readable text and controls for both dark application/light form
 and light application/dark form. Run these checks with direct
 renderer and webcomponent hosts where both are supported.
+
+
+## Experimental dynamic overlays: dispatch is only one consumer
+
+Resolving an arbitrary extension option does not give a standard renderer a new
+feature. Interactive examples should show supported presentation properties; keep
+unconsumed extension payloads in resolver tests or explicitly identify their
+custom consumer. Use catalog keys for visible prose and display bound technical
+values separately when they do not need translation.
+
+Capture actual focus ownership before replacing an editor, rather than retaining
+the last element that ever received focus. React's pre-commit snapshot lifecycle
+can capture that ownership before DOM removal; after commit, transfer only when
+the old editor is disconnected and focus has not moved elsewhere. Pure resolution
+caches may reuse immutable results, but must not publish form writes or committed
+subscriptions from a speculative render.
+
+Nested `$dynamic` metadata is not an instruction to the parent overlay walker.
+Preserve it in object-valued detail slots as well as child arrays; only a later
+UI-element dispatch resolves it. A detail may be reused in several rows, so
+premature resolution can freeze the parent's item into every child. Exclude such
+metadata from the parent's dependency inventory. Cells often receive an already
+resolved data path, unlike Control renderers: do not append the scope twice when
+constructing their `value` environment root. Array snapshots must reject indexed
+getters without executing them, just like object snapshots.
+
+A nonvisual aspect can resolve an element and delegate to the normal renderer,
+but a parent may already have read its child's label or sizing. Share the same
+per-occurrence resolution service with those parent consumers. Do not identify a
+child by its evaluated label, or cache effective detail values solely by the shared
+authored UI object. Same-component updates need reactive props; a different
+selected component replaces only that subtree, discarding its local uncommitted
+draft under §11.7. Internal editor replacements follow the same policy.
+For a numeric input, typing `1e` may already have committed the valid prefix `1`;
+the discarded draft is the incomplete suffix, not that committed value. Test
+against the last committed form data rather than assuming it is the value from
+before typing began. A slider's thumb is an editor focus target even when its
+control exposes no native text input.
+
+Proposed acceptance: in the [two-form playground](../examples/dynamic-playground/README.md),
+change the plan label, switch automatic/radio/automatic, and toggle readonly. The
+preview data and unrelated name editor survive; the configuration form remains
+editable. Repeat with an uncommitted edit, IME and permission revocation before
+claiming lifecycle support. These are future adapter acceptance cases, not results
+of executed renderer tests. See spec §11.7–11.10.

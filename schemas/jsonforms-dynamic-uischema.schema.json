@@ -1,0 +1,196 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kchobantonov.github.io/jsonforms-extended-spec/schemas/jsonforms-dynamic-uischema.schema.json",
+  "title": "Experimental JSON Forms $dynamic UI schema",
+  "description": "Validates portable $dynamic descriptor syntax in addition to the published extended UI vocabulary. Runtime evaluation and TypeScript authoring remain experimental.",
+  "allOf": [
+    {
+      "$ref": "jsonforms-extended-uischema.schema.json"
+    },
+    {
+      "$ref": "#/$defs/node"
+    }
+  ],
+  "$defs": {
+    "node": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$dynamic": {
+              "$ref": "#/$defs/dynamic"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/node"
+          }
+        }
+      ]
+    },
+    "dynamic": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/overlay"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "type": "object",
+      "not": {
+        "required": [
+          "$dynamic"
+        ]
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/value"
+      }
+    },
+    "rule": {
+      "type": "object",
+      "required": [
+        "overlay"
+      ],
+      "properties": {
+        "when": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "required": [
+                "expression"
+              ],
+              "properties": {
+                "expression": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "overlay": {
+          "$ref": "#/$defs/overlay"
+        }
+      },
+      "additionalProperties": false
+    },
+    "value": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "bind"
+          ],
+          "properties": {
+            "bind": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "expression"
+          ],
+          "properties": {
+            "expression": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "template"
+          ],
+          "properties": {
+            "template": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "literal"
+          ],
+          "properties": {
+            "literal": {}
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "not": {
+            "anyOf": [
+              {
+                "required": ["bind"],
+                "maxProperties": 1
+              },
+              {
+                "required": ["expression"],
+                "maxProperties": 1
+              },
+              {
+                "required": ["template"],
+                "maxProperties": 1
+              },
+              {
+                "required": ["literal"],
+                "maxProperties": 1
+              }
+            ]
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/value"
+          },
+          "properties": {
+            "$dynamic": { "$ref": "#/$defs/dynamic" }
+          }
+        }
+      ]
+    }
+  }
+}

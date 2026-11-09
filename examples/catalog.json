@@ -249,6 +249,22 @@
     "hostRequirements": []
   },
   {
+    "id": "dynamic-playground",
+    "title": "Dynamic playground: preview and configuration forms",
+    "files": [
+      "schema.json",
+      "data.json",
+      "uischema.json",
+      "configuration.json",
+      "dynamic-uischema.json",
+      "translations.json",
+      "config.json"
+    ],
+    "hostRequirements": [
+      "Mount the configuration form alongside the preview using dynamic-uischema.json with explicit $dynamic support. Share external.settings between the configuration form and the External JSON editor; retain invalid JSON drafts and preserve other external namespaces. The static uischema.json and host.mjs helper demonstrate only basic presentation."
+    ]
+  },
+  {
     "id": "editor-details",
     "title": "Editor details: objects, mixed types, and cells",
     "files": [

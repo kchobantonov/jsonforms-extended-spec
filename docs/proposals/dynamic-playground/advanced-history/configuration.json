@@ -1,0 +1,85 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "slider": {
+        "type": "boolean"
+      },
+      "flatLayout": {
+        "type": "boolean"
+      },
+      "showExtra": {
+        "type": "boolean"
+      },
+      "useAlternate": {
+        "type": "boolean"
+      },
+      "hideNameInHideMode": {
+        "type": "boolean"
+      },
+      "label": {
+        "type": "string"
+      },
+      "invalidLabel": {
+        "type": "boolean"
+      }
+    }
+  },
+  "data": {
+    "slider": false,
+    "flatLayout": false,
+    "showExtra": false,
+    "useAlternate": false,
+    "hideNameInHideMode": false,
+    "label": "Amount",
+    "invalidLabel": false,
+    "i18n": "dynamicAdvanced.amount"
+  },
+  "uischema": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/slider",
+        "label": "Use slider editor",
+        "i18n": "dynamicAdvanced.useSlider"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/flatLayout",
+        "label": "Use flat extra layout",
+        "i18n": "dynamicAdvanced.flatLayout"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/showExtra",
+        "label": "Show extra field",
+        "i18n": "dynamicAdvanced.showExtra"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/useAlternate",
+        "label": "Edit alternate name",
+        "i18n": "dynamicAdvanced.editAlternate"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/hideNameInHideMode",
+        "label": "Hide name when mode is hide",
+        "i18n": "dynamicAdvanced.hideName"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/label",
+        "label": "Amount label",
+        "i18n": "dynamicAdvanced.amountLabel"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/invalidLabel",
+        "label": "Try invalid label binding",
+        "i18n": "dynamicAdvanced.invalidLabel"
+      }
+    ]
+  }
+}

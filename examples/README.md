@@ -1,6 +1,6 @@
 # Specification examples
 
-These 47 example groups share the portable [specification](../docs/spec.md). Each
+These 48 example groups share the portable [specification](../docs/spec.md). Each
 folder contains authored JSON, English/Bulgarian translations and a walkthrough.
 The [catalog](catalog.json) lists files and required host capabilities.
 
@@ -27,6 +27,7 @@ The [catalog](catalog.json) lists files and required host capabilities.
 | [Destructive-change confirmation](destructive-confirmation/README.md) | [14.3](../docs/spec.md#143-shared-destructive-change-confirmation) |
 | [Draft-07 metaschema](draft-07-metaschema/README.md) | [29](../docs/spec.md#29-json-schema-artifacts-and-validation-boundary) |
 | [Editor details: objects, mixed types, and cells](editor-details/README.md) | [18.6](../docs/spec.md#186-shared-detail-ui-schema-selection) |
+| [Dynamic playground: preview and configuration forms](dynamic-playground/README.md) | [11](../docs/spec.md#11-dynamic-values-and-path-grammar) |
 | [File control](file-control/README.md) | [18.18.4](../docs/spec.md#18184-file-control) |
 | [Group layout](group-layout/README.md) | [8.1](../docs/spec.md#81-group) |
 | [JSON editor: any JSON type](json-editor/README.md) | [18.20](../docs/spec.md#1820-mixed-value-controls-and-navigation) |
@@ -53,6 +54,15 @@ The [catalog](catalog.json) lists files and required host capabilities.
 | [Tree: maximum five levels](tree-max-depth/README.md) | [Appendix A](../docs/spec.md#finite-tree-depth) |
 | [Tuple control](tuple-control/README.md) | [18.11](../docs/spec.md#1811-tuple-control-positional-array-fields) |
 | [Validator profile (Ajv)](validator-profile/README.md) | [15.9](../docs/spec.md#159-data-schemas-rules-and-validator-profile) |
+
+## Dynamic playground
+
+The [two-form dynamic playground](dynamic-playground/README.md) is the single
+catalog example for `$dynamic`. It combines basic presentation settings with
+advanced context, structural and renderer-selection cases. Its External editor
+and configuration form share host state independently of business data.
+The static UI schema and host helper remain a basic fallback for hosts without
+the experimental resolver; they do not implement the advanced cases.
 
 ## Loading and validation
 
