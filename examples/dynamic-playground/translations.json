@@ -12,7 +12,6 @@
     "dynamicAdvanced.name.label": "Name",
     "dynamicAdvanced.editName.label": "Edit name",
     "dynamicAdvanced.editAlternate.label": "Edit alternate name",
-    "dynamicAdvanced.amount.label": "Amount",
     "dynamicAdvanced.mode.label": "Mode",
     "dynamicAdvanced.members.label": "Members",
     "dynamicAdvanced.memberName.label": "Member name",
@@ -31,7 +30,11 @@
     "dynamicAdvanced.rendererPath.text": "Renderer path",
     "dynamicAdvanced.advanced.label": "Advanced",
     "dynamicAdvanced.emptyName.label": "Name (empty)",
-    "dynamicAdvanced.locale.text": "Locale"
+    "dynamicAdvanced.locale.text": "Locale",
+    "dynamicAdvanced.wholeMemberDetail.label": "Replace whole member detail",
+    "dynamicAdvanced.memberDetail.label": "Member detail",
+    "dynamicAdvanced.restrictions.unspecified.text": "Restrictions not specified",
+    "dynamicAdvanced.amount.label": "Amount"
   },
   "bg": {
     "dynamicPlayground.name.label": "Име",
@@ -46,7 +49,6 @@
     "dynamicAdvanced.name.label": "Име",
     "dynamicAdvanced.editName.label": "Редактиране на име",
     "dynamicAdvanced.editAlternate.label": "Редактиране на друго име",
-    "dynamicAdvanced.amount.label": "Сума",
     "dynamicAdvanced.mode.label": "Режим",
     "dynamicAdvanced.members.label": "Членове",
     "dynamicAdvanced.memberName.label": "Име на член",
@@ -65,6 +67,10 @@
     "dynamicAdvanced.rendererPath.text": "Път на визуализатора",
     "dynamicAdvanced.advanced.label": "Разширени настройки",
     "dynamicAdvanced.emptyName.label": "Име (празно)",
-    "dynamicAdvanced.locale.text": "Език"
+    "dynamicAdvanced.locale.text": "Език",
+    "dynamicAdvanced.wholeMemberDetail.label": "Замени всички настройки на детайла",
+    "dynamicAdvanced.memberDetail.label": "Детайли за члена",
+    "dynamicAdvanced.restrictions.unspecified.text": "Ограниченията не са зададени",
+    "dynamicAdvanced.amount.label": "Сума"
   }
 }

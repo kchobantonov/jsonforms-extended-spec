@@ -202,6 +202,9 @@
             }
           ],
           "description": "Controls access to form data and context during Label text interpolation."
+        },
+        "dynamic": {
+          "$ref": "#/$defs/dynamic"
         }
       }
     },
@@ -300,6 +303,22 @@
           "type": "boolean",
           "default": false,
           "description": "Allows Label interpolation expressions to access data, item, config and context. Static text parameters remain usable when false. This does not enable dynamic UI-element overlays."
+        }
+      }
+    },
+    "dynamic": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Experimental UI-element $dynamic activation, independent of Label dynamicValues and template script permissions.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Only true enables $dynamic overlays. Omitted or false uses the authored UI element."
+        },
+        "trusted": {
+          "not": {},
+          "description": "In-process only: the adapter exported TRUST_DYNAMIC_FUNCTIONS unique symbol. No JSON value grants trusted callback access."
         }
       }
     }

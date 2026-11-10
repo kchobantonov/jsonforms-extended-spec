@@ -47,6 +47,8 @@ test('playground ordinary forms and derived presentations satisfy published auth
     options: {
       custom: { literal: { bind: 'ordinary data' } },
       metadata: { bind: 'ordinary data', other: true },
+      customLiteralField: { literal: 'data', extra: 1 },
+      literalOptions: { literal: 'data', theme: 'x' },
     },
   };
   assert.ok(validateDynamic(escaped), JSON.stringify(validateDynamic.errors));
@@ -76,7 +78,7 @@ test('host playground round trip retains unrelated UI identity and restores stat
   const restored = derive(settings);
   assert.deepEqual(restored, automatic);
   assert.ok(!Object.hasOwn(restored.elements[1].options, 'format'));
-  assert.equal(derive({ label: '', readonly: false }).elements[1].label, '');
+  assert.equal(derive({ label: '', readonly: false }).elements[1].i18n, 'dynamicPlayground.plan');
   assert.deepEqual(derive({ label: null, readonly: null }), authored);
   assert.deepEqual(authored, original);
 });
@@ -99,13 +101,87 @@ test('advanced configuration bindings use visible Label properties and localized
   const ui = JSON.parse(await readFile(new URL('../examples/dynamic-playground/dynamic-uischema.json', import.meta.url), 'utf8'));
   const translations = JSON.parse(await readFile(new URL('../examples/dynamic-playground/translations.json', import.meta.url), 'utf8'));
   assert.equal(JSON.stringify(ui).includes('exampleStatus'), false);
-  const status = ui.elements.find(element => element.i18n === 'dynamicAdvanced.restrictions.enabled');
-  assert.match(status.$dynamic.i18n.expression, /config\.restrict/);
-  const path = ui.elements.find(element => element.text === '/');
-  assert.equal(path.$dynamic.text.expression, "path == '' ? '/' : path");
+  const status = ui.elements.find(element => element.i18n === 'dynamicAdvanced.restrictions.unspecified');
+  assert.match(status.$dynamic[0].overlay.i18n.expression, /config\.restrict/);
+  const members = ui.elements.find(element => element.scope === '#/properties/members');
+  const path = members.$dynamic[1].overlay.options.detail.literal.elements.find(element => element.i18n === 'dynamicAdvanced.pathValue');
+  assert.equal(path.$dynamic.text.bind, 'path');
   for (const locale of ['en', 'bg']) {
     for (const key of ['restrictions.enabled', 'restrictions.disabled', 'rendererPath']) {
       assert.ok(translations[locale][`dynamicAdvanced.${key}.text`]);
     }
   }
+});
+
+test('host preview text is the fallback under loaded catalogs', async () => {
+  const ui = createPreviewUiSchema(await read('uischema.json'))({ label: 'My plan' });
+  const catalog = (await read('translations.json')).en;
+  const control = ui.elements[1];
+  assert.equal(catalog[`${control.i18n}.label`] ?? control.label, 'My plan');
+  assert.notEqual(control.i18n, '');
+});
+
+test('host-supplied dynamic text uses explicit untranslated prefixes', async () => {
+  const catalogs = await read('translations.json');
+  function visit(value) {
+    if (!value || typeof value !== 'object') return;
+    if (value.type === 'Label' && value.$dynamic?.text?.bind || value.type === 'Label' && value.$dynamic?.text?.template) {
+      assert.ok(value.i18n);
+      for (const catalog of Object.values(catalogs)) assert.equal(catalog[`${value.i18n}.text`], undefined);
+    }
+    for (const child of Object.values(value)) visit(child);
+  }
+  visit(await read('dynamic-uischema.json'));
+});
+
+test('literal payloads validate nested UI metadata without treating ordinary payload data as descriptors', async () => {
+  const validate = (await validators(root))['jsonforms-dynamic-uischema.schema.json'];
+  const child = { type: 'Control', scope: '#', $dynamic: [{ when: 17 }] };
+  for (const detail of [child, { literal: child }, { literal: { type: 'VerticalLayout', elements: [child] } }]) {
+    const ui = { type: 'Control', scope: '#', $dynamic: { options: { detail } } };
+    assert.equal(validate(ui), false);
+  }
+  const data = { bind: 17, $dynamic: [{ when: 17 }] };
+  assert.equal(validate({ type: 'Control', scope: '#', $dynamic: { options: { custom: { literal: data } } } }), true);
+});
+
+test('default Plan uses catalogs while a supplied label overrides them and clearing restores localization', async () => {
+  const derive = createPreviewUiSchema(await read('uischema.json'));
+  const catalog = (await read('translations.json')).bg;
+  for (const [label, expected] of [['', 'План'], ['Custom plan', 'Custom plan'], ['Plan', 'Plan'], ['', 'План']]) {
+    const plan = derive({label}).elements[1];
+    assert.equal(catalog[`${plan.i18n}.label`] ?? plan.label, expected);
+  }
+});
+
+test('independent host text roles use independent prefixes', async () => {
+  const found = new Map();
+  function visit(value) {
+    if (!value || typeof value !== 'object') return;
+    if (value.type === 'Label' && value.$dynamic?.text) {
+      const source = value.$dynamic.text.bind ?? value.$dynamic.text.template;
+      if (source) {
+        if (found.has(source)) assert.equal(found.get(source), value.i18n);
+        found.set(source, value.i18n);
+      }
+    }
+    for (const child of Object.values(value)) visit(child);
+  }
+  visit(await read('dynamic-uischema.json'));
+  assert.equal(new Set(found.values()).size, found.size);
+  assert.ok(found.has('{item.name}'));
+  assert.ok(found.has('{data.name}'));
+  assert.ok(found.has('locale'));
+});
+
+test('dynamic activation is portable JSON while function trust is not', async () => {
+  const checks = await validators(root);
+  const validate = checks['jsonforms-extended-config.schema.json'];
+  for (const enabled of [false, true]) {
+    assert.ok(validate({jsonformsExtended: {dynamic: {enabled}}}));
+  }
+  for (const trusted of [true, false, null, 'TRUST_DYNAMIC_FUNCTIONS', {}, []]) {
+    assert.equal(validate({jsonformsExtended: {dynamic: {enabled: true, trusted}}}), false);
+  }
+  assert.equal((await read('config.json')).jsonformsExtended.dynamic.enabled, true);
 });

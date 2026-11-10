@@ -1496,6 +1496,36 @@
       "finding": "Detail dialogs read the scoped resizable default through the shared dialog resolver; a local dialog member takes precedence.",
       "declaredBefore": false,
       "declaredAfter": true
+    },
+    {
+      "path": "config.jsonformsExtended.dynamic",
+      "status": "consumed",
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/dynamicConfig.ts"
+      ],
+      "finding": "Config-only overlay activation and exact in-process trusted function capability; external input remains independent.",
+      "declaredBefore": false,
+      "declaredAfter": true
+    },
+    {
+      "path": "config.jsonformsExtended.dynamic.enabled",
+      "status": "consumed",
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/dynamicConfig.ts"
+      ],
+      "finding": "Config-only overlay activation and exact in-process trusted function capability; external input remains independent.",
+      "declaredBefore": false,
+      "declaredAfter": true
+    },
+    {
+      "path": "config.jsonformsExtended.dynamic.trusted",
+      "status": "consumed",
+      "evidence": [
+        "packages/jsonforms-react-renderer-common/src/dynamicConfig.ts"
+      ],
+      "finding": "Config-only overlay activation and exact in-process trusted function capability; external input remains independent.",
+      "declaredBefore": false,
+      "declaredAfter": true
     }
   ]
 }

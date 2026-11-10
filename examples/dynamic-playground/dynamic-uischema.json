@@ -20,6 +20,9 @@
           "overlay": {
             "i18n": {
               "expression": "value == '' ? 'dynamicAdvanced.emptyName' : 'dynamicAdvanced.name'"
+            },
+            "label": {
+              "expression": "value == '' ? 'Name (empty)' : 'Name'"
             }
           },
           "when": {
@@ -31,7 +34,8 @@
             "expression": "!has(data.name)"
           },
           "overlay": {
-            "i18n": "dynamicAdvanced.emptyName"
+            "i18n": "dynamicAdvanced.emptyName",
+            "label": "Name (empty)"
           }
         },
         {
@@ -57,18 +61,26 @@
       "type": "Control",
       "scope": "#/properties/plan",
       "label": "Plan",
-      "i18n": "",
+      "i18n": "dynamicPlayground.plan",
       "$dynamic": [
         {
           "overlay": {
-            "label": {
-              "bind": "external.settings.label"
-            },
             "options": {
               "readonly": {
                 "bind": "external.settings.readonly"
               }
             }
+          }
+        },
+        {
+          "when": {
+            "expression": "has(external.settings.label) && external.settings.label != null && external.settings.label != ''"
+          },
+          "overlay": {
+            "label": {
+              "bind": "external.settings.label"
+            },
+            "i18n": "dynamicPlayground.boundPlanText"
           }
         },
         {
@@ -90,27 +102,23 @@
     },
     {
       "type": "Label",
-      "text": "Restrictions enabled",
-      "i18n": "dynamicAdvanced.restrictions.enabled",
-      "$dynamic": {
-        "i18n": {
-          "expression": "config.restrict == true ? 'dynamicAdvanced.restrictions.enabled' : 'dynamicAdvanced.restrictions.disabled'"
+      "text": "Restrictions not specified",
+      "i18n": "dynamicAdvanced.restrictions.unspecified",
+      "$dynamic": [
+        {
+          "when": {
+            "expression": "has(config.restrict) && config.restrict != null"
+          },
+          "overlay": {
+            "i18n": {
+              "expression": "config.restrict == true ? 'dynamicAdvanced.restrictions.enabled' : 'dynamicAdvanced.restrictions.disabled'"
+            },
+            "text": {
+              "expression": "config.restrict == true ? 'Restrictions enabled' : 'Restrictions disabled'"
+            }
+          }
         }
-      }
-    },
-    {
-      "type": "Label",
-      "text": "Renderer path",
-      "i18n": "dynamicAdvanced.rendererPath"
-    },
-    {
-      "type": "Label",
-      "text": "/",
-      "$dynamic": {
-        "text": {
-          "expression": "path == '' ? '/' : path"
-        }
-      }
+      ]
     },
     {
       "type": "Label",
@@ -119,6 +127,9 @@
       "$dynamic": {
         "i18n": {
           "expression": "size(errors) > 0 ? 'dynamicAdvanced.status.hasErrors' : 'dynamicAdvanced.status.noErrors'"
+        },
+        "text": {
+          "expression": "size(errors) > 0 ? 'Core errors present' : 'No core errors'"
         }
       }
     },
@@ -144,13 +155,17 @@
       "type": "Control",
       "scope": "#/properties/amount",
       "label": "Amount",
-      "i18n": "",
+      "i18n": "dynamicAdvanced.amount",
       "$dynamic": [
         {
           "overlay": {
             "label": {
               "bind": "external.settings.amountLabel"
-            }
+            },
+            "i18n": "dynamicAdvanced.amountLabelValue"
+          },
+          "when": {
+            "expression": "has(external.settings.amountLabel) && external.settings.amountLabel != null && external.settings.amountLabel != ''"
           }
         },
         {
@@ -188,7 +203,7 @@
       "options": {
         "collapsed": false,
         "detail": {
-          "type": "VerticalLayout",
+          "type": "Group",
           "elements": [
             {
               "type": "Control",
@@ -196,34 +211,102 @@
               "label": "Member name",
               "i18n": "dynamicAdvanced.memberName"
             }
-          ]
+          ],
+          "label": "Member detail",
+          "i18n": "dynamicAdvanced.memberDetail"
         }
       },
       "i18n": "dynamicAdvanced.members",
-      "$dynamic": {
-        "options": {
-          "detail": {
-            "type": "VerticalLayout",
-            "elements": [
-              {
-                "type": "Control",
-                "scope": "#/properties/name",
-                "label": "Member name",
-                "i18n": "dynamicAdvanced.memberName"
-              },
-              {
-                "type": "Label",
-                "text": "Ada",
-                "$dynamic": {
-                  "text": {
-                    "template": "{item.name}"
+      "$dynamic": [
+        {
+          "overlay": {
+            "options": {
+              "detail": {
+                "elements": [
+                  {
+                    "type": "Control",
+                    "scope": "#/properties/name",
+                    "label": "Member name",
+                    "i18n": "dynamicAdvanced.memberName"
+                  },
+                  {
+                    "type": "Label",
+                    "text": "Ada",
+                    "$dynamic": {
+                      "text": {
+                        "template": "{item.name}"
+                      }
+                    },
+                    "i18n": "dynamicAdvanced.memberNameValue"
+                  },
+                  {
+                    "type": "Label",
+                    "text": "Renderer path",
+                    "i18n": "dynamicAdvanced.rendererPath"
+                  },
+                  {
+                    "type": "Label",
+                    "text": "/",
+                    "$dynamic": {
+                      "text": {
+                        "bind": "path"
+                      }
+                    },
+                    "i18n": "dynamicAdvanced.pathValue"
                   }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "when": {
+            "expression": "external.settings.wholeMemberDetail == true"
+          },
+          "overlay": {
+            "options": {
+              "detail": {
+                "literal": {
+                  "type": "VerticalLayout",
+                  "elements": [
+                    {
+                      "type": "Control",
+                      "scope": "#/properties/name",
+                      "label": "Member name",
+                      "i18n": "dynamicAdvanced.memberName"
+                    },
+                    {
+                      "type": "Label",
+                      "text": "Ada",
+                      "$dynamic": {
+                        "text": {
+                          "template": "{item.name}"
+                        }
+                      },
+                      "i18n": "dynamicAdvanced.memberNameValue"
+                    },
+                    {
+                      "type": "Label",
+                      "text": "Renderer path",
+                      "i18n": "dynamicAdvanced.rendererPath"
+                    },
+                    {
+                      "type": "Label",
+                      "text": "/",
+                      "$dynamic": {
+                        "text": {
+                          "bind": "path"
+                        }
+                      },
+                      "i18n": "dynamicAdvanced.pathValue"
+                    }
+                  ]
                 }
               }
-            ]
+            }
           }
         }
-      }
+      ]
     },
     {
       "type": "Group",
@@ -268,7 +351,8 @@
                   "text": {
                     "template": "{data.name}"
                   }
-                }
+                },
+                "i18n": "dynamicAdvanced.documentNameValue"
               }
             ]
           }
@@ -288,7 +372,8 @@
         "text": {
           "bind": "locale"
         }
-      }
+      },
+      "i18n": "dynamicAdvanced.localeValue"
     }
   ]
 }

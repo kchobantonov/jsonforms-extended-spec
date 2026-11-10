@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { forSchema } from '../src/authoring/forSchema';
-import type { DynamicSpec, TrustedDynamicSpec } from '../src/authoring/dynamic';
+import type { DynamicDescriptor, DynamicSpec, TrustedDynamicSpec } from '../src/authoring/dynamic';
 import { withTrustedDynamic } from '../src/authoring/dynamic';
 
 const form = forSchema({
@@ -55,4 +55,34 @@ it('keeps trusted function authoring separate from portable JSON', () => {
   const portable: DynamicSpec<{ label: string }> = trusted;
   expect(trusted).toBeDefined();
   expect(portable).toBeDefined();
+});
+
+it('checks complete literal descriptor values', () => {
+  const valid: DynamicSpec<{ detail: { type: string; scope: string } }> = {
+    detail: { literal: { type: 'Control', scope: '#/properties/name' } },
+  };
+  // @ts-expect-error atomic replacement requires a complete target
+  const incomplete: DynamicDescriptor<{ type: string; scope: string }> = { literal: { type: 'Control' } };
+  expect(valid.detail).toBeDefined();
+  expect(incomplete).toBeDefined();
+});
+
+it('permits a real literal field when another target key makes the object ordinary data', () => {
+  type Target = { custom: { literal: string; other: number } };
+  const portable: DynamicSpec<Target> = { custom: { literal: 'data', other: 1 } };
+  const trusted: TrustedDynamicSpec<Target> = { custom: { literal: 'data', other: () => 2 } };
+  // @ts-expect-error the real literal field retains its declared type
+  const wrong: DynamicSpec<Target> = { custom: { literal: 3, other: 1 } };
+  // Broad patches cannot prove the key-count distinction; explicit descriptors can.
+  // @ts-expect-error a complete object cannot be replaced with a string
+  const ambiguous: DynamicDescriptor<Target['custom']> = { literal: 'data' };
+  expect([portable, trusted, wrong, ambiguous]).toHaveLength(4);
+});
+
+it('allows literal-named data beside unknown extension keys', () => {
+  type Target = { custom: { literal: string; known?: boolean }; options: { readonly?: boolean } };
+  const first: DynamicSpec<Target> = { custom: { literal: 'data', extra: 1 } };
+  const second: DynamicSpec<Target> = { options: { literal: 'data', theme: 'x' } };
+  const trusted: TrustedDynamicSpec<Target> = { options: { literal: 'data', theme: 'x' } };
+  expect([first, second, trusted]).toHaveLength(3);
 });

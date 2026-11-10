@@ -30,13 +30,25 @@
         },
         {
           "type": "object",
-          "properties": {
-            "$dynamic": {
-              "$ref": "#/$defs/dynamic"
-            }
-          },
           "additionalProperties": {
             "$ref": "#/$defs/node"
+          },
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "$dynamic": {
+                "$ref": "#/$defs/dynamic"
+              }
+            }
           }
         }
       ]
@@ -157,7 +169,9 @@
             "literal"
           ],
           "properties": {
-            "literal": {}
+            "literal": {
+              "$ref": "#/$defs/node"
+            }
           },
           "additionalProperties": false
         },
@@ -166,19 +180,27 @@
           "not": {
             "anyOf": [
               {
-                "required": ["bind"],
+                "required": [
+                  "bind"
+                ],
                 "maxProperties": 1
               },
               {
-                "required": ["expression"],
+                "required": [
+                  "expression"
+                ],
                 "maxProperties": 1
               },
               {
-                "required": ["template"],
+                "required": [
+                  "template"
+                ],
                 "maxProperties": 1
               },
               {
-                "required": ["literal"],
+                "required": [
+                  "literal"
+                ],
                 "maxProperties": 1
               }
             ]
@@ -187,7 +209,9 @@
             "$ref": "#/$defs/value"
           },
           "properties": {
-            "$dynamic": { "$ref": "#/$defs/dynamic" }
+            "$dynamic": {
+              "$ref": "#/$defs/dynamic"
+            }
           }
         }
       ]

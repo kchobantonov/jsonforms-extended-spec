@@ -39,6 +39,9 @@
       },
       "invalidLabel": {
         "type": "boolean"
+      },
+      "wholeMemberDetail": {
+        "type": "boolean"
       }
     },
     "required": [
@@ -49,7 +52,7 @@
     ]
   },
   "data": {
-    "label": "Subscription plan",
+    "label": "",
     "readonly": false,
     "presentation": "automatic",
     "compact": false,
@@ -58,8 +61,9 @@
     "showExtra": false,
     "useAlternate": false,
     "hideNameInHideMode": false,
-    "amountLabel": "Amount",
-    "invalidLabel": false
+    "amountLabel": "",
+    "invalidLabel": false,
+    "wholeMemberDetail": false
   },
   "uischema": {
     "type": "VerticalLayout",
@@ -96,44 +100,50 @@
           {
             "type": "Control",
             "scope": "#/properties/slider",
-            "amountLabel": "Use slider editor",
-            "i18n": "dynamicAdvanced.useSlider"
+            "i18n": "dynamicAdvanced.useSlider",
+            "label": "Use slider editor"
           },
           {
             "type": "Control",
             "scope": "#/properties/flatLayout",
-            "amountLabel": "Use flat extra layout",
-            "i18n": "dynamicAdvanced.flatLayout"
+            "i18n": "dynamicAdvanced.flatLayout",
+            "label": "Use flat extra layout"
           },
           {
             "type": "Control",
             "scope": "#/properties/showExtra",
-            "amountLabel": "Show extra field",
-            "i18n": "dynamicAdvanced.showExtra"
+            "i18n": "dynamicAdvanced.showExtra",
+            "label": "Show extra field"
           },
           {
             "type": "Control",
             "scope": "#/properties/useAlternate",
-            "amountLabel": "Edit alternate name",
-            "i18n": "dynamicAdvanced.editAlternate"
+            "i18n": "dynamicAdvanced.editAlternate",
+            "label": "Edit alternate name"
           },
           {
             "type": "Control",
             "scope": "#/properties/hideNameInHideMode",
-            "amountLabel": "Hide name when mode is hide",
-            "i18n": "dynamicAdvanced.hideName"
+            "i18n": "dynamicAdvanced.hideName",
+            "label": "Hide name when mode is hide"
           },
           {
             "type": "Control",
             "scope": "#/properties/amountLabel",
-            "amountLabel": "Amount label",
-            "i18n": "dynamicAdvanced.amountLabel"
+            "i18n": "dynamicAdvanced.amountLabel",
+            "label": "Amount label"
           },
           {
             "type": "Control",
             "scope": "#/properties/invalidLabel",
-            "amountLabel": "Try invalid label binding",
-            "i18n": "dynamicAdvanced.invalidLabel"
+            "i18n": "dynamicAdvanced.invalidLabel",
+            "label": "Try invalid label binding"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/wholeMemberDetail",
+            "label": "Replace whole member detail",
+            "i18n": "dynamicAdvanced.wholeMemberDetail"
           }
         ]
       }

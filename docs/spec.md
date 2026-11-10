@@ -144,7 +144,7 @@ like, because this specification places them explicitly:
 `disableRemove`, `restrict`.
 
 **Blocks that live under `jsonformsExtended`:** `layoutDefaults`,
-`dynamicValues`, `security`, `markup`, `confirmation`.
+`dynamicValues`, `dynamic`, `security`, `markup`, `confirmation`.
 
 A worked shape:
 
@@ -224,6 +224,7 @@ A reference web context:
 ```ts
 export interface FormContext {
   [key: string]: unknown;
+  external?: Readonly<Record<string, unknown>>;
   config?: unknown;
   readonly?: boolean;
   locale?: string;
@@ -425,10 +426,11 @@ Array item enums select choice **cells**, not a different outer-array renderer.
 | Categorization | `accordion` | Categorization | Expandable sections | Family default |
 
 Renderer specifications MAY add variants but MUST NOT rename canonical ones.
-`variant: "auto"` is not canonical output. A canonical variant is static in the published authoring profile. The future
-§11 overlay profile proposes dynamic tester inputs, including `options.variant`,
-only with resolution before selection and an explicit editing lifecycle policy.
-This does not make `$dynamic` a currently supported option.
+`variant: "auto"` is not canonical output. A canonical variant is static in the
+published static authoring profile. The experimental §11 overlay profile supports
+dynamic tester inputs, including `options.variant`, in the reference
+reference integrations, with resolution before selection and the immediate
+replacement policy. This does not promote `$dynamic` into static v1 conformance.
 
 **The two array-choice variants outrank the automatic checkbox group**, because
 explicit selection takes precedence over automatic presentation.
@@ -1485,7 +1487,7 @@ vectors still exclude this feature. Experimental TypeScript authoring types
 are available without promoting the runtime contract. The separate
 `jsonforms-dynamic-uischema.schema.json` checks experimental portable descriptor
 syntax and is used for the catalogued dynamic playground asset; it does not
-certify full runtime or lifecycle conformance. See [the design backlog](todo.md#future--dynamic-ui-element-overlays).
+certify full runtime or lifecycle conformance. See [implementation status and remaining work](todo.md#experimental--dynamic-ui-element-overlays).
 Existing Label interpolation and its `dynamicValues.enabled` gate remain separate.
 
 ### 11.1 Overlay shape and boundaries
@@ -1551,7 +1553,10 @@ Trusted metadata may retain functions only under the explicit trusted profile.
 
 Do not introduce generic `visible` or `enabled` properties through this proposal:
 JSON Forms rules continue to control visibility and enablement. An overlay may
-overlay the authored `rule` using the ordinary deep-merge rules, but the effective rule still goes through ordinary
+overlay the authored `rule` using the ordinary deep-merge rules, or replace it
+atomically with a descriptor such as `{ "literal": value }`. Use replacement when changing condition
+shapes (for example AND to a schema condition), to avoid retaining obsolete keys.
+The effective rule still goes through ordinary
 JSON Forms rule evaluation; `$dynamic` does not directly set visibility. An effective
 `readonly: false` cannot revoke host, ancestor or schema restrictions.
 
@@ -1573,12 +1578,26 @@ Recommended portable leaves:
 
 Each `bind`, `expression` or `template` descriptor has exactly one recognized
 key with a string value. A `literal` descriptor instead accepts any JSON value.
+An authored nested object is a patch: recursively add/update its supplied keys
+and retain unspecified keys. A descriptor result (`bind`, `expression`, `template`,
+`literal`, or an opted-in trusted function) is a complete value: install it at
+that target without merging old object keys. Check the complete result for generic JSON safety before
+installation; invalid results preserve the accumulated fallback. `literal` copies
+its payload without interpreting descriptor-shaped descendants. Nested UI elements'
+own `$dynamic` metadata remains available for their later dispatch. There is no
+separate replacement keyword. This distinction is generic, including
+`rule.condition`, `options.detail` and custom extension objects.
 Literal strings remain literal. Never interpret arbitrary strings as JavaScript.
 The design retains `bind` alongside CEL expressions and templates.
 Descriptors can occur in nested objects and array entries. Use
 `{ "literal": value }` to preserve descriptor-shaped data, for example
 `{ "literal": { "bind": "ordinary data" } }`. The escaped value is copied as
-JSON without interpreting descriptor-shaped descendants. An object with a
+JSON without interpreting descriptor-shaped descendants. The authoring schema
+still checks the syntax of an own `$dynamic` on nested UI-element-shaped objects
+(objects with a string `type`), including inside literal payloads. This is a
+static metadata check, not descriptor evaluation or target-option validation.
+Objects without that UI-element shape remain opaque data with respect to
+`$dynamic`. Runtime activation still occurs only at a UI-element dispatch. An object with a
 recognized descriptor key and other keys is ordinary data. A one-key descriptor
 whose value has the wrong type is invalid rather than silently treated as data.
 
@@ -1594,9 +1613,17 @@ adapters need not share implementation code.
 CEL is the preferred expression language, not a selected TypeScript dependency.
 Its [language specification](https://github.com/cel-expr/cel-spec) defines portable
 expression semantics. Selecting a library still requires compatibility and cost
-checks. Freeze a shared profile covering missing values, null, numeric conversion,
-allowed functions, collection operations, and evaluation limits before publishing
-syntax. Do not substitute JavaScript truthiness or numeric semantics. No host
+checks. The experimental example profile requires CEL presence checks (`has`),
+equality/inequality for strings, booleans and null; integer ordering comparisons
+(such as `size(errors) > 0`); boolean conjunction and negation; conditional
+expressions; string and safe-integer literal results (such as `? 8 : 24`);
+and `size` on lists.
+An absent map member makes `has(data.name)` false; an explicitly present null
+makes it true. Direct access to an absent member fails that descriptor rather
+than producing null. Null, empty string, false and zero remain distinct values.
+Failed expressions preserve the accumulated fallback (§11.4). The playground
+uses only this profile. Additional CEL functions and collection operations require
+adapter documentation and compatibility tests before being claimed portable. Do not substitute JavaScript truthiness or numeric semantics. No host
 methods, network access, writes or arbitrary callbacks are exposed to portable
 expressions. Bound input, compilation cache and evaluation work. CEL integer
 results become JSON numbers only when they are safe integers. An out-of-range
@@ -1613,13 +1640,22 @@ Recommended explicit environment:
 | `value` | Value at the authored Control scope at the start of evaluation; missing for unbound elements. A scope overlay does not change `value` during that evaluation. |
 | `path` | Current dispatcher data path, using the adapter's documented encoding. |
 | `locale` | Current locale. |
-| `external` | Immutable, host-exposed values from `FormContext.external`. |
+| `external` | Immutable host-exposed values; the reference integrations receive them through `external`. |
 | `config` | Permitted application configuration, excluding `jsonformsExtended`. |
 | `errors` | Read-only current core schema-validation errors. Additional host and editor-owned errors remain outside this initial portable root. |
 
 This is an environment contract, not unrestricted access to FormContext.
 Recommend `external` for new host bindings. Label `context` bindings and namespace gates use their declared contracts.
-Do not publish `external` as an implemented FormContext API yet.
+The reference integrations expose `external` as
+`context.external` to templates, including TemplateLayoutRenderer. Replacing the
+host-owned external object updates both environments without changing form data.
+Only external values are exposed: activation and trusted-function settings are
+not copied into template context. `settings` is a playground convention, not a
+reserved or required namespace; hosts may use keys such as `branding` or `session`.
+Where the host API also accepts `context.external`, a defined
+`external` takes precedence, including an empty object; omitting it or
+setting it to undefined restores the host context value. Neither source is mutated
+by the bridge. Template security and interpolation namespace gates remain unchanged.
 
 Keep UI navigation state in host-owned `external` initially. The resolver reads
 snapshots and never writes back. A separate mutable `state` API is deferred.
@@ -1640,8 +1676,8 @@ locale
 Own-property lookup only; reject `__proto__`, `prototype` and `constructor` at
 every path/merge depth. No calls or operators in `bind`. Computation belongs in
 `expression`. Do not pass host objects with getters, methods or mutable capabilities
-into the portable environment. Missing data is distinct from JSON null; the CEL
-adapter must define how absence is represented without treating it as null.
+into the portable environment. Missing data is distinct from JSON null; absence makes a direct expression lookup fail, while CEL `has` returns false
+for an absent map member and true for a present member, including null.
 
 ### 11.4 Evaluation, merge and fallback
 
@@ -1658,9 +1694,11 @@ Recommended evaluation algorithm:
    renderer or UI-schema validator owns the meaning and applicability of each
    effective field. Reject unsafe keys, getters, functions, cycles and values
    outside JSON rather than forwarding them to a renderer.
-4. Recursively merge plain objects; replace arrays as whole values. Validate the
-   generic JSON safety of an array replacement as a unit. Do not partially
-   install an unsafe or non-JSON array.
+4. Recursively merge authored plain objects; replace arrays as whole values.
+   Install descriptor results as complete values, including objects: no old
+   target keys survive. Check descriptor results and array replacements for
+   generic JSON safety as complete units before installation; never partially
+   install an unsafe or non-JSON result.
 5. A missing/undefined, failed or generically invalid value preserves the value
    accumulated **in this evaluation**. Generic invalidity includes malformed
    descriptors and unsafe or non-JSON results from step 3. It does not retain a
@@ -1712,6 +1750,15 @@ pass the normal URL policy. An externally bound visible string is host-supplied
 text and must be localized by that host if localization is required. Do not add
 a second ICU/catalog system or hardcoded locale branches as part of `$dynamic`.
 
+An `i18n` prefix is a lookup key, not a translation-disable flag. In particular,
+`i18n: ""` is not a portable opt-out: core may look up `.label` for a Control
+or the text itself for a Label. Host-supplied text in the playground uses explicit,
+nonempty dedicated prefixes absent from its bundled catalogs, with the supplied
+`label`/`text` as fallback. Hosts may intentionally translate those keys. This
+prevents accidental lookup by the supplied text, but does not promise a universal
+verbatim mode. When a dynamic state changes a message key, overlay its matching
+fallback `label` or `text` too, so missing translations never describe the old state.
+
 ### 11.6 Integration and reactivity
 
 Integration may use a dispatcher hook before selection or a high-priority
@@ -1731,19 +1778,52 @@ cells, templates and registered UI schemas, including separate cell registries.
 Forward schema, root schema, path, registry and inherited permissions unchanged;
 avoid stale connected-renderer props or altered rule behavior through redispatch.
 
-Use explicit opt-in integration. A portable activation API across adapters remains
-undecided:
-the existing `dynamicValues.enabled` interpolation gate must not silently enable
-CEL or trusted callbacks. Disabled integration performs no resolution and does not
-intercept ordinary renderer selection. Enabled integration preserves recursion
-safety even for malformed descriptors and reports the failure.
+Activation is config-only: `config.jsonformsExtended.dynamic.enabled === true`
+enables `$dynamic`; omission or `false` disables it. The separate host `external`
+prop supplies immutable values to both the resolver and template `context.external`,
+even while overlays are disabled. Supplying `external` alone never enables overlays.
+There is no `dynamic` form prop. `external.settings` is an example namespace, not a
+reserved field.
+
+Trusted synchronous function leaves additionally require the exact adapter-exported
+`TRUST_DYNAMIC_FUNCTIONS` unique symbol at
+`config.jsonformsExtended.dynamic.trusted`. A boolean, string, JSON value, or another
+symbol with the same description cannot grant trust. The token does not activate
+overlays by itself. Export it from one shared adapter module so all public import
+paths refer to the same identity. JSON config may set `enabled`, but cannot encode
+`trusted`; the config schema rejects every JSON value for that key.
+
+The existing `dynamicValues.enabled` interpolation gate and template script permissions
+remain independent; neither enables CEL overlays or trusted callbacks. Disabled
+integration performs no resolution and delegates the authored element to normal
+renderer selection. An adapter may retain a transparent aspect shell to avoid
+remounting the editor on activation changes, but it must not execute descriptors.
+Enabled integration preserves recursion safety even for malformed descriptors and
+reports the failure. Live activation changes must recompute from the authored base;
+external values and committed form data must remain intact.
+
+An adapter may load its evaluator lazily. If it does, an initially enabled form
+must not mount editable static-fallback renderers while preparation is pending.
+A live activation should preserve already mounted editors and their local drafts,
+blocking editing until effective permissions and selection are known. Report a
+loading failure rather than silently treating it as disabled integration; support
+an explicit retry, such as a later activation. Ignore asynchronous completion for
+an obsolete activation or disposed form. Loading the evaluator itself must not
+execute authored expressions or write form data.
+
+Pure result reuse may be shared within a form when the authored element, referenced
+immutable inputs, trust setting and evaluator readiness match. Retain
+occurrence-local element stabilization, isolate forms, and bound retention rather
+than accumulating a history of input generations. Sharing solely by authored
+element identity can leak one row's values into another. This cache does not imply
+field-level dependency tracking.
 
 Start with immutable namespace snapshots and namespace-level invalidation.
 External-only and locale-only changes trigger reevaluation without data writes.
 An implementation may conservatively identify the roots that authored descriptors
 can read and snapshot only those roots. Trusted function leaves can read every
 environment root and therefore require the full available environment. A shared
-snapshot must be immutable, validated before reuse, and invalidated when its
+snapshot must be immutable, checked for generic JSON safety before reuse, and invalidated when its
 source namespace is replaced; evaluation limits still apply across all roots
 used together. This avoids copying an unrelated form document once per dynamic
 occurrence while preserving the environment boundary.
@@ -1802,7 +1882,10 @@ fallback after replacement; leave focus elsewhere untouched. Cancel obsolete
 async work and owner-scoped resources; late completions must not write through a
 disposed occurrence. An adapter without this lifecycle support must report
 selection-changing targets as unsupported rather than claim full `$dynamic`
-support. The cross-adapter focus and cancellation protocol remains to be designed.
+support. The reference integrations implement adapter-specific focus
+handoff and cancellation with focused lifecycle tests. A universal protocol and
+complete coverage across renderer families, internal editors and other adapters
+remain unverified; those tests do not establish portable conformance.
 
 ### 11.8 Worked example: preview and configuration forms
 
@@ -1828,23 +1911,45 @@ screen). Configuration form changes replace `external.settings` for the preview;
 they never become preview business data. Editing the preview updates only its own
 data. The configuration form is not made readonly by the preview's setting.
 
-For example, the plan Control can be authored as:
+For example, the plan Control keeps a translated default and switches to a
+host-text prefix only while a custom label is supplied:
 
 ```json
 {
   "type": "Control",
   "scope": "#/properties/plan",
   "label": "Plan",
+  "i18n": "dynamicPlayground.plan",
   "$dynamic": [
     {
       "overlay": {
-        "label": { "bind": "external.settings.label" },
-        "options": { "readonly": { "bind": "external.settings.readonly" } }
+        "options": {
+          "readonly": {
+            "bind": "external.settings.readonly"
+          }
+        }
       }
     },
     {
-      "when": { "expression": "external.settings.presentation == 'radio'" },
-      "overlay": { "options": { "format": "radio" } }
+      "when": {
+        "expression": "has(external.settings.label) && external.settings.label != null && external.settings.label != ''"
+      },
+      "overlay": {
+        "label": {
+          "bind": "external.settings.label"
+        },
+        "i18n": "dynamicPlayground.boundPlanText"
+      }
+    },
+    {
+      "when": {
+        "expression": "external.settings.presentation == 'radio'"
+      },
+      "overlay": {
+        "options": {
+          "format": "radio"
+        }
+      }
     }
   ]
 }
@@ -1856,12 +1961,23 @@ Control is replaced under §11.7. Returning to automatic presentation starts fro
 the static Control, so `format: "radio"` disappears. There is no invented
 `format: "select"` or `variant: "auto"`. A registry may use one component for both
 presentations; acceptance measures actual component identity, not an assumed
-number of mounts. The stored plan and the neighboring name editor are preserved.
+number of mounts. The stored plan and the neighboring name editor are preserved. The static `dynamicPlayground.plan` prefix localizes the default. A nonempty
+custom label switches to `dynamicPlayground.boundPlanText`, with no bundled
+translation; clearing the setting restores the localized default (§11.5).
 
 For a host-owned playground, deriving an ordinary UI schema from configuration
 is sufficient and avoids an expression runtime. `$dynamic` adds value when that
 mapping must be portable authored JSON. Both paths need the same lifecycle
 behavior. Do not run both transformations over the preview at once.
+
+
+#### Object patches and complete descriptor values
+
+Authored nested objects patch their supplied keys; descriptor results replace
+only the target where the descriptor appears. The playground's **Replace whole
+member detail** toggle demonstrates both behaviors while preserving member data.
+See its [patch versus whole-object examples](../examples/dynamic-playground/README.md#patch-a-few-keys-versus-supply-a-whole-object)
+for the maintained JSON examples and instructions.
 
 ### 11.9 TypeScript authoring boundary
 
@@ -1874,6 +1990,16 @@ String(environment.locale) })` to attach that profile to an otherwise typed
 element. Portable helpers continue to reject executable leaves, including under
 unknown extension keys. Known numeric targets reject string templates. Object
 patches may be partial; objects inserted into replacement arrays must be complete.
+Because arbitrary extension keys are allowed, the fixed `DynamicSpec<T>` type
+cannot enforce the exact own-key-count distinction for every object. In
+particular, `{ literal: x, extra: y }` is allowed as ordinary patch data even
+when `extra` is not a known target key. This permissiveness can also admit an
+incomplete one-key literal through the patch branch. To check a complete literal
+value statically, annotate it explicitly as `DynamicDescriptor<T>` (or use
+`satisfies DynamicDescriptor<T>`) before including it in an overlay. The JSON
+schema checks descriptor syntax; runtime generic safety and renderer-owned
+semantic validation still apply. Do not claim full JSON/TypeScript equivalence.
+
 The published portable JSON schemas remain separate from the experimental
 descriptor schema, and a raw element or unchecked cast supplies no validation.
 
@@ -1883,8 +2009,8 @@ for their own fields. Reserve the
 current element's own `$dynamic` as resolver metadata, not an overlay target. Distinguish portable
 JSON authoring from the explicitly trusted local function profile; JSON export
 must reject functions rather than silently drop them. TypeScript cannot prove
-that a string expression has the promised runtime type, so runtime target
-validation remains required for generic JSON safety; semantic target validation
+that a string expression has the promised runtime type, so runtime generic JSON-safety
+checks still apply; semantic target validation
 remains with the selected renderer or UI-schema validator (§11.4).
 Cache/invalidation must account for trusted function
 identity: JSON serialization is not an equality test for that profile. Include
@@ -1892,9 +2018,28 @@ compile-time positive and negative cases alongside runtime integration coverage.
 
 ### 11.10 Proposed acceptance cases and remaining decisions
 
+Activation acceptance: missing/false `dynamic.enabled` leaves authored values in place;
+`true` enables overlays; toggling back restores authored values without data writes.
+Passing `external` alone must not activate overlays and must remain available to templates
+while disabled. Trusted functions execute only with both activation and the exact exported
+token; test booleans, strings and a lookalike symbol as rejected capabilities.
+
 These are design acceptance cases, **not executed renderer tests**:
 
 - Ordered matching rules, omitted conditions, false conditions and invalid booleans.
+- Patch a detail object's children while retaining its type/label; then supply a
+  complete object through `literal`, `bind`, `expression` or a trusted function
+  and verify old keys disappear only at that target. Return to the static value.
+- Descriptor results with unsafe/non-JSON descendants fail atomically; safe but
+  semantically unsupported fields remain the renderer's responsibility.
+- CEL `has` is false for an absent map member and true for present null; direct
+  missing access fails. Empty string, zero, false and null stay distinct.
+- Switch a message key together with its fallback text; missing host translations
+  must describe the current state. Independent host-text roles have distinct keys.
+- Validate malformed child `$dynamic` syntax equally in authored patches and
+  literal UI elements, without interpreting descriptor-shaped literal data.
+- A real `literal` field alongside another key is ordinary patch data; a one-key
+  `literal` object is a descriptor and requires its complete target type.
 - Missing, null, false, zero and empty values; nested merge and whole-array replacement.
 - A matching rule becomes false: restore static values, not yesterday's overlay.
 - One valid rule followed by an invalid override: retain the earlier valid value.
@@ -1918,12 +2063,20 @@ These are design acceptance cases, **not executed renderer tests**:
 - Trusted functions and portable descriptors obey the same target/fallback contract;
   serialized input cannot introduce executable functions.
 
-Before promotion settle: CEL profile and implementation; error/environment exposure;
-activation and namespace permissions; extension target semantics at the owning
-renderer or validator; and focus handoff
-after variant changes. Prove adapter dispatch behavior in multiple framework
-implementations and test each additional framework before claiming support. Then add runtime tests, publish only
-implemented authoring shapes, and supply runnable examples.
+The reference integrations have resolver and lifecycle tests;
+the experimental descriptor schema, TypeScript helpers and runnable playground
+are available. This acceptance list is a coverage checklist, not a claim that
+every case has run across every renderer family or adapter.
+
+Before portable promotion, establish a recorded coverage matrix and settle broader
+CEL function/cost portability, a common activation and namespace-permission
+contract, and any additional environment exposure. The current `errors` root
+contains core validation errors only; `external` remains a separate host input.
+Semantic extension-target validation belongs to its renderer or UI-schema
+validator, not to a future resolver registry. Verify focus handoff, draft disposal
+and cancellation for each supported editor boundary and test each additional
+adapter before claiming support. Track these remaining decisions separately from
+implemented behavior in [the status backlog](todo.md#experimental--dynamic-ui-element-overlays).
 
 ## 12. URL and extension security configuration
 
@@ -7439,8 +7592,8 @@ Implementations **MUST**:
 - gate string script evaluation;
 - sanitize Markdown;
 - keep structural fields, `name` and canonical `variant` static in the current
-  published static authoring profile; the experimental §11 overlay profile proposes
-  resolution before dispatch for these fields;
+  published static authoring profile; the experimental §11 overlay integrations
+  resolve these fields before dispatch;
 - keep runtime state out of the UI schema;
 - honour effective-visible-child layout semantics;
 - provide safe fallbacks;

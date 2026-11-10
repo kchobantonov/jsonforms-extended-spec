@@ -544,5 +544,40 @@ Proposed acceptance: in the [two-form playground](../examples/dynamic-playground
 change the plan label, switch automatic/radio/automatic, and toggle readonly. The
 preview data and unrelated name editor survive; the configuration form remains
 editable. Repeat with an uncommitted edit, IME and permission revocation before
-claiming lifecycle support. These are future adapter acceptance cases, not results
-of executed renderer tests. See spec §11.7–11.10.
+claiming lifecycle support. These are adapter acceptance criteria. Focused Svelte and React lifecycle tests
+exist, but each renderer/host combination needs its own evidence; this checklist
+is not a claim that every combination has been executed. See spec §11.7–11.10.
+
+## Dynamic replacement and message fallback
+
+Deep merging a new discriminated object can retain an old discriminator or condition.
+Use a complete descriptor value such as `literal` or `bind` when changing
+rule/detail shapes. Authored objects patch existing keys; descriptor results
+replace their target completely. Literal payloads are not recursively evaluated. Check a complete
+replacement for generic JSON safety before installing it; semantic target
+validation belongs to the renderer or UI-schema validator. Changing an i18n prefix also requires changing
+its fallback message. Empty prefixes are not translation opt-outs; use dedicated
+keys for host text rather than allowing the supplied text to become a lookup key.
+
+### Keep external input separate from dynamic activation
+
+`external` is host data, available to template context even when overlays are disabled.
+Only `config.jsonformsExtended.dynamic.enabled === true` activates overlays. Trusted
+callbacks additionally require the exported `TRUST_DYNAMIC_FUNCTIONS` symbol at
+`dynamic.trusted`; never accept a JSON flag or a lookalike symbol. A transparent
+aspect may stay mounted while disabled, but must delegate without evaluating metadata.
+
+### Lazy evaluator boundaries must survive bundling
+
+A dynamic import does not guarantee a lazy bundle: package-based manual chunk
+rules can merge the evaluator with an eager loader. Inspect the emitted static
+import graph and keep expression runtimes out of eager package chunks. Retain
+snapshot validation; avoid repeating pure resolution instead of bypassing the
+JSON-safety contract. Share results only for identical authored elements and
+referenced inputs, including trust and evaluator readiness.
+
+Proposed acceptance: no evaluator request while disabled; concurrent activation
+shares preparation; initially enabled forms do not mount editable fallback
+editors; live activation retains draft state; disabling or disposing during load
+ignores stale completion; failure is visible and reactivation retries. Check that
+a cached pre-preparation failure is not reused after preparation succeeds.

@@ -16,50 +16,58 @@ Unknown extension keys remain allowed by the schemas. Such acceptance does not
 validate the feature's shape or claim it is supported. We do not publish a second
 schema containing speculative options.
 
-## FUTURE — dynamic UI-element overlays
+<a id="future--dynamic-ui-element-overlays"></a>
 
-`$dynamic` has an experimental Svelte implementation, but its full lifecycle
-and cross-adapter design are not final. Section 11 and other overlay examples
-remain design notes, not current portable API contracts. The proposed
-`bind`/`template` descriptors and their conformance vectors remain outside the
-published common/extended schemas and current test vectors.
+## EXPERIMENTAL — dynamic UI-element overlays
 
-Section 11 now consolidates the two dynamic design discussions, including ordered
-rules, CEL, trusted local functions, explicit external inputs and aspect redispatch.
-The agreed design uses element-shaped overlays in both unconditional and ordered
-conditional forms, and retains `bind` alongside CEL expressions and templates.
-Other recommendations remain proposals; the Svelte adapter's focused runtime
-tests do not certify the entire contract or another adapter. The acceptance
-cases there are a design checklist, not executed cross-adapter tests.
+`$dynamic` is implemented experimentally in the Svelte and React reference
+integrations. It is not a static v1 conformance requirement, and implementation
+in these adapters does not establish portable or universal renderer coverage.
+The common/extended static schemas and canonical conformance vectors remain
+separate from the experimental descriptor schema and adapter tests.
 
-The [two-form playground](../examples/dynamic-playground/README.md) now supplies
-concrete assets and a host-derived alternative. Section 11 describes parent
-consumers, renderer lifecycle and the TypeScript boundary. The ordinary host-driven example is in
-the catalog; its host-mapping tests are not renderer certification. The proposed
-`$dynamic` descriptor is a separate experimental catalog asset.
+### Implemented reference behavior
 
-Before implementation, resolve:
+- Element-shaped patches and ordered rules, restricted `bind`/`template` paths,
+  CEL expressions and explicitly opted-in trusted functions.
+- Authored object patches versus complete descriptor values; fallback, JSON
+  safety, own-property access and prototype protection.
+- Config-only `jsonformsExtended.dynamic.enabled` activation and host-owned `external`, also exposed
+  to templates as `context.external`; immutable
+  environment snapshots and reevaluation when input namespaces change.
+- Resolution before renderer/cell selection, parent-consumed metadata, and
+  nested/detail occurrences in the reference integrations.
+- Immediate draft discard on editor replacement, scope-change editing sessions,
+  and adapter-specific focus handoff and cancellation. Focused tests exist;
+  coverage must still be verified for every claimed editor boundary.
+- The experimental `jsonforms-dynamic-uischema.schema.json`, TypeScript authoring
+  helpers, and the combined [playground](../examples/dynamic-playground/README.md),
+  including its External editor and static host-derived alternative.
 
-- The use cases and boundary between overlays, rules, interpolation, host context
-  and any future remote choice provider.
-- Descriptor shape, path/expression syntax, supported namespaces and the
-  distinction between missing, null, false, zero and empty values.
-- How generic field changes, including renderer selection and structural
-  replacements, handle focus and parent-consumed metadata under the immediate
-  draft-discard policy.
-- Trust boundaries, own-property access, prototype protection, permitted context
-  values, URL substitution and permissions.
-- Resolution timing across nested, generated and detail UI schemas; stable
-  identity, async replacement policy, focus and local-state preservation.
-- Diagnostics, fallback behavior, and versioning of the eventual API.
+The normative experimental behavior and limitations are in
+[spec §11](spec.md#11-dynamic-values-and-path-grammar). Adapter resolver, lifecycle
+and demo tests are evidence for the scenarios they execute, not certification of
+the entire acceptance checklist or another renderer set.
 
-Complete the resolver lifecycle and integration matrix before adding the shape
-to the published common/extended schemas.
+### Remaining decisions and verification
 
-**Existing feature to preserve:** Label interpolation already uses
-`jsonformsExtended.dynamicValues.enabled` to expose data/item/config/context.
-That setting controls interpolation; it does not enable an overlay resolver. Its current
-configuration schema remains, with a description limited to interpolation.
+- Additional namespace-permission policies across adapters. Activation is settled:
+  `jsonformsExtended.dynamic.enabled`; the Label interpolation gate is independent.
+- Broader CEL function coverage and consistent evaluation-cost limits across engines.
+- Additional environment exposure beyond current core validation `errors`.
+  Host/editor errors and a separate mutable `state` API are not part of this profile.
+- A universal focus/cancellation protocol and a recorded coverage matrix for
+  renderer families, internal editor changes, nested/generated/registered details,
+  cells, templates, web components and additional adapters.
+- API versioning and the evidence required before promotion into portable
+  conformance or the published common/extended static schemas.
+
+Remote choice providers remain a separate design; overlays do not introduce
+network acquisition, refresh or cancellation vocabulary for choices.
+
+**Existing feature to preserve:** Label interpolation uses
+`jsonformsExtended.dynamicValues.enabled` and its namespace gates. It is separate
+from the overlay resolver and does not grant CEL or trusted-function activation.
 
 ## FUTURE — other designs
 
