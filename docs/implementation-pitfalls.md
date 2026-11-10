@@ -519,8 +519,8 @@ caches may reuse immutable results, but must not publish form writes or committe
 subscriptions from a speculative render.
 
 Nested `$dynamic` metadata is not an instruction to the parent overlay walker.
-Preserve it in object-valued detail slots as well as child arrays; only a later
-UI-element dispatch resolves it. A detail may be reused in several rows, so
+Preserve it in object-valued detail slots as well as child arrays; resolve it only at the child
+occurrence, either for dispatch or a parent reader using that same occurrence context. A detail may be reused in several rows, so
 premature resolution can freeze the parent's item into every child. Exclude such
 metadata from the parent's dependency inventory. Cells often receive an already
 resolved data path, unlike Control renderers: do not append the scope twice when
@@ -531,7 +531,26 @@ A nonvisual aspect can resolve an element and delegate to the normal renderer,
 but a parent may already have read its child's label or sizing. Share the same
 per-occurrence resolution service with those parent consumers. Do not identify a
 child by its evaluated label, or cache effective detail values solely by the shared
-authored UI object. Same-component updates need reactive props; a different
+authored UI object.
+Parents that inspect descendant scopes, types, or labels need an effective structural
+view before making their decisions. This includes conditional detail filtering,
+error summaries, data/validation indicators, tuple placement, card presentation,
+and template inputs. Traverse structural `elements`, not arbitrary extension objects
+or uninstantiated `options.detail`. Resolve a detail at its actual object/row path;
+never reuse an outer row's item context for a nested collection. Preserve the
+parent's filtering when dispatching that view rather than reconstructing the
+unfiltered authored tree. Keep authored category/slot lookup identities separately
+from effective presentation properties.
+
+Proposed acceptance: move a child's scope from an absent conditional field to a
+present invalid field; the child must remain visible, its indicator must count the
+new field's error, and dispatch must use the same scope. Change an external label
+again and retain the same editor instance. Reuse one detail in two rows and verify
+that their item-bound labels remain distinct. A template must read the effective
+child label through its original authored slot name, including after external
+replacement. These are acceptance scenarios, not a claim of execution by every
+adapter.
+ Same-component updates need reactive props; a different
 selected component replaces only that subtree, discarding its local uncommitted
 draft under §11.7. Internal editor replacements follow the same policy.
 For a numeric input, typing `1e` may already have committed the valid prefix `1`;

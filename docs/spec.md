@@ -1846,6 +1846,16 @@ Resolve before testers inspect the effective element. Install equivalent coverag
 for renderer and cell registries. Parents that consume child labels, sizing or
 presentation metadata before child dispatch must read the same effective result.
 Resolving only inside a child aspect leaves those parent consumers stale.
+This also applies to descendant scopes used for conditional filtering, error
+summaries and data/validation indicators, tuple placement, card content types,
+and child properties exposed to templates. An effective structural view may
+resolve `elements` in the current occurrence context, but must not eagerly resolve
+reusable details in arbitrary option objects. Resolve those when their actual
+object or collection-item context is known. Dispatching a parent's filtered view
+must preserve that filtering, without reapplying overlays to an already effective
+result. Template slot lookup names remain the authored names; effective child
+properties must not silently change those lookup identities.
+
 
 Cache results per authored **occurrence and context**, not just per UI-schema
 object: a registered detail may be reused for several array items. Compilation
