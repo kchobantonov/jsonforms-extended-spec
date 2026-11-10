@@ -1763,9 +1763,11 @@ fallback `label` or `text` too, so missing translations never describe the old s
 
 Integration may use a dispatcher hook before selection or a high-priority
 **aspect renderer and redispatch** around the same resolution service.
-Its tester detects an own top-level `$dynamic` key, the aspect resolves the current
-element, then redispatches the effective element through the normal registry.
-The stripped key prevents re-entry. Descendants resolve independently when mounted.
+Its tester detects `$dynamic` on the current element or its structural descendants;
+the aspect resolves that structural view before redispatching through the normal
+registry. Redispatch must bypass the same aspect only for that resolved root,
+without disabling independent descendant occurrences. Reusable object/array
+details remain unresolved until their actual dispatch context is known.
 A numeric rank is not a universal guarantee: registry installation must establish
 precedence and detect competing aspects. The portable contract specifies behavior,
 not one framework's dispatcher or HOC implementation.

@@ -600,3 +600,25 @@ shares preparation; initially enabled forms do not mount editable fallback
 editors; live activation retains draft state; disabling or disposing during load
 ignores stale completion; failure is visible and reactivation retries. Check that
 a cached pre-preparation failure is not reused after preparation succeeds.
+
+### Parent tester inputs and the static fast path
+
+Resolving structural children only inside a selected parent cannot affect its
+selection. A parent tester that checks child types must receive the effective
+structural view before ranking. A nonvisual aspect may need to recognize metadata
+on descendants even when the parent has none. Bypass its immediate redispatch
+without bypassing the children, including when activation is disabled and the
+children still carry authored metadata.
+
+Cache metadata-presence checks by immutable UI identity. An unchanged static tree
+must not repeatedly traverse descendants, snapshot environment roots, evaluate
+expressions or subscribe its resolver to unrelated external inputs. A new authored
+object gets its own presence result. This is a constant-time fast path after an
+initial scan, not a claim of literally zero execution cost.
+
+Proposed acceptance: a categorization with no own overlay has a child whose type
+changes dynamically. Parent selection must follow that effective type. Preserve
+drafts for label-only changes; switch only the selected parent subtree when its
+tester result changes. Reuse the same detail for distinct rows, then reorder them
+and verify independent selection. These scenarios supplement the parent-reader
+acceptance cases above.
