@@ -3733,8 +3733,11 @@ controls visible, operable, and distinguishable.
 
 Composition MUST preserve input focus, validation, accessible naming, and
 narrow-layout usability. Hovering, focusing, editing, and revealing native
-controls MUST NOT shift the value or hide an adornment. Native clear and picker
-controls MUST NOT overlap adornment content, and a tooltip MUST NOT cause
+controls MUST NOT shift the value or hide an adornment. When a password reveal
+action is persistently visible and clear appears on hover or focus, place clear
+before reveal so the reveal action stays in a fixed position, unless the
+UI library has an established ordering. Native clear and picker controls MUST
+NOT overlap adornment content, and a tooltip MUST NOT cause
 viewport-width oscillation or horizontal scrolling. An adornment MUST NOT cover
 editable text, a picker icon, or another control. Read-only and disabled
 states preserve informational content and its accessible explanation.

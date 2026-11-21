@@ -656,8 +656,10 @@ A generic wrapper that repeatedly measures already-adorned padding can add
 space on every hover or focus render: the value visibly jumps. Animated padding
 can make the value slide even when the final measurement is correct. A focused
 field may also paint over a start icon, while an absolutely positioned clear
-button may cover an end icon or text despite adequate input padding. A tooltip
-opening beyond the viewport can toggle horizontal scrollbars and make the page
+button may cover an end icon or text despite adequate input padding. Putting a
+conditional clear action after a permanent password reveal action can make the
+reveal action appear to move or leave an empty slot. A tooltip opening beyond
+the viewport can toggle horizontal scrollbars and make the page
 appear to shake.
 
 **Behavior:** Normalize a literal string, object, or object array. Resolve each
