@@ -9,17 +9,17 @@
 - [Layout types and semantics](../../docs/spec.md#81-group)
 
 A Group is the plainest container there is — "an ordinary Group presents
-related controls as a labelled section" — and three options make it more than
-that. Four groups, one per combination worth seeing.
+related controls as a labelled section". The tabs show its disclosure and
+indicator options, then a Group with cover, header and action regions.
 
 ## Files
 
 | File | Role |
 | --- | --- |
-| `schema.json` | Nine plain properties; the interest is in the arrangement, not the data. |
-| `uischema.json` | Four groups: plain, collapsible, collapsed, and one that asks to be collapsed without being collapsible. |
+| `schema.json` | Supplier properties; the interest is in the arrangement, not the data. |
+| `uischema.json` | The existing Group cases plus a Card regions tab with cover, authored heading and footer. |
 | `data.json` | Half the properties filled, so the data indicator has something to distinguish. |
-| `config.json` | `showUnfocusedDescription`. |
+| `config.json` | `showUnfocusedDescription` and the image-data URL permission needed by the self-contained cover and header artwork. |
 | `translations.json` | English and Bulgarian, including the indicator's accessible label. |
 
 ## What the form contains
@@ -94,6 +94,22 @@ the inner.
 | `showDataIndicator: true`, no descendant holds data | No marker. |
 | A collapsed group | Children remain in the document, validated as normal. |
 
+## Cover, header and footer
+
+The **Card regions** tab in `uischema.json` demonstrates the optional structural
+regions. A self-contained courtyard photograph fills the 800px-wide card cover.
+Two authored header Labels provide the title and smaller supporting text. The
+footer follows the body with space on both sides of its divider.
+The group starts
+collapsed, showing its cover, single heading area, disclosure control and
+indicator. Opening it reveals the controls and footer inside that frame.
+Activating a footer button must not toggle the disclosure. Closing the Group hides
+the controls and footer without changing data. Hiding the Group hides every region.
+The image uses the ordinary ImageView URL and alternative-text rules; the
+buttons use ordinary action dispatch and enabled/read-only behavior. The two
+buttons select English or Bulgarian through the demo host's `setLocale` action.
+The card's width limit comes from its parent VerticalLayout item constraint.
+
 ## Not covered: `collapsed` driven from data
 
 §8's worked example binds `collapsed` through `$dynamic`:
@@ -126,7 +142,7 @@ required by this package.
 
 ## Feature navigation
 
-Explore one feature at a time using the tabs: **Identity group**, **Contact group**, **Insurance group**, **Audit group**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
+Explore one feature at a time using the tabs: **Identity group**, **Contact group**, **Insurance group**, **Audit group**, **False and zero**, and **Card regions**. Tab titles are localized in English and Bulgarian. The tabs share the existing form data.
 
 ## Consolidated demo coverage
 

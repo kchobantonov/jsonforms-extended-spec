@@ -333,6 +333,21 @@
         "label": {
           "type": "string"
         },
+        "cover": {
+          "$ref": "#/$defs/element"
+        },
+        "header": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element"
+          }
+        },
+        "footer": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/element"
+          }
+        },
         "elements": {
           "type": "array",
           "items": {

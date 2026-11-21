@@ -23,7 +23,11 @@
     "Contact": "Contact",
     "Additional details": "Additional details",
     "Insurance": "Insurance",
-    "Audit": "Audit"
+    "Audit": "Audit",
+    "regions.tab.label": "Card regions",
+    "regions.footer.text": "Preview language",
+    "regions.header.title.text": "Hospitality partner",
+    "regions.header.description.text": "Verified service partner · Member since 2018"
   },
   "bg": {
     "group.dataIndicator": "Съдържа данни",
@@ -49,6 +53,10 @@
     "Contact": "Контакти",
     "Additional details": "Допълнителни данни",
     "Insurance": "Застраховка",
-    "Audit": "Одит"
+    "Audit": "Одит",
+    "regions.tab.label": "Секции на картата",
+    "regions.footer.text": "Език на прегледа",
+    "regions.header.title.text": "Партньор в хотелиерството",
+    "regions.header.description.text": "Проверен партньор · Член от 2018 г."
   }
 }

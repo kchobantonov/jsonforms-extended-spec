@@ -724,6 +724,66 @@ does not look like a mistake.
 An ordinary Group presents related controls as a labelled section. Its default
 visual treatment belongs to the renderer family and requires no variant.
 
+Groups may also declare optional structural regions. `cover` is one
+UI-schema element displayed as prominent media in the card; `header` is
+an array of authored elements in the heading area; `footer` is an array of
+elements displayed after the body, including actions or other content. These are
+top-level fields, not `options`, and use ordinary renderer dispatch with the
+Group's schema, data path, enabled state and renderer registry. An empty region
+renders nothing. `elements` remains the body. A renderer family chooses the
+native component and styling for each region; none of these fields requires a
+Card component or a particular pixel arrangement.
+
+When `header` is present, its authored elements provide the heading; renderers
+prefer them over `label` and do not repeat the Group label. Without a header,
+`label` remains the title and accessible name. A header may contain two `Label`
+elements for a title and supporting text; renderers give the second a smaller,
+muted treatment. For a collapsible Group, the existing status and chevron stay
+at the far right of the heading row. The cover and one heading area remain
+visible when collapsed. Only the body and footer hide. Keep authored
+interactive content in `header` outside the disclosure trigger. Footer content
+remains outside the trigger too. Group visibility hides all regions;
+enabled/read-only behavior and rule visibility apply to dispatched children as
+usual. Region children do not become body descendants for the Group's
+data-presence or validation indicators; only `elements` define that aggregate.
+
+For Groups that declare regions, keep the authored content in one card frame.
+In a collapsible presentation, the cover and one heading area stay inside the
+card frame and remain visible. The disclosure control uses the renderer's
+existing chevron, without a separate text button. Groups without regions retain
+their existing renderer presentation. Keep the title and authored header
+content in one heading area, with a row that can wrap at narrow widths. Keep footer
+elements in one area after the body, likewise wrapping instead of
+distributing each element across the full width or stacking them by default.
+The renderer supplies spacing on both sides of the body/footer divider; authors
+do not need to add a layout solely for that gap.
+Both presentations order cover, heading, body and footer. In the collapsible
+presentation, only the body and footer are inside the hidden content. Renderers use
+their card library's sections where available, or its documented composition pattern.
+
+```json
+{
+  "type": "Group",
+  "options": { "collapsible": true, "collapsed": true },
+  "cover": { "type": "ImageView", "src": "/hotel.jpg", "alt": "Hotel courtyard", "options": { "width": "100%" } },
+  "header": [
+    { "type": "Label", "text": "Hospitality partner" },
+    { "type": "Label", "text": "Verified member since 2018" }
+  ],
+  "elements": [{ "type": "Control", "scope": "#/properties/name" }],
+  "footer": [{ "type": "Button", "label": "View partnership", "action": "viewPartner" }]
+}
+```
+
+This example initially shows the image and one heading area with a title,
+supporting text, and disclosure control. Expanding it reveals the
+name control and footer button.
+
+`ImageView` retains its URL policy and alternative-text rules (§13.1); `Button`
+retains the action, disabled and pending rules (§14). Authors can place any
+supported UI-schema element in a region, but should keep editable fields in
+`elements` so collapse and section indicators have predictable meaning.
+
 | Option | Default | Behaviour |
 | --- | --- | --- |
 | `collapsible` | `false` | Enables an accessible disclosure control |

@@ -220,6 +220,28 @@ When a branch selector already sets a const-valued discriminator, an authored br
 
 A remembered oneOf selection must not leave a phantom branch editor after the bound node is removed by external data replacement. Clear the selector and branch fields for a missing node, or an empty object matching no branch. Do not erase legitimate scalar values or invalid nonempty data merely because validation fails. Test replacement after a branch was previously displayed, as well as a fresh empty mount.
 
+## Group regions share one collapsible card
+
+`cover`, `header` and `footer` are structural children of Group, rendered
+through the normal registry in the current schema and data context. An authored
+`header` takes precedence over `label` for the visible title. Two
+Label elements can supply a title and smaller supporting text. Keep all regions
+inside one card frame. Keep the cover and heading visible when collapsed; hide
+the body and footer. Nesting an authored Button inside the trigger makes keyboard and pointer behavior
+ambiguous. Data and validation indicators aggregate only through `elements`. Acceptance:
+mount the Card regions tab in `examples/group-layout/uischema.json` closed,
+open it, activate a footer button without changing expansion, close it, then hide
+the Group. Verify region visibility, action dispatch and unchanged data at each step.
+
+Keep the cover and authored header outside the hidden content, with the
+title in the same heading area. Preserve the native Group appearance and
+indicator alignment when no regions are declared. A cover
+or footer left outside the card frame looks detached;
+putting the authored header in a second titled area or letting each
+footer child fill a full-width slot obscures its relationship to the title
+and each other. Verify row alignment and responsive wrapping in a wide and a
+narrow host, as well as the disclosure and action independence above.
+
 ## Equivalent composition feedback
 
 Document validation may report the same missing property through multiple alternatives, and local active-branch validation may report it again. Present equivalent errors once: compare instance path, keyword, parameters and message, rather than schema location alone. Preserve different constraint parameters, messages and targets. Deduplication of displayed branch feedback must not alter document validation or its emitted errors.

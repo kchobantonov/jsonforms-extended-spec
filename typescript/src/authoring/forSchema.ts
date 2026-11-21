@@ -220,6 +220,12 @@ export interface TypedLayout<S> {
   type: 'VerticalLayout' | 'HorizontalLayout' | 'Group' | 'Categorization';
   label?: string;
   i18n?: string;
+  /** Group's prominent media, dispatched before its heading. */
+  cover?: TypedElement<S>;
+  /** Group's supplemental heading content, outside the disclosure trigger. */
+  header?: TypedElement<S>[];
+  /** Group's content after its body; may contain any supported elements. */
+  footer?: TypedElement<S>[];
   elements: (TypedElement<S> | TypedCategory<S>)[];
   options?: {
     gap?: CssLength;
