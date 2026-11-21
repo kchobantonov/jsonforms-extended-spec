@@ -53,6 +53,7 @@ requirements in [the catalog](../examples/catalog.json).
 - [16. Adaptive behaviour](#16-adaptive-behaviour)
 - [17. External context, visibility and security](#17-external-context-visibility-and-security)
 - [18. Renderer behaviour specifications](#18-renderer-behaviour-specifications)
+- [18.3a Input adornments](#183a-input-adornments)
 - [19. Honest rendering of invalid and out-of-domain data](#19-honest-rendering-of-invalid-and-out-of-domain-data)
 - [20. Optional editor and tooling capability catalogues](#20-optional-editor-and-tooling-capability-catalogues)
 - [21. Diagnostics](#21-diagnostics)
@@ -3656,6 +3657,94 @@ MUST NOT implement it by removing the accessible required state.
 shared empty representation and is subject to read-only, enabled and
 `restrict`. Clearing is an ordinary edit and does not prompt the destructive
 confirmation policy.
+
+### 18.3a Input adornments
+
+An applicable input Control MAY declare `options.startAdornment` and
+`options.endAdornment`. These are logical start and end edges of the editable
+field, following writing direction. Each value is a literal string, one
+adornment object, or an ordered array of adornment objects. An empty string or
+empty array contributes nothing. Arrays preserve authored order; strings
+inside arrays are not part of this grammar (use a text object). A renderer
+normalizes the three shapes to an ordered list before presentation.
+
+```ts
+type InputAdornment =
+  | { kind: 'text'; text: string; i18n?: string; tooltip?: string }
+  | { kind: 'icon'; icon: string; label: string; i18n?: string;
+      tooltip?: string; decorative?: false }
+  | { kind: 'icon'; icon: string; decorative: true };
+type InputAdornmentValue = string | InputAdornment | InputAdornment[];
+```
+
+A string is literal visible text, retaining the plain-string behavior of JSON
+Forms React Material `startAdornment` and `endAdornment`. An object opts into
+localization or an icon. For an object with nonempty `i18n`, resolve
+`<i18n>.text` or `<i18n>.label` for the visible text or accessible name.
+Resolve `<i18n>.tooltip` only when an authored `tooltip` is present. Use each
+authored property as fallback. Do not derive keys
+from array indices, the Control prefix, or English text. Text is plain text;
+markup, HTML, component props, executable expressions, and action handlers are
+not adornment content. Missing translation retains the fallback and locale
+changes update resolved content without writing form data.
+
+`icon` is a semantic identifier resolved through a renderer/host icon mapping,
+not a UI-library icon name or markup. The mapping may render a platform-native
+symbol. If the identifier is unavailable, display the localized `label` as
+text; an unavailable decorative icon may be omitted. A nondecorative icon MUST
+have a nonempty fallback `label`; `decorative: true` removes it from the
+accessibility tree and MUST NOT be paired with a tooltip. A nondecorative
+icon's localized label is its accessible name. A configured tooltip on either kind of adornment supplements its
+visible text or accessible name, is accessible by keyboard focus and pointer,
+and does not replace validation or field help. An icon with a tooltip is an information affordance,
+not an action; it MUST NOT mutate data. Interactive adornments require a
+separate action contract.
+
+Adornment content is display-only. It MUST NOT be stored, parsed as part of the
+value, submitted, included in copyable input text, or used to change the JSON
+Schema unit or validation. Applicability depends on the rendered editor, not
+only its schema type or `format`. An input-like Control with a coherent text-entry
+surface SHOULD support adornments where its renderer can attach them without
+breaking editing or native controls. This includes ordinary and multiline text,
+masked and password inputs, number and integer entry, editable choices, and
+text-entry presentations for date, time, date-time, duration, cron, and color.
+For password, end placement must preserve reveal and clear; for time, duration,
+and cron it must preserve picker and clear actions. A color swatch or picker
+trigger remains operable. A slider, checkbox, OTP box group, composite editor,
+or code editor is not automatically eligible merely because its value is text or
+it contains an internal text field. Such a variant MAY support adornments only
+when it defines a coherent outer field boundary and satisfies the same
+placement, focus, and accessibility contract. A renderer set MUST declare
+support by control/variant and SHOULD diagnose an inapplicable or unsupported
+value rather than silently claiming support. A supported renderer MAY use native
+input slots or an attached field wrapper. The adornment MUST appear within the
+visible input boundary, sharing its field chrome with editable text and native
+controls. Placing it beside a separately bordered input is insufficient.
+By default, `startAdornment` occupies the outermost logical start position:
+it precedes native input parts such as a leading date/time/date-time picker
+icon, duration or cron picker trigger, color swatch or picker trigger, password
+icon, and search icon. By default, `endAdornment` occupies the outermost
+logical end position: it follows native clear/reveal buttons, dropdown arrows,
+picker triggers, validation indicators, and other built-in end content. A
+renderer MAY follow its UI library's established adornment slot or ordering
+convention instead. In that case it MUST preserve
+the library's familiar control placement and keep both adornments and native
+controls visible, operable, and distinguishable.
+
+Composition MUST preserve input focus, validation, accessible naming, and
+narrow-layout usability. Hovering, focusing, editing, and revealing native
+controls MUST NOT shift the value or hide an adornment. Native clear and picker
+controls MUST NOT overlap adornment content, and a tooltip MUST NOT cause
+viewport-width oscillation or horizontal scrolling. An adornment MUST NOT cover
+editable text, a picker icon, or another control. Read-only and disabled
+states preserve informational content and its accessible explanation.
+
+See the [input-adornments example](../examples/input-adornments/README.md).
+The Svelte Flowbite, Skeleton, and Shadcn families and the React Ant Design and
+Shadcn families implement this contract for their input-like controls, including
+their extended text-entry controls. Focused renderer tests cover composition,
+localization, tooltips, and native-control ordering; the example adapter checklist
+remains the guide for broader visual and interaction review.
 
 ### 18.4 Pending edits, commit timing and cancellation
 

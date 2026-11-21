@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Portable input adornments",
+  "properties": {
+    "price": {
+      "type": "number",
+      "title": "Price",
+      "minimum": 0
+    },
+    "weight": {
+      "type": "number",
+      "title": "Weight",
+      "minimum": 0
+    },
+    "accountNumber": {
+      "type": "string",
+      "title": "Account number"
+    },
+    "reference": {
+      "type": "string",
+      "title": "Reference"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "enum": [
+        "standard",
+        "express"
+      ]
+    },
+    "deliveryDate": {
+      "type": "string",
+      "format": "date",
+      "title": "Delivery date"
+    },
+    "appointment": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Appointment"
+    },
+    "highlight": {
+      "type": "string",
+      "format": "color",
+      "title": "Highlight color"
+    },
+    "startTime": {
+      "type": "string",
+      "format": "time",
+      "title": "Start time"
+    },
+    "runSchedule": {
+      "type": "string",
+      "format": "cron",
+      "title": "Run schedule"
+    },
+    "retention": {
+      "type": "string",
+      "format": "duration",
+      "title": "Retention"
+    },
+    "secret": {
+      "type": "string",
+      "format": "password",
+      "title": "Secret"
+    }
+  },
+  "required": [
+    "price",
+    "weight",
+    "accountNumber"
+  ]
+}

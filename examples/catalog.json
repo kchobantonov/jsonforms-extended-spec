@@ -302,6 +302,19 @@
     "hostRequirements": []
   },
   {
+    "id": "input-adornments",
+    "title": "Input adornments",
+    "files": [
+      "data.json",
+      "schema.json",
+      "translations.json",
+      "uischema.json"
+    ],
+    "hostRequirements": [
+      "Use input renderers with portable adornment support for the claimed text-like variants, a semantic icon map for information, account, schedule, and lock, and a cron format validator; report unsupported variants."
+    ]
+  },
+  {
     "id": "job-application",
     "title": "Job application",
     "files": [

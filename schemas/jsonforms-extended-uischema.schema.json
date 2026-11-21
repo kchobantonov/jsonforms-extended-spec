@@ -1062,6 +1062,12 @@
           "type": "boolean",
           "default": false,
           "description": "Keeps the native radio control visible inside each card. Hidden by default; keyboard interaction and accessible radio semantics remain either way."
+        },
+        "startAdornment": {
+          "$ref": "#/$defs/inputAdornmentValue"
+        },
+        "endAdornment": {
+          "$ref": "#/$defs/inputAdornmentValue"
         }
       }
     },
@@ -1793,6 +1799,124 @@
     },
     "detailDialog": {
       "$ref": "jsonforms-uischema.schema.json#/$defs/detailDialog"
+    },
+    "inputAdornment": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "text"
+          ],
+          "properties": {
+            "kind": {
+              "const": "text"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "i18n": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tooltip": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "icon"
+          ],
+          "properties": {
+            "kind": {
+              "const": "icon"
+            },
+            "icon": {
+              "type": "string",
+              "minLength": 1
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "i18n": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tooltip": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decorative": {
+              "type": "boolean"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "decorative": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "decorative"
+                ]
+              },
+              "then": {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "label"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "tooltip"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "i18n"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "else": {
+                "required": [
+                  "label"
+                ]
+              }
+            }
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "inputAdornmentValue": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/inputAdornment"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/inputAdornment"
+          }
+        }
+      ],
+      "description": "Logical input-edge content. Strings preserve upstream literal behavior; objects add localized text or semantic icons; arrays compose objects in order."
     }
   },
   "$id": "https://kchobantonov.github.io/jsonforms-extended-spec/schemas/jsonforms-extended-uischema.schema.json"

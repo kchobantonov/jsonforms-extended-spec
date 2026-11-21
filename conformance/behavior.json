@@ -502,5 +502,213 @@
       "unsavedInput": "draft",
       "templateStatePreserved": true
     }
+  },
+  {
+    "id": "adornment-display-only",
+    "section": "18.3a",
+    "input": {
+      "data": {
+        "weight": 2.4
+      },
+      "options": {
+        "endAdornment": [
+          {
+            "kind": "text",
+            "text": "kg"
+          },
+          {
+            "kind": "icon",
+            "icon": "information",
+            "label": "Help",
+            "tooltip": "Unpackaged weight"
+          }
+        ]
+      },
+      "edit": {
+        "weight": 3.1
+      }
+    },
+    "expected": {
+      "data": {
+        "weight": 3.1
+      },
+      "adornmentIncludedInValue": false,
+      "existingInputActionsPreserved": true
+    }
+  },
+  {
+    "id": "adornment-translation-and-icon-fallback",
+    "section": "18.3a",
+    "input": {
+      "locale": "bg",
+      "options": {
+        "endAdornment": {
+          "kind": "icon",
+          "icon": "information",
+          "label": "Help",
+          "tooltip": "About this value",
+          "i18n": "weight.help"
+        }
+      },
+      "catalog": {
+        "weight.help.label": "Помощ",
+        "weight.help.tooltip": "За тази стойност"
+      },
+      "iconAvailable": false
+    },
+    "expected": {
+      "visibleFallback": "Помощ",
+      "accessibleName": "Помощ",
+      "tooltip": "За тази стойност",
+      "dataChanged": false
+    }
+  },
+  {
+    "id": "adornment-ordered-composition",
+    "section": "18.3a",
+    "input": {
+      "options": {
+        "startAdornment": "€",
+        "endAdornment": [
+          {
+            "kind": "text",
+            "text": "kg"
+          },
+          {
+            "kind": "icon",
+            "icon": "information",
+            "label": "Help"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "start": [
+        "€"
+      ],
+      "end": [
+        "kg",
+        "information"
+      ],
+      "storedValueUnchanged": true
+    }
+  },
+  {
+    "id": "adornment-outer-edge-native-controls",
+    "section": "18.3a",
+    "input": {
+      "control": "date-time picker",
+      "nativeStart": [
+        "pickerIcon"
+      ],
+      "nativeEnd": [
+        "clearButton",
+        "pickerTrigger"
+      ],
+      "options": {
+        "startAdornment": "Due",
+        "endAdornment": {
+          "kind": "icon",
+          "icon": "information",
+          "label": "Help"
+        }
+      }
+    },
+    "expected": {
+      "logicalOrder": [
+        "Due",
+        "pickerIcon",
+        "input",
+        "clearButton",
+        "pickerTrigger",
+        "information"
+      ],
+      "pickerOperable": true,
+      "clearOperable": true,
+      "dataChangedByAdornment": false
+    }
+  },
+  {
+    "id": "adornment-library-slot-convention",
+    "section": "18.3a",
+    "input": {
+      "control": "select",
+      "nativeEnd": [
+        "clearButton",
+        "dropdownArrow"
+      ],
+      "options": {
+        "endAdornment": {
+          "kind": "text",
+          "text": "per item"
+        }
+      },
+      "libraryConvention": [
+        "input",
+        "clearButton",
+        "per item",
+        "dropdownArrow"
+      ]
+    },
+    "expected": {
+      "logicalOrder": [
+        "input",
+        "clearButton",
+        "per item",
+        "dropdownArrow"
+      ],
+      "nativeConventionPreserved": true,
+      "clearOperable": true,
+      "dropdownOperable": true
+    }
+  },
+  {
+    "id": "adornment-text-like-variant-coverage",
+    "section": "18.3a",
+    "input": {
+      "variants": [
+        "time",
+        "duration",
+        "cron",
+        "password"
+      ],
+      "nativeActions": {
+        "time": [
+          "pickerTrigger",
+          "clearButton"
+        ],
+        "duration": [
+          "pickerTrigger",
+          "clearButton"
+        ],
+        "cron": [
+          "pickerTrigger",
+          "clearButton"
+        ],
+        "password": [
+          "revealButton",
+          "clearButton"
+        ]
+      },
+      "options": {
+        "startAdornment": {
+          "kind": "text",
+          "text": "Prefix"
+        },
+        "endAdornment": {
+          "kind": "icon",
+          "icon": "information",
+          "label": "Help"
+        }
+      }
+    },
+    "expected": {
+      "eachSupportedVariantKeepsNativeActions": true,
+      "startBeforeNativeLeadingParts": true,
+      "endAfterNativeTrailingPartsUnlessLibraryConvention": true,
+      "typedValueExcludesAdornments": true,
+      "passwordRevealDoesNotChangeData": true,
+      "unsupportedVariantReported": true
+    }
   }
 ]

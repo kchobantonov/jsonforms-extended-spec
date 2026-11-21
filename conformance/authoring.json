@@ -2028,5 +2028,142 @@
       }
     },
     "valid": true
+  },
+  {
+    "id": "adornment-literal",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "startAdornment": "€"
+      }
+    },
+    "valid": true,
+    "section": "18.3a"
+  },
+  {
+    "id": "adornment-single-icon",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "endAdornment": {
+          "kind": "icon",
+          "icon": "information",
+          "label": "Help",
+          "tooltip": "Read the instructions.",
+          "i18n": "help.icon"
+        }
+      }
+    },
+    "valid": true,
+    "section": "18.3a"
+  },
+  {
+    "id": "adornment-ordered-array",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "endAdornment": [
+          {
+            "kind": "text",
+            "text": "kg"
+          },
+          {
+            "kind": "icon",
+            "icon": "information",
+            "label": "About weight"
+          }
+        ]
+      }
+    },
+    "valid": true,
+    "section": "18.3a"
+  },
+  {
+    "id": "adornment-array-string",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "endAdornment": [
+          "kg"
+        ]
+      }
+    },
+    "valid": false,
+    "section": "18.3a"
+  },
+  {
+    "id": "adornment-missing-icon-label",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "endAdornment": {
+          "kind": "icon",
+          "icon": "information"
+        }
+      }
+    },
+    "valid": false,
+    "section": "18.3a"
+  },
+  {
+    "id": "adornment-decorative-tooltip",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "endAdornment": {
+          "kind": "icon",
+          "icon": "sparkle",
+          "decorative": true,
+          "tooltip": "Help"
+        }
+      }
+    },
+    "valid": false,
+    "section": "18.3a"
+  },
+  {
+    "id": "adornment-markup",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "endAdornment": {
+          "kind": "text",
+          "text": "kg",
+          "html": "<b>kg</b>"
+        }
+      }
+    },
+    "valid": false,
+    "section": "18.3a"
+  },
+  {
+    "id": "adornment-invalid-kind",
+    "schema": "jsonforms-extended-uischema.schema.json",
+    "value": {
+      "type": "Control",
+      "scope": "#/properties/value",
+      "options": {
+        "startAdornment": {
+          "kind": "action",
+          "icon": "search"
+        }
+      }
+    },
+    "valid": false,
+    "section": "18.3a"
   }
 ]

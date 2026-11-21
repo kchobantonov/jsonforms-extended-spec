@@ -1,0 +1,14 @@
+{
+  "price": 12.5,
+  "weight": 2.4,
+  "accountNumber": "4821",
+  "reference": "AB-42",
+  "category": "standard",
+  "deliveryDate": "2026-11-24",
+  "appointment": "2026-11-24T15:30:00Z",
+  "highlight": "#2255aa",
+  "startTime": "09:30:00Z",
+  "runSchedule": "0 0 9 * * *",
+  "retention": "PT1H30M",
+  "secret": "example-only-123"
+}

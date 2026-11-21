@@ -1,0 +1,262 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Categorization",
+      "elements": [
+        {
+          "type": "Category",
+          "name": "string",
+          "label": "String",
+          "i18n": "adornments.tabs.string",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/accountNumber",
+              "options": {
+                "startAdornment": {
+                  "kind": "icon",
+                  "icon": "account",
+                  "label": "Account",
+                  "i18n": "adornments.account.icon"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "Account number information",
+                  "tooltip": "Find this number on your statement.",
+                  "i18n": "adornments.account.help"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/reference",
+              "options": {
+                "startAdornment": "#",
+                "endAdornment": {
+                  "kind": "text",
+                  "text": "internal",
+                  "tooltip": "This reference is used within the company.",
+                  "i18n": "adornments.reference.suffix"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "number",
+          "label": "Number",
+          "i18n": "adornments.tabs.number",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/price",
+              "options": {
+                "startAdornment": "€"
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/weight",
+              "options": {
+                "endAdornment": [
+                  {
+                    "kind": "text",
+                    "text": "kg",
+                    "i18n": "adornments.weight.unit"
+                  },
+                  {
+                    "kind": "icon",
+                    "icon": "information",
+                    "label": "About weight",
+                    "tooltip": "Enter unpackaged weight.",
+                    "i18n": "adornments.weight.help"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "choice",
+          "label": "Choice",
+          "i18n": "adornments.tabs.choice",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/category",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About category",
+                  "tooltip": "Choose the shipping category.",
+                  "i18n": "adornments.category.help"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "password",
+          "label": "Password",
+          "i18n": "adornments.tabs.password",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/secret",
+              "options": {
+                "startAdornment": {
+                  "kind": "icon",
+                  "icon": "lock",
+                  "label": "Secret",
+                  "i18n": "adornments.secret.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About secret",
+                  "tooltip": "Keep this value private.",
+                  "i18n": "adornments.secret.help"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "date",
+          "label": "Date",
+          "i18n": "adornments.tabs.date",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/deliveryDate",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Due",
+                  "i18n": "adornments.deliveryDate.start"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "dateTime",
+          "label": "Date-time",
+          "i18n": "adornments.tabs.dateTime",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/appointment",
+              "options": {
+                "startAdornment": {
+                  "kind": "icon",
+                  "icon": "schedule",
+                  "label": "Appointment",
+                  "i18n": "adornments.appointment.start"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "time",
+          "label": "Time",
+          "i18n": "adornments.tabs.time",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/startTime",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "At",
+                  "i18n": "adornments.startTime.start"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "duration",
+          "label": "Duration",
+          "i18n": "adornments.tabs.duration",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/retention",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Keep",
+                  "i18n": "adornments.retention.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About duration",
+                  "tooltip": "Enter an ISO 8601 duration.",
+                  "i18n": "adornments.retention.help"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "cron",
+          "label": "Cron",
+          "i18n": "adornments.tabs.cron",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/runSchedule",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Run",
+                  "i18n": "adornments.runSchedule.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About schedule",
+                  "tooltip": "Use a six-field schedule.",
+                  "i18n": "adornments.runSchedule.help"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Category",
+          "name": "color",
+          "label": "Color",
+          "i18n": "adornments.tabs.color",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/highlight",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Color",
+                  "i18n": "adornments.highlight.start"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

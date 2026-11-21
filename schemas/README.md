@@ -1,8 +1,10 @@
 # Authoring schemas
 
 These schemas describe the implemented authoring subset of [spec.md](../docs/spec.md),
-using the reference renderer implementation as evidence. Provisional and
-unimplemented features belong in [TODO.md](../docs/todo.md), not schema definitions.
+using the reference renderer implementation as evidence. The explicitly
+provisional input-adornment authoring contract is also validated here; its
+renderer support remains pending. Other provisional and unimplemented features
+belong in [TODO.md](../docs/todo.md), not schema definitions.
 They use draft-07 and preserve unknown options and namespaces. Core configuration
 settings are also described even when a renderer does not implement their
 presentation behavior; their descriptions state that boundary.

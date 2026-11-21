@@ -34,7 +34,16 @@ export type CardChoice = ({ value: unknown; branch?: never } | { branch: number;
   detail?: EditorDetail;
 };
 
+export type InputAdornment =
+  | { kind: 'text'; text: string; i18n?: string; tooltip?: string }
+  | { kind: 'icon'; icon: string; label: string; i18n?: string; tooltip?: string; decorative?: false }
+  | { kind: 'icon'; icon: string; decorative: true; label?: never; i18n?: never; tooltip?: never };
+export type InputAdornmentValue = string | InputAdornment | InputAdornment[];
+
 export interface CommonControlOptions {
+  /** Provisional portable input-edge content; support depends on the renderer variant. */
+  startAdornment?: InputAdornmentValue;
+  endAdornment?: InputAdornmentValue;
   /** Opt in to conditional object field discovery; local false overrides config. */
   conditionalFields?: boolean;
   /** Editor layout or upstream detail-resolution mode. */

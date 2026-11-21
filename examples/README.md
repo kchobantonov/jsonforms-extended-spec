@@ -1,6 +1,6 @@
 # Specification examples
 
-These 48 example groups share the portable [specification](../docs/spec.md). Each
+These 50 example groups share the portable [specification](../docs/spec.md). Each
 folder contains authored JSON, English/Bulgarian translations and a walkthrough.
 The [catalog](catalog.json) lists files and required host capabilities.
 
@@ -30,6 +30,7 @@ The [catalog](catalog.json) lists files and required host capabilities.
 | [Dynamic playground: preview and configuration forms](dynamic-playground/README.md) | [11](../docs/spec.md#11-dynamic-values-and-path-grammar) |
 | [File control](file-control/README.md) | [18.18.4](../docs/spec.md#18184-file-control) |
 | [Group layout](group-layout/README.md) | [8.1](../docs/spec.md#81-group) |
+| [Input adornments](input-adornments/README.md) | [18.3a](../docs/spec.md#183a-input-adornments) |
 | [JSON editor: any JSON type](json-editor/README.md) | [18.20](../docs/spec.md#1820-mixed-value-controls-and-navigation) |
 | [JSON inference: paste data without a schema](json-inference/README.md) | [18.20](../docs/spec.md#1820-mixed-value-controls-and-navigation) |
 | [Kitchen sink: job application](kitchen-sink/README.md) | [24](../docs/spec.md#24-examples-requirement) |

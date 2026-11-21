@@ -16,6 +16,20 @@ Unknown extension keys remain allowed by the schemas. Such acceptance does not
 validate the feature's shape or claim it is supported. We do not publish a second
 schema containing speculative options.
 
+## TODO — portable input adornment verification
+
+The serialized `startAdornment` / `endAdornment` contract is specified in
+[§18.3a](spec.md#183a-input-adornments), with a tabbed
+[example](../examples/input-adornments/README.md). Svelte Flowbite, Skeleton,
+and Shadcn and React Ant Design and Shadcn now compose supported input-like
+controls with the string, object, and object-array shapes. Focused tests cover
+localization, accessible tooltip content, and ordering around password and
+picker controls. Complete the fixture's visual interaction checklist across
+all families, locales, narrow widths, and writing directions. Add explicit
+unsupported-variant diagnostics where a renderer cannot provide a coherent
+input boundary. The authoring and behavior vectors alone are not evidence of
+those remaining adapter checks.
+
 <a id="future--dynamic-ui-element-overlays"></a>
 
 ## EXPERIMENTAL — dynamic UI-element overlays

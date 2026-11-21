@@ -644,3 +644,44 @@ drafts for label-only changes; switch only the selected parent subtree when its
 tester result changes. Reuse the same detail for distinct rows, then reorder them
 and verify independent selection. These scenarios supplement the parent-reader
 acceptance cases above.
+
+## P23 — Input adornments are content, not component props
+
+**Trap:** Pass a portable icon object directly to a UI library's string-only
+prefix/suffix prop, concatenate a unit into the stored value, put a start
+adornment between a picker icon and its input, outside the visible field
+border like a neighboring layout element, or displace or cover native
+clear, dropdown, picker, reveal, or validation icons with an end adornment.
+A generic wrapper that repeatedly measures already-adorned padding can add
+space on every hover or focus render: the value visibly jumps. Animated padding
+can make the value slide even when the final measurement is correct. A focused
+field may also paint over a start icon, while an absolutely positioned clear
+button may cover an end icon or text despite adequate input padding. A tooltip
+opening beyond the viewport can toggle horizontal scrollbars and make the page
+appear to shake.
+
+**Behavior:** Normalize a literal string, object, or object array. Resolve each
+object's independent translation prefix; map semantic icon IDs locally and
+preserve the localized accessible label and focusable tooltip. Compose content
+at the logical input edge without changing parsing, storage, focus, validation,
+or built-in controls. Decide support from the actual text-entry surface, not
+only `type: string` or `format`. Time, duration, cron, password, color, masked,
+and editable choice inputs can qualify; a segmented OTP, code editor, or other
+composite needs a coherent outer field boundary before it can qualify.
+Normally put start before native leading icons and end after native trailing
+icons. Follow a UI library's established slot order where applicable while
+preserving familiar placement and operability. Unsupported
+editor variants report a capability gap.
+
+**Check:** Use [input adornments](../examples/input-adornments/README.md) in
+both locales and writing directions. Edit, clear, reload, focus the help icon,
+and compare saved JSON before/after a locale change. An icon mapping miss shows
+its localized label. Date/time/date-time, duration, cron, and color start
+adornments sit outside their picker triggers. Password reveal/clear and choice
+arrows remain operable before end adornments unless the library's standard slot
+order applies. Typed text, picker edits, and reveal toggles retain their
+original data and focus semantics. Compare value, adornment, picker, and
+clear-button bounds before hover, during hover, and after focus; none should
+jump or overlap. Check that the start icon remains visible while typing, the
+end adornment follows the clear button, and tooltip hover leaves document width
+and horizontal scroll unchanged.

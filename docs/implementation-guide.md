@@ -30,6 +30,7 @@ Use native components and theme tokens. A native error icon may differ in shape;
 | Element | Expected relationship |
 | --- | --- |
 | Ordinary control | One field label associated with the editor; description/help follows the control's documented visibility policy. Errors take precedence over ordinary help. |
+| Input adornment | Apply to supported input-like variants, including time, duration, cron and password where they expose a coherent text-entry surface. By default, start sits before native leading icons and end after native trailing icons. Use an established library slot order where applicable; translated content remains accessible without entering the value or obscuring built-in actions. |
 | Invalid ordinary control | Native invalid styling, accessible state and the applicable error indicator; readable error text below the control. Tooltip-only feedback is insufficient. |
 | Table cell | Column header supplies the label. Compact local feedback belongs beside/in the cell; error text is available through the accessible indicator/tooltip instead of expanding every row. |
 | Container | Direct errors stay at the container boundary; descendant errors use a localized summary and do not replace field-level feedback. |
