@@ -3725,9 +3725,9 @@ it precedes native input parts such as a leading date/time/date-time picker
 icon, duration or cron picker trigger, color swatch or picker trigger, password
 icon, and search icon. By default, `endAdornment` occupies the outermost
 logical end position: it follows native clear/reveal buttons, dropdown arrows,
-picker triggers, validation indicators, and other built-in end content. A
-renderer MAY follow its UI library's established adornment slot or ordering
-convention instead. In that case it MUST preserve
+picker triggers, number steppers, validation indicators, and other built-in end
+content. A renderer MAY follow its UI library's established adornment slot or
+ordering convention instead. In that case it MUST preserve
 the library's familiar control placement and keep both adornments and native
 controls visible, operable, and distinguishable.
 
@@ -3736,8 +3736,11 @@ narrow-layout usability. Hovering, focusing, editing, and revealing native
 controls MUST NOT shift the value or hide an adornment. When a password reveal
 action is persistently visible and clear appears on hover or focus, place clear
 before reveal so the reveal action stays in a fixed position, unless the
-UI library has an established ordering. Native clear and picker controls MUST
-NOT overlap adornment content, and a tooltip MUST NOT cause
+UI library has an established ordering. Adornments MUST preserve the control's
+normal clear-button visibility policy; a clear action that ordinarily appears
+on hover or focus MUST NOT become permanently visible because adornments are
+present. Native clear, picker, and number stepper controls MUST NOT overlap
+adornment content or each other, and a tooltip MUST NOT cause
 viewport-width oscillation or horizontal scrolling. An adornment MUST NOT cover
 editable text, a picker icon, or another control. Read-only and disabled
 states preserve informational content and its accessible explanation.

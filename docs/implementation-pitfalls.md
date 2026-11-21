@@ -648,18 +648,22 @@ acceptance cases above.
 ## P23 — Input adornments are content, not component props
 
 **Trap:** Pass a portable icon object directly to a UI library's string-only
-prefix/suffix prop, concatenate a unit into the stored value, put a start
-adornment between a picker icon and its input, outside the visible field
-border like a neighboring layout element, or displace or cover native
-clear, dropdown, picker, reveal, or validation icons with an end adornment.
-A generic wrapper that repeatedly measures already-adorned padding can add
-space on every hover or focus render: the value visibly jumps. Animated padding
-can make the value slide even when the final measurement is correct. A focused
-field may also paint over a start icon, while an absolutely positioned clear
-button may cover an end icon or text despite adequate input padding. Putting a
-conditional clear action after a permanent password reveal action can make the
-reveal action appear to move or leave an empty slot. A tooltip opening beyond
-the viewport can toggle horizontal scrollbars and make the page
+prefix/suffix prop or concatenate a unit into the stored value. Rendering an
+adornment beside a separately bordered input makes it a neighboring layout
+element rather than part of the field. Putting a start adornment between the
+picker or swatch and its input, or placing it on top of a color, cron, or
+duration trigger, reverses or obscures native controls. An end adornment can
+likewise cover clear, dropdown, picker, reveal, validation, or browser number
+stepper controls. Reserving only text padding does not prevent an absolutely
+positioned clear button from covering an end icon or suffix text.
+
+A wrapper that measures padding already adjusted for adornments can add space
+on each hover or focus render; animating that padding makes the value slide.
+Focused field layers can hide the start icon. A clear action added after a
+persistent password reveal action can move the reveal action or leave an empty
+slot. Making clear permanently visible on date, date-time, or time fields can
+also change the control's usual hover/focus behavior. A tooltip that extends
+beyond the viewport can toggle horizontal scrolling and make the whole page
 appear to shake.
 
 **Behavior:** Normalize a literal string, object, or object array. Resolve each
@@ -671,19 +675,34 @@ only `type: string` or `format`. Time, duration, cron, password, color, masked,
 and editable choice inputs can qualify; a segmented OTP, code editor, or other
 composite needs a coherent outer field boundary before it can qualify.
 Normally put start before native leading icons and end after native trailing
-icons. Follow a UI library's established slot order where applicable while
-preserving familiar placement and operability. Unsupported
-editor variants report a capability gap.
+icons. Reserve separate, stable space for the value, leading triggers, trailing
+actions, and adornments; account for the browser's number stepper as well as
+renderer-owned controls. Preserve the renderer's normal clear visibility
+policy: if clear appears on hover or focus, do not make it permanently visible
+when composing adornments. Keep a persistent password reveal action in a fixed
+position, normally after a conditional clear action and before the end
+adornment. Keep informational content visible while the input is focused and
+edited. Follow a UI library's established slot order where applicable while
+preserving familiar placement and operability. Unsupported editor variants
+report a capability gap.
 
 **Check:** Use [input adornments](../examples/input-adornments/README.md) in
 both locales and writing directions. Edit, clear, reload, focus the help icon,
 and compare saved JSON before/after a locale change. An icon mapping miss shows
 its localized label. Date/time/date-time, duration, cron, and color start
-adornments sit outside their picker triggers. Password reveal/clear and choice
-arrows remain operable before end adornments unless the library's standard slot
-order applies. Typed text, picker edits, and reveal toggles retain their
-original data and focus semantics. Compare value, adornment, picker, and
-clear-button bounds before hover, during hover, and after focus; none should
-jump or overlap. Check that the start icon remains visible while typing, the
-end adornment follows the clear button, and tooltip hover leaves document width
-and horizontal scroll unchanged.
+adornments sit outside their picker icons, swatches, and triggers. Password
+reveal/clear, choice arrows, and number steppers remain visible and operable
+before end adornments unless the library's standard slot order applies. On a
+number input, hover to show the browser stepper, increment and decrement, then
+use clear: the stepper and clear must have distinct hit targets. Typed text,
+picker edits, and reveal toggles retain their original data and focus
+semantics. Compare value, adornment, picker, stepper, and clear-button bounds
+at rest, on hover, during focus, and while editing; none should jump,
+disappear, or overlap. In particular, check the start icon while typing,
+suffix text and icons when clear appears, and the password reveal position as
+clear appears and disappears. On date, date-time, and time controls whose
+clear is normally conditional, verify that it is hidden at rest, appears on
+hover or focus, and remains keyboard accessible. Tooltip hover must leave
+document width and horizontal scroll unchanged. Inspect the rendered field,
+not just DOM order or declared padding, since browser controls and component
+styles can change the actual positions.
