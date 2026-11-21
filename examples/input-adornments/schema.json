@@ -5,25 +5,25 @@
   "properties": {
     "price": {
       "type": "number",
-      "title": "Price",
+      "title": "Number — Start only",
       "minimum": 0
     },
     "weight": {
       "type": "number",
-      "title": "Weight",
+      "title": "Number — End only",
       "minimum": 0
     },
     "accountNumber": {
       "type": "string",
-      "title": "Account number"
+      "title": "String — End only"
     },
     "reference": {
       "type": "string",
-      "title": "Reference"
+      "title": "String — Start only"
     },
     "category": {
       "type": "string",
-      "title": "Category",
+      "title": "Choice — End only",
       "enum": [
         "standard",
         "express"
@@ -32,37 +32,171 @@
     "deliveryDate": {
       "type": "string",
       "format": "date",
-      "title": "Delivery date"
+      "title": "Date — Start only"
     },
     "appointment": {
       "type": "string",
       "format": "date-time",
-      "title": "Appointment"
+      "title": "Date-time — Start only"
     },
     "highlight": {
       "type": "string",
       "format": "color",
-      "title": "Highlight color"
+      "title": "Color — Start only"
     },
     "startTime": {
       "type": "string",
       "format": "time",
-      "title": "Start time"
+      "title": "Time — Start only"
     },
     "runSchedule": {
       "type": "string",
       "format": "cron",
-      "title": "Run schedule"
+      "title": "Cron — Both"
     },
     "retention": {
       "type": "string",
       "format": "duration",
-      "title": "Retention"
+      "title": "Duration — Both"
     },
     "secret": {
       "type": "string",
       "format": "password",
-      "title": "Secret"
+      "title": "Password — Both"
+    },
+    "stringBoth": {
+      "type": "string",
+      "title": "String — Both"
+    },
+    "multilineStart": {
+      "type": "string",
+      "title": "Multiline — Start only"
+    },
+    "multilineEnd": {
+      "type": "string",
+      "title": "Multiline — End only"
+    },
+    "multilineBoth": {
+      "type": "string",
+      "title": "Multiline — Both"
+    },
+    "numberBoth": {
+      "type": "number",
+      "title": "Number — Both",
+      "minimum": 0
+    },
+    "integerStart": {
+      "type": "integer",
+      "title": "Integer — Start only",
+      "minimum": 0
+    },
+    "integerEnd": {
+      "type": "integer",
+      "title": "Integer — End only",
+      "minimum": 0
+    },
+    "integerBoth": {
+      "type": "integer",
+      "title": "Integer — Both",
+      "minimum": 0
+    },
+    "choiceStart": {
+      "type": "string",
+      "title": "Choice — Start only",
+      "enum": [
+        "standard",
+        "express"
+      ]
+    },
+    "choiceBoth": {
+      "type": "string",
+      "title": "Choice — Both",
+      "enum": [
+        "standard",
+        "express"
+      ]
+    },
+    "passwordStart": {
+      "type": "string",
+      "format": "password",
+      "title": "Password — Start only"
+    },
+    "passwordEnd": {
+      "type": "string",
+      "format": "password",
+      "title": "Password — End only"
+    },
+    "dateEnd": {
+      "type": "string",
+      "format": "date",
+      "title": "Date — End only"
+    },
+    "dateBoth": {
+      "type": "string",
+      "format": "date",
+      "title": "Date — Both"
+    },
+    "dateTimeEnd": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Date-time — End only"
+    },
+    "dateTimeBoth": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Date-time — Both"
+    },
+    "timeEnd": {
+      "type": "string",
+      "format": "time",
+      "title": "Time — End only"
+    },
+    "timeBoth": {
+      "type": "string",
+      "format": "time",
+      "title": "Time — Both"
+    },
+    "durationStart": {
+      "type": "string",
+      "format": "duration",
+      "title": "Duration — Start only"
+    },
+    "durationEnd": {
+      "type": "string",
+      "format": "duration",
+      "title": "Duration — End only"
+    },
+    "cronStart": {
+      "type": "string",
+      "format": "cron",
+      "title": "Cron — Start only"
+    },
+    "cronEnd": {
+      "type": "string",
+      "format": "cron",
+      "title": "Cron — End only"
+    },
+    "colorEnd": {
+      "type": "string",
+      "format": "color",
+      "title": "Color — End only"
+    },
+    "colorBoth": {
+      "type": "string",
+      "format": "color",
+      "title": "Color — Both"
+    },
+    "maskedStart": {
+      "type": "string",
+      "title": "Masked — Start only"
+    },
+    "maskedEnd": {
+      "type": "string",
+      "title": "Masked — End only"
+    },
+    "maskedBoth": {
+      "type": "string",
+      "title": "Masked — Both"
     }
   },
   "required": [

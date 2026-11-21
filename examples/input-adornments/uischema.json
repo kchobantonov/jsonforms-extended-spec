@@ -2,36 +2,34 @@
   "type": "VerticalLayout",
   "elements": [
     {
-      "type": "Categorization",
+      "type": "Group",
+      "label": "String",
       "elements": [
         {
-          "type": "Category",
-          "name": "string",
-          "label": "String",
-          "i18n": "adornments.tabs.string",
+          "type": "HorizontalLayout",
           "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/reference",
+              "options": {
+                "startAdornment": "#"
+              }
+            },
             {
               "type": "Control",
               "scope": "#/properties/accountNumber",
               "options": {
-                "startAdornment": {
-                  "kind": "icon",
-                  "icon": "account",
-                  "label": "Account",
-                  "i18n": "adornments.account.icon"
-                },
                 "endAdornment": {
-                  "kind": "icon",
-                  "icon": "information",
-                  "label": "Account number information",
-                  "tooltip": "Find this number on your statement.",
-                  "i18n": "adornments.account.help"
+                  "kind": "text",
+                  "text": "internal",
+                  "tooltip": "This reference is used within the company.",
+                  "i18n": "adornments.reference.suffix"
                 }
               }
             },
             {
               "type": "Control",
-              "scope": "#/properties/reference",
+              "scope": "#/properties/stringBoth",
               "options": {
                 "startAdornment": "#",
                 "endAdornment": {
@@ -43,12 +41,120 @@
               }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.string"
+    },
+    {
+      "type": "Group",
+      "label": "Multiline",
+      "elements": [
         {
-          "type": "Category",
-          "name": "number",
-          "label": "Number",
-          "i18n": "adornments.tabs.number",
+          "type": "HorizontalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/multilineStart",
+              "options": {
+                "multi": true,
+                "startAdornment": "#"
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/multilineEnd",
+              "options": {
+                "multi": true,
+                "endAdornment": {
+                  "kind": "text",
+                  "text": "internal",
+                  "tooltip": "This reference is used within the company.",
+                  "i18n": "adornments.reference.suffix"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/multilineBoth",
+              "options": {
+                "multi": true,
+                "startAdornment": "#",
+                "endAdornment": {
+                  "kind": "text",
+                  "text": "internal",
+                  "tooltip": "This reference is used within the company.",
+                  "i18n": "adornments.reference.suffix"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "i18n": "adornments.tabs.multiline"
+    },
+    {
+      "type": "Group",
+      "label": "Masked",
+      "i18n": "adornments.tabs.masked",
+      "elements": [
+        {
+          "type": "HorizontalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/maskedStart",
+              "options": {
+                "mask": "###-###",
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "ID",
+                  "i18n": "adornments.masked.start"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/maskedEnd",
+              "options": {
+                "mask": "###-###",
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About masked text",
+                  "tooltip": "Enter six digits.",
+                  "i18n": "adornments.masked.help"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/maskedBoth",
+              "options": {
+                "mask": "###-###",
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "ID",
+                  "i18n": "adornments.masked.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About masked text",
+                  "tooltip": "Enter six digits.",
+                  "i18n": "adornments.masked.help"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Group",
+      "label": "Number",
+      "elements": [
+        {
+          "type": "HorizontalLayout",
           "elements": [
             {
               "type": "Control",
@@ -76,15 +182,97 @@
                   }
                 ]
               }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/numberBoth",
+              "options": {
+                "startAdornment": "€",
+                "endAdornment": [
+                  {
+                    "kind": "text",
+                    "text": "kg",
+                    "i18n": "adornments.weight.unit"
+                  },
+                  {
+                    "kind": "icon",
+                    "icon": "information",
+                    "label": "About weight",
+                    "tooltip": "Enter unpackaged weight.",
+                    "i18n": "adornments.weight.help"
+                  }
+                ]
+              }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.number"
+    },
+    {
+      "type": "Group",
+      "label": "Integer",
+      "elements": [
         {
-          "type": "Category",
-          "name": "choice",
-          "label": "Choice",
-          "i18n": "adornments.tabs.choice",
+          "type": "HorizontalLayout",
           "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/integerStart",
+              "options": {
+                "startAdornment": "€"
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/integerEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About integer",
+                  "tooltip": "Help for the integer field.",
+                  "i18n": "adornments.integer.help"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/integerBoth",
+              "options": {
+                "startAdornment": "€",
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About integer",
+                  "tooltip": "Help for the integer field.",
+                  "i18n": "adornments.integer.help"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "i18n": "adornments.tabs.integer"
+    },
+    {
+      "type": "Group",
+      "label": "Choice",
+      "elements": [
+        {
+          "type": "HorizontalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/choiceStart",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Choice",
+                  "i18n": "adornments.choice.start"
+                }
+              }
+            },
             {
               "type": "Control",
               "scope": "#/properties/category",
@@ -97,15 +285,62 @@
                   "i18n": "adornments.category.help"
                 }
               }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/choiceBoth",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Choice",
+                  "i18n": "adornments.choice.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About category",
+                  "tooltip": "Choose the shipping category.",
+                  "i18n": "adornments.category.help"
+                }
+              }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.choice"
+    },
+    {
+      "type": "Group",
+      "label": "Password",
+      "elements": [
         {
-          "type": "Category",
-          "name": "password",
-          "label": "Password",
-          "i18n": "adornments.tabs.password",
+          "type": "HorizontalLayout",
           "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/passwordStart",
+              "options": {
+                "startAdornment": {
+                  "kind": "icon",
+                  "icon": "lock",
+                  "label": "Secret",
+                  "i18n": "adornments.secret.start"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/passwordEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About secret",
+                  "tooltip": "Keep this value private.",
+                  "i18n": "adornments.secret.help"
+                }
+              }
+            },
             {
               "type": "Control",
               "scope": "#/properties/secret",
@@ -126,12 +361,16 @@
               }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.password"
+    },
+    {
+      "type": "Group",
+      "label": "Date",
+      "elements": [
         {
-          "type": "Category",
-          "name": "date",
-          "label": "Date",
-          "i18n": "adornments.tabs.date",
+          "type": "HorizontalLayout",
           "elements": [
             {
               "type": "Control",
@@ -143,14 +382,49 @@
                   "i18n": "adornments.deliveryDate.start"
                 }
               }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/dateEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About date",
+                  "tooltip": "Help for the date field.",
+                  "i18n": "adornments.date.help"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/dateBoth",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Due",
+                  "i18n": "adornments.deliveryDate.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About date",
+                  "tooltip": "Help for the date field.",
+                  "i18n": "adornments.date.help"
+                }
+              }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.date"
+    },
+    {
+      "type": "Group",
+      "label": "Date-time",
+      "elements": [
         {
-          "type": "Category",
-          "name": "dateTime",
-          "label": "Date-time",
-          "i18n": "adornments.tabs.dateTime",
+          "type": "HorizontalLayout",
           "elements": [
             {
               "type": "Control",
@@ -163,14 +437,50 @@
                   "i18n": "adornments.appointment.start"
                 }
               }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/dateTimeEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About date-time",
+                  "tooltip": "Help for the date-time field.",
+                  "i18n": "adornments.dateTime.help"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/dateTimeBoth",
+              "options": {
+                "startAdornment": {
+                  "kind": "icon",
+                  "icon": "schedule",
+                  "label": "Appointment",
+                  "i18n": "adornments.appointment.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About date-time",
+                  "tooltip": "Help for the date-time field.",
+                  "i18n": "adornments.dateTime.help"
+                }
+              }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.dateTime"
+    },
+    {
+      "type": "Group",
+      "label": "Time",
+      "elements": [
         {
-          "type": "Category",
-          "name": "time",
-          "label": "Time",
-          "i18n": "adornments.tabs.time",
+          "type": "HorizontalLayout",
           "elements": [
             {
               "type": "Control",
@@ -182,15 +492,74 @@
                   "i18n": "adornments.startTime.start"
                 }
               }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/timeEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About time",
+                  "tooltip": "Help for the time field.",
+                  "i18n": "adornments.time.help"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/timeBoth",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "At",
+                  "i18n": "adornments.startTime.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About time",
+                  "tooltip": "Help for the time field.",
+                  "i18n": "adornments.time.help"
+                }
+              }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.time"
+    },
+    {
+      "type": "Group",
+      "label": "Duration",
+      "elements": [
         {
-          "type": "Category",
-          "name": "duration",
-          "label": "Duration",
-          "i18n": "adornments.tabs.duration",
+          "type": "HorizontalLayout",
           "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/durationStart",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Keep",
+                  "i18n": "adornments.retention.start"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/durationEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About duration",
+                  "tooltip": "Enter an ISO 8601 duration.",
+                  "i18n": "adornments.retention.help"
+                }
+              }
+            },
             {
               "type": "Control",
               "scope": "#/properties/retention",
@@ -210,13 +579,41 @@
               }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.duration"
+    },
+    {
+      "type": "Group",
+      "label": "Cron",
+      "elements": [
         {
-          "type": "Category",
-          "name": "cron",
-          "label": "Cron",
-          "i18n": "adornments.tabs.cron",
+          "type": "HorizontalLayout",
           "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/cronStart",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Run",
+                  "i18n": "adornments.runSchedule.start"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/cronEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About schedule",
+                  "tooltip": "Use a six-field schedule.",
+                  "i18n": "adornments.runSchedule.help"
+                }
+              }
+            },
             {
               "type": "Control",
               "scope": "#/properties/runSchedule",
@@ -236,12 +633,16 @@
               }
             }
           ]
-        },
+        }
+      ],
+      "i18n": "adornments.tabs.cron"
+    },
+    {
+      "type": "Group",
+      "label": "Color",
+      "elements": [
         {
-          "type": "Category",
-          "name": "color",
-          "label": "Color",
-          "i18n": "adornments.tabs.color",
+          "type": "HorizontalLayout",
           "elements": [
             {
               "type": "Control",
@@ -253,10 +654,42 @@
                   "i18n": "adornments.highlight.start"
                 }
               }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/colorEnd",
+              "options": {
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About color",
+                  "tooltip": "Help for the color field.",
+                  "i18n": "adornments.color.help"
+                }
+              }
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/colorBoth",
+              "options": {
+                "startAdornment": {
+                  "kind": "text",
+                  "text": "Color",
+                  "i18n": "adornments.highlight.start"
+                },
+                "endAdornment": {
+                  "kind": "icon",
+                  "icon": "information",
+                  "label": "About color",
+                  "tooltip": "Help for the color field.",
+                  "i18n": "adornments.color.help"
+                }
+              }
             }
           ]
         }
-      ]
+      ],
+      "i18n": "adornments.tabs.color"
     }
   ]
 }

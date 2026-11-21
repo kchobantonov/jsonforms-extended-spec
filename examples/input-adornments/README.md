@@ -4,16 +4,18 @@
 **Demo entry:** **Spec: Input adornments** (`#spec-input-adornments`)\
 **Spec:** [§18.3a](../../docs/spec.md#183a-input-adornments)
 
-The Categorization has separate String, Number, Choice, Password, Date,
-Date-time, Time, Duration, Cron, and Color tabs. Each tab uses the same
-underlying form data and exposes that input type for visual comparison.
+The single page groups String, Multiline, Masked, Number, Integer, Choice, Password,
+Date, Date-time, Time, Duration, Cron, and Color. Each group shows three
+independent fields side by side: start adornment only, end adornment only,
+and both adornments. Scroll the page to compare every supported input type
+without switching tabs.
 
 This authoring fixture shows a literal currency prefix, a translated unit and
 help icon in one suffix, single icon objects on both sides of a field, a
 translated text tooltip, and a select suffix that must coexist with its arrow.
 Date, date-time, time, duration, cron, and color fields exercise start
-placement beside picker icons; Reference, Category, cron, duration, and password
-exercise end placement beside clear, dropdown, picker, and reveal controls.
+placement beside picker icons; the end-only and both fields exercise suffix
+placement beside clear, dropdown, picker, and reveal controls.
 The semantic `information`, `account`, `schedule`, and `lock` IDs require a
 renderer/host icon map;
 no particular icon library is part of the UI model.
@@ -22,14 +24,15 @@ no particular icon library is part of the UI model.
 
 `schema.json` defines numeric, text and choice values. `data.json` contains
 ordinary editable data without adornment text. `uischema.json` exercises all
-three value shapes and groups the controls into translated tabs. `translations.json` provides matching English and Bulgarian
-keys with authored English fallbacks.
+three placements on one page. `translations.json` provides matching English
+and Bulgarian keys with authored English fallbacks.
 
 ## Adapter checks
 
 1. Render all fields, then switch between English and Bulgarian. Text, icon
    names and tooltips update; data stays byte-for-byte equal. The literal `€`
-   and `#` remain unchanged.
+   and `#` remain unchanged. Verify that each group shows start only, end
+   only, and both placements at the same time.
 2. Focus the help icon with a keyboard and read its localized tooltip and
    accessible label. Hover works too. With a missing icon mapping, show the
    localized label as text.
@@ -43,7 +46,7 @@ keys with authored English fallbacks.
    text-entry surfaces and open each picker without losing focus or caret state.
    The adornment must not cover the Color swatch or the Cron and Duration
    triggers.
-5. Clear Reference and open Category. Clear and dropdown icons remain visible
+5. Clear a String field and open Choice. Clear and dropdown icons remain visible
    and operable before end adornments. Toggle the password reveal icon without
    changing stored data; its reveal and clear controls remain distinct from the
    informational suffix. Cron and Duration picker actions remain usable. A
