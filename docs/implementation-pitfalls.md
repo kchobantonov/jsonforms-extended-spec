@@ -750,8 +750,10 @@ adjacent input width from row to row. Give the button the same visual
 treatment as a value clear action. Apply a small fixed maximum height to a
 duration popup so it scrolls even when the viewport has room. Omit the clear
 action from the cron popup's Expression field while providing it on other
-fields, or show clear permanently or for an empty value. Style Cron Apply as
-a secondary action while the comparable duration popup uses the theme primary
+fields, or show clear permanently or for an empty value. Hiding a conditional
+clear button with CSS visibility also removes it from the accessibility tree
+and keyboard focus order, so focusing the button cannot reveal it. Style
+Cron Apply as a secondary action while the comparable duration popup uses the theme primary
 action.
 
 **Behavior:** A duration Remove unit action removes that component from the
@@ -763,8 +765,9 @@ unit-specific name. Preserve the final-unit restriction and Apply/Cancel or
 immediate-update semantics. Size popups from the space available above or below
 the trigger; allow vertical scrolling when content genuinely exceeds that
 space. A cron popup input, including Expression, offers its own clear action
-when it contains text and the field is hovered or focused. Clearing that draft
-uses the same validation and commit rules as typing into the field. Give the
+when it contains text and the field is hovered or focused. Keep that action
+keyboard reachable while it is visually quiet at rest; focus must reveal it.
+Clearing that draft uses the same validation and commit rules as typing into the field. Give the
 Cron Apply action the theme primary treatment and Cancel the secondary
 treatment, consistent with other popup editors.
 
@@ -779,10 +782,13 @@ summary, clear meaning, and draft behavior should agree across renderers.
 
 A color picker should expose a labeled Clear value action at the bottom of
 its app-owned panel when a value is present and clearing is allowed. It must
-use the same empty-value contract as the field-level clear action. A browser
-native color dialog cannot host application buttons; a renderer using one may
-place the chooser and Clear value action together in an app popover, while
-recording that its color-selection UI does not match a custom spectrum.
+use the same empty-value contract as the field-level clear action. Opening the
+field's picker should reveal the color-selection controls immediately; a large
+native color-input swatch inside an app popover creates a second dialog when
+activated. A browser-native color dialog cannot host application buttons, so a
+renderer that needs Clear value in the picker should use an app-owned spectrum
+and controls in that single panel. A renderer that uses a native dialog instead
+must expose clear separately and record that platform limitation.
 
 **Check:** Open a duration with at least two units. Compare the numeric input
 and Remove unit button centers; compare the input right edges and label start
@@ -794,8 +800,10 @@ fits without an internal scrollbar; on a short viewport, its actions stay
 reachable by scrolling. In the cron popup, focus and hover the nonempty
 Expression field, clear it, and verify the draft becomes empty while the
 committed value follows the configured Apply/Cancel or immediate mode. Check
-that an empty Expression field has no clear action. Compare Cron Apply with
-Duration Apply and confirm both use the theme primary button treatment.
+that an empty Expression field has no clear action. With a nonempty Seconds
+field, locate its reset action by accessible name before hover, focus it from
+the keyboard, and verify that it appears and resets only Seconds. Compare
+Cron Apply with Duration Apply and confirm both use the theme primary button treatment.
 Select two minutes in succession from the scrolling choice list, confirm both
 appear in the compact summary and draft expression, then clear Minutes to
 Every without changing the other fields. Check that Expression has a visible
@@ -806,5 +814,8 @@ evidence of execution by the Svelte renderers.
 Open a populated color picker and activate the footer Clear value action;
 verify the stored property is removed. Repeat with an empty value, clearing
 disabled, and a readonly control; the footer action must be absent or disabled.
+Activate the field's picker and verify that saturation, hue and channel editing
+are usable immediately, without activating another swatch or opening a second
+dialog. Use pointer and keyboard editing, then clear from the same panel.
 React Antd and Shadcn have focused DOM regressions for the footer action;
 neither test establishes visual parity between their color-selection surfaces.
