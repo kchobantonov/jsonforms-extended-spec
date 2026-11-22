@@ -721,22 +721,28 @@ styles can change the actual positions.
 
 **Trap:** Put a duration unit's remove action inside its numeric input, where
 it reads as “clear this number,” or align a separate remove button against the
-label rather than the input. Give the button the same visual treatment as a
-value clear action. Apply a small fixed maximum height to a duration popup so
-it scrolls even when the viewport has room. Omit the clear action from the
-cron popup's Expression field while providing it on other fields, or show
-clear permanently or for an empty value.
+label rather than the input. Let different unit-label widths change the
+adjacent input width from row to row. Give the button the same visual
+treatment as a value clear action. Apply a small fixed maximum height to a
+duration popup so it scrolls even when the viewport has room. Omit the clear
+action from the cron popup's Expression field while providing it on other
+fields, or show clear permanently or for an empty value. Style Cron Apply as
+a secondary action while the comparable duration popup uses the theme primary
+action.
 
 **Behavior:** A duration Remove unit action removes that component from the
 staged duration; it is separate from clearing the whole duration or editing a
 component's quantity. Present number, unit name, and remove action as one
-aligned row, with the remove action outside the numeric field and an accessible
+aligned row, with consistent numeric-input and unit-label columns across all
+rows, the remove action outside the numeric field, and an accessible
 unit-specific name. Preserve the final-unit restriction and Apply/Cancel or
 immediate-update semantics. Size popups from the space available above or below
 the trigger; allow vertical scrolling when content genuinely exceeds that
 space. A cron popup input, including Expression, offers its own clear action
 when it contains text and the field is hovered or focused. Clearing that draft
-uses the same validation and commit rules as typing into the field.
+uses the same validation and commit rules as typing into the field. Give the
+Cron Apply action the theme primary treatment and Cancel the secondary
+treatment, consistent with other popup editors.
 
 Cron picker rows should identify each field visibly, including the raw Expression
 editor. Give selectable time fields a compact summary of chosen values, a
@@ -755,15 +761,17 @@ place the chooser and Clear value action together in an app popover, while
 recording that its color-selection UI does not match a custom spectrum.
 
 **Check:** Open a duration with at least two units. Compare the numeric input
-and Remove unit button centers, activate Remove Hours, and verify that the
-draft loses the hour component, while committed data changes only at the
-configured commit step. Confirm that the X is visibly outside the input and
+and Remove unit button centers; compare the input right edges and label start
+edges across rows. Activate Remove Hours and verify that the draft loses the
+hour component, while committed data changes only at the configured commit
+step. Confirm that the X is visibly outside the input and
 remains distinct from the whole-value clear button. On a tall viewport, a short duration popup
 fits without an internal scrollbar; on a short viewport, its actions stay
 reachable by scrolling. In the cron popup, focus and hover the nonempty
 Expression field, clear it, and verify the draft becomes empty while the
 committed value follows the configured Apply/Cancel or immediate mode. Check
-that an empty Expression field has no clear action.
+that an empty Expression field has no clear action. Compare Cron Apply with
+Duration Apply and confirm both use the theme primary button treatment.
 Select two minutes in succession from the scrolling choice list, confirm both
 appear in the compact summary and draft expression, then clear Minutes to
 Every without changing the other fields. Check that Expression has a visible
