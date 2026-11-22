@@ -655,7 +655,11 @@ picker or swatch and its input, or placing it on top of a color, cron, or
 duration trigger, reverses or obscures native controls. An end adornment can
 likewise cover clear, dropdown, picker, reveal, validation, or browser number
 stepper controls. Reserving only text padding does not prevent an absolutely
-positioned clear button from covering an end icon or suffix text.
+positioned clear button from covering an end icon or suffix text. A native
+select's browser-drawn arrow can stay at the physical edge even after the
+value receives extra end padding; a separate combobox trigger can do the same.
+A tooltip rendered inside a clipped field wrapper may appear as a thin sliver
+instead of readable help.
 
 A wrapper that measures padding already adjusted for adornments can add space
 on each hover or focus render; animating that padding makes the value slide.
@@ -677,12 +681,14 @@ composite needs a coherent outer field boundary before it can qualify.
 Normally put start before native leading icons and end after native trailing
 icons. Reserve separate, stable space for the value, leading triggers, trailing
 actions, and adornments; account for the browser's number stepper as well as
-renderer-owned controls. Preserve the renderer's normal clear visibility
-policy: if clear appears on hover or focus, do not make it permanently visible
-when composing adornments. Keep a persistent password reveal action in a fixed
-position, normally after a conditional clear action and before the end
-adornment. Keep informational content visible while the input is focused and
-edited. Follow a UI library's established slot order where applicable while
+renderer-owned controls. Move a choice arrow or trigger into that reserved
+space; padding the selected text alone does not move it. Keep tooltip content
+unclipped and within the viewport. Preserve the renderer's normal clear
+visibility policy: if clear appears on hover or focus, do not make it
+permanently visible when composing adornments. Keep a persistent password
+reveal action in a fixed position, normally after a conditional clear action
+and before the end adornment. Keep informational content visible while
+the input is focused and edited. Follow a UI library's established slot order where applicable while
 preserving familiar placement and operability. Unsupported editor variants
 report a capability gap.
 
@@ -700,9 +706,73 @@ semantics. Compare value, adornment, picker, stepper, and clear-button bounds
 at rest, on hover, during focus, and while editing; none should jump,
 disappear, or overlap. In particular, check the start icon while typing,
 suffix text and icons when clear appears, and the password reveal position as
-clear appears and disappears. On date, date-time, and time controls whose
-clear is normally conditional, verify that it is hidden at rest, appears on
-hover or focus, and remains keyboard accessible. Tooltip hover must leave
+clear appears and disappears. Check that the password value and masked glyphs
+have visible space after the reveal icon. Test both a native select arrow and
+a separately positioned combobox trigger with an end adornment; the text,
+arrow, clear action, and adornment need distinct hit areas. On date,
+date-time, and time controls whose clear is normally conditional, verify that
+it is hidden at rest, appears on hover or focus, and remains keyboard
+accessible. Tooltip hover must leave
 document width and horizontal scroll unchanged. Inspect the rendered field,
 not just DOM order or declared padding, since browser controls and component
 styles can change the actual positions.
+
+## P24 — Popup actions keep their distinct meanings and fit the viewport
+
+**Trap:** Put a duration unit's remove action inside its numeric input, where
+it reads as “clear this number,” or align a separate remove button against the
+label rather than the input. Give the button the same visual treatment as a
+value clear action. Apply a small fixed maximum height to a duration popup so
+it scrolls even when the viewport has room. Omit the clear action from the
+cron popup's Expression field while providing it on other fields, or show
+clear permanently or for an empty value.
+
+**Behavior:** A duration Remove unit action removes that component from the
+staged duration; it is separate from clearing the whole duration or editing a
+component's quantity. Present number, unit name, and remove action as one
+aligned row, with the remove action outside the numeric field and an accessible
+unit-specific name. Preserve the final-unit restriction and Apply/Cancel or
+immediate-update semantics. Size popups from the space available above or below
+the trigger; allow vertical scrolling when content genuinely exceeds that
+space. A cron popup input, including Expression, offers its own clear action
+when it contains text and the field is hovered or focused. Clearing that draft
+uses the same validation and commit rules as typing into the field.
+
+Cron picker rows should identify each field visibly, including the raw Expression
+editor. Give selectable time fields a compact summary of chosen values, a
+scrollable list for long ranges such as seconds and minutes, and a separate
+clear action that returns that field to Every. Multi-selection must keep the
+list usable across successive choices and preserve unrelated expression fields.
+An accessible name alone does not explain an unlabeled raw expression box to a
+sighted user. Native library styling may differ, but the row labels, selected
+summary, clear meaning, and draft behavior should agree across renderers.
+
+A color picker should expose a labeled Clear value action at the bottom of
+its app-owned panel when a value is present and clearing is allowed. It must
+use the same empty-value contract as the field-level clear action. A browser
+native color dialog cannot host application buttons; a renderer using one may
+place the chooser and Clear value action together in an app popover, while
+recording that its color-selection UI does not match a custom spectrum.
+
+**Check:** Open a duration with at least two units. Compare the numeric input
+and Remove unit button centers, activate Remove Hours, and verify that the
+draft loses the hour component, while committed data changes only at the
+configured commit step. Confirm that the X is visibly outside the input and
+remains distinct from the whole-value clear button. On a tall viewport, a short duration popup
+fits without an internal scrollbar; on a short viewport, its actions stay
+reachable by scrolling. In the cron popup, focus and hover the nonempty
+Expression field, clear it, and verify the draft becomes empty while the
+committed value follows the configured Apply/Cancel or immediate mode. Check
+that an empty Expression field has no clear action.
+Select two minutes in succession from the scrolling choice list, confirm both
+appear in the compact summary and draft expression, then clear Minutes to
+Every without changing the other fields. Check that Expression has a visible
+label in both populated and empty pickers. React Shadcn has a focused DOM
+regression for multiple choices and reset; React Antd has DOM regressions for
+Expression labeling and clearing. These are not browser visual checks or
+evidence of execution by the Svelte renderers.
+Open a populated color picker and activate the footer Clear value action;
+verify the stored property is removed. Repeat with an empty value, clearing
+disabled, and a readonly control; the footer action must be absent or disabled.
+React Antd and Shadcn have focused DOM regressions for the footer action;
+neither test establishes visual parity between their color-selection surfaces.
