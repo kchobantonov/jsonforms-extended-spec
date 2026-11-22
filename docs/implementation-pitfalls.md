@@ -666,7 +666,10 @@ on each hover or focus render; animating that padding makes the value slide.
 Focused field layers can hide the start icon. A clear action added after a
 persistent password reveal action can move the reveal action or leave an empty
 slot. Making clear permanently visible on date, date-time, or time fields can
-also change the control's usual hover/focus behavior. A tooltip that extends
+also change the control's usual hover/focus behavior. Mixing a text
+multiplication sign or a filled action button with the UI library's clear icon
+makes numeric controls look like a different action from text and temporal
+controls. A tooltip that extends
 beyond the viewport can toggle horizontal scrolling and make the whole page
 appear to shake.
 
@@ -685,8 +688,12 @@ renderer-owned controls. Move a choice arrow or trigger into that reserved
 space; padding the selected text alone does not move it. Keep tooltip content
 unclipped and within the viewport. Preserve the renderer's normal clear
 visibility policy: if clear appears on hover or focus, do not make it
-permanently visible when composing adornments. Keep a persistent password
-reveal action in a fixed position, normally after a conditional clear action
+permanently visible when composing adornments. Use the same UI-library
+clear icon and neutral button treatment across comparable field types,
+including numeric and temporal inputs. Give icon-only picker triggers and
+clear buttons visible tooltips as well as accessible names. Translate those
+tooltips with the active locale, including after a live locale change. Keep a
+persistent password reveal action in a fixed position, normally after a conditional clear action
 and before the end adornment. Keep informational content visible while
 the input is focused and edited. Follow a UI library's established slot order where applicable while
 preserving familiar placement and operability. Unsupported editor variants
@@ -712,7 +719,10 @@ a separately positioned combobox trigger with an end adornment; the text,
 arrow, clear action, and adornment need distinct hit areas. On date,
 date-time, and time controls whose clear is normally conditional, verify that
 it is hidden at rest, appears on hover or focus, and remains keyboard
-accessible. Tooltip hover must leave
+accessible. Check picker and clear tooltips in both supported locales and
+after switching locale while the control remains mounted. Compare the rendered
+clear icon and button treatment on text, number, integer, date, date-time, and
+time controls. Tooltip hover must leave
 document width and horizontal scroll unchanged. Inspect the rendered field,
 not just DOM order or declared padding, since browser controls and component
 styles can change the actual positions.
