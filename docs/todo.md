@@ -61,6 +61,10 @@ separate from the experimental descriptor schema and adapter tests.
   environment snapshots and reevaluation when input namespaces change.
 - Resolution before renderer/cell selection, parent-consumed metadata, and
   nested/detail occurrences in the reference integrations.
+- Group `cover`, `header`, and `footer` children resolve through dynamic
+  dispatch. Focused Group integration tests in React Ant Design and Shadcn and
+  Svelte Flowbite, Skeleton, and Shadcn cover region updates, the effective
+  header Label's accessible name, and preserving the mounted body editor.
 - Immediate draft discard on editor replacement, scope-change editing sessions,
   and adapter-specific focus handoff and cancellation. Focused tests exist;
   coverage must still be verified for every claimed editor boundary.
@@ -83,8 +87,6 @@ the entire acceptance checklist or another renderer set.
 - A universal focus/cancellation protocol and a recorded coverage matrix for
   renderer families, internal editor changes, nested/generated/registered details,
   cells, templates, web components and additional adapters.
-- Verify Group header parent consumption: an effective header Label change must
-  update the Group title and accessible name without remounting its body.
 - API versioning and the evidence required before promotion into portable
   conformance or the published common/extended static schemas.
 
