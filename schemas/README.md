@@ -2,8 +2,10 @@
 
 These schemas describe the implemented authoring subset of [spec.md](../docs/spec.md),
 using the reference renderer implementation as evidence. The explicitly
-provisional input-adornment authoring contract is also validated here; its
-renderer support remains pending. Other provisional and unimplemented features
+provisional input-adornment authoring contract is also validated here. Five
+Svelte and React renderer families implement supported input-like variants;
+visual verification and unsupported-variant diagnostics remain pending.
+Other provisional and unimplemented features
 belong in [TODO.md](../docs/todo.md), not schema definitions.
 They use draft-07 and preserve unknown options and namespaces. Core configuration
 settings are also described even when a renderer does not implement their

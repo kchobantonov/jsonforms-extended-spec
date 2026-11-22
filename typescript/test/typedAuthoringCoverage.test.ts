@@ -44,11 +44,11 @@ describe('every element kind is expressible', () => {
       cover: f.raw({ type: 'ImageView', src: '/contact.jpg', alt: 'Office' }),
       header: [f.label({ text: 'Verified' })],
       elements: [f.control('email')],
-      actions: [f.raw({ type: 'Button', label: 'Verify', action: 'verify' })],
+      footer: [f.raw({ type: 'Button', label: 'Verify', action: 'verify' })],
     });
     expect(ui.cover?.type).toBe('ImageView');
     expect(ui.header).toHaveLength(1);
-    expect(ui.actions).toHaveLength(1);
+    expect(ui.footer).toHaveLength(1);
   });
 
   it('builds labels, categories, rules and the root scope', () => {

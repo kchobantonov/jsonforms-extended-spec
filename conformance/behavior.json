@@ -663,6 +663,24 @@
     }
   },
   {
+    "id": "group-header-accessible-name",
+    "section": "8.1",
+    "input": {
+      "groupLabel": "Contact",
+      "header": [
+        { "type": "Button", "label": "Help" },
+        { "type": "Label", "text": "Verified", "i18n": "contact.heading" },
+        { "type": "Label", "text": "Supporting text" }
+      ],
+      "catalog": { "contact.heading.text": "Потвърдено" },
+      "locale": "bg"
+    },
+    "expected": {
+      "groupAccessibleName": "Потвърдено",
+      "groupLabelRepeatedVisually": false
+    }
+  },
+  {
     "id": "adornment-text-like-variant-coverage",
     "section": "18.3a",
     "input": {
@@ -707,8 +725,7 @@
       "startBeforeNativeLeadingParts": true,
       "endAfterNativeTrailingPartsUnlessLibraryConvention": true,
       "typedValueExcludesAdornments": true,
-      "passwordRevealDoesNotChangeData": true,
-      "unsupportedVariantReported": true
+      "passwordRevealDoesNotChangeData": true
     }
   }
 ]

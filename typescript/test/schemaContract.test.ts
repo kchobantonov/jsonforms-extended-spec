@@ -564,16 +564,23 @@ describe('the two UI schemas', () => {
     expect(validate(doc)).toBe(false);
   });
 
-  it('names no vendor and no renderer library', () => {
+  it('names no renderer library and keeps vendor mentions to upstream attribution', () => {
     for (const name of [
       BASE_CONFIG,
       EXTENDED_CONFIG,
       BASE_UISCHEMA,
       EXTENDED_UISCHEMA,
     ]) {
-      const text = JSON.stringify(load(name)).toLowerCase();
+      const schema = load(name);
+      const text = JSON.stringify(schema).toLowerCase();
       expect(text, name).not.toContain('jsonforms-react-renderers');
-      expect(text, name).not.toContain('material');
+      if (name === EXTENDED_UISCHEMA) {
+        const attribution = schema.$defs.inputAdornmentValue.description;
+        expect(attribution).toContain('JSON Forms React Material');
+        expect(text.replace(attribution.toLowerCase(), ''), name).not.toContain('material');
+      } else {
+        expect(text, name).not.toContain('material');
+      }
     }
   });
 });

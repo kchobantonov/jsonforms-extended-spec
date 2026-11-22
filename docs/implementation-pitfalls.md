@@ -227,7 +227,12 @@ through the normal registry in the current schema and data context. An authored
 `header` takes precedence over `label` for the visible title. Two
 Label elements can supply a title and smaller supporting text. Keep all regions
 inside one card frame. Keep the cover and heading visible when collapsed; hide
-the body and footer. Nesting an authored Button inside the trigger makes keyboard and pointer behavior
+the body and footer. The first header Label supplies the Group's resolved
+accessible name; use the Group label when no header Label exists. Recompute
+that name when locale or effective dynamic header text changes. Resolving a
+dynamic Label only at child dispatch leaves the parent's name stale. Keep
+authored interactive content outside the disclosure trigger: nesting a Button
+inside it makes keyboard and pointer behavior
 ambiguous. Data and validation indicators aggregate only through `elements`. Acceptance:
 mount the Card regions tab in `examples/group-layout/uischema.json` closed,
 open it, activate a footer button without changing expansion, close it, then hide
@@ -672,6 +677,10 @@ makes numeric controls look like a different action from text and temporal
 controls. A tooltip that extends
 beyond the viewport can toggle horizontal scrolling and make the whole page
 appear to shake.
+An independently styled dark tooltip can ignore the renderer family's theme
+and become illegible in dark mode. Guessing native field parts from CSS class
+substrings such as `start-` and `end-` can move an unrelated positioned element
+or miss a library control after a class-name change.
 
 **Behavior:** Normalize a literal string, object, or object array. Resolve each
 object's independent translation prefix; map semantic icon IDs locally and
@@ -697,7 +706,10 @@ persistent password reveal action in a fixed position, normally after a conditio
 and before the end adornment. Keep informational content visible while
 the input is focused and edited. Follow a UI library's established slot order where applicable while
 preserving familiar placement and operability. Unsupported editor variants
-report a capability gap.
+should report a capability gap rather than silently dropping adornments.
+Use the family's tooltip treatment and theme colors. Identify native parts
+through stable library slots or explicit renderer integration where available;
+verify positioning after a library update.
 
 **Check:** Use [input adornments](../examples/input-adornments/README.md) in
 both locales and writing directions. Edit, clear, reload, focus the help icon,
@@ -726,6 +738,8 @@ time controls. Tooltip hover must leave
 document width and horizontal scroll unchanged. Inspect the rendered field,
 not just DOM order or declared padding, since browser controls and component
 styles can change the actual positions.
+Check tooltip contrast in light and dark themes, and verify that start/end
+spacing does not move unrelated positioned controls.
 
 ## P24 — Popup actions keep their distinct meanings and fit the viewport
 

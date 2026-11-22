@@ -739,7 +739,10 @@ When `header` is present, its authored elements provide the heading; renderers
 prefer them over `label` and do not repeat the Group label. Without a header,
 `label` remains the title and accessible name. A header may contain two `Label`
 elements for a title and supporting text; renderers give the second a smaller,
-muted treatment. For a collapsible Group, the existing status and chevron stay
+muted treatment. When the header contains a `Label`, the first such Label's
+resolved text is the Group's accessible name, including after a locale change;
+otherwise the Group label remains the accessible name. For a collapsible Group,
+the existing status and chevron stay
 at the far right of the heading row. The cover and one heading area remain
 visible when collapsed. Only the body and footer hide. Keep authored
 interactive content in `header` outside the disclosure trigger. Footer content
@@ -1908,6 +1911,9 @@ An aspect is a nonvisual adapter around that service, not a new visual Control.
 Resolve before testers inspect the effective element. Install equivalent coverage
 for renderer and cell registries. Parents that consume child labels, sizing or
 presentation metadata before child dispatch must read the same effective result.
+This includes a Group reading its header Label for the title and accessible
+name. Resolve that Label in the Group's current occurrence context before using
+its text, including when the header has no overlay of its own.
 Resolving only inside a child aspect leaves those parent consumers stale.
 This also applies to descendant scopes used for conditional filtering, error
 summaries and data/validation indicators, tuple placement, card content types,
@@ -3693,8 +3699,8 @@ not a UI-library icon name or markup. The mapping may render a platform-native
 symbol. If the identifier is unavailable, display the localized `label` as
 text; an unavailable decorative icon may be omitted. A nondecorative icon MUST
 have a nonempty fallback `label`; `decorative: true` removes it from the
-accessibility tree and MUST NOT be paired with a tooltip. A nondecorative
-icon's localized label is its accessible name. A configured tooltip on either kind of adornment supplements its
+accessibility tree and MUST NOT be paired with `label`, `i18n`, or `tooltip`.
+A nondecorative icon's localized label is its accessible name. A configured tooltip on either kind of adornment supplements its
 visible text or accessible name, is accessible by keyboard focus and pointer,
 and does not replace validation or field help. An icon with a tooltip is an information affordance,
 not an action; it MUST NOT mutate data. Interactive adornments require a
@@ -3744,6 +3750,8 @@ adornment content or each other, and a tooltip MUST NOT cause
 viewport-width oscillation or horizontal scrolling. An adornment MUST NOT cover
 editable text, a picker icon, or another control. Read-only and disabled
 states preserve informational content and its accessible explanation.
+Tooltips MUST use the renderer family's theme semantics, including dark mode,
+and remain legible and operable by keyboard and pointer.
 
 See the [input-adornments example](../examples/input-adornments/README.md).
 The Svelte Flowbite, Skeleton, and Shadcn families and the React Ant Design and

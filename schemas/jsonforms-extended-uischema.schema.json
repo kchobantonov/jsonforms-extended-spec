@@ -1916,7 +1916,7 @@
           }
         }
       ],
-      "description": "Logical input-edge content. Strings preserve upstream literal behavior; objects add localized text or semantic icons; arrays compose objects in order."
+      "description": "Logical input-edge content. Strings preserve JSON Forms React Material literal startAdornment/endAdornment behavior; objects add localized text or semantic icons; arrays compose objects in order."
     }
   },
   "$id": "https://kchobantonov.github.io/jsonforms-extended-spec/schemas/jsonforms-extended-uischema.schema.json"

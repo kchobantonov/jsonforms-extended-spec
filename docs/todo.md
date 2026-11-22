@@ -29,6 +29,16 @@ all families, locales, narrow widths, and writing directions. Add explicit
 unsupported-variant diagnostics where a renderer cannot provide a coherent
 input boundary. The authoring and behavior vectors alone are not evidence of
 those remaining adapter checks.
+The shared React and Svelte adornment components currently style tooltips as
+fixed dark boxes and infer some positioned field parts from `start-`/`end-`
+class-name fragments. Replace those assumptions with theme-aware family
+tooltips and stable renderer-owned slots or explicit integration, then verify
+light/dark themes and native action placement in each family.
+
+React Ant Design uses `Card.Meta` for a Group region header. Its default title
+truncation may conflict with §8.1's narrow-width wrapping requirement. Confirm
+in a browser with a long translated title, then adjust the Group header styling
+if it truncates. This visual behavior is not yet verified.
 
 <a id="future--dynamic-ui-element-overlays"></a>
 
@@ -73,6 +83,8 @@ the entire acceptance checklist or another renderer set.
 - A universal focus/cancellation protocol and a recorded coverage matrix for
   renderer families, internal editor changes, nested/generated/registered details,
   cells, templates, web components and additional adapters.
+- Verify Group header parent consumption: an effective header Label change must
+  update the Group title and accessible name without remounting its body.
 - API versioning and the evidence required before promotion into portable
   conformance or the published common/extended static schemas.
 
