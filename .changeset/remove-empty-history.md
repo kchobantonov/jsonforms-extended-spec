@@ -2,4 +2,4 @@
 '@chobantonov/jsonforms-extended-spec': patch
 ---
 
-Remove the empty historical migration placeholder from the published documentation.
+Remove obsolete documentation placeholders and archived dynamic playground fixtures. Move the external resources proposal into the maintained docs and align its examples with the current experimental `$dynamic` syntax.

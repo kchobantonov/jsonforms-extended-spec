@@ -83,7 +83,7 @@ from the overlay resolver and does not grant CEL or trusted-function activation.
 | --- | --- | --- |
 | Timezone conversion and selectors | Settle source/display/save zone semantics, daylight-saving ambiguity, time-only reference dates and draft lifecycle, then implement. | No `timezone`, `saveTimezone`, `showTimezoneSelector` or `timezoneChangeMode` definitions. |
 | Layout `start` and `responsive` hints | Define placement, breakpoints, precedence and interaction with span/wrap/splitters, then implement. | Removed reserved definitions from child sizing. |
-| Remote choice providers | Define acquisition, cancellation, refresh, typed values and permissions separately from overlays. | No provider vocabulary. |
+| Remote choice providers | Define acquisition, cancellation, refresh, typed values and permissions separately from overlays; see the [external resources design](external-resources-proposal.md). | No provider vocabulary. |
 | Markdown images and raw HTML | Decide whether these capabilities are wanted and define separate security profiles before implementation. | No enabling options; both supported Markdown profiles exclude these features. |
 
 ## Proposed authoring features awaiting design or implementation

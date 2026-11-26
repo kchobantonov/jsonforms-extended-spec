@@ -1,7 +1,0 @@
-{
-  "name": "Ada",
-  "alternate": "Grace",
-  "amount": 25,
-  "mode": "normal",
-  "members": [{ "name": "Ada" }, { "name": "Grace" }]
-}

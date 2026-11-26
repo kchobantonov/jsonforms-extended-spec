@@ -93,7 +93,7 @@ Proposed minimal shape:
     "assignees": {
       "source": "identity.users",
       "params": {
-        "groupId": { "expr": "data.groupId" }
+        "groupId": { "bind": "data.groupId" }
       }
     }
   }
@@ -101,7 +101,7 @@ Proposed minimal shape:
 ```
 
 - `source`: required virtual identifier; **not** a URL. Exact resolution is host-defined and authorization-checked.
-- `params`: optional named JSON values or expressions evaluated with the existing safe `$dynamic` expression machinery. Values are *data*, not code or raw HTTP headers.
+- `params`: optional named JSON values or descriptors evaluated with the existing safe `$dynamic` machinery. Values are *data*, not code or raw HTTP headers. Reuse `bind`, `expression`, `template`, and `literal`; use `literal` when a parameter value itself has a descriptor-shaped object.
 - Other fields are optional future extensions and must be explicitly versioned.
 - No `url`, `headers`, `token`, `credentials`, `script`, or arbitrary HTTP method in the portable core.
 - A host may expose a named `http` resource provider, but its URL and authentication configuration live outside the UI schema by default.
@@ -163,21 +163,22 @@ The existing `$dynamic` resolver receives a new read-only `resources` context na
     }
   },
   "$dynamic": {
-    "options.items": {
-      "expr": "resources.assignees.data"
-    },
-    "options.loading": {
-      "expr": "resources.assignees.isFetching"
-    },
-    "options.error": {
-      "expr": "resources.assignees.error.message",
-      "when": "resources.assignees.error != null"
+    "options": {
+      "items": {
+        "expression": "resources.assignees.status == 'success' && resources.assignees.data != null ? resources.assignees.data : []"
+      },
+      "loading": {
+        "bind": "resources.assignees.isFetching"
+      },
+      "error": {
+        "expression": "resources.assignees.error != null ? resources.assignees.error.message : null"
+      }
     }
   }
 }
 ```
 
-**Compatibility note:** All examples use *illustrative* `$dynamic` target-path and `expr` notation. The final specification **must reuse the exact `$dynamic` syntax and overlay semantics already implemented**; this proposal does not redefine it. In particular, do not introduce a new expression language just for resources.
+**Compatibility note:** The nested overlay and descriptor syntax matches the existing experimental `$dynamic` profile. The proposed `resources` environment root is not yet part of that profile, so these are design examples, not executable fixtures. The final specification must reuse the existing overlay semantics and must not introduce a separate expression language for resources.
 
 The resolver must handle unavailable data safely. Prefer existing static fallback values (`items: []`, `loading: false`, `error: null`) and defined null/error semantics. If a conditional `$dynamic` overlay is inapplicable, the original static property remains. A transient error should not leave a stale overlay from an earlier evaluation.
 
@@ -276,15 +277,16 @@ A provider may return raw service JSON or a projected, domain-level response. Re
     }
   },
   "$dynamic": {
-    "options.items": {
-      "expr": "resources.users.data"
-    },
-    "options.loading": {
-      "expr": "resources.users.isFetching"
-    },
-    "options.error": {
-      "expr": "resources.users.error.message",
-      "when": "resources.users.error != null"
+    "options": {
+      "items": {
+        "expression": "resources.users.status == 'success' && resources.users.data != null ? resources.users.data : []"
+      },
+      "loading": {
+        "bind": "resources.users.isFetching"
+      },
+      "error": {
+        "expression": "resources.users.error != null ? resources.users.error.message : null"
+      }
     }
   }
 }
@@ -330,7 +332,7 @@ Illustrative optional syntax:
     "searchChange": {
       "resource": "users",
       "command": "setParams",
-      "args": { "query": { "expr": "event.query" } }
+      "args": { "query": { "bind": "event.query" } }
     },
     "endReached": {
       "resource": "users",
@@ -340,7 +342,7 @@ Illustrative optional syntax:
 }
 ```
 
-This is **not mandatory for the initial core**. The event bridge must only accept allowlisted command names, target resources visible in scope, and validated argument shapes. No arbitrary method invocation or user-defined scripts.
+This is **not mandatory for the initial core**. The `event` root exists only while evaluating an optional action's arguments; it is not added to ordinary `$dynamic` evaluation. The event bridge must only accept allowlisted command names, target resources visible in scope, and validated argument shapes. No arbitrary method invocation or user-defined scripts.
 
 A third-party renderer can participate only if it emits the agreed semantic event through an adapter, or if its host application externally drives resource parameters. A renderer that merely accepts `options.items` can display fetched data, but cannot magically support server-side search or infinite scrolling without an interaction channel.
 
@@ -470,22 +472,23 @@ A host should expose which resource sources and commands are supported, and a re
 
 1. Add `$resources` local aliases and `source`/`params` schema validation.
 2. Add a host resource resolver interface and subscription lifecycle.
-3. Inject `resources` snapshots into the existing `$dynamic` context.
-4. Bind a Camunda user-directory resource to an **existing** custom dropdown's `options.items`, `options.loading`, and `options.error`.
-5. Verify no new renderer is needed and no credentials or endpoint URLs appear in the UI schema.
+3. Enforce source authorization, parameter bounds, cache isolation, and sanitized snapshots before exposing any resource data.
+4. Inject `resources` snapshots into the existing `$dynamic` context.
+5. Bind a Camunda user-directory resource to an **existing** custom dropdown's `options.items`, `options.loading`, and `options.error`.
+6. Verify no new renderer is needed and no credentials or endpoint URLs appear in the UI schema.
 
 ### Phase 2 — Practical interaction profile
 
-6. Define portable `open`, `searchChange`, `endReached` semantic events only for renderers that can emit them.
-7. Add allowlisted `refresh`, `setParams`, `loadMore` resource commands.
-8. Implement debouncing, pagination, cancellation, stale-query isolation and selected-value lookup in the **host provider**.
-9. Add native Kotlin and web conformance tests using identical JSON fixtures.
+7. Define portable `open`, `searchChange`, `endReached` semantic events only for renderers that can emit them.
+8. Add allowlisted `refresh`, `setParams`, `loadMore` resource commands.
+9. Implement debouncing, pagination, cancellation, stale-query isolation and selected-value lookup in the **host provider**.
+10. Add native Kotlin and web conformance tests using identical JSON fixtures.
 
 ### Phase 3 — Operational hardening
 
-10. Add strict resource allowlisting, parameter validation, cache isolation, redaction, rate limiting and deployment-specific auth/CSRF adapters.
-11. Add diagnostics for missing resource names, invalid params, unsupported events, malformed snapshots, and binding target mismatches.
-12. Publish a capability catalog and examples for AntD, Shadcn, Vue/Svelte and a native renderer.
+11. Add operational rate limiting, retry policy, observability and deployment-specific auth/CSRF adapters without weakening the Phase 1 trust boundary.
+12. Add diagnostics for missing resource names, invalid params, unsupported events, malformed snapshots, and binding target mismatches.
+13. Publish a capability catalog and examples for AntD, Shadcn, Vue/Svelte and a native renderer.
 
 ## 13. Conformance and acceptance tests
 
@@ -503,6 +506,8 @@ A portable implementation should pass at least these cases:
 10. **Cross-runtime:** identical schema, resource snapshots and expressions yield equivalent resolved UI properties in TypeScript and Kotlin implementations.
 11. **Form integrity:** resource updates do not change form data or JSON Schema; selection updates only the intended form path.
 12. **Lifecycle:** dispose/unsubscribe prevents updates after the owning UI scope is gone.
+13. **Null and refresh:** a successful `null` response remains distinguishable from unavailable data under the chosen `hasData` policy; background refresh retains usable data and a nonfatal refresh failure does not erase it.
+14. **Disabled and collision:** disabled resource access issues no request and retains static UI fallback; duplicate nested aliases follow the chosen collision policy with a diagnostic.
 
 ## 14. Decisions to lock before coding
 

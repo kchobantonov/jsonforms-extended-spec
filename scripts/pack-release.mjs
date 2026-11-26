@@ -21,7 +21,7 @@ try {
     assert.equal(manifest.name, '@chobantonov/jsonforms-extended-spec');
     assert.equal(manifest.private, undefined);
     for (const group of ['dependencies','optionalDependencies','peerDependencies']) for (const version of Object.values(manifest[group] ?? {})) assert.ok(!/^(workspace:|link:|file:)/.test(version));
-    for (const file of ['docs/spec.md','docs/renderer-and-demo.md','docs/renderer-selection.md','docs/todo.md','docs/audit.md','README.md','LICENSE','provenance.json','conformance/authoring.json']) await readFile(join(packed,file));
+    for (const file of ['docs/spec.md','docs/renderer-and-demo.md','docs/renderer-selection.md','docs/todo.md','docs/audit.md','docs/external-resources-proposal.md','README.md','LICENSE','provenance.json','conformance/authoring.json']) await readFile(join(packed,file));
     // Resolve public subpaths as an external consumer with no workspace imports.
     const consumer = join(temp,'consumer');
     await mkdir(join(consumer,'node_modules/@chobantonov'),{recursive:true});
