@@ -12,8 +12,8 @@ importers:
         specifier: 2.30.0
         version: 2.30.0(@types/node@18.19.130)
       '@jsonforms/core':
-        specifier: 3.9.0-alpha.1
-        version: 3.9.0-alpha.1
+        specifier: 3.9.0-alpha.4
+        version: 3.9.0-alpha.4
       '@types/node':
         specifier: ^18.19.130
         version: 18.19.130
@@ -244,8 +244,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.6.0':
     resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
 
-  '@jsonforms/core@3.9.0-alpha.1':
-    resolution: {integrity: sha512-69uvhKNAvc6TkWU4skmF0z2IM56Xp3Q/a1TS2EXV+DFgzRDYJHktTW6E6yGs2dpcRW93Pk40x5CuA4dsl/8hEA==}
+  '@jsonforms/core@3.9.0-alpha.4':
+    resolution: {integrity: sha512-hClo0hIhPxd18LP+fgA4/EGtMP3FPod3Zc1QOznz0pXxqlx4127s8BUaIx+Za1vAvmVA2CVYNl+ZrNkcnMTe+g==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -1198,7 +1198,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.6.0': {}
 
-  '@jsonforms/core@3.9.0-alpha.1':
+  '@jsonforms/core@3.9.0-alpha.4':
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.20.0
