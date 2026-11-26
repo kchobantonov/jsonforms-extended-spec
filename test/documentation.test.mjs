@@ -9,7 +9,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const md = new MarkdownIt();
 const slug = text => text.toLowerCase().replace(/[^\p{L}\p{N}_\- ]/gu, '').replaceAll(' ', '-');
 const catalog = await readJson(join(root, 'examples/catalog.json'));
-const docs = ['docs/proposals/dynamic-playground/README.md', 'README.md', 'docs/spec.md', 'docs/renderer-and-demo.md', 'docs/renderer-selection.md', 'docs/todo.md', 'docs/audit.md', 'docs/history/TODO.md', 'typescript/README.md', 'schemas/README.md', 'examples/README.md', ...catalog.map(x => `examples/${x.id}/README.md`)];
+const docs = ['docs/proposals/dynamic-playground/README.md', 'README.md', 'docs/spec.md', 'docs/renderer-and-demo.md', 'docs/renderer-selection.md', 'docs/todo.md', 'docs/audit.md', 'typescript/README.md', 'schemas/README.md', 'examples/README.md', ...catalog.map(x => `examples/${x.id}/README.md`)];
 const headings = new Map();
 for (const path of docs) {
   const ids = new Set(); const counts = new Map();
@@ -64,8 +64,7 @@ test('JSON specification snippets parse and complete authoring documents validat
   }
 });
 
-test('maintained guides live in docs and history contains only its TODO', async () => {
-  assert.deepEqual(await readdir(join(root, 'docs/history')), ['TODO.md']);
+test('maintained guides live in docs', async () => {
   const rootFiles = await readdir(root);
   for (const obsolete of ['SPEC.md', 'RENDERER-AND-DEMO.md', 'RENDERER-SELECTION.md', 'AUDIT.md', 'TODO.md', 'DOCUMENTATION-COVERAGE.md']) {
     assert.ok(!rootFiles.includes(obsolete), `${obsolete} should not remain at the package root`);

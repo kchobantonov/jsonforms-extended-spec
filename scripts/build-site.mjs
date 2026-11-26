@@ -33,7 +33,7 @@ async function render(source, target) {
   await writeFile(join(dest, target), html);
 }
 await render('README.md', 'index.html');
-for (const name of ['spec', 'renderer-and-demo', 'renderer-selection', 'todo', 'audit', 'history/TODO']) await render(`docs/${name}.md`, `docs/${name}.html`);
+for (const name of ['spec', 'renderer-and-demo', 'renderer-selection', 'todo', 'audit']) await render(`docs/${name}.md`, `docs/${name}.html`);
 await render('schemas/README.md', 'schemas/README.html');
 await render('examples/README.md', 'examples/README.html');
 for (const name of await readdir(join(root, 'examples'))) {
