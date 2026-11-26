@@ -32,36 +32,6 @@ Keep local validation results immutable and avoid mutating shared validator erro
 
 Map logical placements to native components: field error below the editor, cell feedback associated with its cell, object errors at the object boundary. Document unavailable platform capabilities and the alternative experience. Browser-specific choices such as an AG Grid valueGetter, CSS overflow or React context are implementation details; their observable behavior is what a port must preserve.
 
-## Reference integration notes
-
-The following notes were moved from the main spec to keep platform choices and implementation progress separate from the portable contract. They describe reference behavior, not certification of every port.
-
-**Renderer integration decisions:**
-
-- **shadcn:** use the official Radix-based shadcn Scroll Area for list navigation,
-  row detail panes, and detail dialog bodies. Use its themed vertical and
-  horizontal scrollbars as needed. Keep the pinned component available in both
-  the React demo and web component hosts, with the same behavior and theme.
-- **Ant Design:** retain native scrolling. Ant Design has no general-purpose
-  Scroll Area component in its public component catalog. The recommended styling
-  is a subtle theme-token thumb and transparent track, respecting light/dark
-  mode and platform accessibility preferences. This is a styling recommendation;
-  themed native scrollbar styling is not yet claimed as implemented by the
-  reference renderer.
-
-
-**Reference implementation progress.** The React Ant Design and shadcn tables
-now provide collection-wide displayed-error counts and navigation to the first
-affected source row, including another page. Where row details are configured,
-the action opens them; selecting a nested detail tab or focusing the exact field
-is not yet implemented. Row detail action areas include descendant error counts.
-AG Grid uses readable Markdown summary text for sorting/filtering and explains
-when a newly added item is filtered out, with an explicit Clear filters action.
-These additions reuse validation results through a shared path index and cache
-resolved grid summaries with a bounded cache invalidated by form/config/locale
-changes. No additional validation pass is required.
-
-
 ## Example provenance
 
 This is a job-application example, inspired by the Svelte demo's

@@ -13,9 +13,8 @@ known values were accepted without type checking, and serialized rule validation
 accepted unsupported function strings. This audit corrects those gaps below.
 
 This is a source and authoring-validation audit, not a live renderer certification.
-Unknown extensions and vendor option bags deliberately remain open. The remaining
-adapter differences below prevent claiming that every schema-valid setting has
-the same behavior in the reference renderer.
+Unknown extensions and vendor option bags deliberately remain open. A schema-valid
+setting does not establish adapter support.
 
 ## Source reconciliation
 
@@ -43,10 +42,10 @@ are reserved, and `showRemoveButton` remains unimplemented.
 
 ## Coverage reviewed
 
-The implementation review used both Ant Design renderer registries, their cell
-registries, the shared extended renderer registry, shared renderer utilities,
-and core model/default/mapper/runtime code. These families have corresponding
-schema definitions; renderer selection still depends on the bound data schema.
+The historical implementation review checked renderer and cell registries,
+shared utilities, and core model/default/mapper/runtime code. The table records
+authoring vocabulary reviewed for schema coverage; it does not state current
+renderer support. Renderer selection still depends on the bound data schema.
 
 | Implementation family | Authoring coverage |
 | --- | --- |

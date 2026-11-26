@@ -1,10 +1,8 @@
 # Authoring schemas
 
-These schemas describe the implemented authoring subset of [spec.md](../docs/spec.md),
-using the reference renderer implementation as evidence. The explicitly
-provisional input-adornment authoring contract is also validated here. Five
-Svelte and React renderer families implement supported input-like variants;
-visual verification and unsupported-variant diagnostics remain pending.
+These schemas describe the published authoring subset of [spec.md](../docs/spec.md).
+The explicitly provisional input-adornment authoring contract is also validated
+here. Schema validation does not establish renderer support or visual behavior.
 Other provisional and unimplemented features
 belong in [TODO.md](../docs/todo.md), not schema definitions.
 They use draft-07 and preserve unknown options and namespaces. Core configuration
@@ -73,8 +71,7 @@ specified host adapter; the old function-source regex is not such an adapter.
 
 Known options inside cell overrides are checked as control options. This checks
 their shape, not whether every renderer is available as a cell. Monaco and grid
-vendor option bags remain open. See [the audit](https://github.com/kchobantonov/jsonforms-react-renderers/blob/master/docs/jsonforms-react-antd-implementation-gaps.md#complete-configuration-property-review)
-for every config property and its actual consumer. Global declarations are limited
+vendor option bags remain open. Global declarations are limited
 to traced config paths. Keep field-dependent `elementLabelProp`,
 `detail`, `summary` and `cells` on their controls; isolated merged-config readers
 do not establish a common global default.

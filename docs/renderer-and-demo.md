@@ -25,8 +25,7 @@ The specification has two distinct contracts:
    validation, and configuration must map to controls from a UI library.
 
 The UI library is the source of truth for component appearance, interaction,
-and API usage. Existing JSON Forms demos, especially the Svelte Shadcn demo,
-are reference implementations for feature coverage and overall information
+and API usage. Existing JSON Forms demos can inform feature coverage and information
 architecture; they are not a reason to replace native library components with
 generic imitations.
 
@@ -100,8 +99,8 @@ The names and directory layout are implementation choices.
 Use the framework's supported build, type-check, test, development-server and
 preview tools. Document reproducible commands and keep dependency lockfiles
 current. A renderer's integration tests MUST exercise its public registries.
-Vite, Vitest and pnpm are choices of the React reference implementation, not
-requirements for other frameworks or languages.
+Vite, Vitest and pnpm are optional tooling choices, not requirements for other
+frameworks or languages.
 
 ## 6. Demo application layout
 
@@ -152,7 +151,7 @@ The Framework-native/Web Component toggle is a top-level application action. It 
 also appear in the settings panel. It MUST use the Web Components logo rather
 than a generic package, cube, or framework icon. The logo's foreground MUST
 remain legible in light and dark themes, and it SHOULD use the same Y-axis spin
-animation as the Svelte reference demo while Web Component mode is active.
+animation while Web Component mode is active.
 Reduced-motion preferences MUST disable that animation.
 
 Each icon-only action MUST have an accessible name, tooltip or title, pressed
@@ -1296,8 +1295,7 @@ When references disagree, use this order:
 2. The selected UI library's official API and components for appearance and
    interaction.
 3. This guide for host architecture and demo behavior. spec.md remains authoritative for portable semantics.
-4. Existing renderer demos and implementations, including the Svelte mixed
-   renderer and extended Monaco renderer, as visual and feature references.
+4. Existing renderer demos and implementations as visual and feature references.
 
 Any intentional deviation MUST be documented in the renderer package README
 and covered by a test when it changes observable behavior.
@@ -1344,4 +1342,6 @@ control. The source choice may remain session-local; it is not form config.
 
 ### Layout default conformance
 
-All ports must follow the portable defaults in §7.1. Antd and shadcn use a 16px gap in both directions; Antd suppresses native field bottom margins within managed layouts. The older PrimeReact layout and upstream MUI layout integration have not been certified against this revised contract and require adaptation/verification; this is an implementation gap, not an allowed alternative default.
+All ports must follow the portable defaults in §7.1. Native field margins must
+not add to the managed layout gap. Each renderer project records verification
+against this contract.

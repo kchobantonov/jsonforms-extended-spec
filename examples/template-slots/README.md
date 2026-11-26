@@ -12,9 +12,8 @@ host code; the UI models themselves contain no executable templates.
 - All cards share the caller's schema and data path. Editing Contact name also
   updates Default name; names identify UI models, not data properties or scopes.
 
-Use unique template names and acyclic references. The current React renderer
-silently omits a missing template and does not yet diagnose duplicates or guard
-cyclic references. Those diagnostics/guards remain implementation gaps.
+Use unique template names and acyclic references. Hosts should diagnose missing
+templates and duplicates and guard cyclic references.
 
 This exercises TemplateRenderer and SlotRenderer, not TemplateLayoutRenderer:
 TemplateLayout renders a source template, whereas these elements compose UI models.

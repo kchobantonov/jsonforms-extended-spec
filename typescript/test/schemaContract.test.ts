@@ -111,7 +111,7 @@ describe('every UI schema in the repository', () => {
 describe('every config in the repository', () => {
   /*
     Validated against the **extended** schema, because the examples exercise
-    both renderer sets. The base schema is the narrower one and is checked for
+    the extended vocabulary. The base schema is the narrower one and is checked for
     the superset relationship below rather than against these fixtures.
   */
   it('validates against the extended config schema', () => {

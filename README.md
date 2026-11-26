@@ -12,7 +12,7 @@ Forms renderer implementations.
 
 This is the consolidated v1 specification. It separates accepted contracts
 from future design work and documents optional capabilities explicitly.
-The published schemas cover implemented features only; see [design backlog](docs/todo.md)
+The published schemas cover the authoring vocabulary; see [design backlog](docs/todo.md)
 for design discussions and implementation work, including `$dynamic`.
 No component library is required by this package.
 

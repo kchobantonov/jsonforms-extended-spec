@@ -8,12 +8,12 @@ versioning, editor design mode, and implementation-specific source organization.
 
 ## About this document
 
-**Published schema scope:** the JSON schemas describe implemented authoring
-features in the reference renderer set. Design proposals and unimplemented
-requirements are tracked in [TODO.md](todo.md). Section 11 describes an
-**experimental** `$dynamic` profile implemented by reference adapters. Its portable
-cross-adapter conformance contract remains pending; support for the published
-static profile does not imply support for `$dynamic`.
+**Published schema scope:** the JSON schemas describe the published authoring
+vocabulary. Design proposals and unimplemented requirements are tracked in
+[TODO.md](todo.md). Section 11 describes an **experimental** `$dynamic` profile.
+Its portable cross-adapter conformance contract remains pending; support for the
+published static profile does not imply support for `$dynamic`. Renderer projects
+document their own implementation status.
 
 This is the single specification for the package. It consolidates the portable
 model, accepted amendments, container indicators, validator extensions, renderer
@@ -880,10 +880,10 @@ within a container, even when multiple controls or child sections cover its path
 Do not simply sum child counts: their covered errors may overlap. An error can
 correctly contribute to both a parent indicator and a child indicator.
 
-The current React implementation caches bound scopes by UI-schema identity and
-shares an error-presence index across containers, keyed by validation-result
-identities. Parent and child presence checks are independent and short-circuit
-on the first matching scope. Explicit counting scans eligible errors against the
+An implementation can cache bound scopes by UI-schema identity and share an
+error-presence index across containers, keyed by validation-result identities.
+Parent and child presence checks remain independent and may short-circuit on
+the first matching scope. Explicit counting scans eligible errors against the
 container's scopes. No additional validation run is needed.
 
 A proposed optimization is to cache underlying presence results by UI-schema
@@ -995,9 +995,9 @@ Compact object and array cells MUST expose eligible errors on the cell value
 and its descendants beside the summary, even while the detail editor is closed.
 This is cell-level validation feedback, separate from an enclosing collection's
 header indicator. Suppressing that header indicator does not suppress cell
-feedback. The reference renderers use the existing single-error tooltip and
-multi-error summary interaction, including the localized error count in the
-expanded summary. A permanent numeric badge beside the cell is not required.
+feedback. A single-error tooltip and multi-error summary interaction can
+provide the explanation, including a localized error count in the expanded
+summary. A permanent numeric badge beside the cell is not required.
 
 For example, when `rows[0].contact.city` is required but missing, the Contact
 cell in row 1 shows an error indicator. An Experience array cell aggregates
@@ -3754,11 +3754,6 @@ Tooltips MUST use the renderer family's theme semantics, including dark mode,
 and remain legible and operable by keyboard and pointer.
 
 See the [input-adornments example](../examples/input-adornments/README.md).
-The Svelte Flowbite, Skeleton, and Shadcn families and the React Ant Design and
-Shadcn families implement this contract for their input-like controls, including
-their extended text-entry controls. Focused renderer tests cover composition,
-localization, tooltips, and native-control ordering; the example adapter checklist
-remains the guide for broader visual and interaction review.
 
 ### 18.4 Pending edits, commit timing and cancellation
 
@@ -6916,7 +6911,7 @@ artificial model containing unrelated fields. It complements focused examples.
 
 ### 18.21.2 Detail dialog geometry and interaction
 
-Cell editors accept `options.cells[field].dialog` (or `options.dialog` on the composite cell itself). Whole-row editors accept `options.rowDetail.dialog` when `presentation` is `"dialog"`. Both renderer sets support the same object:
+Cell editors accept `options.cells[field].dialog` (or `options.dialog` on the composite cell itself). Whole-row editors accept `options.rowDetail.dialog` when `presentation` is `"dialog"`. Both use the same object:
 
 ```json
 {
@@ -8292,9 +8287,7 @@ Use the existing detail mechanism for custom layouts instead of inventing a
 second generated/registered switch.
 
 The array-detail-modes example demonstrates a matching registry entry, generation,
-inline layout, DEFAULT, and registry fallback. Two of the reference renderer sets
-provide runtime coverage; this statement does not establish parity for other
-renderer families or platforms.
+inline layout, DEFAULT, and registry fallback.
 
 ### Editor detail modes and mixed type overrides
 
@@ -8319,9 +8312,7 @@ detail pane; it does not impose a root-specific layout on every descendant.
 Code presentation edits the whole value and does not use these field layouts.
 Null retains the existing no-value-control presentation.
 
-Implemented and tested in two of the reference renderer sets. Other renderer
-sets are not claimed to support these extensions. See the editor-details
-example.
+See the editor-details example.
 
 ### Conditional fields
 

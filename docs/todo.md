@@ -1,12 +1,9 @@
 # Design and implementation backlog
 
-Reviewed against current React source and tests on 2026-10-02. Completed
-features are not pending proposals; remaining parity work is identified below.
-
-The published JSON schemas describe the implemented authoring vocabulary. A
+The published JSON schemas describe the authoring vocabulary. A
 feature appearing in spec.md does not by itself qualify for a schema definition.
-This backlog separates proposals from implementation work. Source issue lists
-can be stale; check the current reference code before promoting an item.
+This backlog separates proposals from implementation work. Renderer projects
+record their own coverage and implementation issues.
 
 - **FUTURE:** discuss and refine the design before implementing it.
 - **TODO:** complete or verify implementation and behavior tests before exposing
@@ -20,37 +17,22 @@ schema containing speculative options.
 
 The serialized `startAdornment` / `endAdornment` contract is specified in
 [§18.3a](spec.md#183a-input-adornments), with a tabbed
-[example](../examples/input-adornments/README.md). Svelte Flowbite, Skeleton,
-and Shadcn and React Ant Design and Shadcn now compose supported input-like
-controls with the string, object, and object-array shapes. Focused tests cover
-localization, accessible tooltip content, and ordering around password and
-picker controls. Complete the fixture's visual interaction checklist across
-all families, locales, narrow widths, and writing directions. Add explicit
+[example](../examples/input-adornments/README.md). Complete the fixture's visual
+interaction checklist across families, locales, narrow widths, and writing
+directions. Add explicit
 unsupported-variant diagnostics where a renderer cannot provide a coherent
 input boundary. The authoring and behavior vectors alone are not evidence of
 those remaining adapter checks.
-The shared React and Svelte adornment components currently style tooltips as
-fixed dark boxes and infer some positioned field parts from `start-`/`end-`
-class-name fragments. Replace those assumptions with theme-aware family
-tooltips and stable renderer-owned slots or explicit integration, then verify
-light/dark themes and native action placement in each family.
-
-React Ant Design uses `Card.Meta` for a Group region header. Its default title
-truncation may conflict with §8.1's narrow-width wrapping requirement. Confirm
-in a browser with a long translated title, then adjust the Group header styling
-if it truncates. This visual behavior is not yet verified.
 
 <a id="future--dynamic-ui-element-overlays"></a>
 
 ## EXPERIMENTAL — dynamic UI-element overlays
 
-`$dynamic` is implemented experimentally in the Svelte and React reference
-integrations. It is not a static v1 conformance requirement, and implementation
-in these adapters does not establish portable or universal renderer coverage.
+`$dynamic` is an experimental profile, not a static v1 conformance requirement.
 The common/extended static schemas and canonical conformance vectors remain
 separate from the experimental descriptor schema and adapter tests.
 
-### Implemented reference behavior
+### Experimental profile
 
 - Element-shaped patches and ordered rules, restricted `bind`/`template` paths,
   CEL expressions and explicitly opted-in trusted functions.
@@ -60,22 +42,20 @@ separate from the experimental descriptor schema and adapter tests.
   to templates as `context.external`; immutable
   environment snapshots and reevaluation when input namespaces change.
 - Resolution before renderer/cell selection, parent-consumed metadata, and
-  nested/detail occurrences in the reference integrations.
+  nested/detail occurrences.
 - Group `cover`, `header`, and `footer` children resolve through dynamic
-  dispatch. Focused Group integration tests in React Ant Design and Shadcn and
-  Svelte Flowbite, Skeleton, and Shadcn cover region updates, the effective
-  header Label's accessible name, and preserving the mounted body editor.
+  dispatch. Verify region updates, the effective header Label's accessible
+  name, and preservation of the mounted body editor.
 - Immediate draft discard on editor replacement, scope-change editing sessions,
-  and adapter-specific focus handoff and cancellation. Focused tests exist;
-  coverage must still be verified for every claimed editor boundary.
+  and adapter-specific focus handoff and cancellation. Verify coverage for every
+  claimed editor boundary.
 - The experimental `jsonforms-dynamic-uischema.schema.json`, TypeScript authoring
   helpers, and the combined [playground](../examples/dynamic-playground/README.md),
   including its External editor and static host-derived alternative.
 
 The normative experimental behavior and limitations are in
 [spec §11](spec.md#11-dynamic-values-and-path-grammar). Adapter resolver, lifecycle
-and demo tests are evidence for the scenarios they execute, not certification of
-the entire acceptance checklist or another renderer set.
+and demo tests are evidence only for the scenarios they execute.
 
 ### Remaining decisions and verification
 
@@ -115,57 +95,29 @@ behavioral evidence before their authoring shapes are promoted. Their absence
 from the published schemas is intentional; permissive extension keys do not
 promise support.
 
-Implementation-specific findings are tracked in the
-[React renderer TODO](https://github.com/kchobantonov/jsonforms-react-renderers/blob/master/docs/TODO.md)
-and [React renderer gaps](https://github.com/kchobantonov/jsonforms-react-renderers/blob/master/docs/jsonforms-react-antd-implementation-gaps.md).
-Those findings are not requirements to reproduce a particular adapter's behavior.
+Implementation-specific findings belong in each renderer project.
 
 ## Promotion checklist
 
 1. Settle the design and update the single specification.
-2. Implement the feature in the reference renderer or shared core.
+2. Implement the feature in an adapter or shared core.
 3. Add behavioral tests, including unsupported and invalid-input cases.
 4. Add only the implemented authoring shape to the schemas, with positive and
    negative schema vectors and a worked example.
 5. Remove or narrow the corresponding backlog entry in the same change.
 
-## Collection presentation implementation tracking
+## Authoring and renderer evidence
 
-Antd and shadcn have pagination, row-detail and collection examples with runtime
-regression tests. Remaining work is interaction/accessibility coverage, browser
-layout checks and parity in other renderer families. Do not treat those open
-checks as absence of the implemented features.
-
-## Renderer/schema/authoring audit (React, 2026-09-29)
-
-This is a targeted source audit, not proof of complete option parity.
-- OTP: implemented by Antd PasswordOtpControl/AntdOtp; documented in §18.24.
-  Extended JSON schema already accepts it through open string variant. Added
-  discoverable variant examples and TypeScript string variant support.
-  Shadcn now supports segmented OTP, masked password fallback, reveal and clear,
-  including partial input and paste. This closes the OTP gap, not all renderer parity gaps.
-- TypeScript OptionsFor is explicitly a curated subset, not generated from JSON
-  schemas. Array variants tuple/chips/multi-select were missing and are now typed.
-  Applicability involving enum choices, bounds or format still needs runtime checks.
-- Shadcn RadioGroupControl used orientation instead of the canonical vertical option;
-  React fix accompanies this audit.
-- Shadcn FileControlRenderer reads accept as a fallback for schema contentMediaType.
-  Decide whether this remains family-specific before declaring a portable option.
-- Split/layout options need a separate element-aware parity review. Properties
-  such as action/params belong to Button schemas; array map/filter calls are not
-  UI options. A raw text scan cannot establish conformance.
-- Collection pagination and rowDetail have runtime implementations and tests in
-  Antd and shadcn. The earlier pending-runtime assessment is superseded; remaining
-  work is coverage and renderer-family parity.
-- Add systematic per-capability vectors linking tester selection, option
-  declarations, authoring acceptance, and renderer behavior. Open schemas accepting
-  an option must never be interpreted as evidence that a renderer implements it.
+TypeScript `OptionsFor` is a curated subset, not generated from JSON schemas.
+Applicability involving enum choices, bounds or format still needs runtime checks.
+Add per-capability vectors linking tester selection, option declarations,
+authoring acceptance, and renderer behavior. Open schemas accepting an option
+must never be interpreted as evidence that a renderer implements it.
 
 ## TODO — remaining Draft-07 visual behavior
 
-Conditional object field discovery is implemented for the documented opt-in
-slice; broader composition coverage remains open. Track executable work in the
-[React renderer TODO](https://github.com/kchobantonov/jsonforms-react-renderers/blob/master/docs/TODO.md#draft-07-visual-support-follow-up).
+Broader conditional composition coverage remains open. Each renderer project
+tracks its own executable work.
 
 - Extend conditional discovery and authored placement across anyOf/oneOf,
   referenced branches and named templates, with reference-scope regressions.
@@ -193,5 +145,5 @@ See [conditional authoring guidance](conditional-fields.md).
 Mixed type-specific details, shared editor detail modes, conditional object field
 discovery and Template/Slot examples now have documented authoring contracts and
 regression coverage. Their implemented slices are in the published schemas.
-Remaining conditional-composition and named-template diagnostic/cycle gaps stay
-in the React backlog. The drag-and-drop editor itself remains future work.
+Remaining conditional-composition and named-template diagnostic/cycle gaps belong
+in renderer backlogs. The drag-and-drop editor itself remains future work.

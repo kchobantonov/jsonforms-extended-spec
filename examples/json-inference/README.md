@@ -27,19 +27,7 @@ absent value; entering `null` selects the JSON null value.
 The host must register mixed-value and null controls; renderer coverage can differ. The Data editor requires Monaco and a host action to apply valid JSON;
 malformed JSON must not replace the current form data.
 
-### React demo adapter
-
-The React demos use core's schema generator on a wrapped value and extract its property schema, because the generator assumes an object root. This supports every JSON root type. While data is absent, an unrestricted runtime schema keeps the form usable. These runtime schemas are never saved into the blank Schema editor.
-
-
-### Temporary inference workaround — upstream #2478
-
-Track [JSON Forms PR #2478](https://github.com/eclipsesource/jsonforms/pull/2478),
-which includes non-object root inference and regeneration when data changes.
-The React demo adapter (`demoSchema.ts`, called from `App.tsx`) is temporary for
-the installed 3.9.0-alpha.1 dependency. Remove it after upgrading to a released
-version containing the fix, not merely after the PR merges. First verify absent
-data, explicit null, every scalar type, arrays, objects, and replacement of data
-with a different root type. Then pass the omitted schema directly to JSON Forms
-and retain the example regressions against that upstream path. The Monaco
-stale-schema cleanup is separate and should remain.
+Hosts should verify inference for absent data, explicit null, every scalar type,
+arrays, objects, and replacement with a different root type. An adapter for a
+core version that lacks these cases must keep its inferred runtime schema out of
+the authored Schema editor. The Monaco stale-schema cleanup is separate.

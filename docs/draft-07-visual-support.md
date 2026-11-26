@@ -1,73 +1,43 @@
-# Draft-07 visual authoring audit
+# Draft-07 visual authoring checklist
 
-Audited 2026-10-01 against the Antd and shadcn renderer sources. This is an
-implementation assessment, not a portable conformance guarantee for every renderer.
+JSON Schema validation and visual authoring are separate capabilities. A
+renderer may validate a document that its controls cannot create or edit.
+Each renderer project should publish a capability table and executed tests for
+the Draft-07 features it supports. No renderer can create a valid instance of
+an unsatisfiable schema, including the boolean schema `false`.
 
-Sources: [official metaschema](https://json-schema.org/draft-07/schema),
-[validation vocabulary](https://json-schema.org/draft-07/draft-handrews-json-schema-validation-01),
-and [core vocabulary](https://json-schema.org/draft-07/draft-handrews-json-schema-01).
+## Editing cases to verify
 
-## Conclusion
-
-The renderers cannot yet promise complete visual authoring for every Draft-07
-schema. Many common structures have dedicated editors, and unconstrained values
-have a mixed-type editor. Validation support does not establish that every legal
-structure can be reached through the form. No renderer can create a valid instance
-of an unsatisfiable schema, including the boolean schema `false`.
-
-## Editing coverage
-
-| Feature | Current assessment |
+| Feature | Acceptance question |
 | --- | --- |
-| string, number, integer, boolean | Dedicated controls exist in both renderers. |
-| null, type arrays, omitted type, unconstrained values | Shared mixed-type selection and editors exist. Not a proof for arbitrary combinations of keywords. |
-| properties and nested objects | Generated or explicit detail layouts, including static and dynamic fields together. |
-| additionalProperties and propertyNames | Add, rename, delete, value editing and name validation exist. Literal and empty keys have dedicated handling. |
-| patternProperties | Both AdditionalProperties implementations now use the shared resolver, combining all matching patterns through allOf. A shadcn regression test verifies fields contributed by two overlapping object patterns. Arbitrary compositions remain subject to the limitations below. |
-| homogeneous items | Array editing exists, including object details and scalar collections. |
-| tuple items and additionalItems | Dedicated tuple/tail editors exist. Position semantics constrain deletion; this is not an ordinary reorderable array. |
-| enum and const | Scalar enum and titled constant choices exist. Antd and Shadcn dropdowns, radio groups, and enum cells use structural equality for object/array values reloaded from JSON, with regression coverage. Antd adapts these values to internal UI option IDs to avoid object key collisions and preserve JSON types. Composite enum support across other renderer families remains uncertified. |
-| allOf, anyOf, oneOf | Dedicated composition renderers exist, but coverage is partial. Mixed delegation now retains compositions and narrows explicitly typed alternatives. Regression coverage includes scalar anyOf and object allOf dispatch in both renderer sets, plus validation-equivalence cases. Arbitrary reference cycles, conditional field discovery, complex enclosing constraints and exhaustive recursive interactions remain uncertified. |
-| if / then / else | Opt-in conditionalFields on object controls discovers active branch fields in Antd and shadcn. Generated and explicit details are supported; see conditional-fields.md for composition limits. |
-| dependencies | Property dependency checks alone are validation. Schema dependencies now participate in opt-in conditionalFields object presentation. |
-| $ref, $id, definitions | Local reference resolution is used. Arbitrary remote retrieval, URI scope combinations and recursive editing are not certified. Hosts must supply resolvable schemas; browser fetching is not a renderer guarantee. |
-| recursive schemas | The official metaschema and the recursive-tree example mount in both renderers. Recursive-tree tests cover discriminated folder selection, including invalid descendants, adding one child to an empty folder, initializing file/folder branches, and translated labels. Full expansion/edit/delete transitions and arbitrary reference cycles remain unverified. Upstream branch matching still reports non-self-contained subschemas; explicit discriminator matching supplies an editing fallback. |
-| title, description | Used as labels/help; UI schema and translations may override presentation. |
-| default, examples | Defaults are used in some creation paths. These annotations do not promise universal initialization or example-selection controls. |
-| readOnly, writeOnly | Read-only behavior and password controls exist. writeOnly is not a universal security or masking guarantee; presentation may need explicit options. |
-| format | Some formats have specialized controls; others use text entry. Lack of a special picker is not itself an authoring gap. |
-| contentEncoding, contentMediaType | File/encoded-content controls exist for supported cases; arbitrary media does not have a universal visual editor. |
+| Scalars, null, type arrays, omitted type | Can the user reach every applicable JSON type, including null and unconstrained values? |
+| Properties and nested objects | Do generated and explicit details expose static and dynamic fields together? |
+| additionalProperties, propertyNames, patternProperties | Can users add, rename, delete and edit literal keys, including empty keys? Do all matching patterns constrain a property? |
+| Homogeneous and tuple arrays | Can users edit items while preserving tuple positions and additionalItems semantics? |
+| enum and const | Do choices preserve object/array values and JSON types after reload? |
+| allOf, anyOf, oneOf | Does the editor preserve composition, expose applicable branches and retain document validation? |
+| if / then / else and dependencies | Does field discovery follow the active condition without rewriting the validator schema? |
+| $ref, $id, definitions and recursion | Are local references resolved in scope, and are recursive children created one at a time? |
+| readOnly, writeOnly, formats and content keywords | Are supported presentation, editing and security effects documented separately? |
 
-Evidence paths in the renderer repository: `jsonforms-react-renderer-common/src/mixed.ts`
-(`schemaForType`, `isMixedSchema`), `mixedTree.ts`, both renderer registries and
-Object/AdditionalProperties/Tuple/AllOf/AnyOf/OneOf implementations, and shadcn
-`controls/EnumControl.tsx`. Paths are relative to `packages/`.
+Bounds, length, pattern, counts, uniqueness, required names and dependencies
+may use ordinary editors with correctly located validation feedback. `not` and
+`contains` need not have dedicated widgets, but the underlying value shape
+must remain editable where the schema permits it. Arbitrary remote reference
+retrieval is a host capability, not an implicit renderer guarantee.
 
-## Validation-only exclusions
+## Metaschema example
 
-Bounds (`minimum`, `maximum`, exclusive bounds, `multipleOf`), string length and
-pattern, item/property counts, uniqueness, required names and property dependencies
-need not have separate editors. Existing controls plus correctly located validation
-feedback are sufficient. `not` and `contains` are not expected to have dedicated
-widgets; an editor must still expose the underlying value shape. This audit does
-not certify every error-placement combination or validator plugin.
+[Draft-07 metaschema](../examples/draft-07-metaschema/README.md) uses the upstream
+document as its schema and a sample inventory JSON Schema as data. Its type
+array, recursive references, arbitrary default/const values, schema maps and
+composition arrays exercise multiple editing paths. Rendering the sample
+without a missing-renderer fallback is only an initial check. Test nested
+interactions, editing from an empty value, browser layout, and reference scope
+separately. A schema document can pass metaschema validation while containing
+unresolved references or an unsatisfiable combination.
 
-## Metaschema example and verification
-
-[Draft-07 metaschema](../examples/draft-07-metaschema/README.md) uses the exact
-upstream document as its schema. Its data is a sample inventory JSON Schema.
-The metaschema's `type: ["object", "boolean"]`, recursive references, arbitrary
-`default`/`const` values, schema maps and composition arrays exercise multiple
-editing paths without altering the source schema to hide limitations.
-
-Verified: catalog/schema validation, and initial React DOM mounting with the
-sample data in both Antd and shadcn without a missing-renderer fallback.
-Not verified: every nested interaction, visual browser layout, external references,
-or that every valid schema document can be authored from an empty value.
-A schema document passing metaschema validation can still have unresolved refs or
-be unsatisfiable. Validate the authored schema with the intended validator before
-using it to validate instances.
-
-Priority follow-up: conditional/schema-dependency field discovery;
-composition-preserving mixed delegation;
-recursive editing tests; composite enum parity across renderer families.
+For normative semantics, see [the specification](spec.md),
+[implementation guidance](implementation-guide.md), and
+[pitfalls](implementation-pitfalls.md). Renderer projects record their own
+support and executed evidence.

@@ -95,8 +95,7 @@ and follow the container-indicator and validation-visibility settings. After a
 selected node is removed, select its closest remaining parent. Navigation remains
 available in read-only forms; mutations remain disabled.
 
-Implemented in React Antd and shadcn, and in Svelte Flowbite, shadcn and
-Skeleton. The recursive-tree example includes a Tree editor tab for comparison.
+The recursive-tree example includes a Tree editor tab for comparison.
 
 ## Array detail resolution
 
@@ -119,8 +118,7 @@ Use the existing detail mechanism for custom layouts instead of inventing a
 second generated/registered switch.
 
 The array-detail-modes example demonstrates a matching registry entry, generation,
-inline layout, DEFAULT, and registry fallback. Runtime coverage is provided for
-React Antd and shadcn; this statement does not establish parity for other platforms.
+inline layout, DEFAULT, and registry fallback.
 
 ## Editor detail modes and mixed type overrides
 
@@ -145,8 +143,7 @@ detail pane; it does not impose a root-specific layout on every descendant.
 Code presentation edits the whole value and does not use these field layouts.
 Null retains the existing no-value-control presentation.
 
-Implemented and tested for React Antd and shadcn. Other renderer sets are not
-claimed to support these extensions. See the editor-details example.
+See the editor-details example.
 
 ## Named templates are separate from ranked detail lookup
 
@@ -158,11 +155,8 @@ is not a data binding. Named-only registry entries should return -1 from testers
 so ordinary detail selection does not accidentally choose them.
 
 The template-slots example covers supplied content, fallback, empty slots and
-nested overrides. React shared-renderer tests execute these cases, and Antd and
-shadcn integration tests render the example through their native registries. Missing-name
-diagnostics, duplicate-name diagnostics and cycle protection remain gaps in the
-current React implementation; do not treat its silent behavior as certification
-of those normative requirements.
+nested overrides. Implementations should also check missing-name diagnostics,
+duplicate-name diagnostics and cycle protection against the normative requirements.
 
 ## Conditional fields
 
@@ -180,10 +174,7 @@ scope, data path and document root. Inline layouts remain relative to the branch
 value. Missing registrations fall back to generation. Value-choice cards do not
 use branch editors.
 
-React Antd and shadcn integration tests cover generation with a matching registry,
-registry selection and fallback, inline layouts, and editing a nested value.
-Other renderer families are not verified by these tests.
-
-The choice-controls Card detail modes example is executed in Antd and shadcn
-integration tests in English and Bulgarian, including registry fallback for Postal
-mail. Its trusted registry is also validated by the spec authoring tests.
+The choice-controls Card detail modes example covers generation with a matching
+registry, registry selection and fallback, inline layouts, and editing a nested
+value. Check the example in English and Bulgarian, including registry fallback
+for Postal mail.

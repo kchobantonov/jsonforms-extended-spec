@@ -56,8 +56,8 @@ full coverage from this index.
 
 ## Reviewed priority relationships
 
-React Antd's reviewed registry uses the following ranks. They are audit evidence,
-not required numeric constants for Svelte, Vue, React, or another framework.
+The following ranks illustrate one valid registry ordering. They are not
+required numeric constants for any framework.
 
 | Applicable presentation | Reviewed rank | Must beat |
 | --- | --- | --- |

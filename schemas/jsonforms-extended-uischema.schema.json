@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "JSON Forms Extended UI schema",
-  "description": "Implemented serialized UI vocabulary, verified against the reference renderer implementation. Unknown extensions remain open; acceptance of an unknown key does not imply support. Unimplemented and provisional features are tracked in TODO.md.",
+  "description": "Published serialized UI vocabulary. Unknown extensions remain open; acceptance of an unknown key does not imply renderer support. Design proposals and provisional features are tracked in TODO.md.",
   "$ref": "#/$defs/element",
   "$defs": {
     "uiSchema": {

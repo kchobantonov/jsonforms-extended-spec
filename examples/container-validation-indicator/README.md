@@ -178,10 +178,10 @@ detail dialog. Alex's row deliberately fails each constraint; Blair's row is val
 | AnyOf contact | Neither email nor phone exists. | The cell summarizes branch-required errors and the anyOf failure. |
 | AllOf contact | Phone has only two characters. | The cell indicates the nested phone minLength failure. |
 
-Open each cell to inspect its detail presentation and field errors in both
-renderers. Valid sibling cells have no indicator. Widen the pane or scroll the
+Open each cell to inspect its detail presentation and field errors. Valid sibling
+cells have no indicator. Widen the pane or scroll the
 table horizontally to reach all columns; error markers stay beside summaries.
 
-The oneOf editor uses a dropdown in both reference renderers. AnyOf retains
-branch tabs. Each alternative declares its object type and editable fields,
+Check oneOf branch selection and anyOf branch navigation. Each alternative
+declares its object type and editable fields,
 so the example tests contact editors rather than unconstrained mixed values.

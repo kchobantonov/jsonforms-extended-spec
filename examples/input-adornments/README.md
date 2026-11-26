@@ -63,6 +63,6 @@ and Bulgarian keys with authored English fallbacks.
    not change document width or horizontal scroll.
 
 The spec package validates the authored fixture and behavior vectors. Focused
-Svelte and React renderer tests exercise adornment composition and placement.
-The remaining visual and interaction checks above should be repeated per
-renderer family and host.
+renderer tests exercise adornment composition and placement. The remaining
+visual and interaction checks above should be repeated per renderer family
+and host.

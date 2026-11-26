@@ -513,8 +513,7 @@ detail pane; it does not impose a root-specific layout on every descendant.
 Code presentation edits the whole value and does not use these field layouts.
 Null retains the existing no-value-control presentation.
 
-Implemented and tested for React Antd and shadcn. Other renderer sets are not
-claimed to support these extensions. See the editor-details example.
+See the editor-details example. Renderer projects document their own support.
 
 ## Authoring named templates and slots
 

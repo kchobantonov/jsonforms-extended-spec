@@ -273,7 +273,8 @@ Code editors validate a section while local references still belong to the docum
 
 The presence of item properties does not make an array suitable for a table by default. Apply nested-array detection before selecting the default table presentation; explicit table options can still opt in. Such tables need a composite detail cell for anyOf, oneOf and allOf values as well as object, array and mixed types. Keep specialized enum and scalar cells ahead of the composite fallback.
 
-Executable renderer regressions cover Draft-07 allOf/anyOf/oneOf default panels and an explicit table with a string-or-array anyOf column in Antd and shadcn.
+Acceptance: check Draft-07 allOf/anyOf/oneOf default panels and an explicit
+table with a string-or-array anyOf column through each renderer's registry.
 
 
 ## Domain trees versus JSON structure trees
@@ -300,8 +301,7 @@ stale-schema cleanup remains independent.
 Acceptance example: render `json-inference` with no authored schema and absent
 data, then replace data with an object, array, string, number, boolean, and
 null. Each root must render without a stale schema or an inapplicable renderer.
-The Antd and Shadcn `genericJsonExamples.test.tsx` files in the React renderer
-repository execute this sequence against JSON Forms React 3.9.0-alpha.2.
+Record the core version used when executing this sequence in a renderer project.
 
 ## Unrestricted array items need a control fallback
 
@@ -312,10 +312,8 @@ at `#` for the item so a nested mixed value still exposes its type selector
 and View action. Preserve registered and explicitly supplied detail UI schemas.
 Do not treat the default-open first item as closed when testing the child row.
 
-Executable acceptance: Antd `MixedRenderer.test.tsx` renders both array and
-object children of an `items: true` array with a type selector and View icon;
-Shadcn `mixedWorkspace.test.tsx` checks the same unrestricted child types.
-These are React renderer tests, not claims about other renderer sets.
+Acceptance: render both array and object children of an `items: true` array
+with a type selector and View action.
 
 ## Cleared mixed scalars versus absent values
 
@@ -349,19 +347,15 @@ is not a data binding. Named-only registry entries should return -1 from testers
 so ordinary detail selection does not accidentally choose them.
 
 The template-slots example covers supplied content, fallback, empty slots and
-nested overrides. React shared-renderer tests execute these cases, and Antd and
-shadcn integration tests render the example through their native registries. Missing-name
-diagnostics, duplicate-name diagnostics and cycle protection remain gaps in the
-current React implementation; do not treat its silent behavior as certification
-of those normative requirements.
+nested overrides. Check missing-name diagnostics, duplicate-name diagnostics,
+and cycle protection separately through each renderer's registry.
 
 ## Image diagnostics must fit their container
 
 Do not print a refused image URL or embedded data payload in the form. Use a
 short warning with an icon and an explanation available on hover, keyboard focus
 and touch. Keep the explanation bounded and wrap long text; allow Escape to
-close it. Source refusal must still prevent the image from loading. The shared
-React ImageView renderer implements this presentation for its consumers.
+close it. Source refusal must still prevent the image from loading.
 
 ## Conditional presentation is not schema rewriting
 
@@ -381,8 +375,7 @@ before the global setting, including explicit false. Preserve the array's own
 errors and item-level indicators while hiding the outer descendant summary.
 
 Acceptance cases: invalid children with global hiding, local false overriding
-global true, and an array type error with hiding enabled. Antd's
-expandable-array tests execute these cases; this does not certify other renderers.
+global true, and an array type error with hiding enabled.
 
 
 ## Choice-card branch details
@@ -394,9 +387,8 @@ scope, data path and document root. Inline layouts remain relative to the branch
 value. Missing registrations fall back to generation. Value-choice cards do not
 use branch editors.
 
-React Antd and shadcn integration tests cover generation with a matching registry,
-registry selection and fallback, inline layouts, and editing a nested value.
-Other renderer families are not verified by these tests.
+Check generation with a matching registry, registry selection and fallback,
+inline layouts, and editing a nested value through the renderer's registry.
 
 ## Button width and layout allocation
 
@@ -438,9 +430,7 @@ Otherwise replacing properties can retain stale editors or miss pagination chang
 
 Acceptance: replace those two key lists at the same control path, check that every
 new property is rendered and removed properties disappear, and verify that adding
-an item selects its page. The React shared pagination regression executes the page
-case, and the React Antd additional-property regression executes property
-replacement. Shadcn and generic property replacement are not certified by those tests.
+an item selects its page.
 
 ## Template subscriptions and runtime bindings
 
@@ -456,12 +446,9 @@ remounting unchanged controls or losing their unsaved drafts. A stable component
 with context/props can carry current bindings without exposing speculative render
 writes through refs shared with an already committed tree.
 
-Executed React regression coverage: shared extended-renderer
-`trackedSnapshot.test.tsx` checks literal keys, whole-object replacement, primitive
-and null roots, and a policy update preserving an input node, its unsaved value,
-and template hook state. The `template-data-subscription-replacement` and
+The `template-data-subscription-replacement` and
 `template-policy-update-preserves-draft` vectors are framework-neutral acceptance
-cases; they are not evidence that other renderer adapters have executed them.
+cases. A renderer adapter must execute them before reporting support.
 
 ## P20 — File operation feedback follows committed data
 
@@ -506,8 +493,7 @@ the top and bottom; use an actual border or an inset outline, with the native
 error color. Reserve the same border space on valid tokens to avoid size shifts.
 Visual acceptance: the imported `Fax` pill has a continuous error-colored
 outline around its rounded perimeter while `Email` remains unmarked, including
-when tokens wrap or scroll. React Shadcn has a DOM class regression for its
-border; this is not a browser visual test or verification of Svelte support.
+when tokens wrap or scroll.
 
 ## P22 — Portable actions require host registration
 
@@ -590,9 +576,8 @@ Proposed acceptance: in the [two-form playground](../examples/dynamic-playground
 change the plan label, switch automatic/radio/automatic, and toggle readonly. The
 preview data and unrelated name editor survive; the configuration form remains
 editable. Repeat with an uncommitted edit, IME and permission revocation before
-claiming lifecycle support. These are adapter acceptance criteria. Focused Svelte and React lifecycle tests
-exist, but each renderer/host combination needs its own evidence; this checklist
-is not a claim that every combination has been executed. See spec §11.7–11.10.
+claiming lifecycle support. These are adapter acceptance criteria; each
+renderer/host combination needs its own evidence. See spec §11.7–11.10.
 
 ## Dynamic replacement and message fallback
 
@@ -807,15 +792,11 @@ Cron Apply with Duration Apply and confirm both use the theme primary button tre
 Select two minutes in succession from the scrolling choice list, confirm both
 appear in the compact summary and draft expression, then clear Minutes to
 Every without changing the other fields. Check that Expression has a visible
-label in both populated and empty pickers. React Shadcn has a focused DOM
-regression for multiple choices and reset; React Antd has DOM regressions for
-Expression labeling and clearing. These are not browser visual checks or
-evidence of execution by the Svelte renderers.
+label in both populated and empty pickers.
 Open a populated color picker and activate the footer Clear value action;
 verify the stored property is removed. Repeat with an empty value, clearing
 disabled, and a readonly control; the footer action must be absent or disabled.
 Activate the field's picker and verify that saturation, hue and channel editing
 are usable immediately, without activating another swatch or opening a second
 dialog. Use pointer and keyboard editing, then clear from the same panel.
-React Antd and Shadcn have focused DOM regressions for the footer action;
-neither test establishes visual parity between their color-selection surfaces.
+Test the footer action and the color-selection surface through each renderer.
